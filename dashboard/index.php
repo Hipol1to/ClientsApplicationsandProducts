@@ -1,3 +1,6 @@
+<?php
+require('../includes/config.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -880,45 +883,257 @@
         <div class="row">
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
+           <!-- Add a modal -->
+<div class="modal fade" id="prestamosModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Detalles de Préstamos</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal Body -->
+      <!-- Modal Body -->
+<div class="modal-body">
+    <!-- Search Form -->
+    <form id="prestamosSearchForm">
+        <div class="form-group">
+            <label for="searchText">Search Text:</label>
+            <input type="text" class="form-control" id="searchText" name="searchText">
+        </div>
+        <div class="form-group">
+    <label>Search Field:</label><br>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="searchField" id="searchId" value="id">
+        <label class="form-check-label" for="searchId">ID</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="searchField" id="searchBeneficiario" value="beneficiario">
+        <label class="form-check-label" for="searchBeneficiario">Beneficiario</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="searchField" id="searchIdCliente" value="IdCliente">
+        <label class="form-check-label" for="searchIdCliente">ID Cliente</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="searchField" id="searchMotivo" value="Motivo">
+        <label class="form-check-label" for="searchMotivo">Motivo</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="searchField" id="searchStatus" value="Status">
+        <label class="form-check-label" for="searchStatus">Status</label>
+    </div>
+    <!-- Add more radio buttons for other fields as needed -->
+</div>
 
-                <p>Prestamos</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-money-bill"></i>
-              </div>
-              <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
+        <button type="button" class="btn btn-primary" onclick="searchPrestamos()">Buscar</button>
+    </form>
+
+    <!-- Display Prestamos details here -->
+    <div id="prestamosDetails">
+        <!-- Content to display Préstamos details... This will be populated dynamically based on the search result. -->
+    </div>
+</div>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    function searchPrestamos() {
+        // Fetch data from the server using AJAX
+        $.ajax({
+            type: "POST",
+            url: "search_prestamos.php", // Replace with the actual server-side script handling the search
+            data: $("#prestamosSearchForm").serialize(), // Serialize form data
+            success: function (data) {
+                // Update the #prestamosDetails section with the search results
+                $("#prestamosDetails").html(data);
+            }
+        });
+    }
+</script>
+
+      
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- Prestamos Box -->
+<div class="small-box bg-info">
+  <?php
+    // Assuming you have a PDO connection named $db
+
+    // Fetch the count of records from the prestamos table
+    $stmt = $db->prepare("SELECT COUNT(*) AS prestamosCount FROM prestamos");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Get the count from the result
+    $prestamosCount = $result['prestamosCount'];
+  ?>
+
+  <!-- Display the count in your HTML -->
+  <div class="inner">
+    <h3><?php echo $prestamosCount; ?></h3>
+    <p>Prestamos</p>
+  </div>
+
+  <div class="icon">
+    <i class="fas fa-money-bill"></i>
+  </div>
+
+  <!-- Add a data-toggle attribute to trigger the modal -->
+  <a href="#" class="small-box-footer" data-toggle="modal" data-target="#prestamosModal">Más información <i class="fas fa-arrow-circle-right"></i></a>
+</div>
+
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px"> </sup></h3>
+              <?php
+// Assuming you have a PDO connection named $db
 
-                <p>Inversiones</p>
-              </div>
+// Fetch the count of records from the inversiones table
+$stmt = $db->prepare("SELECT COUNT(*) AS inversionesCount FROM inversiones");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Get the count from the result
+$inversionesCount = $result['inversionesCount'];
+?>
+
+
+<!-- Display the count in your HTML -->
+<div class="inner">
+    <h3><?php echo $inversionesCount; ?><sup style="font-size: 20px"> </sup></h3>
+    <p>Inversiones</p>
+</div>
+
+<!-- Bootstrap modal for Inversiones -->
+<div class="modal fade" id="inversionesModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" style="color: black;">Detalles de Inversiones</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <!-- Search Form -->
+                <form id="inversionesSearchForm">
+                    <div class="form-group">
+                        <label for="searchText" style="color: black;">Search Text:</label>
+                        <input type="text" class="form-control" id="searchText" name="searchText">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: black;">Search Field:</label><br>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="searchField" id="searchId" value="Id">
+                            <label class="form-check-label" for="searchId" style="color: black;">ID</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="searchField" id="searchBeneficiario" value="Beneficiario">
+                            <label class="form-check-label" for="searchBeneficiario" style="color: black;">Beneficiario</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="searchField" id="searchIdCliente" value="IdCliente">
+                            <label class="form-check-label" for="searchIdCliente" style="color: black;">ID Cliente</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="searchField" id="searchMotivo" value="Motivo">
+                            <label class="form-check-label" for="searchMotivo" style="color: black;">Motivo</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="searchField" id="searchStatus" value="Status">
+                            <label class="form-check-label" for="searchStatus" style="color: black;">Status</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="searchField" id="searchRemitente" value="Remitente">
+                            <label class="form-check-label" for="searchRemitente" style="color: black;">Remitente</label>
+                        </div>
+                        <!-- Add more radio buttons for other fields as needed -->
+                    </div>
+
+                    <button type="button" class="btn btn-primary" onclick="searchInversiones()">Buscar</button>
+                </form>
+
+                <!-- Display Inversiones details here -->
+                <div id="inversionesDetails" style="color: black;">
+                    <!-- Content to display Inversiones details... This will be populated dynamically based on the search result. -->
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+
+
               <div class="icon">
                 <i class="fas fa-chart-line"></i>
               </div>
-              <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+              <a href="#" class="small-box-footer" data-toggle="modal" data-target="#inversionesModal">Más información <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
+              <?php
+// Assuming you have a PDO connection named $db
 
-                <p>Inversiones en cola</p>
-              </div>
+// Fetch the count of records from the inversiones table where status is "En cola"
+$stmt = $db->prepare("SELECT COUNT(*) AS inversionesEnColaCount FROM inversiones WHERE Status = 'En cola'");
+$stmt->execute();
+$result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+// Get the count from the result
+$inversionesEnColaCount = $result['inversionesEnColaCount'];
+?>
+
+<!-- Display the count in your HTML -->
+<div class="inner">
+    <h3><?php echo $inversionesEnColaCount; ?></h3>
+    <p>Inversiones en cola</p>
+</div>
+
               <div class="icon">
                 <i class="fas fa-clock"></i>
               </div>
+
+<script>
+    function searchInversiones() {
+        // Fetch data from the server using AJAX
+        $.ajax({
+            type: "POST",
+            url: "search_inversiones.php", // Replace with the actual server-side script handling the search
+            data: $("#inversionesSearchForm").serialize(), // Serialize form data
+            success: function (data) {
+                // Update the #inversionesDetails section with the search results
+                $("#inversionesDetails").html(data);
+            }
+        });
+    }
+</script>
+
               <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
             </div>
           </div>

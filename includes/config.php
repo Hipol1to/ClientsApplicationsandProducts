@@ -28,9 +28,17 @@ try {
     echo '<p class="bg-danger">'.$e->getMessage().'</p>';
     exit;
 }
-
+//echo $_SERVER['PHP_SELF'];
+if(strpos($_SERVER['PHP_SELF'], 'dashboard') !== false)
+{
+  include('../classes/user.php');
+  include('../classes/phpmailer/mail.php');
+}
+else {
+  include('classes/user.php');
+  include('classes/phpmailer/mail.php');
+}
 //include the user class, pass in the database connection
-include('classes/user.php');
-include('classes/phpmailer/mail.php');
+
 $user = new User($db);
 ?>

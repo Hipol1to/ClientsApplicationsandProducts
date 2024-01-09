@@ -1,0 +1,25 @@
+<?php
+require('../includes/config.php');
+
+// Check if the form is submitted and values are set
+if (isset($_POST['searchText'], $_POST['searchField'])) {
+    // Get the search parameters
+    $searchText = $_POST['searchText'];
+    $searchField = $_POST['searchField'];
+
+    // Assuming you have a PDO connection named $db
+    // Perform the search based on the selected field
+    $stmt = $db->prepare("SELECT * FROM inversiones WHERE $searchField LIKE :searchText");
+    $stmt->bindValue(':searchText', "%$searchText%", PDO::PARAM_STR);
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Display the search results
+    foreach ($results as $result) {
+        echo '<p>' . $result['Id'] . ' - ' . $result['Beneficiario'] . ' - ' . $result['Motivo'] . ' - ' . $result['Status'] . ' - ' . $result['IdCliente'] . ' - ' . $result['Remitente'] . '</p>';
+    }
+} else {
+    // Handle the case where the form is not submitted correctly
+    echo "Search parameters are missing.";
+}
+?>

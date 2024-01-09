@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Dec 28, 2023 at 01:52 AM
+-- Generation Time: Jan 09, 2024 at 03:59 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -80,14 +80,24 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 
 DROP TABLE IF EXISTS `inversiones`;
 CREATE TABLE IF NOT EXISTS `inversiones` (
-  `Id` int(11) NOT NULL,
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `IdCliente` int(11) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
   `Remitente` varchar(255) DEFAULT NULL,
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `inversiones`
+--
+
+INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `Remitente`, `Beneficiario`, `Status`) VALUES
+(1, 1, 'New Investment', 'Sender1', 'Receiver1', 'En cola'),
+(2, 2, 'Investment Plan A', 'Sender2', 'Receiver2', 'Aprobada'),
+(3, 3, 'Long-term Investment', 'Sender3', 'Receiver3', 'Rechazada'),
+(4, 4, 'Short-term Investment', 'Sender4', 'Receiver4', 'En cola');
 
 -- --------------------------------------------------------
 
@@ -99,9 +109,14 @@ DROP TABLE IF EXISTS `pago`;
 CREATE TABLE IF NOT EXISTS `pago` (
   `Id` int(11) NOT NULL,
   `IdCliente` int(11) DEFAULT NULL,
+  `CuentaRemitente` varchar(255) DEFAULT NULL,
+  `EntidadBancariaRemitente` varchar(255) DEFAULT NULL,
+  `CuentaDestinatario` varchar(255) DEFAULT NULL,
+  `EntidadBancariaDestinatario` varchar(255) DEFAULT NULL,
   `Monto` decimal(10,2) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
   `Tipo` varchar(50) DEFAULT NULL,
+  `FechaDePago` datetime DEFAULT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
@@ -120,6 +135,15 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `prestamos`
+--
+
+INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `Beneficiario`, `Status`) VALUES
+(1, 123, 'Préstamo para compra de equipo', 'Juan Pérez', 'En proceso'),
+(2, 123, 'Préstamo para combustible', 'Luka Sosa', 'Saldado'),
+(3, 123, 'Préstamo hipotecario', 'Pablo Garcia', 'En revision');
 
 -- --------------------------------------------------------
 
