@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 09, 2024 at 03:59 AM
+-- Generation Time: Jan 11, 2024 at 09:14 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -153,7 +153,7 @@ INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `Beneficiario`, `Status`) 
 
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
-  `Id` int(11) NOT NULL DEFAULT '0',
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Nombre` varchar(255) DEFAULT NULL,
   `Usuario` varchar(50) NOT NULL,
   `Contraseña` varchar(255) NOT NULL,
@@ -162,14 +162,15 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `Active` varchar(255) NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`Id`, `Nombre`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`) VALUES
-(0, NULL, 'adww', '$2y$10$xEL.GZGcKaggyeRCBKnR4..4.R2ki6C1y6jXlu8QA7DFZC9Iia.li', 'Cliente', 'thelegendstutorials@gmail.com', 'Yes');
+(1, NULL, 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 'Yes'),
+(2, NULL, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 'Yes');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
