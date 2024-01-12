@@ -73,7 +73,7 @@ if(isset($_POST['submit'])){
             ':nombre' => null, // Provide a value for 'Nombre' here
             ':username' => $username,
             ':password' => $hashedpassword,
-            ':rol' => 'Cliente', // Assuming default role is 'Cliente'
+            ':rol' => 'Administrador', // Assuming default role is 'Cliente'
             ':email' => $email,
             ':active' => $activasion // You may adjust this based on your activation mechanism
             ));

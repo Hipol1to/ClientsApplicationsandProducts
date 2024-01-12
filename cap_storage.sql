@@ -1,7 +1,7 @@
 -- phpMyAdmin SQL Dump
 -- version 4.8.4
 -- https://www.phpmyadmin.net/
---
+-- pendiente, agregar id de pago a inversiones y pagos
 -- Host: 127.0.0.1:3306
 -- Generation Time: Jan 11, 2024 at 09:14 PM
 -- Server version: 5.7.24
@@ -131,6 +131,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Id` int(11) NOT NULL,
   `IdCliente` int(11) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
+  `Remitente` varchar(255) DEFAULT NULL,
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Id`)

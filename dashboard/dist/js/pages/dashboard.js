@@ -128,7 +128,7 @@ $(function () {
         pointStrokeColor: 'rgba(60,141,188,1)',
         pointHighlightFill: '#fff',
         pointHighlightStroke: 'rgba(60,141,188,1)',
-        data: [28, 48, 40, 19, 86, 27, 70]
+        data: [28, 48, 40, 19, 86, 27, 70, 98]
       },
       {
         label: 'Electronics',
@@ -174,19 +174,19 @@ $(function () {
 
   // Donut Chart
   var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
-  var pieData = {
-    labels: [
-      'Dinero en Caja',
-      'Dinero en prestamos',
-      'Dinero Invertido'
-    ],
-    datasets: [
-      {
-        data: [30, 12, 20],
-        backgroundColor: ['#f56954', '#00a65a', '#f39c12']
-      }
-    ]
-  }
+    var pieData = {
+      labels: [
+        'Dinero en Caja',
+        'Dinero en prestamos',
+        'Dinero Invertido'
+      ],
+      datasets: [
+        {
+          data: [30, 12, 20],
+          backgroundColor: ['#f56954', '#00a65a', '#f39c12']
+        }
+      ]
+    }
   var pieOptions = {
     legend: {
       display: false
