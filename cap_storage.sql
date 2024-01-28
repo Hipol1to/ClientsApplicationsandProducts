@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.2
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jan 24, 2024 at 01:28 AM
--- Server version: 10.4.10-MariaDB
--- PHP Version: 7.3.12
+-- Generation Time: Jan 28, 2024 at 07:54 PM
+-- Server version: 5.7.24
+-- PHP Version: 7.2.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `administradores` (
   `FechaConexion` date DEFAULT NULL,
   `FechaIngreso` date DEFAULT NULL,
   `FechaSalida` date DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
-  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `FechaSalida` date DEFAULT NULL,
   `MesesEnEmpresa` int(11) DEFAULT NULL,
   `TotalPrestado` decimal(10,2) DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
-  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS `finanzas` (
 --
 
 INSERT INTO `finanzas` (`dineroencaja`, `dineroinvertido`, `dineroenprestamos`) VALUES
-('13000.00', '1500.50', '12804.50');
+('10000.00', '1500.50', '2400.00');
 
 -- --------------------------------------------------------
 
@@ -111,8 +111,8 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) NOT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
-  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -124,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
 INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaCreacion`, `FechaModificacion`) VALUES
 (1, 4, 'Short-term Investment', 'Sender4', 'Receiver4', 'En cola', 3, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
 (2, 2, 'Investment Plan A', 'Sender2', 'Receiver2', 'Aprobada', 2, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
-(3, 1, 'New Investment', 'Sender1', 'Receiver1', 'En cola', 1, '2024-01-18 08:17:08', '2024-01-18 04:48:34');
+(3, 1, 'New Investment', 'Sender1', 'Receiver1', 'En cola', 1, '2024-01-18 08:17:08', '2024-01-28 19:54:20');
 
 --
 -- Triggers `inversiones`
@@ -175,6 +175,7 @@ DROP TRIGGER IF EXISTS `after_update_on_inversiones`;
 DELIMITER $$
 CREATE TRIGGER `after_update_on_inversiones` AFTER UPDATE ON `inversiones` FOR EACH ROW BEGIN
   -- Update "dineroinvertido" in "finanzas" with the new sum of "Monto" from "pagos"
+  SET @ViejoDineroInvertido = (SELECT dineroinvertido FROM finanzas);
   UPDATE finanzas
   SET dineroinvertido = (
     SELECT COALESCE(SUM(p.Monto), 0)
@@ -182,6 +183,29 @@ CREATE TRIGGER `after_update_on_inversiones` AFTER UPDATE ON `inversiones` FOR E
     LEFT JOIN pagos p ON i.PagoId = p.Id
     WHERE i.Status = 'Aprobada'
   );
+  SET @NuevoDineroInvertido = (SELECT dineroinvertido FROM finanzas);
+
+  IF @ViejoDineroInvertido < @NuevoDineroInvertido THEN
+    -- Calculate the difference between the old and new values
+   SET @diff = @ViejoDineroInvertido - @NuevoDineroInvertido;
+  SET @numero = (SELECT dineroencaja FROM finanzas);
+  SET @resta =  @diff + @numero;
+  UPDATE finanzas
+    SET dineroencaja = @resta;
+    -- Update dineroencaja by subtracting the difference
+  END IF;
+  
+  IF @ViejoDineroInvertido > @NuevoDineroInvertido THEN
+    -- Calculate the difference between the old and new values
+    SET @diff = (SELECT ABS(@NuevoDineroInvertido)) - (SELECT ABS(@ViejoDineroInvertido));
+    SET @numero = (SELECT dineroencaja FROM finanzas);
+    SET @resta = @numero + (SELECT ABS(@diff));
+  
+  UPDATE finanzas
+    SET dineroencaja = @resta;
+    -- Update dineroencaja by subtracting the difference
+  END IF;
+
 END
 $$
 DELIMITER ;
@@ -204,10 +228,10 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `Motivo` varchar(255) DEFAULT NULL,
   `Tipo` varchar(50) DEFAULT NULL,
   `FechaDePago` datetime DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
-  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pagos`
@@ -220,7 +244,8 @@ INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `EntidadBancariaRemit
 (4, 1, 'Cuenta1', 'Banco1', 'CuentaDest1', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', '2023-12-15 08:30:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
 (5, 2, 'Cuenta3', 'Banco3', 'CuentaDest3', 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', '2023-12-25 12:15:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
 (6, 1, 'Cuenta1', 'Banco1', 'CuentaDest1', 'BancoDest1', '1400.00', 'Pago adicional', 'Transferencia', '2023-12-28 09:00:00', '2024-01-22 12:56:30', '2024-01-23 23:53:56'),
-(7, 2, 'Cuenta2', 'Banco2', 'CuentaDest2', 'BancoDest2', '1800.75', 'Pago extra', 'Depósito', '2023-12-30 14:30:00', '2024-01-22 12:56:30', '2024-01-22 12:56:30');
+(7, 2, 'Cuenta2', 'Banco2', 'CuentaDest2', 'BancoDest2', '1800.75', 'Pago extra', 'Depósito', '2023-12-30 14:30:00', '2024-01-22 12:56:30', '2024-01-22 12:56:30'),
+(26, 1, 'Cuenta1', 'Banco1', 'CuentaDest1', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', '2023-12-15 08:30:00', '2024-01-28 19:41:34', '2024-01-28 19:41:34');
 
 --
 -- Triggers `pagos`
@@ -283,11 +308,11 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
-  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prestamos`
@@ -295,10 +320,11 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
 
 INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaCreacion`, `FechaModificacion`) VALUES
 (4, 3, 'Business Loan', 'Sender3', 'Receiver3', 'Aprobado', 4, '2024-01-18 08:28:00', '2024-01-22 12:16:18'),
-(5, 1, 'Education Loan', 'Sender1', 'Receiver1', 'En proceso', 5, '2024-01-18 08:30:00', '2024-01-22 12:16:18'),
+(5, 1, 'Education Loan', 'Sender1', 'Receiver1', 'En proceso', 5, '2024-01-18 08:30:00', '2024-01-28 19:37:04'),
 (6, 3, 'Business Loan', 'Sender3', 'Receiver3', 'En proceso', NULL, '2024-01-18 08:28:00', '2024-01-22 12:56:04'),
 (7, 1, 'Education Loan', 'Sender1', 'Receiver1', 'En proceso', NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
-(8, 3, 'Business Loan', 'Sender3', 'Receiver3', 'Aprobado', 6, '2024-01-18 08:28:00', '2024-01-22 12:57:26');
+(8, 3, 'Business Loan', 'Sender3', 'Receiver3', 'Aprobado', 6, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
+(27, 4, 'Short-term Loan', 'Sender4', 'Receiver4', 'En proceso', 26, '2024-01-18 08:20:00', '2024-01-28 19:44:54');
 
 --
 -- Triggers `prestamos`
@@ -307,7 +333,7 @@ DROP TRIGGER IF EXISTS `after_prestamos_insert_update`;
 DELIMITER $$
 CREATE TRIGGER `after_prestamos_insert_update` AFTER INSERT ON `prestamos` FOR EACH ROW BEGIN
   -- Update "dineroenprestamos" in "finanzas" with the new sum of "Monto" from "pagos"
-  SET @ViejoDineroEnPrestamos = (SELECT dineroenprestamos FROM finanzas);
+SET @ViejoDineroEnPrestamos = (SELECT dineroenprestamos FROM finanzas);
   UPDATE finanzas
   SET dineroenprestamos = (
     SELECT COALESCE(SUM(p.Monto), 0)
@@ -329,16 +355,14 @@ CREATE TRIGGER `after_prestamos_insert_update` AFTER INSERT ON `prestamos` FOR E
   
   IF @ViejoDineroEnPrestamos > @NuevoDineroEnPrestamos THEN
     -- Calculate the difference between the old and new values
-   SET @diff = @NuevoDineroEnPrestamos - @ViejoDineroEnPrestamos;
-  SET @numero = (SELECT dineroencaja FROM finanzas);
-  SET @resta =  @diff + @numero;
+    SET @diff = (SELECT ABS(@NuevoDineroEnPrestamos)) - (SELECT ABS(@ViejoDineroEnPrestamos));
+    SET @numero = (SELECT dineroencaja FROM finanzas);
+    SET @resta = @numero + (SELECT ABS(@diff));
+  
   UPDATE finanzas
     SET dineroencaja = @resta;
     -- Update dineroencaja by subtracting the difference
   END IF;
-  
-
-
 END
 $$
 DELIMITER ;
@@ -346,6 +370,7 @@ DROP TRIGGER IF EXISTS `after_prestamos_update`;
 DELIMITER $$
 CREATE TRIGGER `after_prestamos_update` AFTER UPDATE ON `prestamos` FOR EACH ROW BEGIN
   -- Update "dineroenprestamos" in "finanzas" with the new sum of "Monto" from "pagos"
+SET @ViejoDineroEnPrestamos = (SELECT dineroenprestamos FROM finanzas);
   UPDATE finanzas
   SET dineroenprestamos = (
     SELECT COALESCE(SUM(p.Monto), 0)
@@ -353,6 +378,28 @@ CREATE TRIGGER `after_prestamos_update` AFTER UPDATE ON `prestamos` FOR EACH ROW
     LEFT JOIN pagos p ON pr.PagoId = p.Id
     WHERE pr.Status = 'Aprobado'
   );
+  SET @NuevoDineroEnPrestamos = (SELECT dineroenprestamos FROM finanzas);
+  
+  IF @ViejoDineroEnPrestamos < @NuevoDineroEnPrestamos THEN
+    -- Calculate the difference between the old and new values
+   SET @diff = @ViejoDineroEnPrestamos - @NuevoDineroEnPrestamos;
+  SET @numero = (SELECT dineroencaja FROM finanzas);
+  SET @resta =  @diff + @numero;
+  UPDATE finanzas
+    SET dineroencaja = @resta;
+    -- Update dineroencaja by subtracting the difference
+  END IF;
+  
+  IF @ViejoDineroEnPrestamos > @NuevoDineroEnPrestamos THEN
+    -- Calculate the difference between the old and new values
+    SET @diff = (SELECT ABS(@NuevoDineroEnPrestamos)) - (SELECT ABS(@ViejoDineroEnPrestamos));
+    SET @numero = (SELECT dineroencaja FROM finanzas);
+    SET @resta = @numero + (SELECT ABS(@diff));
+  
+  UPDATE finanzas
+    SET dineroencaja = @resta;
+    -- Update dineroencaja by subtracting the difference
+  END IF;
 END
 $$
 DELIMITER ;
@@ -372,8 +419,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `Rol` varchar(20) NOT NULL,
   `Email` varchar(255) NOT NULL,
   `Active` varchar(255) NOT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
-  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
