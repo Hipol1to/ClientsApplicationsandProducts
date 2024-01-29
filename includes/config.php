@@ -31,8 +31,15 @@ try {
 //echo $_SERVER['PHP_SELF'];
 if(strpos($_SERVER['PHP_SELF'], 'dashboard') !== false)
 {
+  if(strpos($_SERVER['PHP_SELF'], 'dist') !== false)
+  {
+    include('../../../../classes/user.php');
+    include('../../../../classes/phpmailer/mail.php');
+  }
+  else {
   include('../classes/user.php');
   include('../classes/phpmailer/mail.php');
+  }
 }
 else {
   include('classes/user.php');

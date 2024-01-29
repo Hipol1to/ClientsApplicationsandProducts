@@ -176,8 +176,8 @@ $(function () {
   var pieChartCanvas = $('#sales-chart-canvas').get(0).getContext('2d')
     var pieData = {
       labels: [
-        'Dinero en Caja',
         'Dinero en prestamos',
+        'Dinero en Caja',
         'Dinero Invertido'
       ],
       datasets: [
@@ -187,6 +187,26 @@ $(function () {
         }
       ]
     }
+  // Function to update the pie chart data
+function updatePieChartData(data) {
+  pieData.datasets[0].data = [data.dineroenprestamos, data.dineroencaja, data.dineroinvertido];
+  pieChart.update();
+}
+
+// Fetch data from the server using AJAX
+$.ajax({
+  url: 'dist/js/pages/fetch_finanzas_data.php',
+  method: 'GET',
+  dataType: 'json',
+  success: function(data) {
+    // Update pie chart data with fetched values
+    updatePieChartData(data);
+  },
+  error: function(xhr, status, error) {
+    console.error('Error fetching data:', error);
+  }
+});
+  
   var pieOptions = {
     legend: {
       display: false
