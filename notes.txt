@@ -1,0 +1,1 @@
+a partir de este punto, el flujo pensado es que todo pago que exista es porque fue aprobado debidamente. Una inversio y un prestamo pueden tener muchos pagos, pero deberan estar vinculados por lo menos a uno (por medio del campo PagoId)

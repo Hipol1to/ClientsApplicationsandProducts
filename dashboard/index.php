@@ -1186,134 +1186,140 @@ $inversionesEnColaCount = $result['inversionesEnColaCount'];
             <!--/.direct-chat -->
 
             <!-- TO DO List -->
-            <div class="card">
+            <?php
+// Include the database connection file
+
+// Fetch data from the database based on your criteria
+$sql = "SELECT CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, CONCAT(DATE_FORMAT(i.FechaFinalEstimada, '%Y-%m-%d')) AS FechaFinalEstimada, CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-%d')) AS FechaActual
+FROM (
+    SELECT Id, Motivo, IdCliente, FechaFinalEstimada
+    FROM Inversiones
+    WHERE DATE_FORMAT(FechaFinalEstimada, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
+    UNION ALL
+    SELECT Id, Motivo, IdCliente, FechaFinalEstimada
+    FROM Prestamos
+    WHERE DATE_FORMAT(FechaFinalEstimada, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
+) AS i
+JOIN Clientes c ON i.IdCliente = c.Id
+JOIN Usuarios u ON c.IdUsuario = u.Id;";
+
+$result = $db->query($sql);
+
+// Check if query execution was successful
+if ($result) {
+    // Output the card structure
+    echo '<div class="card">
               <div class="card-header">
                 <h3 class="card-title">
                   <i class="ion ion-clipboard mr-1"></i>
-                  Pagos proximos a vencer
+                  Pagos próximos a vencer
                 </h3>
-
                 <div class="card-tools">
                   <ul class="pagination pagination-sm">
+                  <!--
                     <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
                     <li class="page-item"><a href="#" class="page-link">1</a></li>
                     <li class="page-item"><a href="#" class="page-link">2</a></li>
                     <li class="page-item"><a href="#" class="page-link">3</a></li>
                     <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                    -->
                   </ul>
                 </div>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <ul class="todo-list" data-widget="todo-list">
-                  <li>
-                    <!-- drag handle -->
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <!-- checkbox -->
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo1" id="todoCheck1">
-                      <label for="todoCheck1"></label>
-                    </div>
-                    <!-- todo text -->
-                    <span class="text">Pago pendiente a Dummy Inversiones</span>
-                    <!-- Emphasis label -->
-                    <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
-                    <!-- General tools such as edit or delete-->
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
-                      <label for="todoCheck2"></label>
-                    </div>
-                    <span class="text">Prestamo atrasado Sujeto CxA</span>
-                    <small class="badge badge-info"><i class="far fa-clock"></i> 4 horas</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo3" id="todoCheck3">
-                      <label for="todoCheck3"></label>
-                    </div>
-                    <span class="text">Pago pendiente a Dummy Inversiones</span>
-                    <small class="badge badge-warning"><i class="far fa-clock"></i> 1 dia</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo4" id="todoCheck4">
-                      <label for="todoCheck4"></label>
-                    </div>
-                    <span class="text">Pago pendiente a Dummy Inversiones</span>
-                    <small class="badge badge-success"><i class="far fa-clock"></i> 3 dias</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo5" id="todoCheck5">
-                      <label for="todoCheck5"></label>
-                    </div>
-                    <span class="text">Pago pendiente a Dummy Inversiones</span>
-                    <small class="badge badge-primary"><i class="far fa-clock"></i> 1 semana</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                  <li>
-                    <span class="handle">
-                      <i class="fas fa-ellipsis-v"></i>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                    <div  class="icheck-primary d-inline ml-2">
-                      <input type="checkbox" value="" name="todo6" id="todoCheck6">
-                      <label for="todoCheck6"></label>
-                    </div>
-                    <span class="text">Pago pendiente a Dummy Inversiones</span>
-                    <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 mes</small>
-                    <div class="tools">
-                      <i class="fas fa-edit"></i>
-                      <i class="fas fa-trash-o"></i>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer clearfix">
-                <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Agregar evento</button>
-              </div>
-            </div>
+                <ul class="todo-list" data-widget="todo-list">';
+    
+    // Loop through the fetched results
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+      $estimatedTimestamp = strtotime($row['FechaFinalEstimada']);
+      $currentTimestamp = strtotime($row['FechaActual']);
+      $timeLeft = "";
+      $classForTime = "";
+      $timeDiff = $estimatedTimestamp - $currentTimestamp;
+
+      // Convert time difference to days, weeks, and months
+      $daysDiff = floor($timeDiff / (60 * 60 * 24));
+      $weeksDiff = floor($daysDiff / 7);
+      $monthsDiff = floor($daysDiff / 30);
+
+      // Set boolean variables based on the time differences
+      $greaterThanOneMonth = $monthsDiff >= 1;
+      $greaterThanTwoWeeks = $weeksDiff >= 2;
+      $greaterThanOneWeek = $weeksDiff >= 1;
+      $greaterThanThreeDays = $daysDiff >= 3;
+
+      $exactOneMonth = $monthsDiff = 1;
+      $exactTwoWeeks = $weeksDiff = 2;
+      $exactOneWeek = $weeksDiff = 1;
+      $exactThreeDays = $daysDiff = 3;
+
+      $dateAmmount = array(
+        "greaterThanOneMonth" => $greaterThanOneMonth,
+        "exactOneMonth" => $exactOneMonth,
+        "greaterThanTwoWeeks" => $greaterThanTwoWeeks,
+        "exactTwoWeeks" => $exactTwoWeeks,
+        "greaterThanOneWeek" => $greaterThanOneWeek,
+        "exactOneWeek" => $exactOneWeek,
+        "greaterThanThreeDays" => $greaterThanThreeDays,
+        "exactThreeDays" => $exactThreeDays
+      );
+      if($dateAmmount["greaterThanOneMonth"]) { 
+        $timeLeft = "+1 Mes";  
+        $classForTime = "badge badge-primary";
+      } elseif ($dateAmmount["exactOneMonth"]) {
+        $timeLeft = "1 Mes";  
+        $classForTime = "badge badge-primary";
+      } elseif ($dateAmmount["greaterThanTwoWeeks"]) {
+        $timeLeft = "2 Semanas y varios días";  
+        $classForTime = "badge badge-success";
+      } elseif ($dateAmmount["exactTwoWeeks"]) {
+        $timeLeft = "2 Semanas";  
+        $classForTime = "badge badge-success";
+      } elseif ($dateAmmount["greaterThanOneWeek"]) {
+        $timeLeft = "1 Semana y varios días";  
+        $classForTime = "badge badge-info";
+      } elseif ($dateAmmount["exactOneWeek"]) {
+        $timeLeft = "1 Semana";  
+        $classForTime = "badge badge-info";
+      } elseif ($dateAmmount["greaterThanThreeDays"]) {
+        $timeLeft = "3 Días o más";  
+        $classForTime = "badge badge-danger";
+      } elseif ($dateAmmount["exactThreeDays"]) {
+        $timeLeft = "3 Días";  
+        $classForTime = "badge badge-danger";
+      }
+        echo '<li>
+                <span class="handle">
+                  <i class="fas fa-ellipsis-v"></i>
+                  <i class="fas fa-ellipsis-v"></i>
+                </span>
+                <span class="text">' . $row['DisplayText'] . '</span>
+                <small class="'.$classForTime.'"><i class="far fa-clock"></i> '.$timeLeft.'</small>
+                <div class="tools">
+                <!--
+                  <i class="fas fa-edit"></i>
+                  <i class="fas fa-trash-o"></i> 
+                  -->
+                </div>
+              </li>';
+    }
+    
+    // Close the card body and footer
+    echo '</ul>
+          </div>
+          <!-- /.card-body -->
+          <div class="card-footer clearfix">
+           <!-- <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Agregar evento</button>-->
+          </div>
+        </div>';
+} else {
+    // Display an error message if the query fails
+    echo "Error: " . $db->errorInfo();
+}
+?>
+
+
             <!-- /.card -->
           </section>
           <!-- /.Left col -->
