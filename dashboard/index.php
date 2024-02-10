@@ -1190,13 +1190,22 @@ $inversionesEnColaCount = $result['inversionesEnColaCount'];
 // Include the database connection file
 
 // Fetch data from the database based on your criteria
-$sql = "SELECT CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, CONCAT(DATE_FORMAT(i.FechaFinalEstimada, '%Y-%m-%d')) AS FechaFinalEstimada, CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-%d')) AS FechaActual
+$sql = "SELECT CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, 
+CONCAT(DATE_FORMAT(i.FechaFinalEstimada, '%Y-%m-%d')) AS FechaFinalEstimada, 
+CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-%d')) AS FechaActual, 
+CONCAT(i.Motivo) AS Motivo, 
+CONCAT(i.Remitente) AS Remitente, 
+CONCAT(i.Beneficiario) AS Beneficiario, 
+CONCAT(i.Status) AS estatus, 
+CONCAT(DATE_FORMAT(i.FechaFinalEstimada, '%Y-%m-%d')) AS fechadepago, 
+CONCAT(i.FechaCreacion) AS fechadecreacion,
+CONCAT(i.Id) AS requestId
 FROM (
-    SELECT Id, Motivo, IdCliente, FechaFinalEstimada
+    SELECT *
     FROM Inversiones
     WHERE DATE_FORMAT(FechaFinalEstimada, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
     UNION ALL
-    SELECT Id, Motivo, IdCliente, FechaFinalEstimada
+    SELECT *
     FROM Prestamos
     WHERE DATE_FORMAT(FechaFinalEstimada, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
 ) AS i
@@ -1289,20 +1298,39 @@ if ($result) {
         $timeLeft = "3 Días";  
         $classForTime = "badge badge-danger";
       }
-        echo '<li>
+        $modalId = 'modal_' . $row['requestId'];
+        
+        echo '<li data-toggle="modal" data-target="#' . $modalId . '">
                 <span class="handle">
                   <i class="fas fa-ellipsis-v"></i>
                   <i class="fas fa-ellipsis-v"></i>
                 </span>
                 <span class="text">' . $row['DisplayText'] . '</span>
                 <small class="'.$classForTime.'"><i class="far fa-clock"></i> '.$timeLeft.'</small>
-                <div class="tools">
-                <!--
-                  <i class="fas fa-edit"></i>
-                  <i class="fas fa-trash-o"></i> 
-                  -->
-                </div>
+                <div class="tools"></div>
               </li>';
+        
+        // Modal for each item
+        echo '<div class="modal fade" id="' . $modalId . '" tabindex="-1" role="dialog" aria-labelledby="' . $modalId . 'Label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="' . $modalId . 'Label">Detalles de la solicitud</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p><strong>Motivo:</strong> ' . $row['Motivo'] . '</p>
+                      <p><strong>Remitente:</strong> ' . $row['Remitente'] . '</p>
+                      <p><strong>Beneficiario:</strong> ' . $row['Beneficiario'] . '</p>
+                      <p><strong>Estatus:</strong> ' . $row['estatus'] . '</p>
+                      <p><strong>Fecha de Pago:</strong> ' . $row['fechadepago'] . '</p>
+                      <p><strong>Fecha de Creación:</strong> ' . $row['fechadecreacion'] . '</p>
+                    </div>
+                  </div>
+                </div>
+              </div>';
     }
     
     // Close the card body and footer
