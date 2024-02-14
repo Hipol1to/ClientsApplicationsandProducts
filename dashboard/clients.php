@@ -1,5 +1,10 @@
 <?php
 require('../includes/config.php');
+
+if (!$user->is_logged_in()) { 
+	header('Location: ../index.php'); 
+	// exit(); 
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +34,10 @@ require('../includes/config.php');
   <link rel="stylesheet" href="./plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -500,11 +509,13 @@ if ($result) {
       </div>
       <!-- /.card-body -->
     </div>';
+    
 } else {
     // Display an error message if the query fails
     echo "Error: " . $db->errorInfo();
 }
 ?>
+
 
 
             <!-- /.card -->
