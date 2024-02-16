@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 09, 2024 at 12:42 AM
+-- Generation Time: Feb 16, 2024 at 12:42 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -74,16 +74,18 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clientes`
 --
 
 INSERT INTO `clientes` (`Id`, `IdUsuario`, `Nombre`, `Apellido`, `Direccion`, `Cedula`, `RNC`, `MontoSolicitado`, `Interes`, `IdPago`, `MontoDeuda`, `Reenganchado`, `Puntos`, `FechaIngreso`, `FechaSalida`, `MesesEnEmpresa`, `TotalPrestado`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 1, 'John', 'Doe', '123 Main St', '1234567890', 'ABC123', '5000.00', '10.00', 1, '0.00', 0, 100, '2023-01-01', NULL, 6, '5000.00', '2024-02-08 23:31:57', '2024-02-08 23:31:57'),
-(2, 2, 'John', 'Doe', '123 Main St', '1234567890', 'ABC123', '5000.00', '10.00', 1, '0.00', 0, 100, '2023-01-01', NULL, 6, '5000.00', '2024-02-08 23:32:19', '2024-02-08 23:32:19'),
-(3, 2, 'John', 'Doe', '123 Main St', '1234567890', 'ABC123', '5000.00', '10.00', 1, '0.00', 0, 100, '2023-01-01', NULL, 6, '5000.00', '2024-02-08 23:32:36', '2024-02-08 23:32:36');
+(7, 2, 'Jane', 'Smithh', '456 Elm St', '0987654321', 'XYZ456', '7000.00', '8.00', 2, '2000.00', 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:25:41', '2024-02-16 00:28:41'),
+(5, NULL, 'yo mimo', 'po quien ma', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '40229604604', '430262617', '23455.00', '10.00', 4, '435353.00', 0, 13, '2023-01-01', NULL, 43, '355532.00', '2024-02-16 00:18:13', '2024-02-16 00:18:13'),
+(4, NULL, 'Hipolito', 'Peña', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '40229604604', '130424555', '23455.00', '10.00', 4242, '435353.00', 0, 13, '2023-01-01', '2023-01-01', 23, '44555.00', '2024-02-13 00:56:28', '2024-02-13 00:56:28'),
+(10, 2, 'Jane', 'Smith', '456 Elm St', '0987654321', 'XYZ456', '7000.00', '8.00', 2, '2000.00', 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:28:20', '2024-02-16 00:28:20'),
+(11, 3, 'Alice', 'Johnson', '789 Oak St', '5432167890', 'DEF789', '10000.00', '12.00', 3, '500.00', 0, 75, '2023-03-20', '2024-01-15', 10, '10500.00', '2024-02-16 00:28:20', '2024-02-16 00:28:20');
 
 -- --------------------------------------------------------
 
@@ -403,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usuarios`
@@ -411,7 +413,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`Id`, `Nombre`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
 (1, 'el compa', 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 'Yes', '2024-01-18 03:47:23', '2024-02-08 23:34:13'),
-(2, NULL, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 'Yes', '2024-01-18 03:47:23', '2024-01-18 03:47:23');
+(2, NULL, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 'Yes', '2024-01-18 03:47:23', '2024-01-18 03:47:23'),
+(3, NULL, 'markDitamai', '$2y$10$mcB8aPjFkUoAeG8Pd5fqIOrajg2799/DsNQfqj1ptb0o66vEXuVyy', 'Administrador', 'cuentascompaltidas@gmail.com', 'Yes', '2024-02-10 17:16:56', '2024-02-10 17:17:30');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

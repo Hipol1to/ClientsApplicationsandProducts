@@ -463,7 +463,10 @@ if ($result) {
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
         echo '<tr>
         <td></td>
-        <td><button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button></td>
+        <td>
+          <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
+          <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
+        </td>
                 <td>' . $row['Id'] . '</td>
                 <td>' . $row['Nombre'] . '</td>
                 <td>' . $row['Apellido'] . '</td>
@@ -654,6 +657,7 @@ if ($result) {
               success: function(response) {
                   $("#editModal").modal("hide");
                   // Optionally, reload the table or update the row with the edited data
+                  location.reload();
               },
               error: function(xhr, status, error) {
                   console.error(xhr.responseText);
@@ -663,6 +667,28 @@ if ($result) {
       });
   });
   
+    </script>
+    <script>
+      // JavaScript for handling delete button click
+$(".delete-btn").click(function() {
+    var id = $(this).data("id");
+    if (confirm("¿Estás seguro que quieres borrar este cliente?")) {
+        $.ajax({
+            url: "delete_cliente.php",
+            type: "POST",
+            data: { id: id },
+            success: function(response) {
+                // Optionally, reload the table or update the UI
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                // Handle error
+            }
+        });
+    }
+});
+
     </script>
     ';
 } else {

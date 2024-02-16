@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $puntos = $_POST['puntos'];
     $fecha_ingreso = $_POST['fecha_ingreso'];
     $fecha_salida = $_POST['fecha_salida'];
+    $fecha_salida = !empty($_POST['fecha_salida']) ? $_POST['fecha_salida'] : null;
     $meses_en_empresa = $_POST['meses_en_empresa'];
     $total_prestado = $_POST['total_prestado'];
     // Add more fields as needed
