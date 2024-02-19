@@ -464,6 +464,7 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
+          <a href="detalle_perfil.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver perfil</a>
           <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
           <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
         </td>
@@ -696,6 +697,7 @@ $(".delete-btn").click(function() {
     echo "Error: " . $db->errorInfo();
 }
 ?>
+
 
 
 
