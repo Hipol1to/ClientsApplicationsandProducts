@@ -302,15 +302,66 @@ if (!$user->is_logged_in()) {
                                         </select>
                                     </div>
                                     <button type="button" class="btn btn-primary" id="guardarEstado">Guardar Cambio</button>
+                                    <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
+                                    <!-- Detalle Perfil Content Here -->
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="estadoCliente">Puntaje:</label>
+                                        <p>
+                                          <?php
+                                          // Check if the ID parameter is set in the URL
+if(isset($_GET['id'])) {
+    // Sanitize the input to prevent SQL injection
+    $client_id = htmlspecialchars($_GET['id']);
+
+    // Fetch client details from the database using the ID
+    $sql = "SELECT * FROM clientes WHERE Id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $client_id);
+    $stmt->execute();
+
+    // Check if a client with the specified ID exists
+    if($stmt->rowCount() > 0) {
+        // Fetch the client's details
+        $client = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Display client details
+        echo $client['Puntos'] . ' puntos</p>';
+        // Continue displaying other client details as needed
+    } else {
+        // If no client with the specified ID is found, display an error message
+        echo '<div class="container">';
+        echo '<h1>Error</h1>';
+        echo '<p>No se pudo encontrar el cliente</p>';
+        echo '</div>';
+    }
+} else {
+    // If the ID parameter is not set in the URL, display an error message
+    echo '<div class="container">';
+    echo '<h1>Error</h1>';
+    echo '<p>No se pudo encontrar el cliente</p>';
+    echo '</div>';
+}
+                                           ?> </p>
+                                    </div>
+                                  <!--  <button type="button" class="btn btn-primary" id="guardarEstado">Guardar Cambio</button> -->
                                 </div>
+                                </div>
+                                
                                 <div class="tab-pane fade" id="prestamos" role="tabpanel" aria-labelledby="prestamos-tab">
                                     <!-- Prestamos Content Here -->
                                     <table id="tablaPrestamos" class="table table-bordered table-striped">
                                         <thead>
                                             <tr>
                                                 <th>Motivo</th>
+                                                <th>Monto</th>
                                                 <th>Remitente</th>
                                                 <th>Beneficiario</th>
+                                                <th>Cuotas</th>
+                                                <th>Días de pago en el mes</th>
+                                                <th>Cant. minima de pagos esperados por mes</th>
+                                                <th>Status</th>
+                                                <th>Fecha Final Estimada</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -325,7 +376,10 @@ if (!$user->is_logged_in()) {
                                             <tr>
                                                 <th>Fecha</th>
                                                 <th>Monto</th>
-                                                <!-- Add more columns as needed -->
+                                                <th>Desde cuenta</th>
+                                                <th>Hasta cuenta</th>
+                                                <th>Tipo de pago</th>
+                                                <th>Fecha de pago</th>
                                             </tr>
                                         </thead>
                                         <tbody>

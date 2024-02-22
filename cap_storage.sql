@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 16, 2024 at 12:42 AM
+-- Generation Time: Feb 22, 2024 at 12:55 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -149,8 +149,10 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `IdCliente` int(11) DEFAULT NULL,
   `CuentaRemitente` varchar(255) DEFAULT NULL,
+  `TipoCuentaRemitente` varchar(255) DEFAULT NULL,
   `EntidadBancariaRemitente` varchar(255) DEFAULT NULL,
   `CuentaDestinatario` varchar(255) DEFAULT NULL,
+  `TipoCuentaDestinatario` varchar(255) DEFAULT NULL,
   `EntidadBancariaDestinatario` varchar(255) DEFAULT NULL,
   `Monto` decimal(10,2) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
@@ -363,11 +365,16 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `IdCliente` int(11) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
+  `Monto` decimal(10,2) DEFAULT NULL,
   `Remitente` varchar(255) DEFAULT NULL,
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) DEFAULT NULL,
   `FechaFinalEstimada` timestamp NULL DEFAULT NULL,
+  `Cuotas` int(3) DEFAULT NULL,
+  `DiasDePagoDelMes` int(11) DEFAULT NULL,
+  `FrecuenciaPagoMensual` varchar(255) DEFAULT NULL,
+  `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
   `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
@@ -378,13 +385,13 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
 -- Dumping data for table `prestamos`
 --
 
-INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `FechaCreacion`, `FechaModificacion`) VALUES
-(4, 3, 'Business Loan', 'Sender3', 'Receiver3', 'Aprobado', 4, NULL, '2024-01-18 08:28:00', '2024-01-22 12:16:18'),
-(5, 1, 'Education Loan', 'Sender1', 'Receiver1', 'En proceso', 5, '2024-12-18 04:00:00', '2024-01-18 08:30:00', '2024-02-08 22:45:47'),
-(6, 3, 'Business Loan', 'Sender3', 'Receiver3', 'En proceso', NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:56:04'),
-(7, 1, 'Education Loan', 'Sender1', 'Receiver1', 'En proceso', NULL, NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
-(8, 3, 'Business Loan', 'Sender3', 'Receiver3', 'Aprobado', 6, NULL, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
-(27, 4, 'Short-term Loan', 'Sender4', 'Receiver4', 'En proceso', 26, NULL, '2024-01-18 08:20:00', '2024-01-28 19:44:54');
+INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `Monto`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `Cuotas`, `DiasDePagoDelMes`, `FrecuenciaPagoMensual`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+(4, 3, 'Business Loan', NULL, 'Sender3', 'Receiver3', 'Aprobado', 4, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:16:18'),
+(5, 1, 'Education Loan', NULL, 'Sender1', 'Receiver1', 'En proceso', 5, '2024-12-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-02-08 22:45:47'),
+(6, 3, 'Business Loan', NULL, 'Sender3', 'Receiver3', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:56:04'),
+(7, 1, 'Education Loan', NULL, 'Sender1', 'Receiver1', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
+(8, 3, 'Business Loan', NULL, 'Sender3', 'Receiver3', 'Aprobado', 6, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
+(27, 4, 'Short-term Loan', NULL, 'Sender4', 'Receiver4', 'En proceso', 26, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:20:00', '2024-01-28 19:44:54');
 
 -- --------------------------------------------------------
 
