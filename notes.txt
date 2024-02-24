@@ -1,12 +1,14 @@
+PENDING: SETEAR LINEA 472 en detalle prestamo para mostrar el form con la info del pago en modo readonly
+
 a partir de este punto, el flujo pensado es que todo pago que exista es porque fue aprobado debidamente. Una inversio y un prestamo pueden tener muchos pagos, pero deberan estar vinculados por lo menos a uno (por medio del campo PagoId)
 
 PENDIENTES:
 
 **ADM VIEW:**
 -Clientes: Actualizar status de usuario (si esta habilitado o no), solicitudes de prestamo/inversiones (monto deseado, intereses que genera por periodo, pagos realizados, fecha de pago modificable), formulario para completar perfil, funcion de descargar detalle de cliente en PDF.
+-Prestamos e Inversiones: apartado donde consultar prestamos e inversiones con su status
 -Pagos: Formulario para registrar los pagos de un cliente en concreto, para un prestamo o inversion en concreto
 -Pagos a vencer: ver detalle de Prestamo/Inversion al clicar
--Prestamos e Inversiones: apartado donde consultar prestamos e inversiones con su status
 -ver historial de pago
 
 **CLIENTS VIEW:**

@@ -5,6 +5,43 @@ if (!$user->is_logged_in()) {
 	header('Location: ../index.php'); 
 	// exit(); 
 }
+
+// Check if ID parameter is set
+if(isset($_GET['id'])) {
+    $prestamo_id = $_GET['id'];
+    
+    // Fetch prestamo details from the database
+    $sql = "SELECT * FROM prestamos WHERE Id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $prestamo_id);
+    $stmt->execute();
+    $prestamo = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    // Check if prestamo exists
+    if(!$prestamo) {
+        echo "Prestamo not found!";
+        exit();
+    }
+} else {
+    echo "Prestamo ID not provided!";
+    exit();
+}
+
+// Handle form submission for updating prestamo status
+if(isset($_POST['actualizarStatus'])) {
+    $status = $_POST['status'];
+    
+    // Update prestamo status in the database
+    $sql = "UPDATE prestamos SET Status = :status WHERE Id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':status', $status);
+    $stmt->bindParam(':id', $prestamo_id);
+    if($stmt->execute()) {
+        echo "Status updated successfully!";
+    } else {
+        echo "Error updating status!";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +49,7 @@ if (!$user->is_logged_in()) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clientes</title>
+  <title>Detalle cliente</title>
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -216,24 +253,24 @@ if (!$user->is_logged_in()) {
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item">
+          <li class="nav-item menu-open">
             <a href="index.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Panel Administrador
-                <!-- <i class="right fas fa-angle-left"></i> -->
+                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
              <li class="nav-item">
-                <a href="clients.php" class="nav-link active">
+                <a href="clients.php" class="nav-link">
                   <i class="far fa-user-circle nav-icon"></i>
                   <p>Clientes</p>
                 </a>
                 </li>
 
                  <li class="nav-item">
-                <a href="prestamos.php" class="nav-link">
-                  <i class="fas fa-handshake nav-icon"></i>
+                <a href="#" class="nav-link">
+                  <i class="fas fa-handshake nav-icon active"></i>
                   <p>Prestamos</p>
                 </a>
                  </li>
@@ -266,349 +303,173 @@ if (!$user->is_logged_in()) {
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>DataTables</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">DataTables</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
-
+  <!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
     <!-- Main content -->
     <section class="content">
-      <div class="container-fluid">
-        <div class="row">
-          <div class="col-12">
-            
-            <!-- /.card -->
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                  <a href="javascript:history.go(-1);" class="btn btn-secondary btn-sm">Volver</a>
 
-            <!-- /.card -->
+                    <!-- Custom Tabs -->
+                    <div class="card">
+                        <div class="card-header p-0">
+                            <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="detalle-tab" data-toggle="pill" href="#detalle" role="tab" aria-controls="detalle" aria-selected="true">Detalle Préstamo</a>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                        <div class="card-body">
+                            <div class="tab-content" id="custom-tabs-one-tabContent">
+                                <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
+                                    <!-- Detalle Perfil Content Here -->
+                                    <div class="form-group">
+                                        <label for="estadoPrestamo">Status del Préstamo:</label>
+                                        <select class="form-control" id="estadoPrestamo">
+                                            <option value="Aprobado" <?php if($prestamo['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
+                                           <option value="En proceso" <?php if($prestamo['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
+                                             <option value="Rechazado" <?php if($prestamo['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
+                                    <!-- <input class="tn btn-primary" type="submit" name="update_status" value="Actualizar status"> -->
+                                    <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
+                                    <!-- Detalle Perfil Content Here -->
+                                    <br>
+                                    <div class="form-group">
+                                        <label for="estadoPrestamo">Cant, total de cuotas:</label>
+                                        <p>
+                                          <?php
+                                          // Check if the ID parameter is set in the URL
+if(isset($_GET['id'])) {
+    // Sanitize the input to prevent SQL injection
+    $client_id = htmlspecialchars($_GET['id']);
 
-<!-- Add Client Form -->
-<!-- Add Client Form -->
+    // Fetch client details from the database using the ID
+    $sql = "SELECT * FROM prestamos WHERE Id = :id";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':id', $client_id);
+    $stmt->execute();
 
-<!-- Include Bootstrap CSS -->
-
-
-<!-- Button to trigger the modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Agregar Cliente Manualmente
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Agregar Cliente Manualmente</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      
-      <!-- Modal Body -->
-      <div class="modal-body">
-        <!-- Form -->
-        <form action="add_client.php" method="post">
-          <!-- Form fields -->
-          <div class="form-group">
-            <div class="card">
-    <div class="card-header">
-        <h3 class="card-title">Agregar Cliente Manualmente</h3>
-    </div>
-    <!-- /.card-header -->
-    <div class="card-body">
-        <form action="add_client.php" method="post">
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="apellido">Apellido:</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
-            </div>
-            <div class="form-group">
-                <label for="direccion">Dirección:</label>
-                <input type="text" class="form-control" id="direccion" name="direccion">
-            </div>
-            <div class="form-group">
-                <label for="cedula">Cédula:</label>
-                <input type="text" class="form-control" id="cedula" name="cedula">
-            </div>
-            <div class="form-group">
-                <label for="rnc">RNC:</label>
-                <input type="text" class="form-control" id="rnc" name="rnc">
-            </div>
-            <div class="form-group">
-                <label for="monto_solicitado">Monto Solicitado:</label>
-                <input type="text" class="form-control" id="monto_solicitado" name="monto_solicitado">
-            </div>
-            <div class="form-group">
-                <label for="interes">Interés:</label>
-                <input type="text" class="form-control" id="interes" name="interes">
-            </div>
-            <div class="form-group">
-                <label for="id_pago">ID de Pago:</label>
-                <input type="text" class="form-control" id="id_pago" name="id_pago">
-            </div>
-            <div class="form-group">
-                <label for="monto_deuda">Monto de Deuda:</label>
-                <input type="text" class="form-control" id="monto_deuda" name="monto_deuda">
-            </div>
-            <div class="form-group">
-                <label for="reenganchado">Reenganchado:</label>
-                <input type="text" class="form-control" id="reenganchado" name="reenganchado">
-            </div>
-            <div class="form-group">
-                <label for="puntos">Puntos:</label>
-                <input type="text" class="form-control" id="puntos" name="puntos">
-            </div>
-            <div class="form-group">
-                <label for="fecha_ingreso">Fecha de Ingreso:</label>
-                <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso">
-            </div>
-            <div class="form-group">
-                <label for="fecha_salida">Fecha de Salida:</label>
-                <input type="text" class="form-control" id="fecha_salida" name="fecha_salida">
-            </div>
-            <div class="form-group">
-                <label for="meses_en_empresa">Meses en la Empresa:</label>
-                <input type="text" class="form-control" id="meses_en_empresa" name="meses_en_empresa">
-            </div>
-            <div class="form-group">
-                <label for="total_prestado">Total Prestado:</label>
-                <input type="text" class="form-control" id="total_prestado" name="total_prestado">
-            </div>
-            <!-- Add more fields as needed -->
-            <button type="submit" class="btn btn-primary">Agregar Cliente</button>
-        </form>
-    </div>
-    <!-- /.card-body -->
-</div>
-          </div>
-          <!-- Add more form fields as needed -->
-          
-          <!-- Modal Footer -->
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Agregar Cliente</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          </div>
-        </form>
-      </div>
-      
-    </div>
-  </div>
-</div>
-
-
-
-<!-- /.card -->
-
-<!-- /.card -->
-
-<?php
-// Include the database connection file
-// Assuming your database connection code is included here
-
-// Fetch data from the clientes table
-$sql = "SELECT * FROM clientes";
-$result = $db->query($sql);
-
-if ($result) {
-    // Output the table structure
-    echo '<div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Clientes</h3>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <table id="example1" class="table table-bordered table-striped">
-                  <thead>
-                  <tr>
-                  <th></th>
-                  <th>Acciones</th>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Dirección</th>
-                    <th>Cédula</th>
-                    <th>RNC</th>
-                    <th>Monto Solicitado</th>
-                    <th>Interés</th>
-                    <th>ID de Pago</th>
-                    <th>Monto de Deuda</th>
-                    <th>Reenganchado</th>
-                    <th>Puntos</th>
-                    <th>Fecha de Ingreso</th>
-                    <th>Fecha de Salida</th>
-                    <th>Meses en la Empresa</th>
-                    <th>Total Prestado</th>
-                    <th>Fecha de Creación</th>
-                    <th>Fecha de Modificación</th>
-                  </tr>
-                  </thead>
-                  <tbody>';
-
-    // Loop through the fetched results and generate table rows
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-        echo '<tr>
-        <td></td>
-        <td>
-          <a href="detalle_perfil.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver perfil</a>
-          <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
-          <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
-        </td>
-                <td>' . $row['Id'] . '</td>
-                <td>' . $row['Nombre'] . '</td>
-                <td>' . $row['Apellido'] . '</td>
-                <td>' . $row['Direccion'] . '</td>
-                <td>' . $row['Cedula'] . '</td>
-                <td>' . $row['RNC'] . '</td>
-                <td>' . $row['MontoSolicitado'] . '</td>
-                <td>' . $row['Interes'] . '</td>
-                <td>' . $row['IdPago'] . '</td>
-                <td>' . $row['MontoDeuda'] . '</td>
-                <td>' . $row['Reenganchado'] . '</td>
-                <td>' . $row['Puntos'] . '</td>
-                <td>' . $row['FechaIngreso'] . '</td>
-                <td>' . $row['FechaSalida'] . '</td>
-                <td>' . $row['MesesEnEmpresa'] . '</td>
-                <td>' . $row['TotalPrestado'] . '</td>
-                <td>' . $row['FechaCreacion'] . '</td>
-                <td>' . $row['FechaModificacion'] . '</td>
-              </tr>';
+    // Check if a client with the specified ID exists
+    if($stmt->rowCount() > 0) {
+        // Fetch the client's details
+        $client = $stmt->fetch(PDO::FETCH_ASSOC);
+        $client['PagosRealizados'] = null;
+        $client['CuotasTotales'] = $client['CuotasTotales'] == null ? "No hay cuotas asignadas" : $client['CuotasTotales'] . " cuotas";
+        $client['FrecuenciaPagoMensual'] = $client['FrecuenciaPagoMensual'] == null ? "N/A" : $client['FrecuenciaPagoMensual'];
+        $client['DiasDePagoDelMes'] = $client['DiasDePagoDelMes'] == null ? "Ninguno" : $client['DiasDePagoDelMes'];
+        $client['FechaDeAprobacion'] = $client['FechaDeAprobacion'] == null ? "No aprobado" : $client['FechaDeAprobacion'];
+        // Display client details
+        echo $client['CuotasTotales'] . ' </p>';
+        echo '<label for="estadoPrestamo">Pagos realizados:</label>';
+        echo '<p>'.$client['PagosRealizados'] . '</p>';
+        echo '<label for="estadoPrestamo">Dias en el mes asignados para pagar:</label>';
+        echo '<p>'.$client['DiasDePagoDelMes'] . '</p>';
+        echo '<label for="estadoPrestamo">Cant. min. pagos en un mes:</label>';
+        echo '<p>'.$client['FrecuenciaPagoMensual'] . '</p>';
+        echo '<label for="estadoPrestamo">Fecha de aprobacion:</label>';
+        echo '<p>'.$client['FechaDeAprobacion'] . '</p>';
+         echo '<label for="estadoPrestamo">Fecha de solicitud:</label>';
+        echo '<p>'.$client['FechaCreacion'] . '</p>';
+        // Continue displaying other client details as needed
+    } else {
+        // If no client with the specified ID is found, display an error message
+        echo '<div class="container">';
+        echo '<h1>Error</h1>';
+        echo '<p>No se pudo encontrar el cliente</p>';
+        echo '</div>';
     }
+} else {
+    // If the ID parameter is not set in the URL, display an error message
+    echo '<div class="container">';
+    echo '<h1>Error</h1>';
+    echo '<p>No se pudo encontrar el cliente</p>';
+    echo '</div>';
+}
 
-    // Close the table body and card
-    echo '</tbody>
-          <tfoot>
-            <tr>
-            <th></th>
-            <th>Acciones</th>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Dirección</th>
-            <th>Cédula</th>
-            <th>RNC</th>
-            <th>Monto Solicitado</th>
-            <th>Interés</th>
-            <th>ID de Pago</th>
-            <th>Monto de Deuda</th>
-            <th>Reenganchado</th>
-            <th>Puntos</th>
-            <th>Fecha de Ingreso</th>
-            <th>Fecha de Salida</th>
-            <th>Meses en la Empresa</th>
-            <th>Total Prestado</th>
-            <th>Fecha de Creación</th>
-            <th>Fecha de Modificación</th>
-            </tr>
-          </tfoot>
-        </table>
-      </div>
-      <!-- /.card-body -->
-    </div>';
-
-    // Add a hidden form to hold the details for editing within the modal
-    echo '<div id="editModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Editar Cliente</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-    <form id="editForm">
-        <!-- Input fields for editing cliente information -->
-        <div class="form-group">
-            <label for="editId">ID:</label>
-            <input type="text" class="form-control" id="editId" name="editId" readonly>
-        </div>
-        <div class="form-group">
-            <label for="editNombre">Nombre:</label>
-            <input type="text" class="form-control" id="editNombre" name="editNombre">
-        </div>
-        <div class="form-group">
-            <label for="editApellido">Apellido:</label>
-            <input type="text" class="form-control" id="editApellido" name="editApellido">
-        </div>
-        <div class="form-group">
-            <label for="editDireccion">Dirección:</label>
-            <input type="text" class="form-control" id="editDireccion" name="editDireccion">
-        </div>
-        <div class="form-group">
-            <label for="editCedula">Cédula:</label>
-            <input type="text" class="form-control" id="editCedula" name="editCedula">
-        </div>
-        <div class="form-group">
-            <label for="editRNC">RNC:</label>
-            <input type="text" class="form-control" id="editRNC" name="editRNC">
-        </div>
-        <div class="form-group">
-            <label for="editMontoSolicitado">Monto Solicitado:</label>
-            <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
-        </div>
-        <div class="form-group">
-            <label for="editInteres">Interés:</label>
-            <input type="text" class="form-control" id="editInteres" name="editInteres">
-        </div>
-        <div class="form-group">
-            <label for="editIdPago">ID de Pago:</label>
-            <input type="text" class="form-control" id="editIdPago" name="editIdPago">
-        </div>
-        <div class="form-group">
-            <label for="editMontoDeuda">Monto de Deuda:</label>
-            <input type="text" class="form-control" id="editMontoDeuda" name="editMontoDeuda">
-        </div>
-        <div class="form-group">
-            <label for="editReenganchado">Reenganchado:</label>
-            <input type="text" class="form-control" id="editReenganchado" name="editReenganchado">
-        </div>
-        <div class="form-group">
-            <label for="editPuntos">Puntos:</label>
-            <input type="text" class="form-control" id="editPuntos" name="editPuntos">
-        </div>
-        <div class="form-group">
-            <label for="editFechaIngreso">Fecha de Ingreso:</label>
-            <input type="text" class="form-control" id="editFechaIngreso" name="editFechaIngreso">
-        </div>
-        <div class="form-group">
-            <label for="editFechaSalida">Fecha de Salida:</label>
-            <input type="text" class="form-control" id="editFechaSalida" name="editFechaSalida">
-        </div>
-        <div class="form-group">
-            <label for="editMesesEnEmpresa">Meses en la Empresa:</label>
-            <input type="text" class="form-control" id="editMesesEnEmpresa" name="editMesesEnEmpresa">
-        </div>
-        <div class="form-group">
-            <label for="editTotalPrestado">Total Prestado:</label>
-            <input type="text" class="form-control" id="editTotalPrestado" name="editTotalPrestado">
-        </div>
-    </form>
-</div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-              </div>
+echo '<div id="editModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Pago</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-          </div>';
+            <div class="modal-body">
+                <form id="editForm">
+                    <!-- Input fields for editing pago information -->
+                    <div class="form-group">
+                        <label for="editId">ID:</label>
+                        <input type="text" class="form-control" id="editId" name="editId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editIdCliente">ID Cliente:</label>
+                        <input type="text" class="form-control" id="editIdCliente" name="editIdCliente" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCuentaRemitente">Cuenta Remitente:</label>
+                        <input type="text" class="form-control" id="editCuentaRemitente" name="editCuentaRemitente" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editTipoCuentaRemitente">Tipo de Cuenta Remitente:</label>
+                        <input type="text" class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEntidadBancariaRemitente">Entidad Bancaria Remitente:</label>
+                        <input type="text" class="form-control" id="editEntidadBancariaRemitente" name="editEntidadBancariaRemitente" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editCuentaDestinatario">Cuenta Destinatario:</label>
+                        <input type="text" class="form-control" id="editCuentaDestinatario" name="editCuentaDestinatario" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editTipoCuentaDestinatario">Tipo de Cuenta Destinatario:</label>
+                        <input type="text" class="form-control" id="editTipoCuentaDestinatario" name="editTipoCuentaDestinatario" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
+                        <input type="text" class="form-control" id="editEntidadBancariaDestinatario" name="editEntidadBancariaDestinatario" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editMonto">Monto:</label>
+                        <input type="text" class="form-control" id="editMonto" name="editMonto" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editMotivo">Motivo:</label>
+                        <input type="text" class="form-control" id="editMotivo" name="editMotivo" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editTipo">Tipo:</label>
+                        <input type="text" class="form-control" id="editTipo" name="editTipo" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editInversionId">ID de Inversión:</label>
+                        <input type="text" class="form-control" id="editInversionId" name="editInversionId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editPrestamoId">ID de Préstamo:</label>
+                        <input type="text" class="form-control" id="editPrestamoId" name="editPrestamoId" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="editFechaDePago">Fecha de Pago:</label>
+                        <input type="text" class="form-control" id="editFechaDePago" name="editFechaDePago" readonly>
+                    </div>
+                </form>
+            </div>
 
-    // Include jQuery library and custom script for handling click event and populating form fields within the modal
-    echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <!-- No save button as requested -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+';
+echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
     $(document).ready(function() {
       $(".edit-btn").click(function() {
@@ -692,27 +553,34 @@ $(".delete-btn").click(function() {
 
     </script>
     ';
-} else {
-    // Display an error message if the query fails
-    echo "Error: " . $db->errorInfo();
-}
-?>
-
-
-
-
-
-
-            <!-- /.card -->
-          </div>
-          <!-- /.col -->
-        </div>
-        <!-- /.row -->
-      </div>
-      <!-- /.container-fluid -->
+                                           ?> </p>
+                                    </div>
+                                </div>
+                                </div>
+                                
+                               
+                               
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  </div>
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Add your JavaScript code for handling tab navigation and fetching data from the database -->
+
+<script>
+    $(document).ready(function() {
+        // JavaScript code for handling tab navigation and fetching data from the database
+    });
+</script>
+
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 22, 2024 at 12:55 AM
+-- Generation Time: Feb 24, 2024 at 09:43 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -118,11 +118,16 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `IdCliente` int(11) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
+  `Monto` decimal(10,2) DEFAULT NULL,
   `Remitente` varchar(255) DEFAULT NULL,
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) NOT NULL,
   `FechaFinalEstimada` timestamp NULL DEFAULT NULL,
+  `CuotasTotales` int(3) DEFAULT NULL,
+  `DiasDePagoDelMes` int(11) DEFAULT NULL,
+  `FrecuenciaPagoMensual` varchar(255) DEFAULT NULL,
+  `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
   `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
@@ -133,10 +138,10 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
 -- Dumping data for table `inversiones`
 --
 
-INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 4, 'Short-term Investment', 'Sender4', 'Receiver4', 'En cola', 3, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
-(2, 2, 'Investment Plan A', 'Sender2', 'Receiver2', 'Aprobada', 2, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
-(3, 1, 'New Investment', 'Sender1', 'Receiver1', 'En cola', 1, '2024-04-18 04:00:00', '2024-01-18 08:17:08', '2024-02-08 23:44:49');
+INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `Monto`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `CuotasTotales`, `DiasDePagoDelMes`, `FrecuenciaPagoMensual`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+(1, 4, 'Short-term Investment', NULL, 'Sender4', 'Receiver4', 'En cola', 3, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
+(2, 2, 'Investment Plan A', NULL, 'Sender2', 'Receiver2', 'Aprobada', 2, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
+(3, 1, 'New Investment', NULL, 'Sender1', 'Receiver1', 'En cola', 1, '2024-04-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-02-08 23:44:49');
 
 -- --------------------------------------------------------
 
@@ -169,15 +174,15 @@ CREATE TABLE IF NOT EXISTS `pagos` (
 -- Dumping data for table `pagos`
 --
 
-INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `EntidadBancariaRemitente`, `CuentaDestinatario`, `EntidadBancariaDestinatario`, `Monto`, `Motivo`, `Tipo`, `InversionId`, `PrestamoId`, `FechaDePago`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 1, 'Cuenta1', 'Banco1', 'CuentaDest1', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, '2023-12-15 08:30:00', '2024-01-18 04:48:27', '2024-01-18 04:48:27'),
-(2, 2, 'Cuenta2', 'Banco2', 'CuentaDest2', 'BancoDest2', '1500.50', 'Pago de deuda', 'Depósito', NULL, NULL, '2023-12-20 10:45:00', '2024-01-18 04:48:27', '2024-01-18 04:48:27'),
-(3, 3, 'Cuenta3', 'Banco3', 'CuentaDest3', 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, 5, '2023-12-25 12:15:00', '2024-01-18 04:48:27', '2024-02-08 21:55:46'),
-(4, 1, 'Cuenta1', 'Banco1', 'CuentaDest1', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, '2023-12-15 08:30:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
-(5, 2, 'Cuenta3', 'Banco3', 'CuentaDest3', 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, NULL, '2023-12-25 12:15:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
-(6, 1, 'Cuenta1', 'Banco1', 'CuentaDest1', 'BancoDest1', '1400.00', 'Pago adicional', 'Transferencia', NULL, NULL, '2023-12-28 09:00:00', '2024-01-22 12:56:30', '2024-01-23 23:53:56'),
-(7, 2, 'Cuenta2', 'Banco2', 'CuentaDest2', 'BancoDest2', '1800.75', 'Pago extra', 'Depósito', NULL, NULL, '2023-12-30 14:30:00', '2024-01-22 12:56:30', '2024-01-22 12:56:30'),
-(26, 1, 'Cuenta1', 'Banco1', 'CuentaDest1', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', 2, NULL, '2023-12-15 08:30:00', '2024-01-28 19:41:34', '2024-02-08 21:58:43');
+INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`, `EntidadBancariaRemitente`, `CuentaDestinatario`, `TipoCuentaDestinatario`, `EntidadBancariaDestinatario`, `Monto`, `Motivo`, `Tipo`, `InversionId`, `PrestamoId`, `FechaDePago`, `FechaCreacion`, `FechaModificacion`) VALUES
+(1, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, '2023-12-15 08:30:00', '2024-01-18 04:48:27', '2024-01-18 04:48:27'),
+(2, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1500.50', 'Pago de deuda', 'Depósito', NULL, NULL, '2023-12-20 10:45:00', '2024-01-18 04:48:27', '2024-01-18 04:48:27'),
+(3, 3, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, 5, '2023-12-25 12:15:00', '2024-01-18 04:48:27', '2024-02-08 21:55:46'),
+(4, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, '2023-12-15 08:30:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
+(5, 2, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, NULL, '2023-12-25 12:15:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
+(6, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1400.00', 'Pago adicional', 'Transferencia', NULL, NULL, '2023-12-28 09:00:00', '2024-01-22 12:56:30', '2024-01-23 23:53:56'),
+(7, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1800.75', 'Pago extra', 'Depósito', NULL, NULL, '2023-12-30 14:30:00', '2024-01-22 12:56:30', '2024-01-22 12:56:30'),
+(26, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', 2, NULL, '2023-12-15 08:30:00', '2024-01-28 19:41:34', '2024-02-08 21:58:43');
 
 --
 -- Triggers `pagos`
@@ -371,7 +376,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) DEFAULT NULL,
   `FechaFinalEstimada` timestamp NULL DEFAULT NULL,
-  `Cuotas` int(3) DEFAULT NULL,
+  `CuotasTotales` int(3) DEFAULT NULL,
   `DiasDePagoDelMes` int(11) DEFAULT NULL,
   `FrecuenciaPagoMensual` varchar(255) DEFAULT NULL,
   `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
@@ -385,7 +390,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
 -- Dumping data for table `prestamos`
 --
 
-INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `Monto`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `Cuotas`, `DiasDePagoDelMes`, `FrecuenciaPagoMensual`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `Monto`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `CuotasTotales`, `DiasDePagoDelMes`, `FrecuenciaPagoMensual`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
 (4, 3, 'Business Loan', NULL, 'Sender3', 'Receiver3', 'Aprobado', 4, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:16:18'),
 (5, 1, 'Education Loan', NULL, 'Sender1', 'Receiver1', 'En proceso', 5, '2024-12-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-02-08 22:45:47'),
 (6, 3, 'Business Loan', NULL, 'Sender3', 'Receiver3', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:56:04'),

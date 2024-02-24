@@ -1,6 +1,11 @@
 <?php
 ob_start();
-session_start();
+// Start the session if it hasn't been started already
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+
 
 //set timezone
 date_default_timezone_set('Europe/London');

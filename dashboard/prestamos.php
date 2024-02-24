@@ -12,7 +12,7 @@ if (!$user->is_logged_in()) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Clientes</title>
+  <title>Prestamos</title>
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -225,14 +225,14 @@ if (!$user->is_logged_in()) {
               </p>
             </a>
              <li class="nav-item">
-                <a href="clients.php" class="nav-link active">
+                <a href="clients.php" class="nav-link">
                   <i class="far fa-user-circle nav-icon"></i>
                   <p>Clientes</p>
                 </a>
                 </li>
 
                  <li class="nav-item">
-                <a href="prestamos.php" class="nav-link">
+                <a href="#" class="nav-link active">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
@@ -421,14 +421,14 @@ if (!$user->is_logged_in()) {
 // Assuming your database connection code is included here
 
 // Fetch data from the clientes table
-$sql = "SELECT * FROM clientes";
+$sql = "SELECT * FROM prestamos";
 $result = $db->query($sql);
 
 if ($result) {
     // Output the table structure
     echo '<div class="card">
               <div class="card-header">
-                <h3 class="card-title">Clientes</h3>
+                <h3 class="card-title">Prestamos</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -438,21 +438,18 @@ if ($result) {
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th>Dirección</th>
-                    <th>Cédula</th>
-                    <th>RNC</th>
-                    <th>Monto Solicitado</th>
-                    <th>Interés</th>
-                    <th>ID de Pago</th>
-                    <th>Monto de Deuda</th>
-                    <th>Reenganchado</th>
-                    <th>Puntos</th>
-                    <th>Fecha de Ingreso</th>
-                    <th>Fecha de Salida</th>
-                    <th>Meses en la Empresa</th>
-                    <th>Total Prestado</th>
+                    <th>Cliente</th>
+                    <th>Motivo</th>
+                    <th>Monto</th>
+                    <th>Remitente</th>
+                    <th>Beneficiario</th>
+                    <th>Status</th>
+                    <th>Pagos</th>
+                    <th>Fecha final estimada</th>
+                    <th>Cuotas totales</th>
+                    <th>Dias de pago del mes</th>
+                    <th>Cant min. de pagos en un mes</th>
+                    <th>Fecha de aprobación</th>
                     <th>Fecha de Creación</th>
                     <th>Fecha de Modificación</th>
                   </tr>
@@ -464,26 +461,23 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
-          <a href="detalle_perfil.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver perfil</a>
+          <a href="detalle_prestamo.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
           <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
           <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
         </td>
                 <td>' . $row['Id'] . '</td>
-                <td>' . $row['Nombre'] . '</td>
-                <td>' . $row['Apellido'] . '</td>
-                <td>' . $row['Direccion'] . '</td>
-                <td>' . $row['Cedula'] . '</td>
-                <td>' . $row['RNC'] . '</td>
-                <td>' . $row['MontoSolicitado'] . '</td>
-                <td>' . $row['Interes'] . '</td>
-                <td>' . $row['IdPago'] . '</td>
-                <td>' . $row['MontoDeuda'] . '</td>
-                <td>' . $row['Reenganchado'] . '</td>
-                <td>' . $row['Puntos'] . '</td>
-                <td>' . $row['FechaIngreso'] . '</td>
-                <td>' . $row['FechaSalida'] . '</td>
-                <td>' . $row['MesesEnEmpresa'] . '</td>
-                <td>' . $row['TotalPrestado'] . '</td>
+                <td>' . $row['IdCliente'] . '</td>
+                <td>' . $row['Motivo'] . '</td>
+                <td>' . $row['Monto'] . '</td>
+                <td>' . $row['Remitente'] . '</td>
+                <td>' . $row['Beneficiario'] . '</td>
+                <td>' . $row['Status'] . '</td>
+                <td>' . $row['PagoId'] . '</td>
+                <td>' . $row['FechaFinalEstimada'] . '</td>
+                <td>' . $row['CuotasTotales'] . '</td>
+                <td>' . $row['DiasDePagoDelMes'] . '</td>
+                <td>' . $row['FrecuenciaPagoMensual'] . '</td>
+                <td>' . $row['FechaDeAprobacion'] . '</td>
                 <td>' . $row['FechaCreacion'] . '</td>
                 <td>' . $row['FechaModificacion'] . '</td>
               </tr>';
@@ -494,25 +488,22 @@ if ($result) {
           <tfoot>
             <tr>
             <th></th>
-            <th>Acciones</th>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Apellido</th>
-            <th>Dirección</th>
-            <th>Cédula</th>
-            <th>RNC</th>
-            <th>Monto Solicitado</th>
-            <th>Interés</th>
-            <th>ID de Pago</th>
-            <th>Monto de Deuda</th>
-            <th>Reenganchado</th>
-            <th>Puntos</th>
-            <th>Fecha de Ingreso</th>
-            <th>Fecha de Salida</th>
-            <th>Meses en la Empresa</th>
-            <th>Total Prestado</th>
-            <th>Fecha de Creación</th>
-            <th>Fecha de Modificación</th>
+                              <th>Acciones</th>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Motivo</th>
+                    <th>Monto</th>
+                    <th>Remitente</th>
+                    <th>Beneficiario</th>
+                    <th>Status</th>
+                    <th>Pagos</th>
+                    <th>Fecha final estimada</th>
+                    <th>Cuotas totales</th>
+                    <th>Dias de pago del mes</th>
+                    <th>Cant min. de pagos en un mes</th>
+                    <th>Fecha de aprobación</th>
+                    <th>Fecha de Creación</th>
+                    <th>Fecha de Modificación</th>
             </tr>
           </tfoot>
         </table>

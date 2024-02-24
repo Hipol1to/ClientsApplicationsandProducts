@@ -12,7 +12,7 @@ if (!$user->is_logged_in()) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AdminLTE 3 | DataTables</title>
+  <title>Detalle cliente</title>
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -232,7 +232,7 @@ if (!$user->is_logged_in()) {
                 </li>
 
                  <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="prestamos.php" class="nav-link">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
