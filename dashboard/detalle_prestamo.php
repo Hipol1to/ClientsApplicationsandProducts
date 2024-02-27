@@ -49,7 +49,7 @@ if(isset($_POST['actualizarStatus'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Detalle cliente</title>
+  <title>Detalle Préstamo</title>
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -323,73 +323,116 @@ if(isset($_POST['actualizarStatus'])) {
                             </ul>
                         </div>
                         <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-one-tabContent">
-                                <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
-                                    <!-- Detalle Perfil Content Here -->
-                                    <div class="form-group">
-                                        <label for="estadoPrestamo">Status del Préstamo:</label>
-                                        <select class="form-control" id="estadoPrestamo">
-                                            <option value="Aprobado" <?php if($prestamo['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
-                                           <option value="En proceso" <?php if($prestamo['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
-                                             <option value="Rechazado" <?php if($prestamo['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
-                                        </select>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
-                                    <!-- <input class="tn btn-primary" type="submit" name="update_status" value="Actualizar status"> -->
-                                    <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
-                                    <!-- Detalle Perfil Content Here -->
-                                    <br>
-                                    <div class="form-group">
-                                        <label for="estadoPrestamo">Cant, total de cuotas:</label>
-                                        <p>
-                                          <?php
-                                          // Check if the ID parameter is set in the URL
-if(isset($_GET['id'])) {
-    // Sanitize the input to prevent SQL injection
-    $client_id = htmlspecialchars($_GET['id']);
+    <div class="tab-content" id="custom-tabs-one-tabContent">
+        <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
+            <!-- Detalle Perfil Content Here -->
+            <div class="form-group">
+                <label for="estadoPrestamo">Status del Préstamo:</label>
+                <select class="form-control" id="estadoPrestamo">
+                    <option value="Aprobado" <?php if($prestamo['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
+                    <option value="En proceso" <?php if($prestamo['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
+                    <option value="Rechazado" <?php if($prestamo['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
+                </select>
+            </div>
+            <button type="button" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
+            <br><br>
+            <?php
+            // Check if the ID parameter is set in the URL
+            if(isset($_GET['id'])) {
+                // Sanitize the input to prevent SQL injection
+                $client_id = htmlspecialchars($_GET['id']);
 
-    // Fetch client details from the database using the ID
-    $sql = "SELECT * FROM prestamos WHERE Id = :id";
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(':id', $client_id);
-    $stmt->execute();
+                // Fetch client details from the database using the ID
+                $sql = "SELECT * FROM prestamos WHERE Id = :id";
+                $stmt = $db->prepare($sql);
+                $stmt->bindParam(':id', $client_id);
+                $stmt->execute();
 
-    // Check if a client with the specified ID exists
-    if($stmt->rowCount() > 0) {
-        // Fetch the client's details
-        $client = $stmt->fetch(PDO::FETCH_ASSOC);
-        $client['PagosRealizados'] = null;
-        $client['CuotasTotales'] = $client['CuotasTotales'] == null ? "No hay cuotas asignadas" : $client['CuotasTotales'] . " cuotas";
-        $client['FrecuenciaPagoMensual'] = $client['FrecuenciaPagoMensual'] == null ? "N/A" : $client['FrecuenciaPagoMensual'];
-        $client['DiasDePagoDelMes'] = $client['DiasDePagoDelMes'] == null ? "Ninguno" : $client['DiasDePagoDelMes'];
-        $client['FechaDeAprobacion'] = $client['FechaDeAprobacion'] == null ? "No aprobado" : $client['FechaDeAprobacion'];
-        // Display client details
-        echo $client['CuotasTotales'] . ' </p>';
-        echo '<label for="estadoPrestamo">Pagos realizados:</label>';
-        echo '<p>'.$client['PagosRealizados'] . '</p>';
-        echo '<label for="estadoPrestamo">Dias en el mes asignados para pagar:</label>';
-        echo '<p>'.$client['DiasDePagoDelMes'] . '</p>';
-        echo '<label for="estadoPrestamo">Cant. min. pagos en un mes:</label>';
-        echo '<p>'.$client['FrecuenciaPagoMensual'] . '</p>';
-        echo '<label for="estadoPrestamo">Fecha de aprobacion:</label>';
-        echo '<p>'.$client['FechaDeAprobacion'] . '</p>';
-         echo '<label for="estadoPrestamo">Fecha de solicitud:</label>';
-        echo '<p>'.$client['FechaCreacion'] . '</p>';
-        // Continue displaying other client details as needed
-    } else {
-        // If no client with the specified ID is found, display an error message
-        echo '<div class="container">';
-        echo '<h1>Error</h1>';
-        echo '<p>No se pudo encontrar el cliente</p>';
-        echo '</div>';
-    }
-} else {
-    // If the ID parameter is not set in the URL, display an error message
-    echo '<div class="container">';
-    echo '<h1>Error</h1>';
-    echo '<p>No se pudo encontrar el cliente</p>';
-    echo '</div>';
-}
+                // Check if a client with the specified ID exists
+                if($stmt->rowCount() > 0) {
+                    // Fetch the client's details
+                    $client = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $client['Solicitante'] = null;
+                    $client['PagosRealizados'] = $client['PagoId'] == null ? "Ningún pago realizado" : $client['PagoId'] . " pagos";
+                    $client['CuotasTotales'] = $client['CuotasTotales'] == null ? "No hay cuotas asignadas" : $client['CuotasTotales'] . " cuotas";
+                    $client['FrecuenciaPagoMensual'] = $client['FrecuenciaPagoMensual'] == null ? "N/A" : $client['FrecuenciaPagoMensual'];
+                    $client['DiasDePagoDelMes'] = $client['DiasDePagoDelMes'] == null ? "Ninguno" : $client['DiasDePagoDelMes'];
+                    $client['FechaDeAprobacion'] = $client['FechaDeAprobacion'] == null ? "No aprobado" : $client['FechaDeAprobacion'];
+                    $isEnabled = false;
+                    // Display client details
+                    echo '<div class="form-group">';
+                    echo '<label for="motivo">Motivo:</label>';
+                    echo '<input type="text" class="form-control" id="motivo" name="motivo" value="'.htmlspecialchars($client['Motivo']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="montoSolicitado">Monto Solicitado:</label>';
+                    echo '<input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" value="'.htmlspecialchars($client['MontoSolicitado']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="montoAprobado">Monto Aprobado:</label>';
+                    echo '<input type="text" class="form-control" id="montoAprobado" name="montoAprobado" value="'.htmlspecialchars($client['MontoAprobado']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="montoPagado">Monto Pagado:</label>';
+                    echo '<input type="text" class="form-control" id="montoPagado" name="montoPagado" value="'.htmlspecialchars($client['MontoPagado']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="tasaDeInteres">Tasa de interés:</label>';
+                    echo '<input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" value="'.htmlspecialchars($client['TasaDeInteres']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="montoRecargo">Monto Recargo:</label>';
+                    echo '<input type="text" class="form-control" id="montoRecargo" name="montoRecargo" value="'.htmlspecialchars($client['MontoRecargo']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="solicitante">Solicitante:</label>';
+                    echo '<input type="text" class="form-control" id="solicitante" name="solicitante" value="'.htmlspecialchars($client['Solicitante']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="cuotasTotales">Cant. total de cuotas:</label>';
+                    echo '<input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales" value="'.htmlspecialchars($client['CuotasTotales']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="pagosRealizados">Pagos realizados:</label>';
+                    echo '<input type="text" class="form-control" id="pagosRealizados" name="pagosRealizados" value="'.htmlspecialchars($client['PagosRealizados']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="diasPagoMes">Dias en el mes asignados para pagar:</label>';
+                    echo '<input type="text" class="form-control" id="diasPagoMes" name="diasPagoMes" value="'.htmlspecialchars($client['DiasDePagoDelMes']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="frecuenciaPago">Cant. min. pagos por mes:</label>';
+                    echo '<input type="text" class="form-control" id="frecuenciaPago" name="frecuenciaPago" value="'.htmlspecialchars($client['FrecuenciaPagoMensual']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="fechaAprobacion">Fecha de aprobacion:</label>';
+                    echo '<input type="text" class="form-control" id="fechaAprobacion" name="fechaAprobacion" value="'.htmlspecialchars($client['FechaDeAprobacion']).'" readonly>';
+                    echo '</div>';
+                    echo '<div class="form-group">';
+                    echo '<label for="fechaSolicitud">Fecha de solicitud:</label>';
+                    echo '<input type="text" class="form-control" id="fechaSolicitud" name="fechaSolicitud" value="'.htmlspecialchars($client['FechaCreacion']).'" readonly>';
+                    echo '</div>';
+                    // Continue displaying other client details as needed
+                } else {
+                    // If no client with the specified ID is found, display an error message
+                    echo '<div class="container">';
+                    echo '<h1>Error</h1>';
+                    echo '<p>No se pudo encontrar el cliente</p>';
+                    echo '</div>';
+                }
+            } else {
+                // If the ID parameter is not set in the URL, display an error message
+                echo '<div class="container">';
+                echo '<h1>Error</h1>';
+                echo '<p>No se pudo encontrar el cliente</p>';
+                echo '</div>';
+            }
+
+            echo '<button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+        </div>
+    </div>
+</div>';
+
 
 echo '<div id="editModal" class="modal fade" role="dialog">
     <div class="modal-dialog">

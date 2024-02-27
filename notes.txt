@@ -1,7 +1,4 @@
-PENDING: SETEAR LINEA 472 en detalle prestamo para mostrar el form con la info del pago en modo readonly
-
-a partir de este punto, el flujo pensado es que todo pago que exista es porque fue aprobado debidamente. Una inversio y un prestamo pueden tener muchos pagos, pero deberan estar vinculados por lo menos a uno (por medio del campo PagoId)
-
+PENDING: agregar trigger para recargo en pagos atrasados (debe de sumar un recargo, el cual pasa a tener mas prioridad que el monto aprobado, es decir hasta que no se salde el recargo el pago del prestamo queda intacto)
 PENDIENTES:
 
 **ADM VIEW:**

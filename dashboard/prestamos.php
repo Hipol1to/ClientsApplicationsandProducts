@@ -302,7 +302,7 @@ if (!$user->is_logged_in()) {
 
 <!-- Button to trigger the modal -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Agregar Cliente Manualmente
+  Agregar Prestamo Manualmente
 </button>
 
 <!-- Modal -->
@@ -438,20 +438,12 @@ if ($result) {
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
-                    <th>Cliente</th>
+                    <th>Solicitante</th>
                     <th>Motivo</th>
-                    <th>Monto</th>
-                    <th>Remitente</th>
-                    <th>Beneficiario</th>
+                    <th>Monto Solicitado</th>
                     <th>Status</th>
                     <th>Pagos</th>
                     <th>Fecha final estimada</th>
-                    <th>Cuotas totales</th>
-                    <th>Dias de pago del mes</th>
-                    <th>Cant min. de pagos en un mes</th>
-                    <th>Fecha de aprobación</th>
-                    <th>Fecha de Creación</th>
-                    <th>Fecha de Modificación</th>
                   </tr>
                   </thead>
                   <tbody>';
@@ -462,24 +454,14 @@ if ($result) {
         <td></td>
         <td>
           <a href="detalle_prestamo.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
-          <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
-          <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
         </td>
                 <td>' . $row['Id'] . '</td>
                 <td>' . $row['IdCliente'] . '</td>
                 <td>' . $row['Motivo'] . '</td>
-                <td>' . $row['Monto'] . '</td>
-                <td>' . $row['Remitente'] . '</td>
-                <td>' . $row['Beneficiario'] . '</td>
+                <td>' . $row['MontoSolicitado'] . '</td>
                 <td>' . $row['Status'] . '</td>
                 <td>' . $row['PagoId'] . '</td>
                 <td>' . $row['FechaFinalEstimada'] . '</td>
-                <td>' . $row['CuotasTotales'] . '</td>
-                <td>' . $row['DiasDePagoDelMes'] . '</td>
-                <td>' . $row['FrecuenciaPagoMensual'] . '</td>
-                <td>' . $row['FechaDeAprobacion'] . '</td>
-                <td>' . $row['FechaCreacion'] . '</td>
-                <td>' . $row['FechaModificacion'] . '</td>
               </tr>';
     }
 
@@ -488,22 +470,14 @@ if ($result) {
           <tfoot>
             <tr>
             <th></th>
-                              <th>Acciones</th>
+                    <th>Acciones</th>
                     <th>ID</th>
-                    <th>Cliente</th>
+                    <th>Solicitante</th>
                     <th>Motivo</th>
-                    <th>Monto</th>
-                    <th>Remitente</th>
-                    <th>Beneficiario</th>
+                    <th>Monto Solicitado</th>
                     <th>Status</th>
                     <th>Pagos</th>
                     <th>Fecha final estimada</th>
-                    <th>Cuotas totales</th>
-                    <th>Dias de pago del mes</th>
-                    <th>Cant min. de pagos en un mes</th>
-                    <th>Fecha de aprobación</th>
-                    <th>Fecha de Creación</th>
-                    <th>Fecha de Modificación</th>
             </tr>
           </tfoot>
         </table>
