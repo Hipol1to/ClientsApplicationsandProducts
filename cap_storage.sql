@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 26, 2024 at 11:53 PM
--- Server version: 5.7.24
--- PHP Version: 7.2.14
+-- Generation Time: Feb 27, 2024 at 05:44 PM
+-- Server version: 10.4.10-MariaDB
+-- PHP Version: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `administradores` (
   `FechaConexion` date DEFAULT NULL,
   `FechaIngreso` date DEFAULT NULL,
   `FechaSalida` date DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -70,8 +70,8 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `FechaSalida` date DEFAULT NULL,
   `MesesEnEmpresa` int(11) DEFAULT NULL,
   `TotalPrestado` decimal(10,2) DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
 ) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
@@ -120,7 +120,9 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   `Motivo` varchar(255) DEFAULT NULL,
   `MontoSolicitado` decimal(10,2) DEFAULT NULL,
   `MontoAprobado` decimal(10,2) DEFAULT NULL,
+  `MontoPagado` decimal(10,2) DEFAULT NULL,
   `TasaDeInteres` decimal(10,2) DEFAULT NULL,
+  `MontoRecargo` decimal(10,2) DEFAULT NULL,
   `Remitente` varchar(255) DEFAULT NULL,
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
@@ -130,8 +132,8 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   `DiasDePagoDelMes` int(11) DEFAULT NULL,
   `FrecuenciaPagoMensual` varchar(255) DEFAULT NULL,
   `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -140,10 +142,10 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
 -- Dumping data for table `inversiones`
 --
 
-INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `TasaDeInteres`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `CuotasTotales`, `DiasDePagoDelMes`, `FrecuenciaPagoMensual`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 4, 'Short-term Investment', NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En cola', 3, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
-(2, 2, 'Investment Plan A', NULL, NULL, NULL, 'Sender2', 'Receiver2', 'Aprobada', 2, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
-(3, 1, 'New Investment', NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En cola', 1, '2024-04-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-02-08 23:44:49');
+INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `TasaDeInteres`, `MontoRecargo`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `CuotasTotales`, `DiasDePagoDelMes`, `FrecuenciaPagoMensual`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+(1, 4, 'Short-term Investment', NULL, NULL, NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En cola', 3, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
+(2, 2, 'Investment Plan A', NULL, NULL, NULL, NULL, NULL, 'Sender2', 'Receiver2', 'Aprobada', 2, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
+(3, 1, 'New Investment', NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En cola', 1, '2024-04-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-02-08 23:44:49');
 
 -- --------------------------------------------------------
 
@@ -167,8 +169,8 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `InversionId` int(11) DEFAULT NULL,
   `PrestamoId` int(11) DEFAULT NULL,
   `FechaDePago` datetime DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
@@ -374,7 +376,9 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Motivo` varchar(255) DEFAULT NULL,
   `MontoSolicitado` decimal(10,2) DEFAULT NULL,
   `MontoAprobado` decimal(10,2) DEFAULT NULL,
+  `MontoPagado` decimal(10,2) DEFAULT NULL,
   `TasaDeInteres` decimal(10,2) DEFAULT NULL,
+  `MontoRecargo` decimal(10,2) DEFAULT NULL,
   `Remitente` varchar(255) DEFAULT NULL,
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
@@ -384,8 +388,8 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `DiasDePagoDelMes` int(11) DEFAULT NULL,
   `FrecuenciaPagoMensual` varchar(255) DEFAULT NULL,
   `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
 ) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
@@ -394,13 +398,13 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
 -- Dumping data for table `prestamos`
 --
 
-INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `TasaDeInteres`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `CuotasTotales`, `DiasDePagoDelMes`, `FrecuenciaPagoMensual`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(4, 3, 'Business Loan', NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 4, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:16:18'),
-(5, 1, 'Education Loan', NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', 5, '2024-12-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-02-08 22:45:47'),
-(6, 3, 'Business Loan', NULL, NULL, NULL, 'Sender3', 'Receiver3', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:56:04'),
-(7, 1, 'Education Loan', NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
-(8, 3, 'Business Loan', NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 6, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
-(27, 4, 'Short-term Loan', NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En proceso', 26, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:20:00', '2024-01-28 19:44:54');
+INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `TasaDeInteres`, `MontoRecargo`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaFinalEstimada`, `CuotasTotales`, `DiasDePagoDelMes`, `FrecuenciaPagoMensual`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+(4, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 4, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:16:18'),
+(5, 1, 'Education Loan', NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', 5, '2024-12-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-02-08 22:45:47'),
+(6, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:56:04'),
+(7, 1, 'Education Loan', NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
+(8, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 6, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
+(27, 4, 'Short-term Loan', NULL, NULL, NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En proceso', 26, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:20:00', '2024-01-28 19:44:54');
 
 -- --------------------------------------------------------
 
@@ -417,8 +421,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `Rol` varchar(20) NOT NULL,
   `Email` varchar(255) NOT NULL,
   `Active` varchar(255) NOT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
