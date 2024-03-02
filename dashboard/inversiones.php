@@ -12,7 +12,7 @@ if (!$user->is_logged_in()) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Prestamos</title>
+  <title>Inversiones</title>
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -42,7 +42,6 @@ if (!$user->is_logged_in()) {
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
- 
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -98,14 +97,14 @@ if (!$user->is_logged_in()) {
                 </li>
 
                  <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="prestamos.php" class="nav-link">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
                  </li>
 
                  <li class="nav-item">
-                <a href="inversiones.php" class="nav-link">
+                <a href="#" class="nav-link active">
                   <i class="fas fa-chart-line nav-icon"></i>
                   <p>Inversiones</p>
                 </a>
@@ -162,7 +161,7 @@ if (!$user->is_logged_in()) {
     
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Agregar Prestamo</h4>
+        <h4 class="modal-title">Agregar Inversión</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       
@@ -249,7 +248,7 @@ if (!$user->is_logged_in()) {
           
           <!-- Modal Footer -->
           <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Agregar Préstamo</button>
+            <button type="submit" class="btn btn-primary">Agregar Inversión</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           </div>
         </form>
@@ -270,7 +269,7 @@ if (!$user->is_logged_in()) {
 // Assuming your database connection code is included here
 
 // Fetch data from the clientes table
-$sql = "SELECT * FROM prestamos";
+$sql = "SELECT * FROM inversiones";
 $result = $db->query($sql);
 
 if ($result) {
@@ -281,7 +280,7 @@ if ($result) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Préstamos</h1>
+            <h1>Inversiones</h1>
           </div>
           <div class="col-sm-6">
           </div>
@@ -296,7 +295,7 @@ if ($result) {
                   <thead>
                   <tr>
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Agregar Prestamo
+  Agregar Inversion
 </button>
                   <th></th>
                   <th>Acciones</th>
@@ -316,7 +315,7 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
-          <a href="detalle_prestamo.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
+          <a href="detalle_inversion.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
         </td>
                 <td>' . $row['Id'] . '</td>
                 <td>' . $row['IdCliente'] . '</td>

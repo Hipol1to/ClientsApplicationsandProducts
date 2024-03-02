@@ -8,34 +8,34 @@ if (!$user->is_logged_in()) {
 
 // Check if ID parameter is set
 if(isset($_GET['id'])) {
-    $prestamo_id = $_GET['id'];
+    $inversion_id = $_GET['id'];
     
-    // Fetch prestamo details from the database
-    $sql = "SELECT * FROM prestamos WHERE Id = :id";
+    // Fetch inversion details from the database
+    $sql = "SELECT * FROM inversiones WHERE Id = :id";
     $stmt = $db->prepare($sql);
-    $stmt->bindParam(':id', $prestamo_id);
+    $stmt->bindParam(':id', $inversion_id);
     $stmt->execute();
-    $prestamo = $stmt->fetch(PDO::FETCH_ASSOC);
+    $inversion = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    // Check if prestamo exists
-    if(!$prestamo) {
-        echo "Prestamo not found!";
+    // Check if inversion exists
+    if(!$inversion) {
+        echo "Inversion not found!";
         exit();
     }
 } else {
-    echo "Prestamo ID not provided!";
+    echo "Inversion ID not provided!";
     exit();
 }
 
-// Handle form submission for updating prestamo status
+// Handle form submission for updating inversion status
 if(isset($_POST['actualizarStatus'])) {
     $status = $_POST['status'];
     
-    // Update prestamo status in the database
-    $sql = "UPDATE prestamos SET Status = :status WHERE Id = :id";
+    // Update inversion status in the database
+    $sql = "UPDATE inversiones SET Status = :status WHERE Id = :id";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':status', $status);
-    $stmt->bindParam(':id', $prestamo_id);
+    $stmt->bindParam(':id', $inversion_id);
     if($stmt->execute()) {
         echo "Status updated successfully!";
     } else {
@@ -49,7 +49,7 @@ if(isset($_POST['actualizarStatus'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Detalle Préstamo</title>
+  <title>Detalle Inversion</title>
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -269,15 +269,15 @@ if(isset($_POST['actualizarStatus'])) {
                 </li>
 
                  <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="fas fa-handshake nav-icon active"></i>
+                <a href="prestamos.php" class="nav-link">
+                  <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
                  </li>
 
                  <li class="nav-item">
-                <a href="inversiones.php" class="nav-link">
-                  <i class="fas fa-chart-line nav-icon"></i>
+                <a href="#" class="nav-link active">
+                  <i class="fas fa-chart-line nav-icon active"></i>
                   <p>Inversiones</p>
                 </a>
                  </li>
@@ -327,11 +327,11 @@ if(isset($_POST['actualizarStatus'])) {
         <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
             <!-- Detalle Perfil Content Here -->
             <div class="form-group">
-                <label for="estadoPrestamo">Status del Préstamo:</label>
-                <select class="form-control" id="estadoPrestamo">
-                    <option value="Aprobado" <?php if($prestamo['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
-                    <option value="En proceso" <?php if($prestamo['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
-                    <option value="Rechazado" <?php if($prestamo['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
+                <label for="estadoInversion">Status de la Inversión:</label>
+                <select class="form-control" id="estadoInversion">
+                    <option value="Aprobado" <?php if($inversion['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
+                    <option value="En proceso" <?php if($inversion['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
+                    <option value="Rechazado" <?php if($inversion['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
                 </select>
             </div>
             <button type="button" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
@@ -343,7 +343,7 @@ if(isset($_POST['actualizarStatus'])) {
                 $client_id = htmlspecialchars($_GET['id']);
 
                 // Fetch client details from the database using the ID
-                $sql = "SELECT * FROM prestamos WHERE Id = :id";
+                $sql = "SELECT * FROM inversiones WHERE Id = :id";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':id', $client_id);
                 $stmt->execute();
@@ -417,14 +417,14 @@ if(isset($_POST['actualizarStatus'])) {
                     // If no client with the specified ID is found, display an error message
                     echo '<div class="container">';
                     echo '<h1>Error</h1>';
-                    echo '<p>No se pudo encontrar el cliente</p>';
+                    echo '<p>No se pudo encontrar la inversion</p>';
                     echo '</div>';
                 }
             } else {
                 // If the ID parameter is not set in the URL, display an error message
                 echo '<div class="container">';
                 echo '<h1>Error</h1>';
-                echo '<p>No se pudo encontrar el cliente</p>';
+                echo '<p>No se pudo encontrar la inversion</p>';
                 echo '</div>';
             }
 

@@ -131,7 +131,7 @@
         pageButtonCount: 15,
         pagerFormat: "Pages: {first} {prev} {pages} {next} {last} &nbsp;&nbsp; {pageIndex} of {pageCount}",
         pagePrevText: "Prev",
-        pageNextText: "Next",
+        pageNextText: "Siguiente",
         pageFirstText: "First",
         pageLastText: "Last",
         pageNavigatorNextText: "...",
