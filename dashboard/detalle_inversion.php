@@ -283,7 +283,7 @@ if(isset($_POST['actualizarStatus'])) {
                  </li>
                  
                  <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="pagos.php" class="nav-link">
                   <i class="fas fa-money-bill-wave nav-icon"></i>
                   <p>Pagos</p>
                 </a>

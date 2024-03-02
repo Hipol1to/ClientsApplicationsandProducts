@@ -111,7 +111,7 @@ if (!$user->is_logged_in()) {
                  </li>
                  
                  <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="pagos.php" class="nav-link">
                   <i class="fas fa-money-bill-wave nav-icon"></i>
                   <p>Pagos</p>
                 </a>
@@ -179,65 +179,65 @@ if (!$user->is_logged_in()) {
     <div class="card-body">
         <form action="add_client.php" method="post">
             <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
-            </div>
-            <div class="form-group">
-                <label for="apellido">Apellido:</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
-            </div>
-            <div class="form-group">
-                <label for="direccion">Dirección:</label>
-                <input type="text" class="form-control" id="direccion" name="direccion">
-            </div>
-            <div class="form-group">
-                <label for="cedula">Cédula:</label>
-                <input type="text" class="form-control" id="cedula" name="cedula">
-            </div>
-            <div class="form-group">
-                <label for="rnc">RNC:</label>
-                <input type="text" class="form-control" id="rnc" name="rnc">
-            </div>
-            <div class="form-group">
-                <label for="monto_solicitado">Monto Solicitado:</label>
-                <input type="text" class="form-control" id="monto_solicitado" name="monto_solicitado">
-            </div>
-            <div class="form-group">
-                <label for="interes">Interés:</label>
-                <input type="text" class="form-control" id="interes" name="interes">
-            </div>
-            <div class="form-group">
-                <label for="id_pago">ID de Pago:</label>
-                <input type="text" class="form-control" id="id_pago" name="id_pago">
-            </div>
-            <div class="form-group">
-                <label for="monto_deuda">Monto de Deuda:</label>
-                <input type="text" class="form-control" id="monto_deuda" name="monto_deuda">
-            </div>
-            <div class="form-group">
-                <label for="reenganchado">Reenganchado:</label>
-                <input type="text" class="form-control" id="reenganchado" name="reenganchado">
-            </div>
-            <div class="form-group">
-                <label for="puntos">Puntos:</label>
-                <input type="text" class="form-control" id="puntos" name="puntos">
-            </div>
-            <div class="form-group">
-                <label for="fecha_ingreso">Fecha de Ingreso:</label>
-                <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso">
-            </div>
-            <div class="form-group">
-                <label for="fecha_salida">Fecha de Salida:</label>
-                <input type="text" class="form-control" id="fecha_salida" name="fecha_salida">
-            </div>
-            <div class="form-group">
-                <label for="meses_en_empresa">Meses en la Empresa:</label>
-                <input type="text" class="form-control" id="meses_en_empresa" name="meses_en_empresa">
-            </div>
-            <div class="form-group">
-                <label for="total_prestado">Total Prestado:</label>
-                <input type="text" class="form-control" id="total_prestado" name="total_prestado">
-            </div>
+    <label for="motivo">Motivo:</label>
+    <input type="text" class="form-control" id="motivo" name="motivo" required>
+</div>
+<div class="form-group">
+    <label for="montoSolicitado">Monto Solicitado:</label>
+    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
+</div>
+<div class="form-group">
+    <label for="montoAprobado">Monto Aprobado:</label>
+    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado">
+</div>
+<div class="form-group">
+    <label for="montoPagado">Monto Pagado:</label>
+    <input type="text" class="form-control" id="montoPagado" name="montoPagado">
+</div>
+<div class="form-group">
+    <label for="tasaDeInteres">Tasa de Interes:</label>
+    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres">
+</div>
+<div class="form-group">
+    <label for="montoRecargo">Monto Recargo:</label>
+    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo">
+</div>
+<div class="form-group">
+    <label for="remitente">Remitente:</label>
+    <input type="text" class="form-control" id="remitente" name="remitente">
+</div>
+<div class="form-group">
+    <label for="beneficiario">Beneficiario:</label>
+    <input type="text" class="form-control" id="beneficiario" name="beneficiario">
+</div>
+<div class="form-group">
+    <label for="status">Status:</label>
+    <input type="text" class="form-control" id="status" name="status" required>
+</div>
+<div class="form-group">
+    <label for="pagoId">Pago ID:</label>
+    <input type="text" class="form-control" id="pagoId" name="pagoId">
+</div>
+<div class="form-group">
+    <label for="fechaFinalEstimada">Fecha Final Estimada:</label>
+    <input type="text" class="form-control" id="fechaFinalEstimada" name="fechaFinalEstimada">
+</div>
+<div class="form-group">
+    <label for="cuotasTotales">Cuotas Totales:</label>
+    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales">
+</div>
+<div class="form-group">
+    <label for="diasDePagoDelMes">Dias de Pago del Mes:</label>
+    <input type="text" class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes">
+</div>
+<div class="form-group">
+    <label for="frecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
+    <input type="text" class="form-control" id="frecuenciaPagoMensual" name="frecuenciaPagoMensual">
+</div>
+<div class="form-group">
+    <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
+    <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
+</div>
             <!-- Add more fields as needed -->
         </form>
     </div>
