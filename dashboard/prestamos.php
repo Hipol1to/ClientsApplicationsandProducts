@@ -178,68 +178,86 @@ if (!$user->is_logged_in()) {
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <form action="add_client.php" method="post">
-            <div class="form-group">
-    <label for="motivo">Motivo:</label>
-    <input type="text" class="form-control" id="motivo" name="motivo" required>
+    <form action="add_client.php" method="post">
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Group 1 -->
+                <div class="form-group">
+                    <label for="motivo">Motivo:</label>
+                    <input type="text" class="form-control" id="motivo" name="motivo" required>
+                </div>
+                <div class="form-group">
+                    <label for="montoSolicitado">Monto Solicitado:</label>
+                    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
+                </div>
+                <div class="form-group">
+                    <label for="montoAprobado">Monto Aprobado:</label>
+                    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 2 -->
+                <div class="form-group">
+                    <label for="montoPagado">Monto Pagado:</label>
+                    <input type="text" class="form-control" id="montoPagado" name="montoPagado">
+                </div>
+                <div class="form-group">
+                    <label for="tasaDeInteres">Tasa de Interes:</label>
+                    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres">
+                </div>
+                <div class="form-group">
+                    <label for="montoRecargo">Monto Recargo:</label>
+                    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 3 -->
+                <div class="form-group">
+                    <label for="remitente">Remitente:</label>
+                    <input type="text" class="form-control" id="remitente" name="remitente">
+                </div>
+                <div class="form-group">
+                    <label for="beneficiario">Beneficiario:</label>
+                    <input type="text" class="form-control" id="beneficiario" name="beneficiario">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <input type="text" class="form-control" id="status" name="status" required>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 4 -->
+                <div class="form-group">
+                    <label for="fechaFinalEstimada">Fecha Final Estimada:</label>
+                    <input type="text" class="form-control" id="fechaFinalEstimada" name="fechaFinalEstimada">
+                </div>
+                <div class="form-group">
+                    <label for="cuotasTotales">Cuotas Totales:</label>
+                    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales">
+                </div>
+                <div class="form-group">
+                    <label for="diasDePagoDelMes">Dias de Pago del Mes:</label>
+                    <input type="text" class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes">
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 5 -->
+                <div class="form-group">
+                    <label for="frecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
+                    <input type="text" class="form-control" id="frecuenciaPagoMensual" name="frecuenciaPagoMensual">
+                </div>
+                <div class="form-group">
+                    <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
+                    <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
+                </div>
+                <!-- Add more form groups for group 5 here -->
+            </div>
+        </div>
+        <!-- Add more fields as needed -->
+    </form>
 </div>
-<div class="form-group">
-    <label for="montoSolicitado">Monto Solicitado:</label>
-    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
-</div>
-<div class="form-group">
-    <label for="montoAprobado">Monto Aprobado:</label>
-    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado">
-</div>
-<div class="form-group">
-    <label for="montoPagado">Monto Pagado:</label>
-    <input type="text" class="form-control" id="montoPagado" name="montoPagado">
-</div>
-<div class="form-group">
-    <label for="tasaDeInteres">Tasa de Interes:</label>
-    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres">
-</div>
-<div class="form-group">
-    <label for="montoRecargo">Monto Recargo:</label>
-    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo">
-</div>
-<div class="form-group">
-    <label for="remitente">Remitente:</label>
-    <input type="text" class="form-control" id="remitente" name="remitente">
-</div>
-<div class="form-group">
-    <label for="beneficiario">Beneficiario:</label>
-    <input type="text" class="form-control" id="beneficiario" name="beneficiario">
-</div>
-<div class="form-group">
-    <label for="status">Status:</label>
-    <input type="text" class="form-control" id="status" name="status" required>
-</div>
-<div class="form-group">
-    <label for="fechaFinalEstimada">Fecha Final Estimada:</label>
-    <input type="text" class="form-control" id="fechaFinalEstimada" name="fechaFinalEstimada">
-</div>
-<div class="form-group">
-    <label for="cuotasTotales">Cuotas Totales:</label>
-    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales">
-</div>
-<div class="form-group">
-    <label for="diasDePagoDelMes">Dias de Pago del Mes:</label>
-    <input type="text" class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes">
-</div>
-<div class="form-group">
-    <label for="frecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
-    <input type="text" class="form-control" id="frecuenciaPagoMensual" name="frecuenciaPagoMensual">
-</div>
-<div class="form-group">
-    <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
-    <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
-</div>
+<!-- /.card-body -->
 
-            <!-- Add more fields as needed -->
-        </form>
-    </div>
-    <!-- /.card-body -->
 </div>
           </div>
           <!-- Add more form fields as needed -->
@@ -295,6 +313,7 @@ if ($result) {
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
   Agregar Prestamo
 </button>
+<p></p>
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
@@ -313,8 +332,14 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
-          <a href="detalle_prestamo.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
-        </td>
+    <a href="detalle_prestamo.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
+    <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+        <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['Id'].'">Editar</button>
+    </div>
+    <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+        <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
+    </div>
+</td>
                 <td>' . $row['Id'] . '</td>
                 <td>' . $row['IdCliente'] . '</td>
                 <td>' . $row['Motivo'] . '</td>

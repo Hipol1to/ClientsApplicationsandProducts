@@ -298,6 +298,7 @@ if ($result) {
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
   Agregar Pago
 </button>
+<p></p>
                   <th></th>
                   <th>Acciones</th>
                     <th>Solicitante</th>

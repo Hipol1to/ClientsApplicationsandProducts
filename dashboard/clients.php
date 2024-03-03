@@ -178,71 +178,89 @@ if (!$user->is_logged_in()) {
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <form action="add_client.php" method="post">
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+    <form action="add_client.php" method="post">
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Group 1 -->
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="apellido">Apellido:</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
+            <div class="col-sm-4">
+                <!-- Group 2 -->
+                <div class="form-group">
+                    <label for="cedula">Cédula:</label>
+                    <input type="text" class="form-control" id="cedula" name="cedula">
+                </div>
+                <div class="form-group">
+                    <label for="rnc">RNC:</label>
+                    <input type="text" class="form-control" id="rnc" name="rnc">
+                </div>
+                <div class="form-group">
+                    <label for="monto_solicitado">Monto Solicitado:</label>
+                    <input type="text" class="form-control" id="monto_solicitado" name="monto_solicitado">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="direccion">Dirección:</label>
-                <input type="text" class="form-control" id="direccion" name="direccion">
+            <div class="col-sm-4">
+                <!-- Group 3 -->
+                <div class="form-group">
+                    <label for="interes">Interés:</label>
+                    <input type="text" class="form-control" id="interes" name="interes">
+                </div>
+                <div class="form-group">
+                    <label for="id_pago">ID de Pago:</label>
+                    <input type="text" class="form-control" id="id_pago" name="id_pago">
+                </div>
+                <div class="form-group">
+                    <label for="monto_deuda">Monto de Deuda:</label>
+                    <input type="text" class="form-control" id="monto_deuda" name="monto_deuda">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="cedula">Cédula:</label>
-                <input type="text" class="form-control" id="cedula" name="cedula">
+            <div class="col-sm-4">
+                <!-- Group 4 -->
+                <div class="form-group">
+                    <label for="reenganchado">Reenganchado:</label>
+                    <input type="text" class="form-control" id="reenganchado" name="reenganchado">
+                </div>
+                <div class="form-group">
+                    <label for="puntos">Puntos:</label>
+                    <input type="text" class="form-control" id="puntos" name="puntos">
+                </div>
+                <div class="form-group">
+                    <label for="fecha_ingreso">Fecha de Ingreso:</label>
+                    <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="rnc">RNC:</label>
-                <input type="text" class="form-control" id="rnc" name="rnc">
+            <div class="col-sm-4">
+                <!-- Group 5 -->
+                <div class="form-group">
+                    <label for="fecha_salida">Fecha de Salida:</label>
+                    <input type="text" class="form-control" id="fecha_salida" name="fecha_salida">
+                </div>
+                <div class="form-group">
+                    <label for="meses_en_empresa">Meses en la Empresa:</label>
+                    <input type="text" class="form-control" id="meses_en_empresa" name="meses_en_empresa">
+                </div>
+                <div class="form-group">
+                    <label for="total_prestado">Total Prestado:</label>
+                    <input type="text" class="form-control" id="total_prestado" name="total_prestado">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="monto_solicitado">Monto Solicitado:</label>
-                <input type="text" class="form-control" id="monto_solicitado" name="monto_solicitado">
-            </div>
-            <div class="form-group">
-                <label for="interes">Interés:</label>
-                <input type="text" class="form-control" id="interes" name="interes">
-            </div>
-            <div class="form-group">
-                <label for="id_pago">ID de Pago:</label>
-                <input type="text" class="form-control" id="id_pago" name="id_pago">
-            </div>
-            <div class="form-group">
-                <label for="monto_deuda">Monto de Deuda:</label>
-                <input type="text" class="form-control" id="monto_deuda" name="monto_deuda">
-            </div>
-            <div class="form-group">
-                <label for="reenganchado">Reenganchado:</label>
-                <input type="text" class="form-control" id="reenganchado" name="reenganchado">
-            </div>
-            <div class="form-group">
-                <label for="puntos">Puntos:</label>
-                <input type="text" class="form-control" id="puntos" name="puntos">
-            </div>
-            <div class="form-group">
-                <label for="fecha_ingreso">Fecha de Ingreso:</label>
-                <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso">
-            </div>
-            <div class="form-group">
-                <label for="fecha_salida">Fecha de Salida:</label>
-                <input type="text" class="form-control" id="fecha_salida" name="fecha_salida">
-            </div>
-            <div class="form-group">
-                <label for="meses_en_empresa">Meses en la Empresa:</label>
-                <input type="text" class="form-control" id="meses_en_empresa" name="meses_en_empresa">
-            </div>
-            <div class="form-group">
-                <label for="total_prestado">Total Prestado:</label>
-                <input type="text" class="form-control" id="total_prestado" name="total_prestado">
-            </div>
-            <!-- Add more fields as needed -->
-        </form>
-    </div>
-    <!-- /.card-body -->
+        </div>
+        <!-- Add more fields as needed -->
+    </form>
+</div>
+<!-- /.card-body -->
+
 </div>
           </div>
           <!-- Add more form fields as needed -->
@@ -296,9 +314,14 @@ if ($result) {
                   <thead>
                   
                   <tr>
+                  <a>
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
   Agregar Cliente
 </button>
+
+<p></p>
+                  </a>
+                  
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
@@ -398,7 +421,7 @@ if ($result) {
                     <!-- Input fields for editing cliente information -->
                     <div class="row">
                         <!-- Group 1 -->
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="editId">ID:</label>
                                 <input type="text" class="form-control" id="editId" name="editId" readonly>
@@ -411,6 +434,9 @@ if ($result) {
                                 <label for="editApellido">Apellido:</label>
                                 <input type="text" class="form-control" id="editApellido" name="editApellido">
                             </div>
+                        </div>
+                        <!-- Group 2 -->
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="editDireccion">Dirección:</label>
                                 <input type="text" class="form-control" id="editDireccion" name="editDireccion">
@@ -419,13 +445,13 @@ if ($result) {
                                 <label for="editCedula">Cédula:</label>
                                 <input type="text" class="form-control" id="editCedula" name="editCedula">
                             </div>
-                        </div>
-                        <!-- Group 2 -->
-                        <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="editRNC">RNC:</label>
                                 <input type="text" class="form-control" id="editRNC" name="editRNC">
                             </div>
+                        </div>
+                        <!-- Group 3 -->
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="editMontoSolicitado">Monto Solicitado:</label>
                                 <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
@@ -438,13 +464,15 @@ if ($result) {
                                 <label for="editIdPago">ID de Pago:</label>
                                 <input type="text" class="form-control" id="editIdPago" name="editIdPago">
                             </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- Group 4 -->
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="editMontoDeuda">Monto de Deuda:</label>
                                 <input type="text" class="form-control" id="editMontoDeuda" name="editMontoDeuda">
                             </div>
-                          </div>
-                          <!-- Group 3 -->
-                            <div class="col-sm-6">
                             <div class="form-group">
                                 <label for="editReenganchado">Reenganchado:</label>
                                 <input type="text" class="form-control" id="editReenganchado" name="editReenganchado">
@@ -453,6 +481,9 @@ if ($result) {
                                 <label for="editPuntos">Puntos:</label>
                                 <input type="text" class="form-control" id="editPuntos" name="editPuntos">
                             </div>
+                        </div>
+                        <!-- Group 5 -->
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="editFechaIngreso">Fecha de Ingreso:</label>
                                 <input type="text" class="form-control" id="editFechaIngreso" name="editFechaIngreso">
@@ -465,11 +496,14 @@ if ($result) {
                                 <label for="editMesesEnEmpresa">Meses en la Empresa:</label>
                                 <input type="text" class="form-control" id="editMesesEnEmpresa" name="editMesesEnEmpresa">
                             </div>
+                        </div>
+                        <!-- Group 6 -->
+                        <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="editTotalPrestado">Total Prestado:</label>
                                 <input type="text" class="form-control" id="editTotalPrestado" name="editTotalPrestado">
                             </div>
-                            </div>
+                            <!-- Add more form groups for group 6 here -->
                         </div>
                     </div>
                 </form>
@@ -481,6 +515,7 @@ if ($result) {
         </div>
     </div>
 </div>
+
 ';
 
     // Include jQuery library and custom script for handling click event and populating form fields within the modal

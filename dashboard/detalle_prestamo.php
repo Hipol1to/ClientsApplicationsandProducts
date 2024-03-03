@@ -349,70 +349,98 @@ if(isset($_POST['actualizarStatus'])) {
                 $stmt->execute();
 
                 // Check if a client with the specified ID exists
-                if($stmt->rowCount() > 0) {
-                    // Fetch the client's details
-                    $client = $stmt->fetch(PDO::FETCH_ASSOC);
-                    $client['Solicitante'] = null;
-                    $client['PagosRealizados'] = $client['PagoId'] == null ? "Ningún pago realizado" : $client['PagoId'] . " pagos";
-                    $client['CuotasTotales'] = $client['CuotasTotales'] == null ? "No hay cuotas asignadas" : $client['CuotasTotales'] . " cuotas";
-                    $client['FrecuenciaPagoMensual'] = $client['FrecuenciaPagoMensual'] == null ? "N/A" : $client['FrecuenciaPagoMensual'];
-                    $client['DiasDePagoDelMes'] = $client['DiasDePagoDelMes'] == null ? "Ninguno" : $client['DiasDePagoDelMes'];
-                    $client['FechaDeAprobacion'] = $client['FechaDeAprobacion'] == null ? "No aprobado" : $client['FechaDeAprobacion'];
-                    $isEnabled = false;
-                    // Display client details
-                    echo '<div class="form-group">';
-                    echo '<label for="motivo">Motivo:</label>';
-                    echo '<input type="text" class="form-control" id="motivo" name="motivo" value="'.htmlspecialchars($client['Motivo']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="montoSolicitado">Monto Solicitado:</label>';
-                    echo '<input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" value="'.htmlspecialchars($client['MontoSolicitado']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="montoAprobado">Monto Aprobado:</label>';
-                    echo '<input type="text" class="form-control" id="montoAprobado" name="montoAprobado" value="'.htmlspecialchars($client['MontoAprobado']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="montoPagado">Monto Pagado:</label>';
-                    echo '<input type="text" class="form-control" id="montoPagado" name="montoPagado" value="'.htmlspecialchars($client['MontoPagado']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="tasaDeInteres">Tasa de interés:</label>';
-                    echo '<input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" value="'.htmlspecialchars($client['TasaDeInteres']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="montoRecargo">Monto Recargo:</label>';
-                    echo '<input type="text" class="form-control" id="montoRecargo" name="montoRecargo" value="'.htmlspecialchars($client['MontoRecargo']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="solicitante">Solicitante:</label>';
-                    echo '<input type="text" class="form-control" id="solicitante" name="solicitante" value="'.htmlspecialchars($client['Solicitante']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="cuotasTotales">Cant. total de cuotas:</label>';
-                    echo '<input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales" value="'.htmlspecialchars($client['CuotasTotales']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="pagosRealizados">Pagos realizados:</label>';
-                    echo '<input type="text" class="form-control" id="pagosRealizados" name="pagosRealizados" value="'.htmlspecialchars($client['PagosRealizados']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="diasPagoMes">Dias en el mes asignados para pagar:</label>';
-                    echo '<input type="text" class="form-control" id="diasPagoMes" name="diasPagoMes" value="'.htmlspecialchars($client['DiasDePagoDelMes']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="frecuenciaPago">Cant. min. pagos por mes:</label>';
-                    echo '<input type="text" class="form-control" id="frecuenciaPago" name="frecuenciaPago" value="'.htmlspecialchars($client['FrecuenciaPagoMensual']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="fechaAprobacion">Fecha de aprobacion:</label>';
-                    echo '<input type="text" class="form-control" id="fechaAprobacion" name="fechaAprobacion" value="'.htmlspecialchars($client['FechaDeAprobacion']).'" readonly>';
-                    echo '</div>';
-                    echo '<div class="form-group">';
-                    echo '<label for="fechaSolicitud">Fecha de solicitud:</label>';
-                    echo '<input type="text" class="form-control" id="fechaSolicitud" name="fechaSolicitud" value="'.htmlspecialchars($client['FechaCreacion']).'" readonly>';
-                    echo '</div>';
-                    // Continue displaying other client details as needed
+if($stmt->rowCount() > 0) {
+    // Fetch the client's details
+    $client = $stmt->fetch(PDO::FETCH_ASSOC);
+    $client['Solicitante'] = null;
+    $client['PagosRealizados'] = $client['PagoId'] == null ? "Ningún pago realizado" : $client['PagoId'] . " pagos";
+    $client['CuotasTotales'] = $client['CuotasTotales'] == null ? "No hay cuotas asignadas" : $client['CuotasTotales'] . " cuotas";
+    $client['FrecuenciaPagoMensual'] = $client['FrecuenciaPagoMensual'] == null ? "N/A" : $client['FrecuenciaPagoMensual'];
+    $client['DiasDePagoDelMes'] = $client['DiasDePagoDelMes'] == null ? "Ninguno" : $client['DiasDePagoDelMes'];
+    $client['FechaDeAprobacion'] = $client['FechaDeAprobacion'] == null ? "No aprobado" : $client['FechaDeAprobacion'];
+    $isEnabled = false;
+
+    // Display client details
+    echo '<div class="modal-body">';
+    echo '<form id="editForm">';
+    echo '<div class="row">';
+
+    // Group 1
+    echo '<div class="col-sm-4">';
+    echo '<div class="form-group">';
+    echo '<label for="motivo">Motivo:</label>';
+    echo '<input type="text" class="form-control" id="motivo" name="motivo" value="'.htmlspecialchars($client['Motivo']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="montoSolicitado">Monto Solicitado:</label>';
+    echo '<input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" value="'.htmlspecialchars($client['MontoSolicitado']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="montoAprobado">Monto Aprobado:</label>';
+    echo '<input type="text" class="form-control" id="montoAprobado" name="montoAprobado" value="'.htmlspecialchars($client['MontoAprobado']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="montoPagado">Monto Pagado:</label>';
+    echo '<input type="text" class="form-control" id="montoPagado" name="montoPagado" value="'.htmlspecialchars($client['MontoPagado']).'" readonly>';
+    echo '</div>';
+
+    echo '</div>';
+
+    // Group 2
+    echo '<div class="col-sm-4">';
+    echo '<div class="form-group">';
+    echo '<label for="tasaDeInteres">Tasa de interés:</label>';
+    echo '<input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" value="'.htmlspecialchars($client['TasaDeInteres']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="montoRecargo">Monto Recargo:</label>';
+    echo '<input type="text" class="form-control" id="montoRecargo" name="montoRecargo" value="'.htmlspecialchars($client['MontoRecargo']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="solicitante">Solicitante:</label>';
+    echo '<input type="text" class="form-control" id="solicitante" name="solicitante" value="'.htmlspecialchars($client['Solicitante']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="fechaSolicitud">Fecha de solicitud:</label>';
+    echo '<input type="text" class="form-control" id="fechaSolicitud" name="fechaSolicitud" value="'.htmlspecialchars($client['FechaCreacion']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="frecuenciaPago">Cant. min. pagos por mes:</label>';
+    echo '<input type="text" class="form-control" id="frecuenciaPago" name="frecuenciaPago" value="'.htmlspecialchars($client['FrecuenciaPagoMensual']).'" readonly>';
+    echo '</div>';
+    echo '<button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>';
+    echo '</div>';
+
+    // Group 3
+    echo '<div class="col-sm-4">';
+    echo '<div class="form-group">';
+    echo '<label for="cuotasTotales">Cant. total de cuotas:</label>';
+    echo '<input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales" value="'.htmlspecialchars($client['CuotasTotales']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="pagosRealizados">Pagos realizados:</label>';
+    echo '<input type="text" class="form-control" id="pagosRealizados" name="pagosRealizados" value="'.htmlspecialchars($client['PagosRealizados']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="diasPagoMes">Dias en el mes asignados para pagar:</label>';
+    echo '<input type="text" class="form-control" id="diasPagoMes" name="diasPagoMes" value="'.htmlspecialchars($client['DiasDePagoDelMes']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="fechaAprobacion">Fecha de aprobacion:</label>';
+    echo '<input type="text" class="form-control" id="fechaAprobacion" name="fechaAprobacion" value="'.htmlspecialchars($client['FechaDeAprobacion']).'" readonly>';
+    echo '</div>';
+    echo '</div>';
+
+    // Group 4
+    echo '<div class="col-sm-4">';
+    
+    
+    
+    echo '</div>';
+
+    echo '</div>'; // Close row
+    echo '</form>';
+    echo '</div>'; 
                 } else {
                     // If no client with the specified ID is found, display an error message
                     echo '<div class="container">';
@@ -428,10 +456,7 @@ if(isset($_POST['actualizarStatus'])) {
                 echo '</div>';
             }
 
-            echo '<button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
-        </div>
-    </div>
-</div>';
+            
 
 
 echo '<div id="editModal" class="modal fade" role="dialog">
