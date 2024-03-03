@@ -386,90 +386,102 @@ if ($result) {
 
     // Add a hidden form to hold the details for editing within the modal
     echo '<div id="editModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Editar Cliente</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-    <form id="editForm">
-        <!-- Input fields for editing cliente information -->
-        <div class="form-group">
-            <label for="editId">ID:</label>
-            <input type="text" class="form-control" id="editId" name="editId" readonly>
-        </div>
-        <div class="form-group">
-            <label for="editNombre">Nombre:</label>
-            <input type="text" class="form-control" id="editNombre" name="editNombre">
-        </div>
-        <div class="form-group">
-            <label for="editApellido">Apellido:</label>
-            <input type="text" class="form-control" id="editApellido" name="editApellido">
-        </div>
-        <div class="form-group">
-            <label for="editDireccion">Dirección:</label>
-            <input type="text" class="form-control" id="editDireccion" name="editDireccion">
-        </div>
-        <div class="form-group">
-            <label for="editCedula">Cédula:</label>
-            <input type="text" class="form-control" id="editCedula" name="editCedula">
-        </div>
-        <div class="form-group">
-            <label for="editRNC">RNC:</label>
-            <input type="text" class="form-control" id="editRNC" name="editRNC">
-        </div>
-        <div class="form-group">
-            <label for="editMontoSolicitado">Monto Solicitado:</label>
-            <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
-        </div>
-        <div class="form-group">
-            <label for="editInteres">Interés:</label>
-            <input type="text" class="form-control" id="editInteres" name="editInteres">
-        </div>
-        <div class="form-group">
-            <label for="editIdPago">ID de Pago:</label>
-            <input type="text" class="form-control" id="editIdPago" name="editIdPago">
-        </div>
-        <div class="form-group">
-            <label for="editMontoDeuda">Monto de Deuda:</label>
-            <input type="text" class="form-control" id="editMontoDeuda" name="editMontoDeuda">
-        </div>
-        <div class="form-group">
-            <label for="editReenganchado">Reenganchado:</label>
-            <input type="text" class="form-control" id="editReenganchado" name="editReenganchado">
-        </div>
-        <div class="form-group">
-            <label for="editPuntos">Puntos:</label>
-            <input type="text" class="form-control" id="editPuntos" name="editPuntos">
-        </div>
-        <div class="form-group">
-            <label for="editFechaIngreso">Fecha de Ingreso:</label>
-            <input type="text" class="form-control" id="editFechaIngreso" name="editFechaIngreso">
-        </div>
-        <div class="form-group">
-            <label for="editFechaSalida">Fecha de Salida:</label>
-            <input type="text" class="form-control" id="editFechaSalida" name="editFechaSalida">
-        </div>
-        <div class="form-group">
-            <label for="editMesesEnEmpresa">Meses en la Empresa:</label>
-            <input type="text" class="form-control" id="editMesesEnEmpresa" name="editMesesEnEmpresa">
-        </div>
-        <div class="form-group">
-            <label for="editTotalPrestado">Total Prestado:</label>
-            <input type="text" class="form-control" id="editTotalPrestado" name="editTotalPrestado">
-        </div>
-    </form>
-</div>
-
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-              </div>
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Cliente</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-          </div>';
+            <div class="modal-body">
+                <form id="editForm">
+                    <!-- Input fields for editing cliente information -->
+                    <div class="row">
+                        <!-- Group 1 -->
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="editId">ID:</label>
+                                <input type="text" class="form-control" id="editId" name="editId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="editNombre">Nombre:</label>
+                                <input type="text" class="form-control" id="editNombre" name="editNombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="editApellido">Apellido:</label>
+                                <input type="text" class="form-control" id="editApellido" name="editApellido">
+                            </div>
+                            <div class="form-group">
+                                <label for="editDireccion">Dirección:</label>
+                                <input type="text" class="form-control" id="editDireccion" name="editDireccion">
+                            </div>
+                            <div class="form-group">
+                                <label for="editCedula">Cédula:</label>
+                                <input type="text" class="form-control" id="editCedula" name="editCedula">
+                            </div>
+                        </div>
+                        <!-- Group 2 -->
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="editRNC">RNC:</label>
+                                <input type="text" class="form-control" id="editRNC" name="editRNC">
+                            </div>
+                            <div class="form-group">
+                                <label for="editMontoSolicitado">Monto Solicitado:</label>
+                                <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
+                            </div>
+                            <div class="form-group">
+                                <label for="editInteres">Interés:</label>
+                                <input type="text" class="form-control" id="editInteres" name="editInteres">
+                            </div>
+                            <div class="form-group">
+                                <label for="editIdPago">ID de Pago:</label>
+                                <input type="text" class="form-control" id="editIdPago" name="editIdPago">
+                            </div>
+                            <div class="form-group">
+                                <label for="editMontoDeuda">Monto de Deuda:</label>
+                                <input type="text" class="form-control" id="editMontoDeuda" name="editMontoDeuda">
+                            </div>
+                          </div>
+                          <!-- Group 3 -->
+                            <div class="col-sm-6">
+                            <div class="form-group">
+                                <label for="editReenganchado">Reenganchado:</label>
+                                <input type="text" class="form-control" id="editReenganchado" name="editReenganchado">
+                            </div>
+                            <div class="form-group">
+                                <label for="editPuntos">Puntos:</label>
+                                <input type="text" class="form-control" id="editPuntos" name="editPuntos">
+                            </div>
+                            <div class="form-group">
+                                <label for="editFechaIngreso">Fecha de Ingreso:</label>
+                                <input type="text" class="form-control" id="editFechaIngreso" name="editFechaIngreso">
+                            </div>
+                            <div class="form-group">
+                                <label for="editFechaSalida">Fecha de Salida:</label>
+                                <input type="text" class="form-control" id="editFechaSalida" name="editFechaSalida">
+                            </div>
+                            <div class="form-group">
+                                <label for="editMesesEnEmpresa">Meses en la Empresa:</label>
+                                <input type="text" class="form-control" id="editMesesEnEmpresa" name="editMesesEnEmpresa">
+                            </div>
+                            <div class="form-group">
+                                <label for="editTotalPrestado">Total Prestado:</label>
+                                <input type="text" class="form-control" id="editTotalPrestado" name="editTotalPrestado">
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+';
 
     // Include jQuery library and custom script for handling click event and populating form fields within the modal
     echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

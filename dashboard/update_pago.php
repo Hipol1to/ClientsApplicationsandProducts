@@ -22,8 +22,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
     $editMonto = $_POST['editMonto'];
     $editMotivo = $_POST['editMotivo'];
     $editTipo = $_POST['editTipo'];
-    $editInversionId = $_POST['editInversionId'];
-    $editPrestamoId = $_POST['editPrestamoId'];
+    $editInversionId = !empty($_POST['editInversionId']) ? $_POST['editInversionId'] : null;
+    $editPrestamoId = !empty($_POST['editPrestamoId']) ? $_POST['editPrestamoId'] : null;
     $editFechaDePago = $_POST['editFechaDePago'];
 
     // Assuming you have a PDO connection named $db
@@ -64,16 +64,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         // Check if the update was successful
         $rowCount = $stmt->rowCount();
         if ($rowCount > 0) {
-            echo json_encode(['status' => 'success', 'message' => 'Record updated successfully.']);
+            error_log(json_encode(['status' => 'success', 'message' => 'Record updated successfully.']));
         } else {
-            echo json_encode(['status' => 'error', 'message' => 'No records updated.']);
+            error_log(json_encode(['status' => 'error', 'message' => 'No records updated.']));
         }
     } catch (PDOException $e) {
         // Handle database errors
-        echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]);
+        error_log(json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]));
     }
 } else {
     // Handle the case where the form is not submitted correctly
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);
+    error_log(json_encode(['status' => 'error', 'message' => 'Invalid request.']));
 }
 ?>
