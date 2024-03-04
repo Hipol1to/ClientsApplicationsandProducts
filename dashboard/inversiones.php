@@ -386,7 +386,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
     <!-- Modal content-->
     <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title">Editar Cliente</h4>
+            <h4 class="modal-title">Editar Inversion</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
@@ -394,67 +394,67 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                 <!-- Input fields for editing cliente information -->
                 <div class="form-group">
                     <label for="editId">ID:</label>
-                    <input type="text" class="form-control" id="editId" name="Id" readonly>
+                    <input type="text" class="form-control" id="editId" name="editId" readonly>
                 </div>
                 <div class="form-group">
                     <label for="editMotivo">Motivo:</label>
-                    <input type="text" class="form-control" id="editMotivo" name="Motivo">
+                    <input type="text" class="form-control" id="editMotivo" name="editMotivo">
                 </div>
                 <div class="form-group">
                     <label for="editMontoSolicitado">Monto Solicitado:</label>
-                    <input type="text" class="form-control" id="editMontoSolicitado" name="MontoSolicitado">
+                    <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
                 </div>
                 <div class="form-group">
                     <label for="editMontoAprobado">Monto Aprobado:</label>
-                    <input type="text" class="form-control" id="editMontoAprobado" name="MontoAprobado">
+                    <input type="text" class="form-control" id="editMontoAprobado" name="editMontoAprobado">
                 </div>
                 <div class="form-group">
                     <label for="editMontoPagado">Monto Pagado:</label>
-                    <input type="text" class="form-control" id="editMontoPagado" name="MontoPagado">
+                    <input type="text" class="form-control" id="editMontoPagado" name="editMontoPagado">
                 </div>
                 <div class="form-group">
                     <label for="editTasaDeInteres">Tasa de Interes:</label>
-                    <input type="text" class="form-control" id="editTasaDeInteres" name="TasaDeInteres">
+                    <input type="text" class="form-control" id="editTasaDeInteres" name="editTasaDeInteres">
                 </div>
                 <div class="form-group">
                     <label for="editMontoRecargo">Monto Recargo:</label>
-                    <input type="text" class="form-control" id="editMontoRecargo" name="MontoRecargo">
+                    <input type="text" class="form-control" id="editMontoRecargo" name="editMontoRecargo">
                 </div>
                 <div class="form-group">
                     <label for="editRemitente">Remitente:</label>
-                    <input type="text" class="form-control" id="editRemitente" name="Remitente">
+                    <input type="text" class="form-control" id="editRemitente" name="editRemitente">
                 </div>
                 <div class="form-group">
                     <label for="editBeneficiario">Beneficiario:</label>
-                    <input type="text" class="form-control" id="editBeneficiario" name="Beneficiario">
+                    <input type="text" class="form-control" id="editBeneficiario" name="editBeneficiario">
                 </div>
                 <div class="form-group">
                     <label for="editStatus">Status:</label>
-                    <input type="text" class="form-control" id="editStatus" name="Status">
+                    <input type="text" class="form-control" id="editStatus" name="editStatus">
                 </div>
                 <div class="form-group">
                     <label for="editPagoId">Pago ID:</label>
-                    <input type="text" class="form-control" id="editPagoId" name="PagoId">
+                    <input type="text" class="form-control" id="editPagoId" name="editPagoId">
                 </div>
                 <div class="form-group">
                     <label for="editFechaFinalEstimada">Fecha Final Estimada:</label>
-                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="FechaFinalEstimada">
+                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="editFechaFinalEstimada">
                 </div>
                 <div class="form-group">
                     <label for="editCuotasTotales">Cuotas Totales:</label>
-                    <input type="text" class="form-control" id="editCuotasTotales" name="CuotasTotales">
+                    <input type="text" class="form-control" id="editCuotasTotales" name="editCuotasTotales">
                 </div>
                 <div class="form-group">
                     <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
-                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="DiasDePagoDelMes">
+                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
                 </div>
                 <div class="form-group">
                     <label for="editFrecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
-                    <input type="text" class="form-control" id="editFrecuenciaPagoMensual" name="FrecuenciaPagoMensual">
+                    <input type="text" class="form-control" id="editFrecuenciaPagoMensual" name="editFrecuenciaPagoMensual">
                 </div>
                 <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control" id="editFechaDeAprobacion" name="FechaDeAprobacion">
+                    <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
                 </div>
             </form>
         </div>
@@ -507,6 +507,8 @@ $.ajax({
 
 $("#saveChangesBtn").click(function() {
 var formData = $("#editForm").serialize();
+console.log(formData);
+console.error(formData);
 $.ajax({
     url: "update_inversion.php", // Changed to update inversion
     type: "POST",

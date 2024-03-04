@@ -3,8 +3,8 @@
 require('../includes/config.php');
 
 if (!$user->is_logged_in()) { 
-    header('Location: ../index.php'); 
-    // exit(); 
+	header('Location: ../index.php'); 
+	// exit(); 
 }
 
 // Check if the form is submitted and values are set
@@ -20,7 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
     $editRemitente = !empty($_POST['editRemitente']) ? $_POST['editRemitente'] : null;
     $editBeneficiario = !empty($_POST['editBeneficiario']) ? $_POST['editBeneficiario'] : null;
     $editStatus = $_POST['editStatus'];
-    $editPagoId = $_POST['editPagoId'];
     $editFechaFinalEstimada = !empty($_POST['editFechaFinalEstimada']) ? $_POST['editFechaFinalEstimada'] : null;
     $editCuotasTotales = !empty($_POST['editCuotasTotales']) ? $_POST['editCuotasTotales'] : null;
     $editDiasDePagoDelMes = !empty($_POST['editDiasDePagoDelMes']) ? $_POST['editDiasDePagoDelMes'] : null;
@@ -39,7 +38,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
                                 Remitente = :remitente, 
                                 Beneficiario = :beneficiario, 
                                 Status = :status, 
-                                PagoId = :pagoId, 
                                 FechaFinalEstimada = :fechaFinalEstimada, 
                                 CuotasTotales = :cuotasTotales, 
                                 DiasDePagoDelMes = :diasDePagoDelMes, 
@@ -55,7 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         $stmt->bindParam(':remitente', $editRemitente, PDO::PARAM_STR);
         $stmt->bindParam(':beneficiario', $editBeneficiario, PDO::PARAM_STR);
         $stmt->bindParam(':status', $editStatus, PDO::PARAM_STR);
-        $stmt->bindParam(':pagoId', $editPagoId, PDO::PARAM_INT);
         $stmt->bindParam(':fechaFinalEstimada', $editFechaFinalEstimada, PDO::PARAM_STR);
         $stmt->bindParam(':cuotasTotales', $editCuotasTotales, PDO::PARAM_INT);
         $stmt->bindParam(':diasDePagoDelMes', $editDiasDePagoDelMes, PDO::PARAM_INT);
@@ -79,6 +76,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
 } else {
     // Handle the case where the form is not submitted correctly
     error_log(json_encode(['status' => 'error', 'message' => 'Invalid request.']));
-    error_log($_POST['editId']);
 }
 ?>
