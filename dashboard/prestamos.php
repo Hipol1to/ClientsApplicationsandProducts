@@ -388,7 +388,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
     </div>
     <div class="modal-body">
     <form id="editForm">
-        <!-- Input fields for editing prestamo information -->
+        <!-- Input fields for editing inversion information -->
         <div class="row">
             <!-- Group 1 -->
             <div class="col-sm-4">
@@ -444,16 +444,15 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editStatus" name="editStatus">
                 </div>
                 <div class="form-group">
-                    <label for="editFechaFinalEstimada">Fecha Final Estimada:</label>
-                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="editFechaFinalEstimada">
+                    <label for="editPagoId">Pago ID:</label>
+                    <input type="text" class="form-control" id="editPagoId" name="editPagoId">
                 </div>
-                
             </div>
             <!-- Group 5 -->
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
-                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
+                    <label for="editFechaFinalEstimada">Fecha Final Estimada:</label>
+                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="editFechaFinalEstimada">
                 </div>
                 <div class="form-group">
                     <label for="editCuotasTotales">Cuotas Totales:</label>
@@ -462,14 +461,18 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             </div>
             <!-- Group 6 -->
             <div class="col-sm-4">
-              <div class="form-group">
-                <label for="editFrecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
-                <input type="text" class="form-control" id="editFrecuenciaPagoMensual" name="editFrecuenciaPagoMensual">
-              </div>
-              <div class="form-group">
-                <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
-                <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
-              </div>
+                <div class="form-group">
+                    <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
+                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
+                </div>
+                <div class="form-group">
+                    <label for="editFrecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
+                    <input type="text" class="form-control" id="editFrecuenciaPagoMensual" name="editFrecuenciaPagoMensual">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
+                    <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                </div>
             </div>
         </div>
     </form>

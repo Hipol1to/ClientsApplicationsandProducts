@@ -390,8 +390,11 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         <div class="modal-body">
-            <form id="editForm">
-                <!-- Input fields for editing cliente information -->
+    <form id="editForm">
+        <!-- Input fields for editing cliente information -->
+        <div class="row">
+            <!-- Group 1 -->
+            <div class="col-sm-4">
                 <div class="form-group">
                     <label for="editId">ID:</label>
                     <input type="text" class="form-control" id="editId" name="editId" readonly>
@@ -405,6 +408,21 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
                 </div>
                 <div class="form-group">
+                    <label for="editStatus">Status:</label>
+                    <input type="text" class="form-control" id="editStatus" name="editStatus">
+                </div>
+                <div class="form-group">
+                    <label for="editPagoId">Pago ID:</label>
+                    <input type="text" class="form-control" id="editPagoId" name="editPagoId">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
+                    <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                </div>
+            </div>
+            <!-- Group 2 -->
+            <div class="col-sm-4">
+                <div class="form-group">
                     <label for="editMontoAprobado">Monto Aprobado:</label>
                     <input type="text" class="form-control" id="editMontoAprobado" name="editMontoAprobado">
                 </div>
@@ -416,6 +434,17 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <label for="editTasaDeInteres">Tasa de Interes:</label>
                     <input type="text" class="form-control" id="editTasaDeInteres" name="editTasaDeInteres">
                 </div>
+                <div class="form-group">
+                    <label for="editFechaFinalEstimada">Fecha Final Estimada:</label>
+                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="editFechaFinalEstimada">
+                </div>
+                <div class="form-group">
+                    <label for="editCuotasTotales">Cuotas Totales:</label>
+                    <input type="text" class="form-control" id="editCuotasTotales" name="editCuotasTotales">
+                </div>
+            </div>
+            <!-- Group 3 -->
+            <div class="col-sm-4">
                 <div class="form-group">
                     <label for="editMontoRecargo">Monto Recargo:</label>
                     <input type="text" class="form-control" id="editMontoRecargo" name="editMontoRecargo">
@@ -429,22 +458,6 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editBeneficiario" name="editBeneficiario">
                 </div>
                 <div class="form-group">
-                    <label for="editStatus">Status:</label>
-                    <input type="text" class="form-control" id="editStatus" name="editStatus">
-                </div>
-                <div class="form-group">
-                    <label for="editPagoId">Pago ID:</label>
-                    <input type="text" class="form-control" id="editPagoId" name="editPagoId">
-                </div>
-                <div class="form-group">
-                    <label for="editFechaFinalEstimada">Fecha Final Estimada:</label>
-                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="editFechaFinalEstimada">
-                </div>
-                <div class="form-group">
-                    <label for="editCuotasTotales">Cuotas Totales:</label>
-                    <input type="text" class="form-control" id="editCuotasTotales" name="editCuotasTotales">
-                </div>
-                <div class="form-group">
                     <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
                     <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
                 </div>
@@ -452,12 +465,26 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <label for="editFrecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
                     <input type="text" class="form-control" id="editFrecuenciaPagoMensual" name="editFrecuenciaPagoMensual">
                 </div>
-                <div class="form-group">
-                    <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
-                </div>
-            </form>
+            </div>
         </div>
+        <div class="row">
+            <!-- Group 4 -->
+            <div class="col-sm-4">
+                
+            </div>
+            <!-- Group 5 -->
+            <div class="col-sm-4">
+                
+            </div>
+            <!-- Group 6 -->
+            <div class="col-sm-4">
+                
+                
+            </div>
+        </div>
+    </form>
+</div>
+
         <div class="modal-footer">
             <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
