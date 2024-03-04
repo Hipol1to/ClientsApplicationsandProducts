@@ -548,7 +548,7 @@ $.ajax({
 echo '<script>
 $(".delete-btn").click(function() {
 var id = $(this).data("id");
-if (confirm("¿Estás seguro que quieres borrar este cliente?")) {
+if (confirm("¿Estás seguro que quieres borrar este préstamo?")) {
 $.ajax({
     url: "delete_prestamo.php",
     type: "POST",

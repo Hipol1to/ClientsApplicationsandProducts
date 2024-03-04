@@ -558,7 +558,7 @@ $.ajax({
 echo '<script>
 $(".delete-btn").click(function() {
 var id = $(this).data("id");
-if (confirm("¿Estás seguro que quieres borrar este cliente?")) {
+if (confirm("¿Estás seguro que quieres borrar esta inversión?")) {
 $.ajax({
     url: "delete_inversion.php", // Changed to delete inversion
     type: "POST",

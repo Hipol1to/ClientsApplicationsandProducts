@@ -185,70 +185,93 @@ if (!$user->is_logged_in()) {
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <form action="add_client.php" method="post">
-            <div class="form-group">
-                <label for="nombre">Nombre:</label>
-                <input type="text" class="form-control" id="nombre" name="nombre" required>
+    <form action="add_client.php" method="post">
+        <div class="row">
+            <!-- Group 1 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" class="form-control" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="apellido">Apellido:</label>
+                    <input type="text" class="form-control" id="apellido" name="apellido" required>
+                </div>
+                <div class="form-group">
+                    <label for="direccion">Dirección:</label>
+                    <input type="text" class="form-control" id="direccion" name="direccion">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="apellido">Apellido:</label>
-                <input type="text" class="form-control" id="apellido" name="apellido" required>
+            <!-- Group 2 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="cedula">Cédula:</label>
+                    <input type="text" class="form-control" id="cedula" name="cedula">
+                </div>
+                <div class="form-group">
+                    <label for="rnc">RNC:</label>
+                    <input type="text" class="form-control" id="rnc" name="rnc">
+                </div>
+                <div class="form-group">
+                    <label for="monto_solicitado">Monto Solicitado:</label>
+                    <input type="text" class="form-control" id="monto_solicitado" name="monto_solicitado">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="direccion">Dirección:</label>
-                <input type="text" class="form-control" id="direccion" name="direccion">
+            <!-- Group 3 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="interes">Interés:</label>
+                    <input type="text" class="form-control" id="interes" name="interes">
+                </div>
+                <div class="form-group">
+                    <label for="id_pago">ID de Pago:</label>
+                    <input type="text" class="form-control" id="id_pago" name="id_pago">
+                </div>
+                <div class="form-group">
+                    <label for="monto_deuda">Monto de Deuda:</label>
+                    <input type="text" class="form-control" id="monto_deuda" name="monto_deuda">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="cedula">Cédula:</label>
-                <input type="text" class="form-control" id="cedula" name="cedula">
+        </div>
+        <div class="row">
+            <!-- Group 4 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="reenganchado">Reenganchado:</label>
+                    <input type="text" class="form-control" id="reenganchado" name="reenganchado">
+                </div>
+                <div class="form-group">
+                    <label for="puntos">Puntos:</label>
+                    <input type="text" class="form-control" id="puntos" name="puntos">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="rnc">RNC:</label>
-                <input type="text" class="form-control" id="rnc" name="rnc">
+            <!-- Group 5 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="fecha_ingreso">Fecha de Ingreso:</label>
+                    <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso">
+                </div>
+                <div class="form-group">
+                    <label for="fecha_salida">Fecha de Salida:</label>
+                    <input type="text" class="form-control" id="fecha_salida" name="fecha_salida">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="monto_solicitado">Monto Solicitado:</label>
-                <input type="text" class="form-control" id="monto_solicitado" name="monto_solicitado">
+            <!-- Group 6 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="meses_en_empresa">Meses en la Empresa:</label>
+                    <input type="text" class="form-control" id="meses_en_empresa" name="meses_en_empresa">
+                </div>
+                <div class="form-group">
+                    <label for="total_prestado">Total Prestado:</label>
+                    <input type="text" class="form-control" id="total_prestado" name="total_prestado">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="interes">Interés:</label>
-                <input type="text" class="form-control" id="interes" name="interes">
-            </div>
-            <div class="form-group">
-                <label for="id_pago">ID de Pago:</label>
-                <input type="text" class="form-control" id="id_pago" name="id_pago">
-            </div>
-            <div class="form-group">
-                <label for="monto_deuda">Monto de Deuda:</label>
-                <input type="text" class="form-control" id="monto_deuda" name="monto_deuda">
-            </div>
-            <div class="form-group">
-                <label for="reenganchado">Reenganchado:</label>
-                <input type="text" class="form-control" id="reenganchado" name="reenganchado">
-            </div>
-            <div class="form-group">
-                <label for="puntos">Puntos:</label>
-                <input type="text" class="form-control" id="puntos" name="puntos">
-            </div>
-            <div class="form-group">
-                <label for="fecha_ingreso">Fecha de Ingreso:</label>
-                <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso">
-            </div>
-            <div class="form-group">
-                <label for="fecha_salida">Fecha de Salida:</label>
-                <input type="text" class="form-control" id="fecha_salida" name="fecha_salida">
-            </div>
-            <div class="form-group">
-                <label for="meses_en_empresa">Meses en la Empresa:</label>
-                <input type="text" class="form-control" id="meses_en_empresa" name="meses_en_empresa">
-            </div>
-            <div class="form-group">
-                <label for="total_prestado">Total Prestado:</label>
-                <input type="text" class="form-control" id="total_prestado" name="total_prestado">
-            </div>
-            <!-- Add more fields as needed -->
-        </form>
-    </div>
+        </div>
+        <!-- Add more fields as needed -->
+    </form>
+</div>
+
     <!-- /.card-body -->
 </div>
           </div>
@@ -326,8 +349,9 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
-        <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
           <a href="detalle_pago.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
+          <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
+          <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
         </td>
                 <td>' . $row['IdCliente'] . '</td>
                 <td>' . $row['CuentaRemitente'] . '</td>
@@ -373,66 +397,91 @@ echo '<div id="editModal" class="modal fade" role="dialog">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-<form id="editForm">
-    <!-- Input fields for editing pago information -->
-    <div class="form-group">
-        <label for="editId">ID:</label>
-        <input type="text" class="form-control" id="editId" name="editId" readonly>
-    </div>
-    <div class="form-group">
-        <label for="editIdCliente">ID Cliente:</label>
-        <input type="text" class="form-control" id="editIdCliente" name="editIdCliente">
-    </div>
-    <div class="form-group">
-        <label for="editCuentaRemitente">Cuenta Remitente:</label>
-        <input type="text" class="form-control" id="editCuentaRemitente" name="editCuentaRemitente">
-    </div>
-    <div class="form-group">
-        <label for="editTipoCuentaRemitente">Tipo de Cuenta Remitente:</label>
-        <input type="text" class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente">
-    </div>
-    <div class="form-group">
-        <label for="editEntidadBancariaRemitente">Entidad Bancaria Remitente:</label>
-        <input type="text" class="form-control" id="editEntidadBancariaRemitente" name="editEntidadBancariaRemitente">
-    </div>
-    <div class="form-group">
-        <label for="editCuentaDestinatario">Cuenta Destinatario:</label>
-        <input type="text" class="form-control" id="editCuentaDestinatario" name="editCuentaDestinatario">
-    </div>
-    <div class="form-group">
-        <label for="editTipoCuentaDestinatario">Tipo de Cuenta Destinatario:</label>
-        <input type="text" class="form-control" id="editTipoCuentaDestinatario" name="editTipoCuentaDestinatario">
-    </div>
-    <div class="form-group">
-        <label for="editEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
-        <input type="text" class="form-control" id="editEntidadBancariaDestinatario" name="editEntidadBancariaDestinatario">
-    </div>
-    <div class="form-group">
-        <label for="editMonto">Monto:</label>
-        <input type="text" class="form-control" id="editMonto" name="editMonto">
-    </div>
-    <div class="form-group">
-        <label for="editMotivo">Motivo:</label>
-        <input type="text" class="form-control" id="editMotivo" name="editMotivo">
-    </div>
-    <div class="form-group">
-        <label for="editTipo">Tipo:</label>
-        <input type="text" class="form-control" id="editTipo" name="editTipo">
-    </div>
-    <div class="form-group">
-        <label for="editInversionId">ID de Inversion:</label>
-        <input type="text" class="form-control" id="editInversionId" name="editInversionId">
-    </div>
-    <div class="form-group">
-        <label for="editPrestamoId">ID de Préstamo:</label>
-        <input type="text" class="form-control" id="editPrestamoId" name="editPrestamoId">
-    </div>
-    <div class="form-group">
-        <label for="editFechaDePago">Fecha de Pago:</label>
-        <input type="text" class="form-control" id="editFechaDePago" name="editFechaDePago">
-    </div>
-</form>
+    <form id="editForm">
+        <div class="row">
+            <!-- Group 1 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editId">ID:</label>
+                    <input type="text" class="form-control" id="editId" name="editId" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editIdCliente">ID Cliente:</label>
+                    <input type="text" class="form-control" id="editIdCliente" name="editIdCliente">
+                </div>
+                <div class="form-group">
+                    <label for="editCuentaRemitente">Cuenta Remitente:</label>
+                    <input type="text" class="form-control" id="editCuentaRemitente" name="editCuentaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editMotivo">Motivo:</label>
+                    <input type="text" class="form-control" id="editMotivo" name="editMotivo">
+                </div>
+                <div class="form-group">
+                    <label for="editTipo">Tipo:</label>
+                    <input type="text" class="form-control" id="editTipo" name="editTipo">
+                </div>
+            </div>
+            <!-- Group 2 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editTipoCuentaRemitente">Tipo de Cuenta Remitente:</label>
+                    <input type="text" class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editEntidadBancariaRemitente">Entidad Bancaria Remitente:</label>
+                    <input type="text" class="form-control" id="editEntidadBancariaRemitente" name="editEntidadBancariaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editCuentaDestinatario">Cuenta Destinatario:</label>
+                    <input type="text" class="form-control" id="editCuentaDestinatario" name="editCuentaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editInversionId">ID de Inversion:</label>
+                    <input type="text" class="form-control" id="editInversionId" name="editInversionId">
+                </div>
+                <div class="form-group">
+                    <label for="editPrestamoId">ID de Préstamo:</label>
+                    <input type="text" class="form-control" id="editPrestamoId" name="editPrestamoId">
+                </div>
+            </div>
+            <!-- Group 3 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editTipoCuentaDestinatario">Tipo de Cuenta Destinatario:</label>
+                    <input type="text" class="form-control" id="editTipoCuentaDestinatario" name="editTipoCuentaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
+                    <input type="text" class="form-control" id="editEntidadBancariaDestinatario" name="editEntidadBancariaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editMonto">Monto:</label>
+                    <input type="text" class="form-control" id="editMonto" name="editMonto">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaDePago">Fecha de Pago:</label>
+                    <input type="text" class="form-control" id="editFechaDePago" name="editFechaDePago">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Group 4 -->
+            <div class="col-sm-4">
+                
+            </div>
+            <!-- Group 5 -->
+            <div class="col-sm-4">
+                
+            </div>
+            <!-- Group 6 -->
+            <div class="col-sm-4">
+                
+            </div>
+        </div>
+    </form>
 </div>
+
 
             <div class="modal-footer">
               <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
