@@ -185,70 +185,88 @@ if (!$user->is_logged_in()) {
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-        <form action="add_client.php" method="post">
-            <div class="form-group">
-    <label for="motivo">Motivo:</label>
-    <input type="text" class="form-control" id="motivo" name="motivo" required>
+    <form action="add_client.php" method="post">
+        <div class="row">
+            <!-- Group 1 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="motivo">Motivo:</label>
+                    <input type="text" class="form-control" id="motivo" name="motivo" required>
+                </div>
+                <div class="form-group">
+                    <label for="montoSolicitado">Monto Solicitado:</label>
+                    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
+                </div>
+                <div class="form-group">
+                    <label for="montoAprobado">Monto Aprobado:</label>
+                    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado">
+                </div>
+                <div class="form-group">
+                    <label for="montoPagado">Monto Pagado:</label>
+                    <input type="text" class="form-control" id="montoPagado" name="montoPagado">
+                </div>
+                <div class="form-group">
+                    <label for="diasDePagoDelMes">Dias de Pago del Mes:</label>
+                    <input type="text" class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes">
+                </div>
+            </div>
+            <!-- Group 2 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="tasaDeInteres">Tasa de Interes:</label>
+                    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres">
+                </div>
+                <div class="form-group">
+                    <label for="montoRecargo">Monto Recargo:</label>
+                    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo">
+                </div>
+                <div class="form-group">
+                    <label for="remitente">Remitente:</label>
+                    <input type="text" class="form-control" id="remitente" name="remitente">
+                </div>
+                <div class="form-group">
+                    <label for="beneficiario">Beneficiario:</label>
+                    <input type="text" class="form-control" id="beneficiario" name="beneficiario">
+                </div>
+                <div class="form-group">
+                    <label for="frecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
+                    <input type="text" class="form-control" id="frecuenciaPagoMensual" name="frecuenciaPagoMensual">
+                </div>
+            </div>
+            <!-- Group 3 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <input type="text" class="form-control" id="status" name="status" required>
+                </div>
+                <div class="form-group">
+                    <label for="pagoId">Pago ID:</label>
+                    <input type="text" class="form-control" id="pagoId" name="pagoId">
+                </div>
+                <div class="form-group">
+                    <label for="fechaFinalEstimada">Fecha Final Estimada:</label>
+                    <input type="text" class="form-control" id="fechaFinalEstimada" name="fechaFinalEstimada">
+                </div>
+                <div class="form-group">
+                    <label for="cuotasTotales">Cuotas Totales:</label>
+                    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales">
+                </div>
+                <div class="form-group">
+                    <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
+                    <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
+                </div>
+            </div>
+            <!-- Group 4 -->
+            <div class="col-sm-4">
+                
+                
+                
+            </div>
+        </div>
+        <!-- Add more fields as needed -->
+    </form>
 </div>
-<div class="form-group">
-    <label for="montoSolicitado">Monto Solicitado:</label>
-    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
-</div>
-<div class="form-group">
-    <label for="montoAprobado">Monto Aprobado:</label>
-    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado">
-</div>
-<div class="form-group">
-    <label for="montoPagado">Monto Pagado:</label>
-    <input type="text" class="form-control" id="montoPagado" name="montoPagado">
-</div>
-<div class="form-group">
-    <label for="tasaDeInteres">Tasa de Interes:</label>
-    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres">
-</div>
-<div class="form-group">
-    <label for="montoRecargo">Monto Recargo:</label>
-    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo">
-</div>
-<div class="form-group">
-    <label for="remitente">Remitente:</label>
-    <input type="text" class="form-control" id="remitente" name="remitente">
-</div>
-<div class="form-group">
-    <label for="beneficiario">Beneficiario:</label>
-    <input type="text" class="form-control" id="beneficiario" name="beneficiario">
-</div>
-<div class="form-group">
-    <label for="status">Status:</label>
-    <input type="text" class="form-control" id="status" name="status" required>
-</div>
-<div class="form-group">
-    <label for="pagoId">Pago ID:</label>
-    <input type="text" class="form-control" id="pagoId" name="pagoId">
-</div>
-<div class="form-group">
-    <label for="fechaFinalEstimada">Fecha Final Estimada:</label>
-    <input type="text" class="form-control" id="fechaFinalEstimada" name="fechaFinalEstimada">
-</div>
-<div class="form-group">
-    <label for="cuotasTotales">Cuotas Totales:</label>
-    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales">
-</div>
-<div class="form-group">
-    <label for="diasDePagoDelMes">Dias de Pago del Mes:</label>
-    <input type="text" class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes">
-</div>
-<div class="form-group">
-    <label for="frecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
-    <input type="text" class="form-control" id="frecuenciaPagoMensual" name="frecuenciaPagoMensual">
-</div>
-<div class="form-group">
-    <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
-    <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
-</div>
-            <!-- Add more fields as needed -->
-        </form>
-    </div>
+
     <!-- /.card-body -->
 </div>
           </div>
@@ -324,7 +342,13 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
-          <a href="detalle_inversion.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
+        <a href="detalle_prestamo.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+            <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['Id'].'">Editar</button>
+        </div>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+            <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
+        </div>
         </td>
                 <td>' . $row['Id'] . '</td>
                 <td>' . $row['IdCliente'] . '</td>
@@ -357,177 +381,172 @@ if ($result) {
     </div>';
 
     // Add a hidden form to hold the details for editing within the modal
-    echo '<div id="editModal" class="modal fade" role="dialog">
-            <div class="modal-dialog">
-              <!-- Modal content-->
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h4 class="modal-title">Editar Cliente</h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+echo '<div id="editModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title">Editar Cliente</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="editForm">
+                <!-- Input fields for editing cliente information -->
+                <div class="form-group">
+                    <label for="editId">ID:</label>
+                    <input type="text" class="form-control" id="editId" name="Id" readonly>
                 </div>
-                <div class="modal-body">
-    <form id="editForm">
-        <!-- Input fields for editing cliente information -->
-        <div class="form-group">
-            <label for="editId">ID:</label>
-            <input type="text" class="form-control" id="editId" name="editId" readonly>
+                <div class="form-group">
+                    <label for="editMotivo">Motivo:</label>
+                    <input type="text" class="form-control" id="editMotivo" name="Motivo">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoSolicitado">Monto Solicitado:</label>
+                    <input type="text" class="form-control" id="editMontoSolicitado" name="MontoSolicitado">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoAprobado">Monto Aprobado:</label>
+                    <input type="text" class="form-control" id="editMontoAprobado" name="MontoAprobado">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoPagado">Monto Pagado:</label>
+                    <input type="text" class="form-control" id="editMontoPagado" name="MontoPagado">
+                </div>
+                <div class="form-group">
+                    <label for="editTasaDeInteres">Tasa de Interes:</label>
+                    <input type="text" class="form-control" id="editTasaDeInteres" name="TasaDeInteres">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoRecargo">Monto Recargo:</label>
+                    <input type="text" class="form-control" id="editMontoRecargo" name="MontoRecargo">
+                </div>
+                <div class="form-group">
+                    <label for="editRemitente">Remitente:</label>
+                    <input type="text" class="form-control" id="editRemitente" name="Remitente">
+                </div>
+                <div class="form-group">
+                    <label for="editBeneficiario">Beneficiario:</label>
+                    <input type="text" class="form-control" id="editBeneficiario" name="Beneficiario">
+                </div>
+                <div class="form-group">
+                    <label for="editStatus">Status:</label>
+                    <input type="text" class="form-control" id="editStatus" name="Status">
+                </div>
+                <div class="form-group">
+                    <label for="editPagoId">Pago ID:</label>
+                    <input type="text" class="form-control" id="editPagoId" name="PagoId">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaFinalEstimada">Fecha Final Estimada:</label>
+                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="FechaFinalEstimada">
+                </div>
+                <div class="form-group">
+                    <label for="editCuotasTotales">Cuotas Totales:</label>
+                    <input type="text" class="form-control" id="editCuotasTotales" name="CuotasTotales">
+                </div>
+                <div class="form-group">
+                    <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
+                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="DiasDePagoDelMes">
+                </div>
+                <div class="form-group">
+                    <label for="editFrecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
+                    <input type="text" class="form-control" id="editFrecuenciaPagoMensual" name="FrecuenciaPagoMensual">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
+                    <input type="text" class="form-control" id="editFechaDeAprobacion" name="FechaDeAprobacion">
+                </div>
+            </form>
         </div>
-        <div class="form-group">
-            <label for="editNombre">Nombre:</label>
-            <input type="text" class="form-control" id="editNombre" name="editNombre">
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
         </div>
-        <div class="form-group">
-            <label for="editApellido">Apellido:</label>
-            <input type="text" class="form-control" id="editApellido" name="editApellido">
-        </div>
-        <div class="form-group">
-            <label for="editDireccion">Dirección:</label>
-            <input type="text" class="form-control" id="editDireccion" name="editDireccion">
-        </div>
-        <div class="form-group">
-            <label for="editCedula">Cédula:</label>
-            <input type="text" class="form-control" id="editCedula" name="editCedula">
-        </div>
-        <div class="form-group">
-            <label for="editRNC">RNC:</label>
-            <input type="text" class="form-control" id="editRNC" name="editRNC">
-        </div>
-        <div class="form-group">
-            <label for="editMontoSolicitado">Monto Solicitado:</label>
-            <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
-        </div>
-        <div class="form-group">
-            <label for="editInteres">Interés:</label>
-            <input type="text" class="form-control" id="editInteres" name="editInteres">
-        </div>
-        <div class="form-group">
-            <label for="editIdPago">ID de Pago:</label>
-            <input type="text" class="form-control" id="editIdPago" name="editIdPago">
-        </div>
-        <div class="form-group">
-            <label for="editMontoDeuda">Monto de Deuda:</label>
-            <input type="text" class="form-control" id="editMontoDeuda" name="editMontoDeuda">
-        </div>
-        <div class="form-group">
-            <label for="editReenganchado">Reenganchado:</label>
-            <input type="text" class="form-control" id="editReenganchado" name="editReenganchado">
-        </div>
-        <div class="form-group">
-            <label for="editPuntos">Puntos:</label>
-            <input type="text" class="form-control" id="editPuntos" name="editPuntos">
-        </div>
-        <div class="form-group">
-            <label for="editFechaIngreso">Fecha de Ingreso:</label>
-            <input type="text" class="form-control" id="editFechaIngreso" name="editFechaIngreso">
-        </div>
-        <div class="form-group">
-            <label for="editFechaSalida">Fecha de Salida:</label>
-            <input type="text" class="form-control" id="editFechaSalida" name="editFechaSalida">
-        </div>
-        <div class="form-group">
-            <label for="editMesesEnEmpresa">Meses en la Empresa:</label>
-            <input type="text" class="form-control" id="editMesesEnEmpresa" name="editMesesEnEmpresa">
-        </div>
-        <div class="form-group">
-            <label for="editTotalPrestado">Total Prestado:</label>
-            <input type="text" class="form-control" id="editTotalPrestado" name="editTotalPrestado">
-        </div>
-    </form>
+    </div>
 </div>
+</div>';
 
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-              </div>
-            </div>
-          </div>';
-
-    // Include jQuery library and custom script for handling click event and populating form fields within the modal
-    echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-    $(document).ready(function() {
-      $(".edit-btn").click(function() {
-          var id = $(this).data("id");
-          $.ajax({
-              url: "fetch_cliente.php",
-              type: "GET",
-              data: { id: id },
-              dataType: "json",
-              success: function(response) {
-                  // Clear previous values
-                  $("#editForm")[0].reset();
-                  console.log("reset");
-                  // Populate modal fields
-                  $("#editId").val(response.Id);
-                  $("#editNombre").val(response.Nombre);
-                  $("#editApellido").val(response.Apellido);
-                  $("#editDireccion").val(response.Direccion);
-                  console.log(response.Nombre);
-                  console.log(response);
-                  $("#editCedula").val(response.Cedula);
-                  $("#editRNC").val(response.RNC);
-                  $("#editMontoSolicitado").val(response.MontoSolicitado);
-                  $("#editInteres").val(response.Interes);
-                  $("#editIdPago").val(response.IdPago);
-                  $("#editMontoDeuda").val(response.MontoDeuda);
-                  $("#editReenganchado").val(response.Reenganchado);
-                  $("#editPuntos").val(response.Puntos);
-                  $("#editFechaIngreso").val(response.FechaIngreso);
-                  $("#editFechaSalida").val(response.FechaSalida);
-                  $("#editMesesEnEmpresa").val(response.MesesEnEmpresa);
-                  $("#editTotalPrestado").val(response.TotalPrestado);
-                  $("#editModal").modal("show");
-              },
-              error: function(xhr, status, error) {
-                  console.error(xhr.responseText);
-              }
-          });
-      });
-  
-      $("#saveChangesBtn").click(function() {
-          var formData = $("#editForm").serialize();
-          $.ajax({
-              url: "update_cliente.php",
-              type: "POST",
-              data: formData,
-              success: function(response) {
-                  $("#editModal").modal("hide");
-                  // Optionally, reload the table or update the row with the edited data
-                  location.reload();
-              },
-              error: function(xhr, status, error) {
-                  console.error(xhr.responseText);
-                  // Handle error
-              }
-          });
-      });
-  });
-  
-    </script>
-    <script>
-      // JavaScript for handling delete button click
-$(".delete-btn").click(function() {
-    var id = $(this).data("id");
-    if (confirm("¿Estás seguro que quieres borrar este cliente?")) {
-        $.ajax({
-            url: "delete_cliente.php",
-            type: "POST",
-            data: { id: id },
-            success: function(response) {
-                // Optionally, reload the table or update the UI
-                location.reload();
-            },
-            error: function(xhr, status, error) {
-                console.error(xhr.responseText);
-                // Handle error
-            }
-        });
+// Include jQuery library and custom script for handling click event and populating form fields within the modal
+echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+$(".edit-btn").click(function() {
+var id = $(this).data("id");
+$.ajax({
+    url: "fetch_inversion.php", // Changed to fetch inversion details
+    type: "GET",
+    data: { id: id },
+    dataType: "json",
+    success: function(response) {
+        // Clear previous values
+        $("#editForm")[0].reset();
+        // Populate modal fields
+        $("#editId").val(response.Id);
+        $("#editMotivo").val(response.Motivo);
+        $("#editMontoSolicitado").val(response.MontoSolicitado);
+        $("#editMontoAprobado").val(response.MontoAprobado);
+        $("#editMontoPagado").val(response.MontoPagado);
+        $("#editTasaDeInteres").val(response.TasaDeInteres);
+        $("#editMontoRecargo").val(response.MontoRecargo);
+        $("#editRemitente").val(response.Remitente);
+        $("#editBeneficiario").val(response.Beneficiario);
+        $("#editStatus").val(response.Status);
+        $("#editPagoId").val(response.PagoId);
+        $("#editFechaFinalEstimada").val(response.FechaFinalEstimada);
+        $("#editCuotasTotales").val(response.CuotasTotales);
+        $("#editDiasDePagoDelMes").val(response.DiasDePagoDelMes);
+        $("#editFrecuenciaPagoMensual").val(response.FrecuenciaPagoMensual);
+        $("#editFechaDeAprobacion").val(response.FechaDeAprobacion);
+        $("#editModal").modal("show");
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
     }
 });
+});
 
-    </script>
-    ';
+$("#saveChangesBtn").click(function() {
+var formData = $("#editForm").serialize();
+$.ajax({
+    url: "update_inversion.php", // Changed to update inversion
+    type: "POST",
+    data: formData,
+    success: function(response) {
+        $("#editModal").modal("hide");
+        // Optionally, reload the table or update the row with the edited data
+        location.reload();
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error
+    }
+});
+});
+});
+</script>';
+
+// JavaScript for handling delete button click
+echo '<script>
+$(".delete-btn").click(function() {
+var id = $(this).data("id");
+if (confirm("¿Estás seguro que quieres borrar este cliente?")) {
+$.ajax({
+    url: "delete_inversion.php", // Changed to delete inversion
+    type: "POST",
+    data: { id: id },
+    success: function(response) {
+        // Optionally, reload the table or update the UI
+        location.reload();
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error
+    }
+});
+}
+});
+</script>';
+
 } else {
     // Display an error message if the query fails
     echo "Error: " . $db->errorInfo();
