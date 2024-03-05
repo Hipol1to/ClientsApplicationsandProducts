@@ -224,10 +224,6 @@ if (!$user->is_logged_in()) {
                     <input type="text" class="form-control" id="interes" name="interes">
                 </div>
                 <div class="form-group">
-                    <label for="id_pago">ID de Pago:</label>
-                    <input type="text" class="form-control" id="id_pago" name="id_pago">
-                </div>
-                <div class="form-group">
                     <label for="monto_deuda">Monto de Deuda:</label>
                     <input type="text" class="form-control" id="monto_deuda" name="monto_deuda">
                 </div>
@@ -235,9 +231,12 @@ if (!$user->is_logged_in()) {
             <div class="col-sm-4">
                 <!-- Group 4 -->
                 <div class="form-group">
-                    <label for="reenganchado">Reenganchado:</label>
-                    <input type="text" class="form-control" id="reenganchado" name="reenganchado">
-                </div>
+                <label for="estadoPrestamo">Reenganchado:</label>
+                <select class="form-control" id="reenganchado" name="reenganchado">
+                    <option value="0" selected>No</option>
+                    <option value="1">Si</option>
+                </select>
+            </div>
                 <div class="form-group">
                     <label for="puntos">Puntos:</label>
                     <input type="text" class="form-control" id="puntos" name="puntos">
@@ -264,6 +263,11 @@ if (!$user->is_logged_in()) {
             </div>
         </div>
         <!-- Add more fields as needed -->
+        <!-- Modal Footer -->
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Agregar Cliente</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
     </form>
 </div>
 <!-- /.card-body -->
@@ -272,11 +276,7 @@ if (!$user->is_logged_in()) {
           </div>
           <!-- Add more form fields as needed -->
           
-          <!-- Modal Footer -->
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Agregar Cliente</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          </div>
+          
         </form>
       </div>
       
@@ -339,7 +339,6 @@ if ($result) {
                     <th>RNC</th>
                     <th>Monto Solicitado</th>
                     <th>Interés</th>
-                    <th>ID de Pago</th>
                     <th>Monto de Deuda</th>
                     <th>Reenganchado</th>
                     <th>Puntos</th>
@@ -370,7 +369,6 @@ if ($result) {
                 <td>' . $row['RNC'] . '</td>
                 <td>' . $row['MontoSolicitado'] . '</td>
                 <td>' . $row['Interes'] . '</td>
-                <td>' . $row['IdPago'] . '</td>
                 <td>' . $row['MontoDeuda'] . '</td>
                 <td>' . $row['Reenganchado'] . '</td>
                 <td>' . $row['Puntos'] . '</td>
@@ -397,7 +395,6 @@ if ($result) {
             <th>RNC</th>
             <th>Monto Solicitado</th>
             <th>Interés</th>
-            <th>ID de Pago</th>
             <th>Monto de Deuda</th>
             <th>Reenganchado</th>
             <th>Puntos</th>
@@ -466,10 +463,6 @@ if ($result) {
                             <div class="form-group">
                                 <label for="editInteres">Interés:</label>
                                 <input type="text" class="form-control" id="editInteres" name="editInteres">
-                            </div>
-                            <div class="form-group">
-                                <label for="editIdPago">ID de Pago:</label>
-                                <input type="text" class="form-control" id="editIdPago" name="editIdPago">
                             </div>
                         </div>
                     </div>
@@ -551,7 +544,6 @@ if ($result) {
                   $("#editRNC").val(response.RNC);
                   $("#editMontoSolicitado").val(response.MontoSolicitado);
                   $("#editInteres").val(response.Interes);
-                  $("#editIdPago").val(response.IdPago);
                   $("#editMontoDeuda").val(response.MontoDeuda);
                   $("#editReenganchado").val(response.Reenganchado);
                   $("#editPuntos").val(response.Puntos);
