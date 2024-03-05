@@ -235,8 +235,8 @@ if (!$user->is_logged_in()) {
             <div class="col-sm-4">
                 <!-- Group 4 -->
                 <div class="form-group">
-                    <label for="fechaFinalEstimada">Fecha Final Estimada:</label>
-                    <input type="text" class="form-control" id="fechaFinalEstimada" name="fechaFinalEstimada">
+                    <label for="fechaFinalPrestamo">Fecha Final de prestamo:</label>
+                    <input type="text" class="form-control" id="fechaFinalPrestamo" name="fechaFinalPrestamo">
                 </div>
                 <div class="form-group">
                     <label for="cuotasTotales">Cuotas Totales:</label>
@@ -250,8 +250,8 @@ if (!$user->is_logged_in()) {
             <div class="col-sm-4">
                 <!-- Group 5 -->
                 <div class="form-group">
-                    <label for="frecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
-                    <input type="text" class="form-control" id="frecuenciaPagoMensual" name="frecuenciaPagoMensual">
+                    <label for="cantPagosPorMes">Cant. de pagos por mes:</label>
+                    <input type="text" class="form-control" id="cantPagosPorMes" name="cantPagosPorMes">
                 </div>
                 <div class="form-group">
                     <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
@@ -261,7 +261,11 @@ if (!$user->is_logged_in()) {
             </div>
         </div>
         <!-- Add more fields as needed -->
-    </form>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Agregar Préstamo</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+      </form>
 </div>
 <!-- /.card-body -->
 
@@ -270,10 +274,7 @@ if (!$user->is_logged_in()) {
           <!-- Add more form fields as needed -->
           
           <!-- Modal Footer -->
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Agregar Préstamo</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          </div>
+          
         </form>
       </div>
       
@@ -329,7 +330,7 @@ if ($result) {
                     <th>Monto Solicitado</th>
                     <th>Status</th>
                     <th>Pagos</th>
-                    <th>Fecha final estimada</th>
+                    <th>Fecha final de prestamo</th>
                   </tr>
                   </thead>
                   <tbody>';
@@ -353,7 +354,7 @@ if ($result) {
                 <td>' . $row['MontoSolicitado'] . '</td>
                 <td>' . $row['Status'] . '</td>
                 <td>' . $row['PagoId'] . '</td>
-                <td>' . $row['FechaFinalEstimada'] . '</td>
+                <td>' . $row['FechaFinalPrestamo'] . '</td>
               </tr>';
     }
 
@@ -369,7 +370,7 @@ if ($result) {
                     <th>Monto Solicitado</th>
                     <th>Status</th>
                     <th>Pagos</th>
-                    <th>Fecha final estimada</th>
+                    <th>Fecha final de prestamo</th>
             </tr>
           </tfoot>
         </table>
@@ -451,8 +452,8 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             <!-- Group 5 -->
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="editFechaFinalEstimada">Fecha Final Estimada:</label>
-                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="editFechaFinalEstimada">
+                    <label for="editFechaFinalPrestamo">Fecha Final de prestamo:</label>
+                    <input type="text" class="form-control" id="editFechaFinalPrestamo" name="editFechaFinalPrestamo">
                 </div>
                 <div class="form-group">
                     <label for="editCuotasTotales">Cuotas Totales:</label>
@@ -466,8 +467,8 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
                 </div>
                 <div class="form-group">
-                    <label for="editFrecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
-                    <input type="text" class="form-control" id="editFrecuenciaPagoMensual" name="editFrecuenciaPagoMensual">
+                    <label for="editCantPagosPorMes">Frecuencia Pago Mensual:</label>
+                    <input type="text" class="form-control" id="editCantPagosPorMes" name="editCantPagosPorMes">
                 </div>
                 <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
@@ -511,10 +512,10 @@ $.ajax({
         $("#editRemitente").val(response.Remitente);
         $("#editBeneficiario").val(response.Beneficiario);
         $("#editStatus").val(response.Status);
-        $("#editFechaFinalEstimada").val(response.FechaFinalEstimada);
+        $("#editFechaFinalPrestamo").val(response.FechaFinalPrestamo);
         $("#editCuotasTotales").val(response.CuotasTotales);
         $("#editDiasDePagoDelMes").val(response.DiasDePagoDelMes);
-        $("#editFrecuenciaPagoMensual").val(response.FrecuenciaPagoMensual);
+        $("#editCantPagosPorMes").val(response.CantPagosPorMes);
         $("#editFechaDeAprobacion").val(response.FechaDeAprobacion);
         $("#editModal").modal("show");
     },

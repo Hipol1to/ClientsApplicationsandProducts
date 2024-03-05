@@ -355,7 +355,7 @@ if($stmt->rowCount() > 0) {
     $client['Solicitante'] = null;
     $client['PagosRealizados'] = $client['PagoId'] == null ? "Ningún pago realizado" : $client['PagoId'] . " pagos";
     $client['CuotasTotales'] = $client['CuotasTotales'] == null ? "No hay cuotas asignadas" : $client['CuotasTotales'] . " cuotas";
-    $client['FrecuenciaPagoMensual'] = $client['FrecuenciaPagoMensual'] == null ? "N/A" : $client['FrecuenciaPagoMensual'];
+    $client['CantPagosPorMes'] = $client['CantPagosPorMes'] == null ? "N/A" : $client['CantPagosPorMes'];
     $client['DiasDePagoDelMes'] = $client['DiasDePagoDelMes'] == null ? "Ninguno" : $client['DiasDePagoDelMes'];
     $client['FechaDeAprobacion'] = $client['FechaDeAprobacion'] == null ? "No aprobado" : $client['FechaDeAprobacion'];
     $isEnabled = false;
@@ -406,7 +406,7 @@ if($stmt->rowCount() > 0) {
     echo '</div>';
     echo '<div class="form-group">';
     echo '<label for="frecuenciaPago">Cant. min. pagos por mes:</label>';
-    echo '<input type="text" class="form-control" id="frecuenciaPago" name="frecuenciaPago" value="'.htmlspecialchars($client['FrecuenciaPagoMensual']).'" readonly>';
+    echo '<input type="text" class="form-control" id="frecuenciaPago" name="frecuenciaPago" value="'.htmlspecialchars($client['CantPagosPorMes']).'" readonly>';
     echo '</div>';
     echo '<button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>';
     echo '</div>';

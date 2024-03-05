@@ -473,23 +473,23 @@ $inversionesEnColaCount = $result['inversionesEnColaCount'];
 
 // Fetch data from the database based on your criteria
 $sql = "SELECT CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, 
-CONCAT(DATE_FORMAT(i.FechaFinalEstimada, '%Y-%m-%d')) AS FechaFinalEstimada, 
+CONCAT(DATE_FORMAT(i.FechaFinalInversion, '%Y-%m-%d')) AS FechaFinalEstimada, 
 CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-%d')) AS FechaActual, 
 CONCAT(i.Motivo) AS Motivo, 
 CONCAT(i.Remitente) AS Remitente, 
 CONCAT(i.Beneficiario) AS Beneficiario, 
 CONCAT(i.Status) AS estatus, 
-CONCAT(DATE_FORMAT(i.FechaFinalEstimada, '%Y-%m-%d')) AS fechadepago, 
+CONCAT(DATE_FORMAT(i.FechaFinalInversion, '%Y-%m-%d')) AS fechadepago, 
 CONCAT(i.FechaCreacion) AS fechadecreacion,
 CONCAT(i.Id) AS requestId
 FROM (
     SELECT *
     FROM Inversiones
-    WHERE DATE_FORMAT(FechaFinalEstimada, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
+    WHERE DATE_FORMAT(FechaFinalInversion, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
     UNION ALL
     SELECT *
     FROM Prestamos
-    WHERE DATE_FORMAT(FechaFinalEstimada, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
+    WHERE DATE_FORMAT(FechaFinalPrestamo, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
 ) AS i
 JOIN Clientes c ON i.IdCliente = c.Id
 JOIN Usuarios u ON c.IdUsuario = u.Id;";

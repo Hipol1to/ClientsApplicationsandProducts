@@ -20,10 +20,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
     $editRemitente = !empty($_POST['editRemitente']) ? $_POST['editRemitente'] : null;
     $editBeneficiario = !empty($_POST['editBeneficiario']) ? $_POST['editBeneficiario'] : null;
     $editStatus = $_POST['editStatus'];
-    $editFechaFinalEstimada = !empty($_POST['editFechaFinalEstimada']) ? $_POST['editFechaFinalEstimada'] : null;
+    $editFechaFinalPrestamo = !empty($_POST['editFechaFinalPrestamo']) ? $_POST['editFechaFinalPrestamo'] : null;
     $editCuotasTotales = !empty($_POST['editCuotasTotales']) ? $_POST['editCuotasTotales'] : null;
     $editDiasDePagoDelMes = !empty($_POST['editDiasDePagoDelMes']) ? $_POST['editDiasDePagoDelMes'] : null;
-    $editFrecuenciaPagoMensual = !empty($_POST['editFrecuenciaPagoMensual']) ? $_POST['editFrecuenciaPagoMensual'] : null;
+    $editCantPagosPorMes = !empty($_POST['editCantPagosPorMes']) ? $_POST['editCantPagosPorMes'] : null;
     $editFechaDeAprobacion = !empty($_POST['editFechaDeAprobacion']) ? $_POST['editFechaDeAprobacion'] : null;
 
     try {
@@ -38,10 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
                                 Remitente = :remitente, 
                                 Beneficiario = :beneficiario, 
                                 Status = :status, 
-                                FechaFinalEstimada = :fechaFinalEstimada, 
+                                FechaFinalPrestamo = :fechaFinalPrestamo, 
                                 CuotasTotales = :cuotasTotales, 
                                 DiasDePagoDelMes = :diasDePagoDelMes, 
-                                FrecuenciaPagoMensual = :frecuenciaPagoMensual, 
+                                CantPagosPorMes = :cantPagosPorMes, 
                                 FechaDeAprobacion = :fechaDeAprobacion 
                                 WHERE Id = :id");
         $stmt->bindParam(':motivo', $editMotivo, PDO::PARAM_STR);
@@ -53,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         $stmt->bindParam(':remitente', $editRemitente, PDO::PARAM_STR);
         $stmt->bindParam(':beneficiario', $editBeneficiario, PDO::PARAM_STR);
         $stmt->bindParam(':status', $editStatus, PDO::PARAM_STR);
-        $stmt->bindParam(':fechaFinalEstimada', $editFechaFinalEstimada, PDO::PARAM_STR);
+        $stmt->bindParam(':fechaFinalPrestamo', $editFechaFinalPrestamo, PDO::PARAM_STR);
         $stmt->bindParam(':cuotasTotales', $editCuotasTotales, PDO::PARAM_INT);
         $stmt->bindParam(':diasDePagoDelMes', $editDiasDePagoDelMes, PDO::PARAM_INT);
-        $stmt->bindParam(':frecuenciaPagoMensual', $editFrecuenciaPagoMensual, PDO::PARAM_STR);
+        $stmt->bindParam(':cantPagosPorMes', $editCantPagosPorMes, PDO::PARAM_STR);
         $stmt->bindParam(':fechaDeAprobacion', $editFechaDeAprobacion, PDO::PARAM_STR);
         $stmt->bindParam(':id', $editId, PDO::PARAM_INT);
 
