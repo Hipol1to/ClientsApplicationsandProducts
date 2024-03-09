@@ -34,6 +34,9 @@ if (!$user->is_logged_in()) {
   <link rel="stylesheet" href="./plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+
+  <!-- Bootstrap Datepicker CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
   <!-- Preloader -->
   <div class="preloader flex-column justify-content-center align-items-center">
     <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
@@ -229,23 +232,24 @@ if (!$user->is_logged_in()) {
                 </div>
                 <div class="form-group">
                     <label for="status">Status:</label>
-                    <input type="text" class="form-control" id="status" name="status" required>
+                    <select class="form-control" id="status" name="status" required>
+                    <option value="Aprobado" selected>Aprobado</option>
+                    <option value="En revisión" selected>En revisión</option>
+                    <option value="Rechazado" selected>Rechazado</option>
+                </select>
                 </div>
             </div>
             <div class="col-sm-4">
                 <!-- Group 4 -->
                 <div class="form-group">
-                    <label for="fechaFinalPrestamo">Fecha Final de prestamo:</label>
-                    <input type="text" class="form-control" id="fechaFinalPrestamo" name="fechaFinalPrestamo">
-                </div>
+    <label for="fechaFinalPrestamo">Fecha Final de prestamo:</label>
+    <input type="text" class="form-control datepicker" id="fechaFinalPrestamo" name="fechaFinalPrestamo">
+  </div>
                 <div class="form-group">
                     <label for="cuotasTotales">Cuotas Totales:</label>
                     <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales">
                 </div>
-                <div class="form-group">
-                    <label for="diasDePagoDelMes">Dias de Pago del Mes:</label>
-                    <input type="text" class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes">
-                </div>
+                
             </div>
             <div class="col-sm-4">
                 <!-- Group 5 -->
@@ -255,8 +259,16 @@ if (!$user->is_logged_in()) {
                 </div>
                 <div class="form-group">
                     <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
+                    <input type="text" class="form-control datepicker" id="fechaDeAprobacion" name="fechaDeAprobacion">
                 </div>
+                <!-- Add more form groups for group 5 here -->
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 6 -->
+                <div class="form-group">
+    <label for="diasDePagoDelMes">Días de Pago del Mes:</label>
+    <select class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes[]" multiple></select>
+</div>
                 <!-- Add more form groups for group 5 here -->
             </div>
         </div>
@@ -642,5 +654,49 @@ $.ajax({
     });
   });
 </script>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      startDate: new Date() // Set the start date as today
+    });
+  });
+</script>
+
+<script>
+  // Function to dynamically generate options for select dropdown
+function generateOptions() {
+    var select = document.getElementById("diasDePagoDelMes");
+    var numDias = document.getElementById("numeroDias").value;
+
+    // Clear existing options
+    select.innerHTML = "";
+
+    // Generate options for the specified number of days
+    for (var i = 1; i <= numDias; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = "Day " + i;
+        select.appendChild(option);
+    }
+}
+
+// Event listener to call generateOptions function when the number of days changes
+document.getElementById("numeroDias").addEventListener("change", generateOptions);
+
+// Initial call to generateOptions function to populate the select dropdown based on initial value
+generateOptions();
+
+</script>
+
+
 </body>
 </html>

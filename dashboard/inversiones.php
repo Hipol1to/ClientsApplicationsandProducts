@@ -356,7 +356,7 @@ if ($result) {
                 <td>' . $row['MontoSolicitado'] . '</td>
                 <td>' . $row['Status'] . '</td>
                 <td>' . $row['PagoId'] . '</td>
-                <td>' . $row['FechaFinalEstimada'] . '</td>
+                <td>' . $row['FechaFinalInversion'] . '</td>
               </tr>';
     }
 
