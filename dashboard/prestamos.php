@@ -1,4 +1,4 @@
-<?php
+ <?php
 require('../includes/config.php');
 
 if (!$user->is_logged_in()) { 
@@ -179,7 +179,6 @@ if (!$user->is_logged_in()) {
       <!-- Modal Body -->
       <div class="modal-body">
         <!-- Form -->
-        <form action="add_client.php" method="post">
           <!-- Form fields -->
           <div class="form-group">
             <div class="card">
@@ -188,7 +187,7 @@ if (!$user->is_logged_in()) {
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-    <form action="add_client.php" method="post">
+    <form onsubmit="return isFormValid()" id="formAddPrestamo" action="add_prestamo.php" method="post">
         <div class="row">
             <div class="col-sm-4">
                 <!-- Group 1 -->
@@ -202,33 +201,34 @@ if (!$user->is_logged_in()) {
                 </div>
                 <div class="form-group">
                     <label for="montoAprobado">Monto Aprobado:</label>
-                    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado">
+                    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado" required>
                 </div>
             </div>
             <div class="col-sm-4">
                 <!-- Group 2 -->
                 <div class="form-group">
                     <label for="montoPagado">Monto Pagado:</label>
-                    <input type="text" class="form-control" id="montoPagado" name="montoPagado">
+                    <input type="text" class="form-control" id="montoPagado" name="montoPagado" required>
                 </div>
                 <div class="form-group">
                     <label for="tasaDeInteres">Tasa de Interes:</label>
-                    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres">
+                    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" required>
                 </div>
                 <div class="form-group">
                     <label for="montoRecargo">Monto Recargo:</label>
-                    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo">
+                    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo" required>
                 </div>
             </div>
             <div class="col-sm-4">
                 <!-- Group 3 -->
                 <div class="form-group">
                     <label for="remitente">Remitente:</label>
-                    <input type="text" class="form-control" id="remitente" name="remitente">
+                    <input type="text" class="form-control" id="remitente" name="remitente" required>
                 </div>
                 <div class="form-group">
-                    <label for="beneficiario">Beneficiario:</label>
-                    <input type="text" class="form-control" id="beneficiario" name="beneficiario">
+                  <label for="beneficiario">Beneficiario:</label>
+                  <input type="text" class="form-control" id="beneficiarioInput" name="beneficiario" required>
+                  <div id="beneficiarioDropdown" class="dropdown-content"></div>
                 </div>
                 <div class="form-group">
                     <label for="status">Status:</label>
@@ -243,38 +243,40 @@ if (!$user->is_logged_in()) {
                 <!-- Group 4 -->
                 <div class="form-group">
     <label for="fechaFinalPrestamo">Fecha Final de prestamo:</label>
-    <input type="text" class="form-control datepicker" id="fechaFinalPrestamo" name="fechaFinalPrestamo">
+    <input type="text" class="form-control datepicker" id="fechaFinalPrestamo" name="fechaFinalPrestamo" required>
   </div>
                 <div class="form-group">
                     <label for="cuotasTotales">Cuotas Totales:</label>
-                    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales">
+                    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales" required>
                 </div>
                 
             </div>
             <div class="col-sm-4">
                 <!-- Group 5 -->
                 <div class="form-group">
-                    <label for="cantPagosPorMes">Cant. de pagos por mes:</label>
-                    <input type="text" class="form-control" id="cantPagosPorMes" name="cantPagosPorMes">
-                </div>
+    <label for="cantPagosPorMes">Cantidad de Pagos por Mes:</label>
+    <input type="number" class="form-control" id="cantPagosPorMes" name="cantPagosPorMes" required>
+</div>
                 <div class="form-group">
                     <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control datepicker" id="fechaDeAprobacion" name="fechaDeAprobacion">
+                    <input type="text" class="form-control datepicker" id="fechaDeAprobacion" name="fechaDeAprobacion" required>
                 </div>
                 <!-- Add more form groups for group 5 here -->
             </div>
             <div class="col-sm-4">
                 <!-- Group 6 -->
                 <div class="form-group">
-    <label for="diasDePagoDelMes">Días de Pago del Mes:</label>
-    <select class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes[]" multiple></select>
+    <label id="labelDiasDePagoDelMes" for="diasDePagoDelMes">Días de Pago del Mes:</label>
+    <div id="diasDePagoContainer"></div>
+    
+    </select>
 </div>
                 <!-- Add more form groups for group 5 here -->
             </div>
         </div>
         <!-- Add more fields as needed -->
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Agregar Préstamo</button>
+            <button id="agregarPrestamoSubmitButton" type="submit" class="btn btn-primary">Agregar Préstamo</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           </div>
       </form>
@@ -287,7 +289,7 @@ if (!$user->is_logged_in()) {
           
           <!-- Modal Footer -->
           
-        </form>
+        
       </div>
       
     </div>
@@ -655,9 +657,6 @@ $.ajax({
   });
 </script>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <!-- Bootstrap Datepicker JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
@@ -673,27 +672,165 @@ $.ajax({
 
 <script>
   // Function to dynamically generate options for select dropdown
-function generateOptions() {
-    var select = document.getElementById("diasDePagoDelMes");
-    var numDias = document.getElementById("numeroDias").value;
+  function generateOptions() {
+    var container = document.getElementById("diasDePagoContainer");
+    var numSelects = document.getElementById("cantPagosPorMes").value;
 
-    // Clear existing options
-    select.innerHTML = "";
+    // Clear existing selects
+    container.innerHTML = "";
 
-    // Generate options for the specified number of days
-    for (var i = 1; i <= numDias; i++) {
-        var option = document.createElement("option");
-        option.value = i;
-        option.text = "Day " + i;
-        select.appendChild(option);
+    // Generate select elements
+    for (var i = 0; i < numSelects; i++) {
+        var select = document.createElement("select");
+        select.className = "form-control";
+        select.name = "diasDePagoDelMes_" + (i+1); // Append index to name
+        select.id = "diasDePagoDelMes_" + (i+1); // Append index to id
+
+        // Generate options for each select
+        for (var j = 1; j <= 28; j++) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = "Día# " + j;
+            select.appendChild(option);
+        }
+
+        // Append select to container
+        select.selectedIndex = (i);
+        container.appendChild(select);
     }
 }
 
 // Event listener to call generateOptions function when the number of days changes
-document.getElementById("numeroDias").addEventListener("change", generateOptions);
+document.getElementById("cantPagosPorMes").addEventListener("change", generateOptions);
 
 // Initial call to generateOptions function to populate the select dropdown based on initial value
 generateOptions();
+
+
+</script>
+
+<script>
+
+// Flag to track whether an option has been selected
+var optionSelected = false;
+
+// Function to fetch autosuggestion data from the database
+function fetchUsuarios(str) {
+  window.globalVariable = true;
+    if (str.length == 0) {
+        document.getElementById("beneficiarioDropdown").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("beneficiarioDropdown").innerHTML = this.responseText;
+
+                // Add event listeners to the options
+                var options = document.querySelectorAll(".dropdown-content .option");
+                options.forEach(function(option) {
+                    option.addEventListener("click", function() {
+                        // Set the input field value to the selected option
+                        document.getElementById("beneficiarioInput").value = this.textContent;
+                        // Clear the dropdown after selecting an option
+                        document.getElementById("beneficiarioDropdown").innerHTML = "";
+                        // Set the flag to true since an option has been selected
+                        console.log("optionSelected = true")
+                        optionSelected = true;
+                        if (optionSelected) {
+                          console.log("la selesionate");
+                          const beneficiarioTextField = document.getElementById('beneficiarioInput');
+                          const agregarPrestamoButton = document.getElementById('agregarPrestamoSubmitButton');
+                          // Add a class to the element/
+                          beneficiarioTextField.classList.remove('is-invalid');
+                          agregarPrestamoButton.classList.remove('disabled');
+                        }
+    
+                    });
+                });
+            }
+        };
+        xmlhttp.open("GET", "get_usuarios.php?q=" + str, true);
+        xmlhttp.send();
+
+        //terminamo
+        if (!optionSelected) {
+      console.log("no la selesionate");
+      const beneficiarioTextField = document.getElementById('beneficiarioInput');
+    const agregarPrestamoButton = document.getElementById('agregarPrestamoSubmitButton');
+    // Add a class to the element/
+    beneficiarioTextField.classList.add('is-invalid');
+    agregarPrestamoButton.classList.add('disabled');
+    }
+    }
+}
+
+// Event listener to call fetchUsuarios function when the input field value changes
+document.getElementById("beneficiarioInput").addEventListener("input", function() {
+    // Reset the flag when the input changes
+    optionSelected = false;
+    fetchUsuarios(this.value);
+    
+});
+
+
+function isFormValid() {
+    // Check for elements with 'is-invalid' class or disabled buttons
+    const xpathExpression = "//*[contains(@class,'is-invalid')] | //button[contains(@class,'disabled')]";
+    const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    const element = result.singleNodeValue;
+
+    // If any element with 'is-invalid' class or disabled button is found, return false
+    if (element !== null) {
+        console.log("Invalid element found:", element);
+        return false;
+    }
+
+    // Check for duplicate values in 'diasDePagoDelMes' select elements
+    const xpathExpression2 = "//select[contains(@id,'diasDePagoDelMes_')]";
+    const result2 = document.evaluate(xpathExpression2, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    const totalElements2 = result2.snapshotLength;
+    const elementValues2 = [];
+
+    for (let i = 0; i < totalElements2; i++) {
+        const value = result2.snapshotItem(i).value;
+        if (elementValues2.includes(value)) {
+            // If a duplicate value is found, display an error message and return false
+            const message = 'Los días de pago no pueden ser iguales';
+            const existingMessage = document.querySelector('.error-message');
+            if (!existingMessage) {
+                showMessageBelowElement(result2.snapshotItem(i), message);
+                console.log(message);
+            }
+            return false;
+        }
+        elementValues2.push(value);
+    }
+
+    // If all validations pass, return true
+    return true;
+}
+
+function showMessageBelowElement(element, message) {
+    // Create a new div element for the error message
+    const errorMessageDiv = document.createElement('div');
+    errorMessageDiv.textContent = message;
+    errorMessageDiv.style.color = 'red';
+    errorMessageDiv.className = 'error-message'; // Adding a class for identification
+
+    // Insert the error message div below the given element
+    element.parentNode.insertBefore(errorMessageDiv, element.nextSibling);
+}
+
+
+
+
+
+
+
+  
+
+
 
 </script>
 
