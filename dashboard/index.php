@@ -472,27 +472,26 @@ $inversionesEnColaCount = $result['inversionesEnColaCount'];
 // Include the database connection file
 
 // Fetch data from the database based on your criteria
-$sql = "SELECT CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, 
-CONCAT(DATE_FORMAT(i.FechaFinalInversion, '%Y-%m-%d')) AS FechaFinalEstimada, 
-CONCAT(DATE_FORMAT(CURDATE(), '%Y-%m-%d')) AS FechaActual, 
-CONCAT(i.Motivo) AS Motivo, 
-CONCAT(i.Remitente) AS Remitente, 
-CONCAT(i.Beneficiario) AS Beneficiario, 
-CONCAT(i.Status) AS estatus, 
-CONCAT(DATE_FORMAT(i.FechaFinalInversion, '%Y-%m-%d')) AS fechadepago, 
-CONCAT(i.FechaCreacion) AS fechadecreacion,
-CONCAT(i.Id) AS requestId
-FROM (
-    SELECT *
-    FROM Inversiones
-    WHERE DATE_FORMAT(FechaFinalInversion, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
-    UNION ALL
-    SELECT *
-    FROM Prestamos
-    WHERE DATE_FORMAT(FechaFinalPrestamo, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(CURDATE(), INTERVAL 1 MONTH), '%Y-%m-%d')
-) AS i
-JOIN Clientes c ON i.IdCliente = c.Id
-JOIN Usuarios u ON c.IdUsuario = u.Id;";
+$sql = "SELECT 
+    CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, 
+    DATE_FORMAT(i.FechaFinalPrestamo, '%Y-%m-%d') AS FechaFinalEstimada, 
+    DATE_FORMAT(CURDATE(), '%Y-%m-%d') AS FechaActual, 
+    CONCAT(i.Motivo) AS Motivo, 
+    CONCAT(i.Remitente) AS Remitente, 
+    CONCAT(i.Beneficiario) AS Beneficiario, 
+    CONCAT(i.Status) AS estatus, 
+    DATE_FORMAT(i.FechaPagoMensual, '%Y-%m-%d') AS fechadepago, 
+    DATE_FORMAT(i.FechaCreacion, '%Y-%m-%d') AS fechadecreacion,
+    CONCAT(i.Id) AS requestId
+FROM 
+    Prestamos AS i
+JOIN 
+    Clientes c ON i.IdCliente = c.Id
+JOIN 
+    Usuarios u ON c.IdUsuario = u.Id
+WHERE 
+    i.FechaPagoMensual >= DATE_ADD(CURDATE(), INTERVAL 3 DAY)
+";
 
 $result = $db->query($sql);
 
@@ -523,97 +522,82 @@ if ($result) {
     
     // Loop through the fetched results
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      $estimatedTimestamp = strtotime($row['FechaFinalEstimada']);
-      $currentTimestamp = strtotime($row['FechaActual']);
-      $timeLeft = "";
-      $classForTime = "";
-      $timeDiff = $estimatedTimestamp - $currentTimestamp;
+    $estimatedTimestamp = strtotime($row['fechadepago']);
+    $currentTimestamp = strtotime($row['FechaActual']);
+    $timeLeft = "";
+    $classForTime = "";
+    $timeDiff = $estimatedTimestamp - $currentTimestamp;
 
-      // Convert time difference to days, weeks, and months
-      $daysDiff = floor($timeDiff / (60 * 60 * 24));
-      $weeksDiff = floor($daysDiff / 7);
-      $monthsDiff = floor($daysDiff / 30);
+    // Convert time difference to days
+    $daysDiff = floor($timeDiff / (60 * 60 * 24));
 
-      // Set boolean variables based on the time differences
-      $greaterThanOneMonth = $monthsDiff >= 1;
-      $greaterThanTwoWeeks = $weeksDiff >= 2;
-      $greaterThanOneWeek = $weeksDiff >= 1;
-      $greaterThanThreeDays = $daysDiff >= 3;
+    // Set boolean variables based on the time differences
+    $greaterThanOneMonth = $daysDiff >= 30;
+    $greaterThanTwoWeeks = $daysDiff >= 14;
+    $greaterThanOneWeek = $daysDiff >= 7;
+    $greaterThanThreeDays = $daysDiff >= 3;
 
-      $exactOneMonth = $monthsDiff = 1;
-      $exactTwoWeeks = $weeksDiff = 2;
-      $exactOneWeek = $weeksDiff = 1;
-      $exactThreeDays = $daysDiff = 3;
-
-      $dateAmmount = array(
-        "greaterThanOneMonth" => $greaterThanOneMonth,
-        "exactOneMonth" => $exactOneMonth,
-        "greaterThanTwoWeeks" => $greaterThanTwoWeeks,
-        "exactTwoWeeks" => $exactTwoWeeks,
-        "greaterThanOneWeek" => $greaterThanOneWeek,
-        "exactOneWeek" => $exactOneWeek,
-        "greaterThanThreeDays" => $greaterThanThreeDays,
-        "exactThreeDays" => $exactThreeDays
-      );
-      if($dateAmmount["greaterThanOneMonth"]) { 
+    if ($greaterThanOneMonth) {
         $timeLeft = "+1 Mes";  
         $classForTime = "badge badge-primary";
-      } elseif ($dateAmmount["exactOneMonth"]) {
+    } elseif ($daysDiff == 30) {
         $timeLeft = "1 Mes";  
         $classForTime = "badge badge-primary";
-      } elseif ($dateAmmount["greaterThanTwoWeeks"]) {
+    } elseif ($greaterThanTwoWeeks) {
         $timeLeft = "2 Semanas y varios días";  
         $classForTime = "badge badge-success";
-      } elseif ($dateAmmount["exactTwoWeeks"]) {
+    } elseif ($daysDiff == 14) {
         $timeLeft = "2 Semanas";  
         $classForTime = "badge badge-success";
-      } elseif ($dateAmmount["greaterThanOneWeek"]) {
+    } elseif ($greaterThanOneWeek) {
         $timeLeft = "1 Semana y varios días";  
         $classForTime = "badge badge-info";
-      } elseif ($dateAmmount["exactOneWeek"]) {
+    } elseif ($daysDiff == 7) {
         $timeLeft = "1 Semana";  
         $classForTime = "badge badge-info";
-      } elseif ($dateAmmount["greaterThanThreeDays"]) {
+    } elseif ($greaterThanThreeDays) {
         $timeLeft = "3 Días o más";  
         $classForTime = "badge badge-danger";
-      } elseif ($dateAmmount["exactThreeDays"]) {
+    } elseif ($daysDiff >= 3) {
         $timeLeft = "3 Días";  
         $classForTime = "badge badge-danger";
-      }
-        $modalId = 'modal_' . $row['requestId'];
-        
-        echo '<li data-toggle="modal" data-target="#' . $modalId . '">
-                <span class="handle">
-                  <i class="fas fa-ellipsis-v"></i>
-                  <i class="fas fa-ellipsis-v"></i>
-                </span>
-                <span class="text">' . $row['DisplayText'] . '</span>
-                <small class="'.$classForTime.'"><i class="far fa-clock"></i> '.$timeLeft.'</small>
-                <div class="tools"></div>
-              </li>';
-        
-        // Modal for each item
-        echo '<div class="modal fade" id="' . $modalId . '" tabindex="-1" role="dialog" aria-labelledby="' . $modalId . 'Label" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="' . $modalId . 'Label">Detalles de la solicitud</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">
-                      <p><strong>Motivo:</strong> ' . $row['Motivo'] . '</p>
-                      <p><strong>Remitente:</strong> ' . $row['Remitente'] . '</p>
-                      <p><strong>Beneficiario:</strong> ' . $row['Beneficiario'] . '</p>
-                      <p><strong>Estatus:</strong> ' . $row['estatus'] . '</p>
-                      <p><strong>Fecha de Pago:</strong> ' . $row['fechadepago'] . '</p>
-                      <p><strong>Fecha de Creación:</strong> ' . $row['fechadecreacion'] . '</p>
-                    </div>
-                  </div>
-                </div>
-              </div>';
     }
+
+    $modalId = 'modal_' . $row['requestId'];
+        
+    echo '<li data-toggle="modal" data-target="#' . $modalId . '">
+            <span class="handle">
+              <i class="fas fa-ellipsis-v"></i>
+              <i class="fas fa-ellipsis-v"></i>
+            </span>
+            <span class="text">' . $row['DisplayText'] . '</span>
+            <small class="'.$classForTime.'"><i class="far fa-clock"></i> '.$timeLeft.'</small>
+            <div class="tools"></div>
+          </li>';
+
+    // Modal for each item
+    echo '<div class="modal fade" id="' . $modalId . '" tabindex="-1" role="dialog" aria-labelledby="' . $modalId . 'Label" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="' . $modalId . 'Label">Detalles de la solicitud</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <p><strong>Motivo:</strong> ' . $row['Motivo'] . '</p>
+                  <p><strong>Remitente:</strong> ' . $row['Remitente'] . '</p>
+                  <p><strong>Beneficiario:</strong> ' . $row['Beneficiario'] . '</p>
+                  <p><strong>Estatus:</strong> ' . $row['estatus'] . '</p>
+                  <p><strong>Fecha de Pago:</strong> ' . $row['fechadepago'] . '</p>
+                  <p><strong>Fecha de Creación:</strong> ' . $row['fechadecreacion'] . '</p>
+                </div>
+              </div>
+            </div>
+          </div>';
+}
+
     
     // Close the card body and footer
     echo '</ul>
