@@ -473,144 +473,157 @@ $inversionesEnColaCount = $result['inversionesEnColaCount'];
 
 // Fetch data from the database based on your criteria
 $sql = "SELECT 
-    CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, 
-    DATE_FORMAT(i.FechaFinalPrestamo, '%Y-%m-%d') AS FechaFinalEstimada, 
-    DATE_FORMAT(CURDATE(), '%Y-%m-%d') AS FechaActual, 
-    CONCAT(i.Motivo) AS Motivo, 
-    CONCAT(i.Remitente) AS Remitente, 
-    CONCAT(i.Beneficiario) AS Beneficiario, 
-    CONCAT(i.Status) AS estatus, 
-    DATE_FORMAT(i.FechaPagoMensual, '%Y-%m-%d') AS fechadepago, 
-    DATE_FORMAT(i.FechaCreacion, '%Y-%m-%d') AS fechadecreacion,
-    CONCAT(i.Id) AS requestId
+CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, 
+i.FechaFinalPrestamo AS FechaFinalEstimada, 
+DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s') AS FechaActual, 
+CONCAT(i.Motivo) AS Motivo, 
+CONCAT(i.Remitente) AS Remitente, 
+CONCAT(i.Beneficiario) AS Beneficiario, 
+CONCAT(i.Status) AS estatus, 
+i.FechaPagoMensual AS fechadepago, 
+i.FechaCreacion AS fechadecreacion,
+CONCAT(i.Id) AS requestId
 FROM 
-    Prestamos AS i
+Prestamos AS i
 JOIN 
-    Clientes c ON i.IdCliente = c.Id
+Clientes c ON i.IdCliente = c.Id
 JOIN 
-    Usuarios u ON c.IdUsuario = u.Id
+Usuarios u ON c.IdUsuario = u.Id
 WHERE 
-    i.FechaPagoMensual >= DATE_ADD(CURDATE(), INTERVAL 3 DAY)
-";
+i.FechaPagoMensual >= DATE_ADD(CURDATE(), INTERVAL 1 MINUTE)";
 
 $result = $db->query($sql);
 
 // Check if query execution was successful
 if ($result) {
-    // Output the card structure
-    echo '<div class="card">
-              <div class="card-header">
-                <h3 class="card-title">
-                  <i class="ion ion-clipboard mr-1"></i>
-                  Pagos próximos a vencer
-                </h3>
-                <div class="card-tools">
-                  <ul class="pagination pagination-sm">
-                  <!--
-                    <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
-                    <li class="page-item"><a href="#" class="page-link">1</a></li>
-                    <li class="page-item"><a href="#" class="page-link">2</a></li>
-                    <li class="page-item"><a href="#" class="page-link">3</a></li>
-                    <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
-                    -->
-                  </ul>
-                </div>
-              </div>
-              <!-- /.card-header -->
-              <div class="card-body">
-                <ul class="todo-list" data-widget="todo-list">';
-    
-    // Loop through the fetched results
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-    $estimatedTimestamp = strtotime($row['fechadepago']);
-    $currentTimestamp = strtotime($row['FechaActual']);
-    $timeLeft = "";
-    $classForTime = "";
-    $timeDiff = $estimatedTimestamp - $currentTimestamp;
-
-    // Convert time difference to days
-    $daysDiff = floor($timeDiff / (60 * 60 * 24));
-
-    // Set boolean variables based on the time differences
-    $greaterThanOneMonth = $daysDiff >= 30;
-    $greaterThanTwoWeeks = $daysDiff >= 14;
-    $greaterThanOneWeek = $daysDiff >= 7;
-    $greaterThanThreeDays = $daysDiff >= 3;
-
-    if ($greaterThanOneMonth) {
-        $timeLeft = "+1 Mes";  
-        $classForTime = "badge badge-primary";
-    } elseif ($daysDiff == 30) {
-        $timeLeft = "1 Mes";  
-        $classForTime = "badge badge-primary";
-    } elseif ($greaterThanTwoWeeks) {
-        $timeLeft = "2 Semanas y varios días";  
-        $classForTime = "badge badge-success";
-    } elseif ($daysDiff == 14) {
-        $timeLeft = "2 Semanas";  
-        $classForTime = "badge badge-success";
-    } elseif ($greaterThanOneWeek) {
-        $timeLeft = "1 Semana y varios días";  
-        $classForTime = "badge badge-info";
-    } elseif ($daysDiff == 7) {
-        $timeLeft = "1 Semana";  
-        $classForTime = "badge badge-info";
-    } elseif ($greaterThanThreeDays) {
-        $timeLeft = "3 Días o más";  
-        $classForTime = "badge badge-danger";
-    } elseif ($daysDiff >= 3) {
-        $timeLeft = "3 Días";  
-        $classForTime = "badge badge-danger";
-    }
-
-    $modalId = 'modal_' . $row['requestId'];
-        
-    echo '<li data-toggle="modal" data-target="#' . $modalId . '">
-            <span class="handle">
-              <i class="fas fa-ellipsis-v"></i>
-              <i class="fas fa-ellipsis-v"></i>
-            </span>
-            <span class="text">' . $row['DisplayText'] . '</span>
-            <small class="'.$classForTime.'"><i class="far fa-clock"></i> '.$timeLeft.'</small>
-            <div class="tools"></div>
-          </li>';
-
-    // Modal for each item
-    echo '<div class="modal fade" id="' . $modalId . '" tabindex="-1" role="dialog" aria-labelledby="' . $modalId . 'Label" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="' . $modalId . 'Label">Detalles de la solicitud</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </div>
-                <div class="modal-body">
-                  <p><strong>Motivo:</strong> ' . $row['Motivo'] . '</p>
-                  <p><strong>Remitente:</strong> ' . $row['Remitente'] . '</p>
-                  <p><strong>Beneficiario:</strong> ' . $row['Beneficiario'] . '</p>
-                  <p><strong>Estatus:</strong> ' . $row['estatus'] . '</p>
-                  <p><strong>Fecha de Pago:</strong> ' . $row['fechadepago'] . '</p>
-                  <p><strong>Fecha de Creación:</strong> ' . $row['fechadecreacion'] . '</p>
-                </div>
+  // Output the card structure
+  echo '<div class="card">
+            <div class="card-header">
+              <h3 class="card-title">
+                <i class="ion ion-clipboard mr-1"></i>
+                Pagos próximos a vencer
+              </h3>
+              <div class="card-tools">
+                <ul class="pagination pagination-sm">
+                <!--
+                  <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+                  <li class="page-item"><a href="#" class="page-link">1</a></li>
+                  <li class="page-item"><a href="#" class="page-link">2</a></li>
+                  <li class="page-item"><a href="#" class="page-link">3</a></li>
+                  <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                  -->
+                </ul>
               </div>
             </div>
-          </div>';
+            <!-- /.card-header -->
+            <div class="card-body">
+              <ul class="todo-list" data-widget="todo-list">';
+
+  // Loop through the fetched results
+  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+      $estimatedTimestamp = strtotime($row['fechadepago']);
+      $currentTimestamp = strtotime($row['FechaActual']);
+      $timeLeft = "";
+      $classForTime = "";
+      $timeDiff = $estimatedTimestamp - $currentTimestamp;
+
+      // Convert time difference to days and hours
+      $daysDiff = floor($timeDiff / (60 * 60 * 24));
+      $hoursDiff = floor($timeDiff / (60 * 60));
+
+      // Set boolean variables based on the time differences
+      $greaterThanOneMonth = $daysDiff >= 30;
+      $greaterThanTwoWeeks = $daysDiff >= 14;
+      $greaterThanOneWeek = $daysDiff >= 7;
+      $greaterThanThreeDays = $daysDiff >= 3;
+      $greaterThanTwoDays = $daysDiff >= 2;
+      $greaterThanOneDay = $hoursDiff <= 47 && $daysDiff <= 1;
+      $greaterThan24H = $hoursDiff <= 24 || $hoursDiff >= 47 || $daysDiff <= 1;
+
+      if ($greaterThanOneMonth) {
+          $timeLeft = "+1 Mes";  
+          $classForTime = "badge badge-primary";
+      } elseif ($daysDiff == 30) {
+          $timeLeft = "1 Mes";  
+          $classForTime = "badge badge-primary";
+      } elseif ($greaterThanTwoWeeks) {
+          $timeLeft = "2 Semanas y varios días";  
+          $classForTime = "badge badge-success";
+      } elseif ($daysDiff == 14) {
+          $timeLeft = "2 Semanas";  
+          $classForTime = "badge badge-success";
+      } elseif ($greaterThanOneWeek) {
+          $timeLeft = "1 Semana y varios días";  
+          $classForTime = "badge badge-info";
+      } elseif ($daysDiff == 7) {
+          $timeLeft = "1 Semana";  
+          $classForTime = "badge badge-info";
+      } elseif ($greaterThanThreeDays) {
+          $timeLeft = "3 Días o más";  
+          $classForTime = "badge badge-danger";
+      } elseif ($daysDiff >= 3) {
+          $timeLeft = "3 Días";  
+          $classForTime = "badge badge-danger";
+      } elseif ($greaterThanTwoDays) {
+        $timeLeft = "2 Días o más";  
+        $classForTime = "badge badge-danger";
+      } elseif ($daysDiff >= 2) {
+        $timeLeft = "2 Días";  
+        $classForTime = "badge badge-danger";
+      } elseif ($greaterThanOneDay) {
+          $timeLeft = "$daysDiff Día y varias horas";  
+          $classForTime = "badge badge-warning";
+      }
+      echo $daysDiff;
+
+      $modalId = 'modal_' . $row['requestId'];
+
+      echo '<li data-toggle="modal" data-target="#' . $modalId . '">
+              <span class="handle">
+                <i class="fas fa-ellipsis-v"></i>
+                <i class="fas fa-ellipsis-v"></i>
+              </span>
+              <span class="text">' . $row['DisplayText'] . '</span>
+              <small class="'.$classForTime.'"><i class="far fa-clock"></i> '.$timeLeft.'</small>
+              <div class="tools"></div>
+            </li>';
+
+      // Modal for each item
+      echo '<div class="modal fade" id="' . $modalId . '" tabindex="-1" role="dialog" aria-labelledby="' . $modalId . 'Label" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="' . $modalId . 'Label">Detalles de la solicitud</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <p><strong>Motivo:</strong> ' . $row['Motivo'] . '</p>
+                    <p><strong>Remitente:</strong> ' . $row['Remitente'] . '</p>
+                    <p><strong>Beneficiario:</strong> ' . $row['Beneficiario'] . '</p>
+                    <p><strong>Estatus:</strong> ' . $row['estatus'] . '</p>
+                    <p><strong>Fecha de Pago:</strong> ' . $row['fechadepago'] . '</p>
+                    <p><strong>Fecha de Creación:</strong> ' . $row['fechadecreacion'] . '</p>
+                  </div>
+                </div>
+              </div>
+            </div>';
+  }
+
+  // Close the card body and footer
+  echo '</ul>
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+         <!-- <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Agregar evento</button>-->
+        </div>
+      </div>';
+} else {
+  // Display an error message if the query fails
+  echo "Error: " . $db->errorInfo();
 }
 
-    
-    // Close the card body and footer
-    echo '</ul>
-          </div>
-          <!-- /.card-body -->
-          <div class="card-footer clearfix">
-           <!-- <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Agregar evento</button>-->
-          </div>
-        </div>';
-} else {
-    // Display an error message if the query fails
-    echo "Error: " . $db->errorInfo();
-}
 ?>
 
 
