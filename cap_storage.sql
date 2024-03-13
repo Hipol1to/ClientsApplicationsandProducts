@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 12, 2024 at 09:00 PM
+-- Generation Time: Mar 13, 2024 at 11:35 PM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -118,17 +118,15 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `IdCliente` int(11) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
-  `MontoAsignado` decimal(10,2) DEFAULT NULL,
-  `MontoPagado` decimal(10,2) DEFAULT NULL,
   `TipoDeInversion` varchar(255) DEFAULT NULL,
   `MontoDividendoEsperado` varchar(255) DEFAULT NULL,
   `PeriodicidadDividendo` varchar(255) DEFAULT NULL,
-  `FechaPagoDividendo` varchar(255) DEFAULT NULL,
+  `FechaPagoDividendo` timestamp NULL DEFAULT NULL,
   `MontoBono` varchar(255) DEFAULT NULL,
   `TasaInteresBono` varchar(255) DEFAULT NULL,
   `PlazoBono` varchar(255) DEFAULT NULL,
   `PeriodicidadInteres` varchar(255) DEFAULT NULL,
-  `FechaPagoBono` varchar(255) DEFAULT NULL,
+  `FechaPagoBono` timestamp NULL DEFAULT NULL,
   `MontoFondoInversion` varchar(255) DEFAULT NULL,
   `TarifaAdministracion` varchar(255) DEFAULT NULL,
   `PeriodicidadTarifaAdm` varchar(255) DEFAULT NULL,
@@ -137,11 +135,8 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   `RendimientoTotal` decimal(10,2) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) DEFAULT NULL,
-  `FechaInicioInversion` varchar(255) DEFAULT NULL,
-  `FechaPagoInversion` varchar(255) DEFAULT NULL,
+  `FechaPagoInicialInversion` timestamp NULL DEFAULT NULL,
   `FechaFinalInversion` timestamp NULL DEFAULT NULL,
-  `DiasDePagoDelMes` int(11) DEFAULT NULL,
-  `CantPagosPorMes` varchar(255) DEFAULT NULL,
   `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
   `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
   `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -153,10 +148,10 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
 -- Dumping data for table `inversiones`
 --
 
-INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `MontoAsignado`, `MontoPagado`, `TipoDeInversion`, `MontoDividendoEsperado`, `PeriodicidadDividendo`, `FechaPagoDividendo`, `MontoBono`, `TasaInteresBono`, `PlazoBono`, `PeriodicidadInteres`, `FechaPagoBono`, `MontoFondoInversion`, `TarifaAdministracion`, `PeriodicidadTarifaAdm`, `CantParticipacion`, `ParticipacionId`, `RendimientoTotal`, `Status`, `PagoId`, `FechaInicioInversion`, `FechaPagoInversion`, `FechaFinalInversion`, `DiasDePagoDelMes`, `CantPagosPorMes`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(4, 1, 'Inversión en acciones', '5000.00', '0.00', 'Acciones', '100.00', 'Trimestral', '2024-03-15', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Activa', NULL, '2024-03-01', NULL, NULL, 30, '1', '2024-03-12 18:23:46', '2024-03-12 18:23:46', '2024-03-12 18:23:46'),
-(5, 2, 'Inversión en bonos', '10000.00', '0.00', 'Bonos', NULL, NULL, NULL, '10000.00', '5%', '1 año', 'Mensual', '2024-04-01', NULL, NULL, NULL, NULL, NULL, NULL, 'Activa', NULL, '2024-03-01', NULL, NULL, 30, '1', '2024-03-12 18:23:47', '2024-03-12 18:23:47', '2024-03-12 18:23:47'),
-(6, 3, 'Inversión en fondos de inversión', '20000.00', '0.00', 'Fondos de inversión', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '20000.00', '2%', 'Trimestral', '1000', NULL, '250.00', 'Activa', NULL, '2024-03-01', NULL, NULL, 30, '1', '2024-03-12 18:23:47', '2024-03-12 18:23:47', '2024-03-12 18:23:47');
+INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `TipoDeInversion`, `MontoDividendoEsperado`, `PeriodicidadDividendo`, `FechaPagoDividendo`, `MontoBono`, `TasaInteresBono`, `PlazoBono`, `PeriodicidadInteres`, `FechaPagoBono`, `MontoFondoInversion`, `TarifaAdministracion`, `PeriodicidadTarifaAdm`, `CantParticipacion`, `ParticipacionId`, `RendimientoTotal`, `Status`, `PagoId`, `FechaPagoInicialInversion`, `FechaFinalInversion`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+(4, 1, 'Inversión en acciones', 'Acciones', '100.00', 'Trimestral', '2024-03-15 04:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Activa', NULL, NULL, NULL, '2024-03-12 18:23:46', '2024-03-12 18:23:46', '2024-03-12 18:23:46'),
+(5, 2, 'Inversión en bonos', 'Bonos', NULL, NULL, NULL, '10000.00', '5%', '1 año', 'Mensual', '2024-04-01 04:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 'Activa', NULL, NULL, NULL, '2024-03-12 18:23:47', '2024-03-12 18:23:47', '2024-03-12 18:23:47'),
+(6, 3, 'Inversión en fondos de inversión', 'Fondos de inversión', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '20000.00', '2%', 'Trimestral', '1000', NULL, '250.00', 'Activa', NULL, NULL, NULL, '2024-03-12 18:23:47', '2024-03-12 18:23:47', '2024-03-12 18:23:47');
 
 -- --------------------------------------------------------
 
@@ -420,7 +415,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) DEFAULT NULL,
-  `FechaPagoMensual` varchar(255) DEFAULT NULL,
+  `FechaPagoMensual` timestamp NULL DEFAULT NULL,
   `FechaFinalPrestamo` timestamp NULL DEFAULT NULL,
   `CuotasTotales` int(3) DEFAULT NULL,
   `DiasDePagoDelMes` int(11) DEFAULT NULL,
@@ -443,9 +438,9 @@ INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoA
 (7, 1, 'Education Loan', NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
 (8, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 6, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
 (27, 4, 'Short-term Loan', NULL, NULL, NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En proceso', 26, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:20:00', '2024-01-28 19:44:54'),
-(28, 7, 'Préstamo para compra de automóvil', '15000.00', '15000.00', '0.00', '8.50', '0.00', 'Banco XYZ', 'John Doe', 'Aprobado', NULL, '2024-03-16 00:00:00', '2024-03-26 04:00:00', 12, 30, 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:31'),
-(29, 7, 'Préstamo para remodelación de casa', '25000.00', '25000.00', '0.00', '7.00', '0.00', 'Banco XYZ', 'Jane Doe', 'Aprobado', NULL, '2024-03-26 00:00:00', '2024-03-26 04:00:00', 24, 15, 'Quincenal', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:36'),
-(30, 7, 'Préstamo para gastos médicos', '10000.00', '10000.00', '0.00', '9.00', '0.00', 'Banco XYZ', 'Alice Smith', 'Aprobado', NULL, '2024-03-13 23:59:00', '2024-03-26 04:00:00', 6, 5, 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 20:47:28');
+(28, 7, 'Préstamo para compra de automóvil', '15000.00', '15000.00', '0.00', '8.50', '0.00', 'Banco XYZ', 'John Doe', 'Aprobado', NULL, '2024-03-16 04:00:00', '2024-03-26 04:00:00', 12, 30, 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:31'),
+(29, 7, 'Préstamo para remodelación de casa', '25000.00', '25000.00', '0.00', '7.00', '0.00', 'Banco XYZ', 'Jane Doe', 'Aprobado', NULL, '2024-03-26 04:00:00', '2024-03-26 04:00:00', 24, 15, 'Quincenal', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:36'),
+(30, 7, 'Préstamo para gastos médicos', '10000.00', '10000.00', '0.00', '9.00', '0.00', 'Banco XYZ', 'Alice Smith', 'Aprobado', NULL, '2024-03-14 03:59:00', '2024-03-26 04:00:00', 6, 5, 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 20:47:28');
 
 -- --------------------------------------------------------
 

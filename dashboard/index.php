@@ -537,8 +537,8 @@ if ($result) {
       $greaterThanOneWeek = $daysDiff >= 7;
       $greaterThanThreeDays = $daysDiff >= 3;
       $greaterThanTwoDays = $daysDiff >= 2;
-      $greaterThanOneDay = $hoursDiff <= 47 && $daysDiff <= 1;
-      $greaterThan24H = $hoursDiff <= 24 || $hoursDiff >= 47 || $daysDiff <= 1;
+      $greaterThanOneDay = $hoursDiff <= 47 && $daysDiff == 1;
+      $greaterThan24H = $hoursDiff <= 24 && $daysDiff <= 1;
 
       if ($greaterThanOneMonth) {
           $timeLeft = "+1 Mes";  
@@ -560,21 +560,23 @@ if ($result) {
           $classForTime = "badge badge-info";
       } elseif ($greaterThanThreeDays) {
           $timeLeft = "3 Días o más";  
-          $classForTime = "badge badge-danger";
+          $classForTime = "badge badge-warning";
       } elseif ($daysDiff >= 3) {
           $timeLeft = "3 Días";  
-          $classForTime = "badge badge-danger";
+          $classForTime = "badge badge-warning";
       } elseif ($greaterThanTwoDays) {
         $timeLeft = "2 Días o más";  
-        $classForTime = "badge badge-danger";
+        $classForTime = "badge badge-warning";
       } elseif ($daysDiff >= 2) {
         $timeLeft = "2 Días";  
-        $classForTime = "badge badge-danger";
+        $classForTime = "badge badge-warning";
       } elseif ($greaterThanOneDay) {
           $timeLeft = "$daysDiff Día y varias horas";  
-          $classForTime = "badge badge-warning";
-      }
-      echo $daysDiff;
+          $classForTime = "badge badge-danger";
+      } elseif ($greaterThan24H) {
+        $timeLeft = "$hoursDiff horas";  
+        $classForTime = "badge badge-danger";
+    } 
 
       $modalId = 'modal_' . $row['requestId'];
 

@@ -185,86 +185,106 @@ if (!$user->is_logged_in()) {
     </div>
     <!-- /.card-header -->
     <div class="card-body">
-    <form action="add_client.php" method="post">
-        <div class="row">
-            <!-- Group 1 -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="motivo">Motivo:</label>
-                    <input type="text" class="form-control" id="motivo" name="motivo" required>
-                </div>
-                <div class="form-group">
-                    <label for="montoSolicitado">Monto Solicitado:</label>
-                    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
-                </div>
-                <div class="form-group">
-                    <label for="montoAprobado">Monto Aprobado:</label>
-                    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado">
-                </div>
-                <div class="form-group">
-                    <label for="montoPagado">Monto Pagado:</label>
-                    <input type="text" class="form-control" id="montoPagado" name="montoPagado">
-                </div>
-                <div class="form-group">
-                    <label for="diasDePagoDelMes">Dias de Pago del Mes:</label>
-                    <input type="text" class="form-control" id="diasDePagoDelMes" name="diasDePagoDelMes">
-                </div>
+    <form action="add_inversion.php" method="post">
+    <div class="row">
+        <!-- Group 3 -->
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="idCliente">ID Cliente:</label>
+                <input type="text" class="form-control" id="idCliente" name="idCliente">
             </div>
-            <!-- Group 2 -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="tasaDeInteres">Tasa de Interes:</label>
-                    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres">
-                </div>
-                <div class="form-group">
-                    <label for="montoRecargo">Monto Recargo:</label>
-                    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo">
-                </div>
-                <div class="form-group">
-                    <label for="remitente">Remitente:</label>
-                    <input type="text" class="form-control" id="remitente" name="remitente">
-                </div>
-                <div class="form-group">
-                    <label for="beneficiario">Beneficiario:</label>
-                    <input type="text" class="form-control" id="beneficiario" name="beneficiario">
-                </div>
-                <div class="form-group">
-                    <label for="frecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
-                    <input type="text" class="form-control" id="frecuenciaPagoMensual" name="frecuenciaPagoMensual">
-                </div>
+            <div class="form-group">
+                <label for="motivo">Motivo:</label>
+                <input type="text" class="form-control" id="motivo" name="motivo">
             </div>
-            <!-- Group 3 -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="status">Status:</label>
-                    <input type="text" class="form-control" id="status" name="status" required>
-                </div>
-                <div class="form-group">
-                    <label for="pagoId">Pago ID:</label>
-                    <input type="text" class="form-control" id="pagoId" name="pagoId">
-                </div>
-                <div class="form-group">
-                    <label for="fechaFinalEstimada">Fecha Final Estimada:</label>
-                    <input type="text" class="form-control" id="fechaFinalEstimada" name="fechaFinalEstimada">
-                </div>
-                <div class="form-group">
-                    <label for="cuotasTotales">Cuotas Totales:</label>
-                    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales">
-                </div>
-                <div class="form-group">
-                    <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
-                </div>
+            <div class="form-group">
+                <label for="tipoDeInversion">Tipo de Inversion:</label>
+                <input type="text" class="form-control" id="tipoDeInversion" name="tipoDeInversion">
             </div>
-            <!-- Group 4 -->
-            <div class="col-sm-4">
-                
-                
-                
+            <div class="form-group">
+                <label for="montoDividendoEsperado">Monto Dividendo Esperado:</label>
+                <input type="text" class="form-control" id="montoDividendoEsperado" name="montoDividendoEsperado">
+            </div>
+            <div class="form-group">
+                <label for="periodicidadDividendo">Periodicidad Dividendo:</label>
+                <input type="text" class="form-control" id="periodicidadDividendo" name="periodicidadDividendo">
+            </div>
+            <div class="form-group">
+                <label for="fechaPagoDividendo">Fecha Pago Dividendo:</label>
+                <input type="text" class="form-control" id="fechaPagoDividendo" name="fechaPagoDividendo">
+            </div>
+            <div class="form-group">
+                <label for="montoBono">Monto Bono:</label>
+                <input type="text" class="form-control" id="montoBono" name="montoBono">
             </div>
         </div>
-        <!-- Add more fields as needed -->
-    </form>
+        <!-- Group 4 -->
+        <div class="col-sm-4">
+            <div class="form-group">
+                <label for="tasaInteresBono">Tasa Interes Bono:</label>
+                <input type="text" class="form-control" id="tasaInteresBono" name="tasaInteresBono">
+            </div>
+            <div class="form-group">
+                <label for="plazoBono">Plazo Bono:</label>
+                <input type="text" class="form-control" id="plazoBono" name="plazoBono">
+            </div>
+            <div class="form-group">
+                <label for="periodicidadInteres">Periodicidad Interes:</label>
+                <input type="text" class="form-control" id="periodicidadInteres" name="periodicidadInteres">
+            </div>
+            <div class="form-group">
+                <label for="fechaPagoBono">Fecha Pago Bono:</label>
+                <input type="text" class="form-control" id="fechaPagoBono" name="fechaPagoBono">
+            </div>
+            <div class="form-group">
+                <label for="montoFondoInversion">Monto Fondo Inversion:</label>
+                <input type="text" class="form-control" id="montoFondoInversion" name="montoFondoInversion">
+            </div>
+            <div class="form-group">
+                <label for="tarifaAdministracion">Tarifa Administracion:</label>
+                <input type="text" class="form-control" id="tarifaAdministracion" name="tarifaAdministracion">
+            </div>
+            <div class="form-group">
+                <label for="periodicidadTarifaAdm">Periodicidad Tarifa Adm:</label>
+                <input type="text" class="form-control" id="periodicidadTarifaAdm" name="periodicidadTarifaAdm">
+            </div>
+            <div class="form-group">
+                <label for="cantParticipacion">Cantidad de Participacion:</label>
+                <input type="text" class="form-control" id="cantParticipacion" name="cantParticipacion">
+            </div>
+            <div class="form-group">
+                <label for="participacionId">Participacion ID:</label>
+                <input type="text" class="form-control" id="participacionId" name="participacionId">
+            </div>
+            <div class="form-group">
+                <label for="rendimientoTotal">Rendimiento Total:</label>
+                <input type="text" class="form-control" id="rendimientoTotal" name="rendimientoTotal">
+            </div>
+            <div class="form-group">
+                <label for="status">Status:</label>
+                <input type="text" class="form-control" id="status" name="status">
+            </div>
+            <div class="form-group">
+                <label for="pagoId">Pago ID:</label>
+                <input type="text" class="form-control" id="pagoId" name="pagoId">
+            </div>
+            <div class="form-group">
+                <label for="fechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
+                <input type="text" class="form-control" id="fechaPagoInicialInversion" name="fechaPagoInicialInversion">
+            </div>
+            <div class="form-group">
+                <label for="fechaFinalInversion">Fecha Final Inversion:</label>
+                <input type="text" class="form-control" id="fechaFinalInversion" name="fechaFinalInversion">
+            </div>
+            <div class="form-group">
+                <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
+                <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
+            </div>
+        </div>
+    </div>
+    <!-- Add more fields as needed -->
+</form>
+
 </div>
 
     <!-- /.card-body -->
@@ -294,7 +314,7 @@ if (!$user->is_logged_in()) {
 // Include the database connection file
 // Assuming your database connection code is included here
 
-// Fetch data from the clientes table
+// Fetch data from the inversiones table
 $sql = "SELECT * FROM inversiones";
 $result = $db->query($sql);
 
@@ -327,12 +347,16 @@ if ($result) {
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
-                    <th>Solicitante</th>
+                    <th>ID Cliente</th>
                     <th>Motivo</th>
-                    <th>Monto Solicitado</th>
+                    <th>Tipo de Inversion</th>
+                    <th>Rendimiento Total</th>
                     <th>Status</th>
-                    <th>Pagos</th>
-                    <th>Fecha final estimada</th>
+                    <th>Pago ID</th>
+                    <th>Fecha Pago Inicial Inversion</th>
+                    <th>Fecha Final Inversion</th>
+                    <th>Fecha de Aprobacion</th>
+                    <th>Fecha Creacion</th>
                   </tr>
                   </thead>
                   <tbody>';
@@ -342,7 +366,7 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
-        <a href="detalle_prestamo.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
+        <a style="white-space: nowrap !important;" href="detalle_inversion.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
         <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
             <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['Id'].'">Editar</button>
         </div>
@@ -353,10 +377,14 @@ if ($result) {
                 <td>' . $row['Id'] . '</td>
                 <td>' . $row['IdCliente'] . '</td>
                 <td>' . $row['Motivo'] . '</td>
-                <td>' . $row['MontoSolicitado'] . '</td>
+                <td>' . $row['TipoDeInversion'] . '</td>
+                <td>' . $row['RendimientoTotal'] . '</td>
                 <td>' . $row['Status'] . '</td>
                 <td>' . $row['PagoId'] . '</td>
+                <td>' . $row['FechaPagoInicialInversion'] . '</td>
                 <td>' . $row['FechaFinalInversion'] . '</td>
+                <td>' . $row['FechaDeAprobacion'] . '</td>
+                <td>' . $row['FechaCreacion'] . '</td>
               </tr>';
     }
 
@@ -367,12 +395,16 @@ if ($result) {
             <th></th>
                     <th>Acciones</th>
                     <th>ID</th>
-                    <th>Solicitante</th>
+                    <th>ID Cliente</th>
                     <th>Motivo</th>
-                    <th>Monto Solicitado</th>
+                    <th>Tipo de Inversion</th>
+                    <th>Rendimiento Total</th>
                     <th>Status</th>
-                    <th>Pagos</th>
-                    <th>Fecha final estimada</th>
+                    <th>Pago ID</th>
+                    <th>Fecha Pago Inicial Inversion</th>
+                    <th>Fecha Final Inversion</th>
+                    <th>Fecha de Aprobacion</th>
+                    <th>Fecha Creacion</th>
             </tr>
           </tfoot>
         </table>
@@ -391,7 +423,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
         </div>
         <div class="modal-body">
     <form id="editForm">
-        <!-- Input fields for editing cliente information -->
+        <!-- Input fields for editing inversion information -->
         <div class="row">
             <!-- Group 1 -->
             <div class="col-sm-4">
@@ -404,8 +436,67 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editMotivo" name="editMotivo">
                 </div>
                 <div class="form-group">
-                    <label for="editMontoSolicitado">Monto Solicitado:</label>
-                    <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
+                    <label for="editTipoDeInversion">Tipo de Inversion:</label>
+                    <input type="text" class="form-control" id="editTipoDeInversion" name="editTipoDeInversion">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoDividendoEsperado">Monto Dividendo Esperado:</label>
+                    <input type="text" class="form-control" id="editMontoDividendoEsperado" name="editMontoDividendoEsperado">
+                </div>
+                <div class="form-group">
+                    <label for="editPeriodicidadDividendo">Periodicidad Dividendo:</label>
+                    <input type="text" class="form-control" id="editPeriodicidadDividendo" name="editPeriodicidadDividendo">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaPagoDividendo">Fecha Pago Dividendo:</label>
+                    <input type="text" class="form-control" id="editFechaPagoDividendo" name="editFechaPagoDividendo">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoBono">Monto Bono:</label>
+                    <input type="text" class="form-control" id="editMontoBono" name="editMontoBono">
+                </div>
+            </div>
+            <!-- Group 2 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editTasaInteresBono">Tasa Interes Bono:</label>
+                    <input type="text" class="form-control" id="editTasaInteresBono" name="editTasaInteresBono">
+                </div>
+                <div class="form-group">
+                    <label for="editPlazoBono">Plazo Bono:</label>
+                    <input type="text" class="form-control" id="editPlazoBono" name="editPlazoBono">
+                </div>
+                <div class="form-group">
+                    <label for="editPeriodicidadInteres">Periodicidad Interes:</label>
+                    <input type="text" class="form-control" id="editPeriodicidadInteres" name="editPeriodicidadInteres">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaPagoBono">Fecha Pago Bono:</label>
+                    <input type="text" class="form-control" id="editFechaPagoBono" name="editFechaPagoBono">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoFondoInversion">Monto Fondo Inversion:</label>
+                    <input type="text" class="form-control" id="editMontoFondoInversion" name="editMontoFondoInversion">
+                </div>
+                <div class="form-group">
+                    <label for="editTarifaAdministracion">Tarifa Administracion:</label>
+                    <input type="text" class="form-control" id="editTarifaAdministracion" name="editTarifaAdministracion">
+                </div>
+                <div class="form-group">
+                    <label for="editPeriodicidadTarifaAdm">Periodicidad Tarifa Adm:</label>
+                    <input type="text" class="form-control" id="editPeriodicidadTarifaAdm" name="editPeriodicidadTarifaAdm">
+                </div>
+                <div class="form-group">
+                    <label for="editCantParticipacion">Cantidad de Participacion:</label>
+                    <input type="text" class="form-control" id="editCantParticipacion" name="editCantParticipacion">
+                </div>
+                <div class="form-group">
+                    <label for="editParticipacionId">Participacion ID:</label>
+                    <input type="text" class="form-control" id="editParticipacionId" name="editParticipacionId">
+                </div>
+                <div class="form-group">
+                    <label for="editRendimientoTotal">Rendimiento Total:</label>
+                    <input type="text" class="form-control" id="editRendimientoTotal" name="editRendimientoTotal">
                 </div>
                 <div class="form-group">
                     <label for="editStatus">Status:</label>
@@ -416,71 +507,21 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editPagoId" name="editPagoId">
                 </div>
                 <div class="form-group">
+                    <label for="editFechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
+                    <input type="text" class="form-control" id="editFechaPagoInicialInversion" name="editFechaPagoInicialInversion">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaFinalInversion">Fecha Final Inversion:</label>
+                    <input type="text" class="form-control" id="editFechaFinalInversion" name="editFechaFinalInversion">
+                </div>
+                <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
                     <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
                 </div>
             </div>
-            <!-- Group 2 -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="editMontoAprobado">Monto Aprobado:</label>
-                    <input type="text" class="form-control" id="editMontoAprobado" name="editMontoAprobado">
-                </div>
-                <div class="form-group">
-                    <label for="editMontoPagado">Monto Pagado:</label>
-                    <input type="text" class="form-control" id="editMontoPagado" name="editMontoPagado">
-                </div>
-                <div class="form-group">
-                    <label for="editTasaDeInteres">Tasa de Interes:</label>
-                    <input type="text" class="form-control" id="editTasaDeInteres" name="editTasaDeInteres">
-                </div>
-                <div class="form-group">
-                    <label for="editFechaFinalEstimada">Fecha Final Estimada:</label>
-                    <input type="text" class="form-control" id="editFechaFinalEstimada" name="editFechaFinalEstimada">
-                </div>
-                <div class="form-group">
-                    <label for="editCuotasTotales">Cuotas Totales:</label>
-                    <input type="text" class="form-control" id="editCuotasTotales" name="editCuotasTotales">
-                </div>
-            </div>
-            <!-- Group 3 -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="editMontoRecargo">Monto Recargo:</label>
-                    <input type="text" class="form-control" id="editMontoRecargo" name="editMontoRecargo">
-                </div>
-                <div class="form-group">
-                    <label for="editRemitente">Remitente:</label>
-                    <input type="text" class="form-control" id="editRemitente" name="editRemitente">
-                </div>
-                <div class="form-group">
-                    <label for="editBeneficiario">Beneficiario:</label>
-                    <input type="text" class="form-control" id="editBeneficiario" name="editBeneficiario">
-                </div>
-                <div class="form-group">
-                    <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
-                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
-                </div>
-                <div class="form-group">
-                    <label for="editFrecuenciaPagoMensual">Frecuencia Pago Mensual:</label>
-                    <input type="text" class="form-control" id="editFrecuenciaPagoMensual" name="editFrecuenciaPagoMensual">
-                </div>
-            </div>
         </div>
         <div class="row">
-            <!-- Group 4 -->
-            <div class="col-sm-4">
-                
-            </div>
-            <!-- Group 5 -->
-            <div class="col-sm-4">
-                
-            </div>
-            <!-- Group 6 -->
-            <div class="col-sm-4">
-                
-                
-            </div>
+            <!-- Add more groups as needed -->
         </div>
     </form>
 </div>
@@ -510,77 +551,41 @@ $.ajax({
         // Populate modal fields
         $("#editId").val(response.Id);
         $("#editMotivo").val(response.Motivo);
-        $("#editMontoSolicitado").val(response.MontoSolicitado);
-        $("#editMontoAprobado").val(response.MontoAprobado);
-        $("#editMontoPagado").val(response.MontoPagado);
-        $("#editTasaDeInteres").val(response.TasaDeInteres);
-        $("#editMontoRecargo").val(response.MontoRecargo);
-        $("#editRemitente").val(response.Remitente);
-        $("#editBeneficiario").val(response.Beneficiario);
+        $("#editTipoDeInversion").val(response.TipoDeInversion);
+        $("#editMontoDividendoEsperado").val(response.MontoDividendoEsperado);
+        $("#editPeriodicidadDividendo").val(response.PeriodicidadDividendo);
+        $("#editFechaPagoDividendo").val(response.FechaPagoDividendo);
+        $("#editMontoBono").val(response.MontoBono);
+        $("#editTasaInteresBono").val(response.TasaInteresBono);
+        $("#editPlazoBono").val(response.PlazoBono);
+        $("#editPeriodicidadInteres").val(response.PeriodicidadInteres);
+        $("#editFechaPagoBono").val(response.FechaPagoBono);
+        $("#editMontoFondoInversion").val(response.MontoFondoInversion);
+        $("#editTarifaAdministracion").val(response.TarifaAdministracion);
+        $("#editPeriodicidadTarifaAdm").val(response.PeriodicidadTarifaAdm);
+        $("#editCantParticipacion").val(response.CantParticipacion);
+        $("#editParticipacionId").val(response.ParticipacionId);
+        $("#editRendimientoTotal").val(response.RendimientoTotal);
         $("#editStatus").val(response.Status);
         $("#editPagoId").val(response.PagoId);
-        $("#editFechaFinalEstimada").val(response.FechaFinalEstimada);
-        $("#editCuotasTotales").val(response.CuotasTotales);
-        $("#editDiasDePagoDelMes").val(response.DiasDePagoDelMes);
-        $("#editFrecuenciaPagoMensual").val(response.FrecuenciaPagoMensual);
+        $("#editFechaPagoInicialInversion").val(response.FechaPagoInicialInversion);
+        $("#editFechaFinalInversion").val(response.FechaFinalInversion);
         $("#editFechaDeAprobacion").val(response.FechaDeAprobacion);
+        // Show the modal
         $("#editModal").modal("show");
     },
     error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-    }
-});
-});
-
-$("#saveChangesBtn").click(function() {
-var formData = $("#editForm").serialize();
-console.log(formData);
-console.error(formData);
-$.ajax({
-    url: "update_inversion.php", // Changed to update inversion
-    type: "POST",
-    data: formData,
-    success: function(response) {
-        $("#editModal").modal("hide");
-        // Optionally, reload the table or update the row with the edited data
-        location.reload();
-    },
-    error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-        // Handle error
+        console.error(xhr);
     }
 });
 });
 });
 </script>';
-
-// JavaScript for handling delete button click
-echo '<script>
-$(".delete-btn").click(function() {
-var id = $(this).data("id");
-if (confirm("¿Estás seguro que quieres borrar esta inversión?")) {
-$.ajax({
-    url: "delete_inversion.php", // Changed to delete inversion
-    type: "POST",
-    data: { id: id },
-    success: function(response) {
-        // Optionally, reload the table or update the UI
-        location.reload();
-    },
-    error: function(xhr, status, error) {
-        console.error(xhr.responseText);
-        // Handle error
-    }
-});
-}
-});
-</script>';
-
 } else {
-    // Display an error message if the query fails
-    echo "Error: " . $db->errorInfo();
+    echo "Error: " . $sql . "<br>" . $db->error;
 }
 ?>
+
 
 
 

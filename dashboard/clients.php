@@ -199,73 +199,78 @@ if (!$user->is_logged_in()) {
                 </div>
                 <div class="form-group">
                     <label for="direccion">Dirección:</label>
-                    <input type="text" class="form-control" id="direccion" name="direccion">
+                    <input type="text" class="form-control" id="direccion" name="direccion" required>
                 </div>
             </div>
             <div class="col-sm-4">
                 <!-- Group 2 -->
                 <div class="form-group">
                     <label for="cedula">Cédula:</label>
-                    <input type="text" class="form-control" id="cedula" name="cedula">
+                    <input type="text" class="form-control" id="cedula" name="cedula" required>
                 </div>
                 <div class="form-group">
                     <label for="rnc">RNC:</label>
-                    <input type="text" class="form-control" id="rnc" name="rnc">
+                    <input type="text" class="form-control" id="rnc" name="rnc" required>
                 </div>
                 <div class="form-group">
                     <label for="monto_solicitado">Monto Solicitado:</label>
-                    <input type="text" class="form-control" id="monto_solicitado" name="monto_solicitado">
+                    <input type="text" class="form-control" id="monto_solicitado" name="monto_solicitado" required>
                 </div>
             </div>
             <div class="col-sm-4">
                 <!-- Group 3 -->
                 <div class="form-group">
                     <label for="interes">Interés:</label>
-                    <input type="text" class="form-control" id="interes" name="interes">
+                    <input type="text" class="form-control" id="interes" name="interes" required>
                 </div>
                 <div class="form-group">
                     <label for="monto_deuda">Monto de Deuda:</label>
-                    <input type="text" class="form-control" id="monto_deuda" name="monto_deuda">
+                    <input type="text" class="form-control" id="monto_deuda" name="monto_deuda" required>
+                </div>
+                <div class="form-group">
+                  <label for="usuario">Usuario:</label>
+                  <input type="text" class="form-control" id="usuarioInput" name="usuario" required>
+                  <div id="usuarioDropdown" class="dropdown-content"></div>
                 </div>
             </div>
             <div class="col-sm-4">
                 <!-- Group 4 -->
                 <div class="form-group">
                 <label for="estadoPrestamo">Reenganchado:</label>
-                <select class="form-control" id="reenganchado" name="reenganchado">
+                <select class="form-control" id="reenganchado" name="reenganchado" required>
                     <option value="0" selected>No</option>
                     <option value="1">Si</option>
                 </select>
             </div>
                 <div class="form-group">
                     <label for="puntos">Puntos:</label>
-                    <input type="text" class="form-control" id="puntos" name="puntos">
+                    <input type="text" class="form-control" id="puntos" name="puntos" required>
                 </div>
                 <div class="form-group">
                     <label for="fecha_ingreso">Fecha de Ingreso:</label>
-                    <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso">
+                    <input type="text" class="form-control" id="fecha_ingreso" name="fecha_ingreso" required>
                 </div>
             </div>
             <div class="col-sm-4">
                 <!-- Group 5 -->
                 <div class="form-group">
                     <label for="fecha_salida">Fecha de Salida:</label>
-                    <input type="text" class="form-control" id="fecha_salida" name="fecha_salida">
+                    <input type="text" class="form-control" id="fecha_salida" name="fecha_salida" required>
                 </div>
                 <div class="form-group">
                     <label for="meses_en_empresa">Meses en la Empresa:</label>
-                    <input type="text" class="form-control" id="meses_en_empresa" name="meses_en_empresa">
+                    <input type="text" class="form-control" id="meses_en_empresa" name="meses_en_empresa" required>
                 </div>
                 <div class="form-group">
                     <label for="total_prestado">Total Prestado:</label>
-                    <input type="text" class="form-control" id="total_prestado" name="total_prestado">
+                    <input type="text" class="form-control" id="total_prestado" name="total_prestado" required>
                 </div>
             </div>
         </div>
         <!-- Add more fields as needed -->
         <!-- Modal Footer -->
         <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Agregar Cliente</button>
+            <button id="agregarClienteSubmitButton" type="submit" class="btn btn-primary">Agregar Cliente</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           </div>
     </form>
@@ -678,5 +683,109 @@ $(".delete-btn").click(function() {
     });
   });
 </script>
+
+<script>
+
+// Flag to track whether an option has been selected
+var optionSelected = false;
+
+// Function to fetch autosuggestion data from the database
+function fetchUsuarios(str) {
+  window.globalVariable = true;
+    if (str.length == 0) {
+        document.getElementById("usuarioDropdown").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("usuarioDropdown").innerHTML = this.responseText;
+
+                // Add event listeners to the options
+                var options = document.querySelectorAll(".dropdown-content .option");
+                options.forEach(function(option) {
+                    option.addEventListener("click", function() {
+                        // Set the input field value to the selected option
+                        document.getElementById("usuarioInput").value = this.textContent;
+                        // Clear the dropdown after selecting an option
+                        document.getElementById("usuarioDropdown").innerHTML = "";
+                        // Set the flag to true since an option has been selected
+                        console.log("optionSelected = true")
+                        optionSelected = true;
+                        if (optionSelected) {
+                          console.log("la selesionate");
+                          const beneficiarioTextField = document.getElementById('usuarioInput');
+                          const agregarPrestamoButton = document.getElementById('agregarClienteSubmitButton');
+                          // Add a class to the element/
+                          beneficiarioTextField.classList.remove('is-invalid');
+                          agregarPrestamoButton.classList.remove('disabled');
+                        }
+    
+                    });
+                });
+            }
+        };
+        xmlhttp.open("GET", "get_usuarios.php?q=" + str, true);
+        xmlhttp.send();
+
+        //terminamo
+        if (!optionSelected) {
+      console.log("no la selesionate");
+      const beneficiarioTextField = document.getElementById('usuarioInput');
+    const agregarPrestamoButton = document.getElementById('agregarClienteSubmitButton');
+    // Add a class to the element/
+    beneficiarioTextField.classList.add('is-invalid');
+    agregarPrestamoButton.classList.add('disabled');
+    }
+    }
+}
+
+// Event listener to call fetchUsuarios function when the input field value changes
+document.getElementById("usuarioInput").addEventListener("input", function() {
+    // Reset the flag when the input changes
+    optionSelected = false;
+    fetchUsuarios(this.value);
+    
+});
+
+
+function isFormValid() {
+    // Check for elements with 'is-invalid' class or disabled buttons
+    const xpathExpression = "//*[contains(@class,'is-invalid')] | //button[contains(@class,'disabled')]";
+    const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    const element = result.singleNodeValue;
+
+    // If any element with 'is-invalid' class or disabled button is found, return false
+    if (element !== null) {
+        console.log("Invalid element found:", element);
+        return false;
+    }
+    // If all validations pass, return true
+    return true;
+}
+
+function showMessageBelowElement(element, message) {
+    // Create a new div element for the error message
+    const errorMessageDiv = document.createElement('div');
+    errorMessageDiv.textContent = message;
+    errorMessageDiv.style.color = 'red';
+    errorMessageDiv.className = 'error-message'; // Adding a class for identification
+
+    // Insert the error message div below the given element
+    element.parentNode.insertBefore(errorMessageDiv, element.nextSibling);
+}
+
+
+
+
+
+
+
+  
+
+
+
+</script>
+
 </body>
 </html>
