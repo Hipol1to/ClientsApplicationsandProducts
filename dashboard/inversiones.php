@@ -579,8 +579,45 @@ $.ajax({
     }
 });
 });
-});
-</script>';
+
+ $("#saveChangesBtn").click(function() {
+          var formData = $("#editForm").serialize();
+          $.ajax({
+              url: "update_inversion.php",
+              type: "POST",
+              data: formData,
+              success: function(response) {
+                  $("#editModal").modal("hide");
+                  // Optionally, reload the table or update the row with the edited data
+                  location.reload();
+              },
+              error: function(xhr, status, error) {
+                  console.error(xhr.responseText);
+                  // Handle error
+              }
+          });
+      });
+  });</script>
+  <script>
+      // JavaScript for handling delete button click
+$(".delete-btn").click(function() {
+    var id = $(this).data("id");
+    if (confirm("¿Estás seguro que quieres borrar esta inversion?")) {
+        $.ajax({
+            url: "delete_inversion.php",
+            type: "POST",
+            data: { id: id },
+            success: function(response) {
+                // Optionally, reload the table or update the UI
+                location.reload();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                // Handle error
+            }
+        });
+    }
+});</script>';
 } else {
     echo "Error: " . $sql . "<br>" . $db->error;
 }
@@ -638,7 +675,6 @@ $.ajax({
 <!-- AdminLTE App -->
 <script src="./dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
-
 <!-- Page specific script -->
 <script>
   $(function () {
