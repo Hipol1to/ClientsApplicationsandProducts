@@ -188,19 +188,28 @@ if (!$user->is_logged_in()) {
     <form action="add_inversion.php" method="post">
     <div class="row">
         <!-- Group 3 -->
-        <div class="col-sm-4">
+        <div class="col-sm-8">
             <div class="form-group">
-                <label for="idCliente">ID Cliente:</label>
-                <input type="text" class="form-control" id="idCliente" name="idCliente">
+                <label for="idCliente">Usuario:</label>
+                <input type="text" class="form-control" id="idCliente" name="idCliente" required>
             </div>
             <div class="form-group">
                 <label for="motivo">Motivo:</label>
-                <input type="text" class="form-control" id="motivo" name="motivo">
+                <input type="text" class="form-control" id="motivo" name="motivo" required>
             </div>
             <div class="form-group">
                 <label for="tipoDeInversion">Tipo de Inversion:</label>
-                <input type="text" class="form-control" id="tipoDeInversion" name="tipoDeInversion">
+                <select class="form-control" id="tipoDeInversion" name="tipoDeInversion" required>
+                  <option value="" selected>--Tipo de inversión--</option>
+                    <option value="Por acciones">Inversion por acciones</option>
+                    <option value="Por bonos">Inversion por bonos</option>
+                    <option value="Fondos de inversión">Fondos de inversión</option>
+                </select>
             </div>
+        
+
+
+        <div id="dividendoFields" style="display: none;">
             <div class="form-group">
                 <label for="montoDividendoEsperado">Monto Dividendo Esperado:</label>
                 <input type="text" class="form-control" id="montoDividendoEsperado" name="montoDividendoEsperado">
@@ -213,13 +222,15 @@ if (!$user->is_logged_in()) {
                 <label for="fechaPagoDividendo">Fecha Pago Dividendo:</label>
                 <input type="text" class="form-control" id="fechaPagoDividendo" name="fechaPagoDividendo">
             </div>
+            </div>
+            
+
+
+          <div id="bonoFields" style="display: none;">
             <div class="form-group">
                 <label for="montoBono">Monto Bono:</label>
                 <input type="text" class="form-control" id="montoBono" name="montoBono">
             </div>
-        </div>
-        <!-- Group 4 -->
-        <div class="col-sm-4">
             <div class="form-group">
                 <label for="tasaInteresBono">Tasa Interes Bono:</label>
                 <input type="text" class="form-control" id="tasaInteresBono" name="tasaInteresBono">
@@ -236,6 +247,8 @@ if (!$user->is_logged_in()) {
                 <label for="fechaPagoBono">Fecha Pago Bono:</label>
                 <input type="text" class="form-control" id="fechaPagoBono" name="fechaPagoBono">
             </div>
+            </div>
+            <div id="fondosDeInversionFields" style="display: none;">
             <div class="form-group">
                 <label for="montoFondoInversion">Monto Fondo Inversion:</label>
                 <input type="text" class="form-control" id="montoFondoInversion" name="montoFondoInversion">
@@ -252,10 +265,13 @@ if (!$user->is_logged_in()) {
                 <label for="cantParticipacion">Cantidad de Participacion:</label>
                 <input type="text" class="form-control" id="cantParticipacion" name="cantParticipacion">
             </div>
-            <div class="form-group">
-                <label for="participacionId">Participacion ID:</label>
-                <input type="text" class="form-control" id="participacionId" name="participacionId">
             </div>
+            </div>
+
+
+        
+        <!-- Group 4 -->
+        <div class="col-sm-4">
             <div class="form-group">
                 <label for="rendimientoTotal">Rendimiento Total:</label>
                 <input type="text" class="form-control" id="rendimientoTotal" name="rendimientoTotal">
@@ -268,7 +284,8 @@ if (!$user->is_logged_in()) {
                 <label for="pagoId">Pago ID:</label>
                 <input type="text" class="form-control" id="pagoId" name="pagoId">
             </div>
-            <div class="form-group">
+        
+         <div class="form-group">
                 <label for="fechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
                 <input type="text" class="form-control" id="fechaPagoInicialInversion" name="fechaPagoInicialInversion">
             </div>
@@ -280,12 +297,47 @@ if (!$user->is_logged_in()) {
                 <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
                 <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
             </div>
-        </div>
+            </div>
     </div>
     <!-- Add more fields as needed -->
 </form>
 
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Get references to the dropdown and fields
+    var tipoDeInversion = document.getElementById("tipoDeInversion");
+    var dividendoFields = document.getElementById("dividendoFields");
+    var bonoFields = document.getElementById("bonoFields");
+    var fondoDeInversionFields = document.getElementById("fondosDeInversionFields");
+
+    // Show or hide fields based on the selected option
+    tipoDeInversion.addEventListener("change", function() {
+       if (tipoDeInversion.value === "") {
+            dividendoFields.style.display = "none";
+            bonoFields.style.display = "none";
+            fondoDeInversionFields.style.display = "none";
+            // Show/hide other fields related to Inversion por acciones
+        } else if (tipoDeInversion.value === "Por acciones") {
+            dividendoFields.style.display = "block";
+            bonoFields.style.display = "none";
+            fondoDeInversionFields.style.display = "none";
+            // Show/hide other fields related to Inversion por acciones
+        } else if (tipoDeInversion.value === "Por bonos") {
+            dividendoFields.style.display = "none";
+            bonoFields.style.display = "block";
+            fondoDeInversionFields.style.display = "none";
+            // Show/hide other fields related to Inversion por bonos
+        } else if (tipoDeInversion.value === "Fondos de inversión"){
+            // Handle other types of inversion if needed
+            dividendoFields.style.display = "none";
+            bonoFields.style.display = "none";
+            fondoDeInversionFields.style.display = "block";
+        }
+    });
+});
+</script>
 
     <!-- /.card-body -->
 </div>
@@ -414,125 +466,129 @@ if ($result) {
 
     // Add a hidden form to hold the details for editing within the modal
 echo '<div id="editModal" class="modal fade" role="dialog">
-<div class="modal-dialog">
-    <!-- Modal content-->
-    <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title">Editar Inversion</h4>
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-    <form id="editForm">
-        <!-- Input fields for editing inversion information -->
-        <div class="row">
-            <!-- Group 1 -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="editId">ID:</label>
-                    <input type="text" class="form-control" id="editId" name="editId" readonly>
-                </div>
-                <div class="form-group">
-                    <label for="editMotivo">Motivo:</label>
-                    <input type="text" class="form-control" id="editMotivo" name="editMotivo">
-                </div>
-                <div class="form-group">
-                    <label for="editTipoDeInversion">Tipo de Inversion:</label>
-                    <input type="text" class="form-control" id="editTipoDeInversion" name="editTipoDeInversion">
-                </div>
-                <div class="form-group">
-                    <label for="editMontoDividendoEsperado">Monto Dividendo Esperado:</label>
-                    <input type="text" class="form-control" id="editMontoDividendoEsperado" name="editMontoDividendoEsperado">
-                </div>
-                <div class="form-group">
-                    <label for="editPeriodicidadDividendo">Periodicidad Dividendo:</label>
-                    <input type="text" class="form-control" id="editPeriodicidadDividendo" name="editPeriodicidadDividendo">
-                </div>
-                <div class="form-group">
-                    <label for="editFechaPagoDividendo">Fecha Pago Dividendo:</label>
-                    <input type="text" class="form-control" id="editFechaPagoDividendo" name="editFechaPagoDividendo">
-                </div>
-                <div class="form-group">
-                    <label for="editMontoBono">Monto Bono:</label>
-                    <input type="text" class="form-control" id="editMontoBono" name="editMontoBono">
-                </div>
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Inversion</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            <!-- Group 2 -->
-            <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="editTasaInteresBono">Tasa Interes Bono:</label>
-                    <input type="text" class="form-control" id="editTasaInteresBono" name="editTasaInteresBono">
-                </div>
-                <div class="form-group">
-                    <label for="editPlazoBono">Plazo Bono:</label>
-                    <input type="text" class="form-control" id="editPlazoBono" name="editPlazoBono">
-                </div>
-                <div class="form-group">
-                    <label for="editPeriodicidadInteres">Periodicidad Interes:</label>
-                    <input type="text" class="form-control" id="editPeriodicidadInteres" name="editPeriodicidadInteres">
-                </div>
-                <div class="form-group">
-                    <label for="editFechaPagoBono">Fecha Pago Bono:</label>
-                    <input type="text" class="form-control" id="editFechaPagoBono" name="editFechaPagoBono">
-                </div>
-                <div class="form-group">
-                    <label for="editMontoFondoInversion">Monto Fondo Inversion:</label>
-                    <input type="text" class="form-control" id="editMontoFondoInversion" name="editMontoFondoInversion">
-                </div>
-                <div class="form-group">
-                    <label for="editTarifaAdministracion">Tarifa Administracion:</label>
-                    <input type="text" class="form-control" id="editTarifaAdministracion" name="editTarifaAdministracion">
-                </div>
-                <div class="form-group">
-                    <label for="editPeriodicidadTarifaAdm">Periodicidad Tarifa Adm:</label>
-                    <input type="text" class="form-control" id="editPeriodicidadTarifaAdm" name="editPeriodicidadTarifaAdm">
-                </div>
-                <div class="form-group">
-                    <label for="editCantParticipacion">Cantidad de Participacion:</label>
-                    <input type="text" class="form-control" id="editCantParticipacion" name="editCantParticipacion">
-                </div>
-                <div class="form-group">
-                    <label for="editParticipacionId">Participacion ID:</label>
-                    <input type="text" class="form-control" id="editParticipacionId" name="editParticipacionId">
-                </div>
-                <div class="form-group">
-                    <label for="editRendimientoTotal">Rendimiento Total:</label>
-                    <input type="text" class="form-control" id="editRendimientoTotal" name="editRendimientoTotal">
-                </div>
-                <div class="form-group">
-                    <label for="editStatus">Status:</label>
-                    <input type="text" class="form-control" id="editStatus" name="editStatus">
-                </div>
-                <div class="form-group">
-                    <label for="editPagoId">Pago ID:</label>
-                    <input type="text" class="form-control" id="editPagoId" name="editPagoId">
-                </div>
-                <div class="form-group">
-                    <label for="editFechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
-                    <input type="text" class="form-control" id="editFechaPagoInicialInversion" name="editFechaPagoInicialInversion">
-                </div>
-                <div class="form-group">
-                    <label for="editFechaFinalInversion">Fecha Final Inversion:</label>
-                    <input type="text" class="form-control" id="editFechaFinalInversion" name="editFechaFinalInversion">
-                </div>
-                <div class="form-group">
-                    <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <!-- Add more groups as needed -->
-        </div>
-    </form>
-</div>
+            <div class="modal-body">
+                <form id="editForm">
+                    <!-- Input fields for editing inversion information -->
+                    <div class="row">
+                        <!-- Group 1 -->
+                        <div class="col-sm-8">
+                            <div class="form-group">
+                                <label for="editId">ID:</label>
+                                <input type="text" class="form-control" id="editId" name="editId" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="editMotivo">Motivo:</label>
+                                <input type="text" class="form-control" id="editMotivo" name="editMotivo">
+                            </div>
+                            <div class="form-group">
+                                <label for="editTipoDeInversion">Tipo de Inversion:</label>
+                                <input type="text" class="form-control" id="editTipoDeInversion" name="editTipoDeInversion">
+                            </div>
 
-        <div class="modal-footer">
-            <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
-            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                            <div id="editDividendoFields" style="display: none;">
+                                <div class="form-group">
+                                    <label for="editMontoDividendoEsperado">Monto Dividendo Esperado:</label>
+                                    <input type="text" class="form-control" id="editMontoDividendoEsperado" name="editMontoDividendoEsperado">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPeriodicidadDividendo">Periodicidad Dividendo:</label>
+                                    <input type="text" class="form-control" id="editPeriodicidadDividendo" name="editPeriodicidadDividendo">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editFechaPagoDividendo">Fecha Pago Dividendo:</label>
+                                    <input type="text" class="form-control" id="editFechaPagoDividendo" name="editFechaPagoDividendo">
+                                </div>
+                            </div>
+
+
+                            <div id="editBonosFields" style="display: none;">
+                                <div class="form-group">
+                                    <label for="editMontoBono">Monto Bono:</label>
+                                    <input type="text" class="form-control" id="editMontoBono" name="editMontoBono">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editTasaInteresBono">Tasa Interes Bono:</label>
+                                    <input type="text" class="form-control" id="editTasaInteresBono" name="editTasaInteresBono">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPlazoBono">Plazo Bono:</label>
+                                    <input type="text" class="form-control" id="editPlazoBono" name="editPlazoBono">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPeriodicidadInteres">Periodicidad Interes:</label>
+                                    <input type="text" class="form-control" id="editPeriodicidadInteres" name="editPeriodicidadInteres">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editFechaPagoBono">Fecha Pago Bono:</label>
+                                    <input type="text" class="form-control" id="editFechaPagoBono" name="editFechaPagoBono">
+                                </div>
+                            </div>
+
+                            <div id="editFondoDeInversionFields" style="display: none;">
+                                <div class="form-group">
+                                    <label for="editMontoFondoInversion">Monto Fondo Inversion:</label>
+                                    <input type="text" class="form-control" id="editMontoFondoInversion" name="editMontoFondoInversion">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editTarifaAdministracion">Tarifa Administracion:</label>
+                                    <input type="text" class="form-control" id="editTarifaAdministracion" name="editTarifaAdministracion">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editPeriodicidadTarifaAdm">Periodicidad Tarifa Adm:</label>
+                                    <input type="text" class="form-control" id="editPeriodicidadTarifaAdm" name="editPeriodicidadTarifaAdm">
+                                </div>
+                                <div class="form-group">
+                                    <label for="editCantParticipacion">Cantidad de Participacion:</label>
+                                    <input type="text" class="form-control" id="editCantParticipacion" name="editCantParticipacion">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Group 2 -->
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label for="editRendimientoTotal">Rendimiento Total:</label>
+                                <input type="text" class="form-control" id="editRendimientoTotal" name="editRendimientoTotal">
+                            </div>
+                            <div class="form-group">
+                                <label for="editStatus">Status:</label>
+                                <input type="text" class="form-control" id="editStatus" name="editStatus">
+                            </div>
+                            <div class="form-group">
+                                <label for="editPagoId">Pago ID:</label>
+                                <input type="text" class="form-control" id="editPagoId" name="editPagoId">
+                            </div>
+                            <div class="form-group">
+                                <label for="editFechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
+                                <input type="text" class="form-control" id="editFechaPagoInicialInversion" name="editFechaPagoInicialInversion">
+                            </div>
+                            <div class="form-group">
+                                <label for="editFechaFinalInversion">Fecha Final Inversion:</label>
+                                <input type="text" class="form-control" id="editFechaFinalInversion" name="editFechaFinalInversion">
+                            </div>
+                            <div class="form-group">
+                                <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
+                                <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
         </div>
     </div>
 </div>
-</div>';
+';
 
 // Include jQuery library and custom script for handling click event and populating form fields within the modal
 echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -573,6 +629,33 @@ $.ajax({
         $("#editFechaDeAprobacion").val(response.FechaDeAprobacion);
         // Show the modal
         $("#editModal").modal("show");
+
+        var tipoDeInversion = response.TipoDeInversion;
+        var dividendoFieldss = document.getElementById("editDividendoFields");
+        var bonoFields = document.getElementById("editBonosFields");
+        var fondoDeInversionFields = document.getElementById("editFondoDeInversionFields");
+
+        if (tipoDeInversion === "") {
+            dividendoFieldss.style.display = "none";
+            bonoFields.style.display = "none";
+            fondoDeInversionFields.style.display = "none";
+            // Show/hide other fields related to Inversion por acciones
+        } else if (tipoDeInversion === "Por acciones") {
+            dividendoFieldss.style.display = "block";
+            bonoFields.style.display = "none";
+            fondoDeInversionFields.style.display = "none";
+            // Show/hide other fields related to Inversion por acciones
+        } else if (tipoDeInversion === "Por bonos") {
+            dividendoFieldss.style.display = "none";
+            bonoFields.style.display = "block";
+            fondoDeInversionFields.style.display = "none";
+            // Show/hide other fields related to Inversion por bonos
+        } else if (tipoDeInversion === "Fondos de inversión"){
+            // Handle other types of inversion if needed
+            dividendoFieldss.style.display = "none";
+            bonoFields.style.display = "none";
+            fondoDeInversionFields.style.display = "block";
+        }
     },
     error: function(xhr, status, error) {
         console.error(xhr);

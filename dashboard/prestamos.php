@@ -226,7 +226,7 @@ if (!$user->is_logged_in()) {
                     <input type="text" class="form-control" id="remitente" name="remitente" required>
                 </div>
                 <div class="form-group">
-                  <label for="beneficiario">Beneficiario:</label>
+                  <label for="beneficiario">Usuario Beneficiario:</label>
                   <input type="text" class="form-control" id="beneficiarioInput" name="beneficiario" required>
                   <div id="beneficiarioDropdown" class="dropdown-content"></div>
                 </div>
