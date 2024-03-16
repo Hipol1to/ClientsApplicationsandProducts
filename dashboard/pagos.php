@@ -349,9 +349,13 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
-          <a href="detalle_pago.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
-          <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
-          <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
+          <a style="white-space: nowrap !important;" href="detalle_pago.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+            <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['Id'].'">Editar</button>
+        </div>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+            <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
+        </div>
         </td>
                 <td>' . $row['IdCliente'] . '</td>
                 <td>' . $row['CuentaRemitente'] . '</td>

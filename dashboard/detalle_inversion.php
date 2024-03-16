@@ -148,7 +148,7 @@ if(isset($_POST['actualizarStatus'])) {
                 </li>
 
                  <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="prestamos.php" class="nav-link">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
@@ -300,17 +300,123 @@ if(isset($_POST['actualizarStatus'])) {
 </div>
                   <a href="javascript:history.go(-1);" class="btn btn-secondary btn-sm">Volver</a>
 
-                    <!-- Custom Tabs -->
+                   <!-- Custom Tabs -->
+                   <!-- Modal -->
+<div id="modalAgregarPagoForParticipacion" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Agregar pago</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Your form goes here -->
+                <form id="editForm" action="add_pago.php">
+    <div class="row">
+        <!-- Group 1 -->
+        <div class="col-sm-8">
+            <div class="form-group">
+                <label for="clientUser">Usuario cliente:</label>
+                <input type="text" class="form-control" id="clientUser" name="clientUser">
+                <div id="clientUserDropdown" class="dropdown-content"></div>
+            </div>
+            <div class="form-group">
+                <label for="addCuentaRemitente">Cuenta Remitente:</label>
+                <input type="text" class="form-control" id="addCuentaRemitente" name="addCuentaRemitente">
+            </div>
+            <div class="form-group">
+                <label for="editTipoCuentaRemitente">Tipo Cuenta Remitente:</label>
+                <select class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente" required>
+                  <option value="" selected>--Tipo de Cuenta--</option>
+                    <option value="Cuenta de ahorros">Cuenta de ahorros</option>
+                    <option value="Cuenta corriente">Cuenta corriente</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="addEntidadBancariaRemitente">Entidad Bancaria Remitente:</label>
+                <input type="text" class="form-control" id="addEntidadBancariaRemitente" name="addEntidadBancariaRemitente">
+            </div>
+            <div class="form-group">
+                <label for="addCuentaDestinatario">Cuenta Destinatario:</label>
+                <input type="text" class="form-control" id="addCuentaDestinatario" name="addCuentaDestinatario">
+            </div>
+            <div class="form-group">
+                <label for="addTipoCuentaDestinatario">Tipo Cuenta Destinatario:</label>
+                <select class="form-control" id="addTipoCuentaDestinatario" name="addTipoCuentaDestinatario" required>
+                  <option value="" selected>--Tipo de Cuenta--</option>
+                    <option value="Cuenta de ahorros">Cuenta de ahorros</option>
+                    <option value="Cuenta corriente">Cuenta corriente</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="addEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
+                <input type="text" class="form-control" id="addEntidadBancariaDestinatario" name="addEntidadBancariaDestinatario">
+            </div>
+        </div>
+        <!-- Group 2 -->
+        <div class="col-sm-4">
+            <div class="form-group">
+              <div class="form-group">
+                <label for="addMotivo">Motivo:</label>
+                <input type="text" class="form-control" id="addMotivo" name="addMotivo">
+            </div>
+                <label for="addMonto">Monto:</label>
+                <input type="text" class="form-control" id="addMonto" name="addMonto">
+            </div>
+            <div class="form-group">
+                <label for="addTipo">Tipo:</label>
+                <input type="text" class="form-control" id="addTipo" name="addTipo">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="addInversionId" name="addInversionId" readonly hidden>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" id="addParticipacionId" name="addParticipacionId" readonly hidden>
+            </div>
+            <div class="form-group">
+                <label for="addFechaDePago">Fecha de Pago:</label>
+                <input type="text" class="form-control" id="addFechaDePago" name="addFechaDePago">
+            </div>
+        </div>
+    </div>
+</form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="addPagoBtn">Agregar pago</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Button to trigger the modal -->
+<div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+
+<script>
+    // jQuery code to show the modal when the button is clicked
+    $(document).ready(function(){
+        $('#openModalBtn').click(function(){
+            $('#myModal').modal('show');
+        });
+    });
+</script>
+
                     <div class="card">
                         <div class="card-header p-0">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="detalle-tab" data-toggle="pill" href="#detalle" role="tab" aria-controls="detalle" aria-selected="true">Detalle Inversión</a>
                                 </li>
-
-                                <li class="nav-item">
+<?php
+if ($inversion['TipoDeInversion'] == "Fondos de inversión") {
+  echo '<li class="nav-item">
     <a class="nav-link" id="nuevo-tab" data-toggle="pill" href="#nuevo" role="tab" aria-controls="nuevo" aria-selected="false">Participaciones</a>
-</li>
+</li>';
+}
+?>
+                                
 
 
 
@@ -558,6 +664,8 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
+        <a style="white-space: nowrap !important;" data-id="'. $row['Id'].'" class="btn btn-info btn-sm">Agregar pago</a>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
             <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['Id'].'">Editar</button>
         </div>
         <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
@@ -678,8 +786,33 @@ echo '<div id="editModal" class="modal fade" role="dialog">
 </div>
 </div>';
 
+
 // Include jQuery library and custom script for handling click event and populating form fields within the modal
 echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".btn-info").click(function() {
+        var id = $(this).data("id");
+        $.ajax({
+            url: "fetch_participacion.php", // Changed to fetch inversion details
+            type: "GET",
+            data: { id: id },
+            dataType: "json",
+            success: function(response) {
+                // Clear previous values
+                $("#editFormParticipacion")[0].reset();
+                $("#addParticipacionId").val(response.Id);
+                $("#addInversionId").val(response.IdInversion);
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr);
+            }
+        });
+    });
+    });
+
+</script>
+
 <script>
 $(document).ready(function() {
     $(".edit-btn").click(function() {
@@ -861,6 +994,78 @@ echo '</div>';
   });
 </script>
 
+<script>
+
+  // Flag to track whether an option has been selected
+  var optionSelected = false;
+
+  // Function to fetch autosuggestion data from the database
+  function fetchUsuarios(str) {
+  window.globalVariable = true;
+    if (str.length == 0) {
+        document.getElementById("clientUserDropdown").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("clientUserDropdown").innerHTML = this.responseText;
+
+                // Add event listeners to the options
+                var options = document.querySelectorAll(".dropdown-content .option");
+                options.forEach(function(option) {
+                    option.addEventListener("click", function() {
+                        // Set the input field value to the selected option
+                        document.getElementById("clientUser").value = this.textContent;
+                        // Clear the dropdown after selecting an option
+                        document.getElementById("clientUserDropdown").innerHTML = "";
+                        // Set the flag to true since an option has been selected
+                        console.log("optionSelected = true")
+                        optionSelected = true;
+                        if (optionSelected) {
+                          console.log("la selesionate");
+                          const beneficiarioTextField = document.getElementById('clientUser');
+                          const agregarPrestamoButton = document.getElementById('addPagoBtn');
+                          // Add a class to the element/
+                          beneficiarioTextField.classList.remove('is-invalid');
+                          agregarPrestamoButton.classList.remove('disabled');
+                        }
+    
+                    });
+                });
+            }
+        };
+        xmlhttp.open("GET", "get_usuarios.php?q=" + str, true);
+        xmlhttp.send();
+
+        //terminamo
+        if (!optionSelected) {
+      console.log("no la selesionate");
+      const beneficiarioTextField = document.getElementById('clientUser');
+    const agregarPrestamoButton = document.getElementById('addPagoBtn');
+    // Add a class to the element/
+    beneficiarioTextField.classList.add('is-invalid');
+    agregarPrestamoButton.classList.add('disabled');
+    }
+    }
+}
+
+document.getElementById("clientUser").addEventListener("input", function() {
+    // Reset the flag when the input changes
+    optionSelected = false;
+    fetchUsuarios(this.value);
+    
+});
+</script>
+
+<script>
+    // jQuery code to show the modal when the button is clicked
+    $(document).ready(function(){
+        $('.btn-info').click(function(){
+            $('#modalAgregarPagoForParticipacion').modal('show');
+        });
+    });
+</script>
 
 </body>
 </html>
