@@ -220,7 +220,7 @@ if (!$user->is_logged_in()) {
             </div>
             <div class="form-group">
                 <label for="fechaPagoDividendo">Fecha Pago Dividendo:</label>
-                <input type="text" class="form-control" id="fechaPagoDividendo" name="fechaPagoDividendo">
+                <input type="text" class="form-control datepicker" id="fechaPagoDividendo" name="fechaPagoDividendo">
             </div>
             </div>
             
@@ -245,7 +245,7 @@ if (!$user->is_logged_in()) {
             </div>
             <div class="form-group">
                 <label for="fechaPagoBono">Fecha Pago Bono:</label>
-                <input type="text" class="form-control" id="fechaPagoBono" name="fechaPagoBono">
+                <input type="text" class="form-control datepicker" id="fechaPagoBono" name="fechaPagoBono">
             </div>
             </div>
             <div id="fondosDeInversionFields" style="display: none;">
@@ -287,15 +287,15 @@ if (!$user->is_logged_in()) {
         
          <div class="form-group">
                 <label for="fechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
-                <input type="text" class="form-control" id="fechaPagoInicialInversion" name="fechaPagoInicialInversion">
+                <input type="text" class="form-control datepicker" id="fechaPagoInicialInversion" name="fechaPagoInicialInversion">
             </div>
             <div class="form-group">
                 <label for="fechaFinalInversion">Fecha Final Inversion:</label>
-                <input type="text" class="form-control" id="fechaFinalInversion" name="fechaFinalInversion">
+                <input type="text" class="form-control datepicker" id="fechaFinalInversion" name="fechaFinalInversion">
             </div>
             <div class="form-group">
                 <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
-                <input type="text" class="form-control" id="fechaDeAprobacion" name="fechaDeAprobacion">
+                <input type="text" class="form-control datepicker" id="fechaDeAprobacion" name="fechaDeAprobacion">
             </div>
             </div>
     </div>
@@ -503,7 +503,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                                 </div>
                                 <div class="form-group">
                                     <label for="editFechaPagoDividendo">Fecha Pago Dividendo:</label>
-                                    <input type="text" class="form-control" id="editFechaPagoDividendo" name="editFechaPagoDividendo">
+                                    <input type="text" class="form-control datepicker" id="editFechaPagoDividendo" name="editFechaPagoDividendo">
                                 </div>
                             </div>
 
@@ -527,7 +527,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                                 </div>
                                 <div class="form-group">
                                     <label for="editFechaPagoBono">Fecha Pago Bono:</label>
-                                    <input type="text" class="form-control" id="editFechaPagoBono" name="editFechaPagoBono">
+                                    <input type="text" class="form-control datepicker" id="editFechaPagoBono" name="editFechaPagoBono">
                                 </div>
                             </div>
 
@@ -566,15 +566,15 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                             </div>
                             <div class="form-group">
                                 <label for="editFechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
-                                <input type="text" class="form-control" id="editFechaPagoInicialInversion" name="editFechaPagoInicialInversion">
+                                <input type="text" class="form-control datepicker" id="editFechaPagoInicialInversion" name="editFechaPagoInicialInversion">
                             </div>
                             <div class="form-group">
                                 <label for="editFechaFinalInversion">Fecha Final Inversion:</label>
-                                <input type="text" class="form-control" id="editFechaFinalInversion" name="editFechaFinalInversion">
+                                <input type="text" class="form-control datepicker" id="editFechaFinalInversion" name="editFechaFinalInversion">
                             </div>
                             <div class="form-group">
                                 <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
-                                <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                                <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
                             </div>
                         </div>
                     </div>
@@ -776,5 +776,20 @@ $(".delete-btn").click(function() {
     });
   });
 </script>
+
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      startDate: new Date() // Set the start date as today
+    });
+  });
+</script>
+
+
 </body>
 </html>

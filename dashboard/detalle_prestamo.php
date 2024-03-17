@@ -427,7 +427,7 @@ if($stmt->rowCount() > 0) {
     echo '</div>';
     echo '<div class="form-group">';
     echo '<label for="fechaAprobacion">Fecha de aprobacion:</label>';
-    echo '<input type="text" class="form-control" id="fechaAprobacion" name="fechaAprobacion" value="'.htmlspecialchars($client['FechaDeAprobacion']).'" readonly>';
+    echo '<input type="text" class="form-control datepicker" id="fechaAprobacion" name="fechaAprobacion" value="'.htmlspecialchars($client['FechaDeAprobacion']).'" readonly>';
     echo '</div>';
     echo '</div>';
 
@@ -524,7 +524,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     </div>
                     <div class="form-group">
                         <label for="editFechaDePago">Fecha de Pago:</label>
-                        <input type="text" class="form-control" id="editFechaDePago" name="editFechaDePago" readonly>
+                        <input type="text" class="form-control datepicker" id="editFechaDePago" name="editFechaDePago" readonly>
                     </div>
                 </form>
             </div>
@@ -704,5 +704,20 @@ $(".delete-btn").click(function() {
     });
   });
 </script>
+
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      startDate: new Date() // Set the start date as today
+    });
+  });
+</script>
+
+
 </body>
 </html>

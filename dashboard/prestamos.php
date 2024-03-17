@@ -467,7 +467,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="editFechaFinalPrestamo">Fecha Final de prestamo:</label>
-                    <input type="text" class="form-control" id="editFechaFinalPrestamo" name="editFechaFinalPrestamo">
+                    <input type="text" class="form-control datepicker" id="editFechaFinalPrestamo" name="editFechaFinalPrestamo">
                 </div>
                 <div class="form-group">
                     <label for="editCuotasTotales">Cuotas Totales:</label>
@@ -486,7 +486,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                 </div>
                 <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                    <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
                 </div>
             </div>
         </div>
