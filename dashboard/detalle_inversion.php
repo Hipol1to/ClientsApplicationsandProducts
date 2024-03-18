@@ -6,32 +6,32 @@ if (!$user->is_logged_in()) {
 	// exit(); 
 }
 
-// Check if ID parameter is set
+// Check if ID parameter is set on URL
 if(isset($_GET['id'])) {
     $inversion_id = $_GET['id'];
     
-    // Fetch prestamo details from the database
+    // Fetch inversion details from the database
     $sql = "SELECT * FROM inversiones WHERE Id = :id";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':id', $inversion_id);
     $stmt->execute();
     $inversion = $stmt->fetch(PDO::FETCH_ASSOC);
     
-    // Check if prestamo exists
+    // Check if inversion exists
     if(!$inversion) {
-        echo "Prestamo not found!";
+        echo "Inversion no encontrada!";
         exit();
     }
 } else {
-    echo "Prestamo ID not provided!";
+    echo "El Id de la inversion no fue provisto!";
     exit();
 }
 
-// Handle form submission for updating prestamo status
+// Handle form submission for updating inversion status
 if(isset($_POST['actualizarStatus'])) {
     $status = $_POST['status'];
     
-    // Update prestamo status in the database
+    // Update inversion status in the database
     $sql = "UPDATE inversiones SET Status = :status WHERE Id = :id";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':status', $status);
@@ -515,9 +515,14 @@ if(isset($_POST['actualizarStatus'])) {
                                     <a class="nav-link active" id="detalle-tab" data-toggle="pill" href="#detalle" role="tab" aria-controls="detalle" aria-selected="true">Detalle Inversión</a>
                                 </li>
 <?php
+//print participaciones tab if inversion has according type
 if ($inversion['TipoDeInversion'] == "Fondos de inversión") {
   echo '<li class="nav-item">
     <a class="nav-link" id="nuevo-tab" data-toggle="pill" href="#nuevo" role="tab" aria-controls="nuevo" aria-selected="false">Participaciones</a>
+</li>';
+} else {
+    echo '<li class="nav-item">
+    <a class="nav-link" id="pagos-tab" data-toggle="pill" href="#nuevo" role="tab" aria-controls="nuevo" aria-selected="false">Pagos</a>
 </li>';
 }
 ?>
@@ -533,8 +538,8 @@ if ($inversion['TipoDeInversion'] == "Fondos de inversión") {
         <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
             <!-- Detalle Perfil Content Here -->
             <div class="form-group">
-                <label for="estadoPrestamo">Status del Préstamo:</label>
-                <select class="form-control" id="estadoPrestamo">
+                <label for="estadoInversion">Status de la Inversión:</label>
+                <select class="form-control" id="estadoInversion">
                     <option value="Aprobado" <?php if($inversion['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
                     <option value="En proceso" <?php if($inversion['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
                     <option value="Rechazado" <?php if($inversion['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
@@ -710,11 +715,9 @@ if($stmt->rowCount() > 0) {
 
                                     echo'</div>';
                                 echo'</div>';
-                                echo'<div class="tab-pane fade" id="nuevo" role="tabpanel" aria-labelledby="nuevo-tab">';
 
-                                // Include the database connection file
-// Assuming your database connection code is included here
-
+//participaciones tab content
+echo'<div class="tab-pane fade" id="nuevo" role="tabpanel" aria-labelledby="nuevo-tab">';
 // Fetch data from the participaciones table
 $sql = "SELECT p.Id, p.IdInversion, p.DescripcionParticipacion, p.MontoInvertido, p.RendimientoEsperado, p.FechaInicioParticipacion, p.FechaFinParticipacion, p.FechaCreacion, p.FechaModificacion, i.IdCliente as IdCliente, u.Usuario as Usuario FROM participaciones as p
 JOIN inversiones i ON p.IdInversion = i.Id
@@ -867,7 +870,7 @@ echo '<div class="modal-dialog">
             </div>
             <div class="modal-body" style="max-height: 500px; overflow-y: auto;">'; // Adjust max-height and overflow
 
-// Prepare the query with a placeholder for the parameter
+// get pagos linked to the participacion
 $sqlPago = "SELECT * FROM pagos WHERE ParticipacionId = :idParticipacion";
 $stmt = $db->prepare($sqlPago);
 
@@ -923,7 +926,7 @@ if ($resultPago) {
     // Close the table body
     echo '</tbody></table>';
 } else {
-    echo "No results found.";
+    echo "No hay pagos para mostrar.";
 }
 
 
@@ -941,7 +944,7 @@ echo '</div>';
 
 
 
-    // Add a hidden form to hold the details for editing within the modal
+    // Edit modal for participacion
 echo '<div id="editModal" class="modal fade" role="dialog">
 <div class="modal-dialog">
     <!-- Modal content-->

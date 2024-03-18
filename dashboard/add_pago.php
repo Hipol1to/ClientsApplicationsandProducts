@@ -165,6 +165,24 @@ error_log("{$pago}");
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
             // Redirect back to the page with success message
+        } else {
+            error_log("error adding id for payment to investments table brocompai");
+        }
+    }
+
+    //update participacion
+    $sql = "UPDATE participaciones SET 
+                                PagoId = :IdPago  
+                                WHERE Id = :participacionId";
+      error_log("{$pago}");
+    
+    if ($stmt = $db->prepare($sql)) {
+        // Bind variables to the prepared statement as parameters
+        $stmt->bindParam(":IdPago", $pago);
+        $stmt->bindParam(":participacionId", $participacionId);
+        // Attempt to execute the prepared statement
+        if ($stmt->execute()) {
+            // Redirect back to the page with success message
             header("location: detalle_inversion.php?id=".$inversionId."&success=1");
             exit();
         } else {
