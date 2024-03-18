@@ -495,6 +495,7 @@ if(isset($_POST['actualizarStatus'])) {
     </div>
 </div>
 
+
 <!-- Button to trigger the modal -->
 <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
 
@@ -751,7 +752,7 @@ if ($result) {
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
-                    <th>IdInversion</th>
+                    <th>Pagos</th>
                     <th>Cliente</th>
                     <th>Descripcion</th>
                     <th>Rendimiento esperado</th>
@@ -777,7 +778,9 @@ if ($result) {
         </div>
         </td>
                 <td>' . $row['Id'] . '</td>
-                <td>' . $row['IdInversion'] . '</td>
+                <td>
+                <button style="white-space: nowrap !important;" type="button" class="btn btn-secondary btn-sm erbustondepago">Ver pagos</button>
+                </td>
                 <td>' . $row['Usuario'] . '</td>
                 <td>' . $row['DescripcionParticipacion'] . '</td>
                 <td>' . $row['RendimientoEsperado'] . '</td>
@@ -795,7 +798,7 @@ if ($result) {
             <th></th>
                     <th>Acciones</th>
                     <th>ID</th>
-                    <th>IdInversion</th>
+                    <th>Pagos</th>
                     <th>Cliente</th>
                     <th>Descripcion</th>
                     <th>Rendimiento esperado</th>
@@ -809,7 +812,134 @@ if ($result) {
       </div>
       <!-- /.card-body -->
     </div>';
-    
+
+
+  echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $(".erbustondepago").click(function() {
+      var id = $(this).data("id");
+      $.ajax({
+          url: "fetch_pago.php",
+          type: "GET",
+          data: { id: id }, 
+          dataType: "json",
+          success: function(response) {
+              // Clear previous values
+
+              $("#editModalPago").modal("show");
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+          }
+      });
+  });
+
+  $("#saveChangesBtn").click(function() {
+      var formData = $("#editForm").serialize();
+      $.ajax({
+          url: "update_pago.php",
+          type: "POST",
+          data: formData,
+          success: function(response) {
+              $("#editModalPago").modal("hide");
+              // Optionally, reload the table or update the row with the edited data
+              location.reload();
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+              // Handle error
+          }
+      });
+  });
+});
+
+</script>';
+
+
+  echo '<div id="editModalPago" class="modal fade" role="dialog">';
+echo '<div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Pagos de participacion</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" style="max-height: 500px; overflow-y: auto;">'; // Adjust max-height and overflow
+
+// Prepare the query with a placeholder for the parameter
+$sqlPago = "SELECT * FROM pagos WHERE ParticipacionId = :idParticipacion";
+$stmt = $db->prepare($sqlPago);
+
+// Bind the parameter
+$stmt->bindParam(':idParticipacion', $inversion['ParticipacionId'], PDO::PARAM_INT); // Assuming $parameter is your parameter value
+
+// Execute the statement
+$stmt->execute();
+
+// Fetch the results
+$resultPago = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Check if there are any results
+if ($resultPago) {
+    // Output the table structure
+    echo '<table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Acciones</th>
+                    <th>Solicitante</th>
+                    <th>Cuenta Remitente</th>
+                    <th>Tipo de Cuenta Remitente</th>
+                    <th>Entidad Bancaria Remitente</th>
+                    <th>Cuenta Destinatario</th>
+                    <th>Tipo de Cuenta Destinatario</th>
+                    <th>Entidad Bancaria Destinatario</th>
+                    <th>Motivo</th>
+                    <th>Monto</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+    // Loop through the fetched results and generate table rows
+    foreach ($resultPago as $rowPago) {
+        echo '<tr>
+                <td>
+                    <a style="white-space: nowrap !important;" href="detalle_pago.php?id='. $rowPago['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
+                    <button class="btn btn-primary btn-sm edit-btn" data-id="'. $rowPago['Id'].'">Editar</button>
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="'. $rowPago['Id'].'">Eliminar</button>
+                </td>
+                <td>' . $rowPago['IdCliente'] . '</td>
+                <td>' . $rowPago['CuentaRemitente'] . '</td>
+                <td>' . $rowPago['TipoCuentaRemitente'] . '</td>
+                <td>' . $rowPago['EntidadBancariaRemitente'] . '</td>
+                <td>' . $rowPago['CuentaDestinatario'] . '</td>
+                <td>' . $rowPago['TipoCuentaDestinatario'] . '</td>
+                <td>' . $rowPago['EntidadBancariaDestinatario'] . '</td>
+                <td>' . $rowPago['Motivo'] . '</td>
+                <td>' . $rowPago['Monto'] . '</td>
+              </tr>';
+    }
+
+    // Close the table body
+    echo '</tbody></table>';
+} else {
+    echo "No results found.";
+}
+
+
+echo '</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>';
+
+echo '</div>';
+
+
+
+
 
     // Add a hidden form to hold the details for editing within the modal
 echo '<div id="editModal" class="modal fade" role="dialog">
@@ -1014,6 +1144,9 @@ $(".delete-btn").click(function() {
 
 echo '</div>';
 ?>
+
+
+
                                 </div>
                                 
                                
