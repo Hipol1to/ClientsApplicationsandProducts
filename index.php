@@ -2,9 +2,11 @@
 require('includes/config.php');
 
 // If logged in, redirect to the members page
-if ($user->is_logged_in()) { 
+if ($user->is_logged_in() && $_SESSION['isAdmin']) { 
 	header('Location: ./dashboard/index.php'); 
 	// exit(); 
+} elseif ($user->is_logged_in() && !$_SESSION['isAdmin']) {
+  header('Location: ./clients/index.php');  
 }
 
 // If the form has been submitted, process it

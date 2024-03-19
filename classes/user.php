@@ -51,7 +51,7 @@ class User
 
 	public function login($username, $password)
 {
-    if (! $this->isValidUsername($username)) {
+    if (!$this->isValidUsername($username)) {
         return false;
     }
 
@@ -67,10 +67,15 @@ class User
         $_SESSION['username'] = $row['username'];
         $_SESSION['userId'] = $row['Id'];
 
+        // Check the role of the logged-in user
+        $role = $row['Rol'];
+        $_SESSION['isAdmin'] = ($role === 'Administrador' || $role === 'Owner') ? true : false;
+
         return true;
     }
     return false;
 }
+
 
 	public function logout()
 	{

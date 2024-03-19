@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 11, 2024 at 09:02 PM
--- Server version: 5.7.24
--- PHP Version: 7.2.14
+-- Generation Time: Mar 19, 2024 at 07:14 PM
+-- Server version: 10.4.10-MariaDB
+-- PHP Version: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -39,8 +39,8 @@ CREATE TABLE IF NOT EXISTS `administradores` (
   `FechaConexion` date DEFAULT NULL,
   `FechaIngreso` date DEFAULT NULL,
   `FechaSalida` date DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
@@ -69,11 +69,11 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `FechaSalida` date DEFAULT NULL,
   `MesesEnEmpresa` int(11) DEFAULT NULL,
   `TotalPrestado` decimal(10,2) DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clientes`
@@ -85,7 +85,8 @@ INSERT INTO `clientes` (`Id`, `IdUsuario`, `Nombre`, `Apellido`, `Direccion`, `C
 (4, NULL, 'Hipolito', 'Peña', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '40229604604', '130424555', '23455.00', '10.00', '435353.00', 0, 13, '2023-01-01', '2023-01-01', 23, '44555.00', '2024-02-13 00:56:28', '2024-02-13 00:56:28'),
 (10, 2, 'Jane', 'Smith', '456 Elm St', '0987654321', 'XYZ456', '7000.00', '8.00', '2000.00', 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:28:20', '2024-02-16 00:28:20'),
 (11, 3, 'Alice', 'Johnson', '789 Oak St', '5432167890', 'DEF789', '10000.00', '12.00', '500.00', 0, 75, '2023-03-20', '2024-01-15', 10, '10500.00', '2024-02-16 00:28:20', '2024-02-16 00:28:20'),
-(12, NULL, 'Hipolito', 'Peña', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '345234566', '', '0.00', '0.00', '0.00', 0, 0, '2023-01-01', NULL, 2, '13.00', '2024-03-05 18:22:28', '2024-03-05 18:22:28');
+(12, NULL, 'Hipolito', 'Peña', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '345234566', '', '0.00', '0.00', '0.00', 0, 0, '2023-01-01', NULL, 2, '13.00', '2024-03-05 18:22:28', '2024-03-05 18:22:28'),
+(13, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-03-14 06:53:31', '2024-03-14 06:53:31');
 
 -- --------------------------------------------------------
 
@@ -105,7 +106,7 @@ CREATE TABLE IF NOT EXISTS `finanzas` (
 --
 
 INSERT INTO `finanzas` (`dineroencaja`, `dineroinvertido`, `dineroenprestamos`) VALUES
-('12099.75', '1000.00', '800.75');
+('12099.75', '1146.75', '800.75');
 
 -- --------------------------------------------------------
 
@@ -118,35 +119,40 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `IdCliente` int(11) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
-  `MontoSolicitado` decimal(10,2) DEFAULT NULL,
-  `MontoAprobado` decimal(10,2) DEFAULT NULL,
-  `MontoPagado` decimal(10,2) DEFAULT NULL,
-  `TasaDeInteres` decimal(10,2) DEFAULT NULL,
-  `MontoRecargo` decimal(10,2) DEFAULT NULL,
-  `Remitente` varchar(255) DEFAULT NULL,
-  `Beneficiario` varchar(255) DEFAULT NULL,
+  `TipoDeInversion` varchar(255) DEFAULT NULL,
+  `MontoDividendoEsperado` varchar(255) DEFAULT NULL,
+  `PeriodicidadDividendo` varchar(255) DEFAULT NULL,
+  `FechaPagoDividendo` timestamp NULL DEFAULT NULL,
+  `MontoBono` varchar(255) DEFAULT NULL,
+  `TasaInteresBono` varchar(255) DEFAULT NULL,
+  `PlazoBono` varchar(255) DEFAULT NULL,
+  `PeriodicidadInteres` varchar(255) DEFAULT NULL,
+  `FechaPagoInteres` timestamp NULL DEFAULT NULL,
+  `MontoFondoInversion` varchar(255) DEFAULT NULL,
+  `TarifaAdministracion` varchar(255) DEFAULT NULL,
+  `PeriodicidadTarifaAdm` varchar(255) DEFAULT NULL,
+  `CantParticipacion` varchar(255) DEFAULT NULL,
+  `ParticipacionId` int(11) DEFAULT NULL,
+  `RendimientoTotal` decimal(10,2) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) DEFAULT NULL,
-  `FechaPagoMensual` varchar(255) DEFAULT NULL,
+  `FechaPagoInicialInversion` timestamp NULL DEFAULT NULL,
   `FechaFinalInversion` timestamp NULL DEFAULT NULL,
-  `CuotasTotales` int(3) DEFAULT NULL,
-  `DiasDePagoDelMes` int(11) DEFAULT NULL,
-  `CantPagosPorMes` varchar(255) DEFAULT NULL,
   `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inversiones`
 --
 
-INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `TasaDeInteres`, `MontoRecargo`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaPagoMensual`, `FechaFinalInversion`, `CuotasTotales`, `DiasDePagoDelMes`, `CantPagosPorMes`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 4, 'Short-term Investment', NULL, NULL, NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En cola', 3, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
-(2, 2, 'Investment Plan A', NULL, NULL, NULL, NULL, NULL, 'Sender2', 'Receiver2', 'Aprobada', 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-01-18 04:48:34'),
-(3, 1, 'New Investment', NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En cola', 1, NULL, '2024-04-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:17:08', '2024-02-08 23:44:49');
+INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `TipoDeInversion`, `MontoDividendoEsperado`, `PeriodicidadDividendo`, `FechaPagoDividendo`, `MontoBono`, `TasaInteresBono`, `PlazoBono`, `PeriodicidadInteres`, `FechaPagoInteres`, `MontoFondoInversion`, `TarifaAdministracion`, `PeriodicidadTarifaAdm`, `CantParticipacion`, `ParticipacionId`, `RendimientoTotal`, `Status`, `PagoId`, `FechaPagoInicialInversion`, `FechaFinalInversion`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+(4, 1, 'Inversión en acciones', 'Por acciones', '100.00', 'Trimestral', '2024-03-15 04:00:00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Activa', NULL, NULL, NULL, '2024-03-12 18:23:46', '2024-03-12 18:23:46', '2024-03-14 01:44:24'),
+(5, 2, 'Inversión en bonos', 'Por bonos', NULL, NULL, NULL, '10000.00', '5%', '1 año', 'Mensual', '2024-04-01 04:00:00', NULL, NULL, NULL, NULL, NULL, NULL, 'Activa', NULL, NULL, NULL, '2024-03-12 18:23:47', '2024-03-12 18:23:47', '2024-03-14 01:44:32'),
+(6, 11, 'Inversión en fondos de inversión', 'Fondos de inversión', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '20000.00', '2%', 'Trimestral', '1000', 5, '250.00', 'Activa', 28, NULL, NULL, '2024-03-12 18:23:47', '2024-03-12 18:23:47', '2024-03-18 03:56:01');
 
 -- --------------------------------------------------------
 
@@ -169,25 +175,28 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `Tipo` varchar(50) DEFAULT NULL,
   `InversionId` int(11) DEFAULT NULL,
   `PrestamoId` int(11) DEFAULT NULL,
+  `ParticipacionId` int(11) DEFAULT NULL,
   `FechaDePago` datetime DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pagos`
 --
 
-INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`, `EntidadBancariaRemitente`, `CuentaDestinatario`, `TipoCuentaDestinatario`, `EntidadBancariaDestinatario`, `Monto`, `Motivo`, `Tipo`, `InversionId`, `PrestamoId`, `FechaDePago`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 1, 'Cuentaa1', '', 'Banco1', 'CuentaDest1', '', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, '2023-12-15 08:30:00', '2024-01-18 04:48:27', '2024-03-02 23:05:50'),
-(2, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1500.50', 'Pago de deuda', 'Depósito', NULL, NULL, '2023-12-20 10:45:00', '2024-01-18 04:48:27', '2024-01-18 04:48:27'),
-(3, 3, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, 5, '2023-12-25 12:15:00', '2024-01-18 04:48:27', '2024-02-08 21:55:46'),
-(4, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, '2023-12-15 08:30:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
-(5, 2, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, NULL, '2023-12-25 12:15:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
-(6, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1400.00', 'Pago adicional', 'Transferencia', NULL, NULL, '2023-12-28 09:00:00', '2024-01-22 12:56:30', '2024-01-23 23:53:56'),
-(7, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1800.75', 'Pago extra', 'Depósito', NULL, NULL, '2023-12-30 14:30:00', '2024-01-22 12:56:30', '2024-01-22 12:56:30'),
-(26, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', 2, NULL, '2023-12-15 08:30:00', '2024-01-28 19:41:34', '2024-02-08 21:58:43');
+INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`, `EntidadBancariaRemitente`, `CuentaDestinatario`, `TipoCuentaDestinatario`, `EntidadBancariaDestinatario`, `Monto`, `Motivo`, `Tipo`, `InversionId`, `PrestamoId`, `ParticipacionId`, `FechaDePago`, `FechaCreacion`, `FechaModificacion`) VALUES
+(1, 1, 'Cuentaa1', '', 'Banco1', 'CuentaDest1', '', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, NULL, '2023-12-15 08:30:00', '2024-01-18 04:48:27', '2024-03-02 23:05:50'),
+(2, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1500.50', 'Pago de deuda', 'Depósito', NULL, NULL, NULL, '2023-12-20 10:45:00', '2024-01-18 04:48:27', '2024-01-18 04:48:27'),
+(3, 3, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, 5, NULL, '2023-12-25 12:15:00', '2024-01-18 04:48:27', '2024-02-08 21:55:46'),
+(4, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, NULL, '2023-12-15 08:30:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
+(5, 2, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, NULL, NULL, '2023-12-25 12:15:00', '2024-01-22 12:15:48', '2024-01-22 12:15:48'),
+(6, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1400.00', 'Pago adicional', 'Transferencia', NULL, NULL, NULL, '2023-12-28 09:00:00', '2024-01-22 12:56:30', '2024-01-23 23:53:56'),
+(7, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1800.75', 'Pago extra', 'Depósito', NULL, NULL, NULL, '2023-12-30 14:30:00', '2024-01-22 12:56:30', '2024-01-22 12:56:30'),
+(26, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', 2, NULL, NULL, '2023-12-15 08:30:00', '2024-01-28 19:41:34', '2024-02-08 21:58:43'),
+(27, 7, '999777477', 'Cuenta de ahorros', 'Banco Popular Dominicano', '94999555', 'Cuenta de ahorros', 'Banco Vimenca', '99.99', 'Compra de acciones', 'Transferencia bancaria', 6, NULL, 4, '2024-03-26 00:00:00', '2024-03-18 03:35:28', '2024-03-18 03:35:28'),
+(28, 7, '2344', 'Cuenta corriente', 'Bandex', '232443', 'Cuenta de ahorros', 'Citibank', '46.76', 'Compra de acciones', 'Transferencia bancaria', 6, NULL, 5, '2024-03-25 00:00:00', '2024-03-18 03:56:01', '2024-03-18 03:56:01');
 
 --
 -- Triggers `pagos`
@@ -367,6 +376,36 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `participaciones`
+--
+
+DROP TABLE IF EXISTS `participaciones`;
+CREATE TABLE IF NOT EXISTS `participaciones` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdInversion` int(11) DEFAULT NULL,
+  `DescripcionParticipacion` varchar(255) DEFAULT NULL,
+  `MontoInvertido` decimal(10,2) DEFAULT NULL,
+  `RendimientoEsperado` decimal(10,2) DEFAULT NULL,
+  `PagoId` int(11) DEFAULT NULL,
+  `FechaInicioParticipacion` date DEFAULT NULL,
+  `FechaFinParticipacion` date DEFAULT NULL,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`Id`),
+  KEY `IdInversion` (`IdInversion`),
+  KEY `PagoId` (`PagoId`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `participaciones`
+--
+
+INSERT INTO `participaciones` (`Id`, `IdInversion`, `DescripcionParticipacion`, `MontoInvertido`, `RendimientoEsperado`, `PagoId`, `FechaInicioParticipacion`, `FechaFinParticipacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+(5, 6, 'compra de bono', '220.33', '300.99', 28, '2024-03-28', '2024-03-29', '2024-03-18 03:54:04', '2024-03-18 03:56:01');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `prestamos`
 --
 
@@ -384,17 +423,17 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Beneficiario` varchar(255) DEFAULT NULL,
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) DEFAULT NULL,
-  `FechaPagoMensual` varchar(255) DEFAULT NULL,
+  `FechaPagoMensual` timestamp NULL DEFAULT NULL,
   `FechaFinalPrestamo` timestamp NULL DEFAULT NULL,
   `CuotasTotales` int(3) DEFAULT NULL,
   `DiasDePagoDelMes` int(11) DEFAULT NULL,
   `CantPagosPorMes` varchar(255) DEFAULT NULL,
   `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
-) ENGINE=MyISAM AUTO_INCREMENT=29 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prestamos`
@@ -406,7 +445,10 @@ INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoA
 (6, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:56:04'),
 (7, 1, 'Education Loan', NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
 (8, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 6, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
-(27, 4, 'Short-term Loan', NULL, NULL, NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En proceso', 26, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:20:00', '2024-01-28 19:44:54');
+(27, 4, 'Short-term Loan', NULL, NULL, NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En proceso', 26, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:20:00', '2024-01-28 19:44:54'),
+(28, 7, 'Préstamo para compra de automóvil', '15000.00', '15000.00', '0.00', '8.50', '0.00', 'Banco XYZ', 'John Doe', 'Aprobado', NULL, '2024-03-16 04:00:00', '2024-03-26 04:00:00', 12, 30, 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:31'),
+(29, 7, 'Préstamo para remodelación de casa', '25000.00', '25000.00', '0.00', '7.00', '0.00', 'Banco XYZ', 'Jane Doe', 'Aprobado', NULL, '2024-03-26 04:00:00', '2024-03-26 04:00:00', 24, 15, 'Quincenal', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:36'),
+(30, 7, 'Préstamo para gastos médicos', '10000.00', '10000.00', '0.00', '9.00', '0.00', 'Banco XYZ', 'Alice Smith', 'Aprobado', NULL, '2024-03-14 03:59:00', '2024-03-26 04:00:00', 6, 5, 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 20:47:28');
 
 -- --------------------------------------------------------
 
@@ -423,8 +465,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `Rol` varchar(20) NOT NULL,
   `Email` varchar(255) NOT NULL,
   `Active` varchar(255) NOT NULL,
-  `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
+  `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`)
 ) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -435,8 +477,8 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`Id`, `Nombre`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
 (1, 'el compa', 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 'Yes', '2024-01-18 03:47:23', '2024-02-08 23:34:13'),
-(2, NULL, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 'Yes', '2024-01-18 03:47:23', '2024-01-18 03:47:23'),
-(3, NULL, 'markDitamai', '$2y$10$mcB8aPjFkUoAeG8Pd5fqIOrajg2799/DsNQfqj1ptb0o66vEXuVyy', 'Administrador', 'cuentascompaltidas@gmail.com', 'Yes', '2024-02-10 17:16:56', '2024-02-10 17:17:30');
+(2, 'el machetes', 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 'Yes', '2024-01-18 03:47:23', '2024-03-12 18:37:17'),
+(3, 'mark distamai', 'markDitamai', '$2y$10$mcB8aPjFkUoAeG8Pd5fqIOrajg2799/DsNQfqj1ptb0o66vEXuVyy', 'Administrador', 'cuentascompaltidas@gmail.com', 'Yes', '2024-02-10 17:16:56', '2024-03-12 18:38:09');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

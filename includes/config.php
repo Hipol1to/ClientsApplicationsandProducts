@@ -47,8 +47,13 @@ if(strpos($_SERVER['PHP_SELF'], 'dashboard') !== false)
   }
 }
 else {
+  if (strpos($_SERVER['PHP_SELF'], 'clients') !== false) {
+    include('../classes/user.php');
+    include('../classes/phpmailer/mail.php');
+  } else {
   include('classes/user.php');
   include('classes/phpmailer/mail.php');
+}
 }
 //include the user class, pass in the database connection
 
