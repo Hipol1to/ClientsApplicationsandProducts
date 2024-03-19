@@ -770,10 +770,10 @@ if ($result) {
         <td>
           <a style="white-space: nowrap !important;" href="detalle_pago.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
         <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-            <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
+            <button class="btn btn-primary btn-sm editarButtonPagoSinParticipacion" data-id="' . $row['Id'] . '">Editar</button>
         </div>
         <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-            <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
+            <button class="btn btn-danger btn-sm delete-btnPagoParticipacion" data-id="' . $row['Id'] . '">Eliminar</button>
         </div>
         </td>
                 <td>' . $row['IdCliente'] . '</td>
@@ -812,7 +812,191 @@ if ($result) {
 }
 echo'</div>';
 
+//PAGOS PER PARTICIPACION
+// Add a hidden form to hold the details for editing within the modal
+echo '<div id="editModalPagoSinParticipacion" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Editar Pago</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+    <form id="editForm">
+        <div class="row">
+            <!-- Group 1 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editId">ID:</label>
+                    <input type="text" class="form-control" id="editId" name="editId" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editIdCliente">ID Cliente:</label>
+                    <input type="text" class="form-control" id="editIdCliente" name="editIdCliente">
+                </div>
+                <div class="form-group">
+                    <label for="editCuentaRemitente">Cuenta Remitente:</label>
+                    <input type="text" class="form-control" id="editCuentaRemitente" name="editCuentaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editMotivo">Motivo:</label>
+                    <input type="text" class="form-control" id="editMotivo" name="editMotivo">
+                </div>
+                <div class="form-group">
+                    <label for="editTipo">Tipo:</label>
+                    <input type="text" class="form-control" id="editTipo" name="editTipo">
+                </div>
+            </div>
+            <!-- Group 2 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editTipoCuentaRemitente">Tipo de Cuenta Remitente:</label>
+                    <input type="text" class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editEntidadBancariaRemitente">Entidad Bancaria Remitente:</label>
+                    <input type="text" class="form-control" id="editEntidadBancariaRemitente" name="editEntidadBancariaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editCuentaDestinatario">Cuenta Destinatario:</label>
+                    <input type="text" class="form-control" id="editCuentaDestinatario" name="editCuentaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editInversionId">ID de Inversion:</label>
+                    <input type="text" class="form-control" id="editInversionId" name="editInversionId">
+                </div>
+                <div class="form-group">
+                    <label for="editPrestamoId">ID de Préstamo:</label>
+                    <input type="text" class="form-control" id="editPrestamoId" name="editPrestamoId">
+                </div>
+            </div>
+            <!-- Group 3 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editTipoCuentaDestinatario">Tipo de Cuenta Destinatario:</label>
+                    <input type="text" class="form-control" id="editTipoCuentaDestinatario" name="editTipoCuentaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
+                    <input type="text" class="form-control" id="editEntidadBancariaDestinatario" name="editEntidadBancariaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editMonto">Monto:</label>
+                    <input type="text" class="form-control" id="editMonto" name="editMonto">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaDePago">Fecha de Pago:</label>
+                    <input type="text" class="form-control" id="editFechaDePago" name="editFechaDePago">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Group 4 -->
+            <div class="col-sm-4">
+                
+            </div>
+            <!-- Group 5 -->
+            <div class="col-sm-4">
+                
+            </div>
+            <!-- Group 6 -->
+            <div class="col-sm-4">
+                
+            </div>
+        </div>
+    </form>
+</div>
 
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>';
+
+// Include jQuery library and custom script for handling click event and populating form fields within the modal
+echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $(".editarButtonPagoSinParticipacion").click(function() {
+      var id = $(this).data("id");
+      $.ajax({
+          url: "fetch_pago.php",
+          type: "GET",
+          data: { id: id },
+          dataType: "json",
+          success: function(response) {
+              // Clear previous values
+              $("#editForm")[0].reset();
+              // Populate modal fields
+              $("#editId").val(response.Id);
+              $("#editIdCliente").val(response.IdCliente);
+              $("#editCuentaRemitente").val(response.CuentaRemitente);
+              $("#editTipoCuentaRemitente").val(response.TipoCuentaRemitente);
+              $("#editEntidadBancariaRemitente").val(response.EntidadBancariaRemitente);
+              $("#editCuentaDestinatario").val(response.CuentaDestinatario);
+              $("#editTipoCuentaDestinatario").val(response.TipoCuentaDestinatario);
+              $("#editEntidadBancariaDestinatario").val(response.EntidadBancariaDestinatario);
+              $("#editMonto").val(response.Monto);
+              $("#editMotivo").val(response.Motivo);
+              $("#editTipo").val(response.Tipo);
+              $("#editInversionId").val(response.InversionId);
+              $("#editPrestamoId").val(response.PrestamoId);
+              $("#editFechaDePago").val(response.FechaDePago);
+              $("#editModalPagoSinParticipacion").modal("show");
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+          }
+      });
+  });
+
+  $("#saveChangesBtn").click(function() {
+      var formData = $("#editForm").serialize();
+      $.ajax({
+          url: "update_pago.php",
+          type: "POST",
+          data: formData,
+          success: function(response) {
+              $("#editModal").modal("hide");
+              // Optionally, reload the table or update the row with the edited data
+              location.reload();
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+              // Handle error
+          }
+      });
+  });
+});
+
+</script>
+<script>
+  // JavaScript for handling delete button click
+$(".delete-btn").click(function() {
+  var id = $(this).data("id");
+  if (confirm("¿Estás seguro que quieres borrar este pago?")) {
+      $.ajax({
+          url: "delete_pago.php",
+          type: "POST",
+          data: { id: id },
+          success: function(response) {
+              // Optionally, reload the table or update the UI
+              location.reload();
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+              // Handle error
+          }
+      });
+  }
+});
+
+</script>
+';
 
 
 
@@ -1021,8 +1205,8 @@ if ($resultPago) {
         echo '<tr>
                 <td>
                     <a style="white-space: nowrap !important;" href="detalle_pago.php?id='. $rowPago['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
-                    <button class="btn btn-primary btn-sm edit-btn" data-id="'. $rowPago['Id'].'">Editar</button>
-                    <button class="btn btn-danger btn-sm delete-btn" data-id="'. $rowPago['Id'].'">Eliminar</button>
+                    <button class="btn btn-primary btn-sm editarButtonPagoParticipacion" data-id="'. $rowPago['Id'].'">Editar</button>
+                    <button class="btn btn-danger btn-sm delete-btnPagoParticipacion" data-id="'. $rowPago['Id'].'">Eliminar</button>
                 </td>
                 <td>' . $rowPago['IdCliente'] . '</td>
                 <td>' . $rowPago['CuentaRemitente'] . '</td>
@@ -1045,7 +1229,6 @@ if ($resultPago) {
 
 echo '</div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
@@ -1150,7 +1333,7 @@ $(document).ready(function() {
             dataType: "json",
             success: function(response) {
                 $("#addInversionId").val('.$inversion_id.');
-                console.log('.$inversion_id.');
+                console.log();
             },
             error: function(xhr, status, error) {
                 console.error(xhr);
@@ -1276,6 +1459,193 @@ $(".delete-btn").click(function() {
     }
 });</script>';
     
+
+//PAGOS PER PARTICIPACION
+// Add a hidden form to hold the details for editing within the modal
+echo '<div id="editModalPerParticipacion" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">Editar Pago</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+    <form id="editForm" action="update_pago.php">
+        <div class="row">
+            <!-- Group 1 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editId">ID:</label>
+                    <input type="text" class="form-control" id="editIdPago" name="editId" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editIdCliente">ID Cliente:</label>
+                    <input type="text" class="form-control" id="editIdClientePago" name="editIdCliente">
+                </div>
+                <div class="form-group">
+                    <label for="editCuentaRemitente">Cuenta Remitente:</label>
+                    <input type="text" class="form-control" id="editCuentaRemitentePago" name="editCuentaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editMotivo">Motivo:</label>
+                    <input type="text" class="form-control" id="editMotivoPago" name="editMotivo">
+                </div>
+                <div class="form-group">
+                    <label for="editTipo">Tipo:</label>
+                    <input type="text" class="form-control" id="editTipoPago" name="editTipo">
+                </div>
+            </div>
+            <!-- Group 2 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editTipoCuentaRemitente">Tipo de Cuenta Remitente:</label>
+                    <input type="text" class="form-control" id="editTipoCuentaRemitentePago" name="editTipoCuentaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editEntidadBancariaRemitente">Entidad Bancaria Remitente:</label>
+                    <input type="text" class="form-control" id="editEntidadBancariaRemitentePago" name="editEntidadBancariaRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editCuentaDestinatario">Cuenta Destinatario:</label>
+                    <input type="text" class="form-control" id="editCuentaDestinatarioPago" name="editCuentaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editInversionId">ID de Inversion:</label>
+                    <input type="text" class="form-control" id="editInversionIdPago" name="editInversionId">
+                </div>
+                <div class="form-group">
+                    <label for="editPrestamoId">ID de Préstamo:</label>
+                    <input type="text" class="form-control" id="editPrestamoIdPago" name="editPrestamoId">
+                </div>
+            </div>
+            <!-- Group 3 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editTipoCuentaDestinatario">Tipo de Cuenta Destinatario:</label>
+                    <input type="text" class="form-control" id="editTipoCuentaDestinatarioPago" name="editTipoCuentaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
+                    <input type="text" class="form-control" id="editEntidadBancariaDestinatarioPago" name="editEntidadBancariaDestinatario">
+                </div>
+                <div class="form-group">
+                    <label for="editMonto">Monto:</label>
+                    <input type="text" class="form-control" id="editMontoPago" name="editMonto">
+                </div>
+                <div class="form-group">
+                    <label for="editFechaDePago">Fecha de Pago:</label>
+                    <input type="text" class="form-control" id="editFechaDePagoPago" name="editFechaDePago">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Group 4 -->
+            <div class="col-sm-4">
+                
+            </div>
+            <!-- Group 5 -->
+            <div class="col-sm-4">
+                
+            </div>
+            <!-- Group 6 -->
+            <div class="col-sm-4">
+                
+            </div>
+        </div>
+        <div class="modal-footer">
+              <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+    </form>
+</div>
+
+
+            
+          </div>
+        </div>
+      </div>';
+
+// Include jQuery library and custom script for handling click event and populating form fields within the modal
+echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $(".editarButtonPagoParticipacion").click(function() {
+      var id = $(this).data("id");
+      $.ajax({
+          url: "fetch_pago.php",
+          type: "GET",
+          data: { id: id },
+          dataType: "json",
+          success: function(response) {
+              // Clear previous values
+              $("#editForm")[0].reset();
+              // Populate modal fields
+              $("#editIdPago").val(response.Id);
+              $("#editIdClientePago").val(response.IdCliente);
+              $("#editCuentaRemitentePago").val(response.CuentaRemitente);
+              $("#editTipoCuentaRemitentePago").val(response.TipoCuentaRemitente);
+              $("#editEntidadBancariaRemitentePago").val(response.EntidadBancariaRemitente);
+              $("#editCuentaDestinatarioPago").val(response.CuentaDestinatario);
+              $("#editTipoCuentaDestinatarioPago").val(response.TipoCuentaDestinatario);
+              $("#editEntidadBancariaDestinatarioPago").val(response.EntidadBancariaDestinatario);
+              $("#editMontoPago").val(response.Monto);
+              $("#editMotivoPago").val(response.Motivo);
+              $("#editTipoPago").val(response.Tipo);
+              $("#editInversionIdPago").val(response.InversionId);
+              $("#editPrestamoIdPago").val(response.PrestamoId);
+              $("#editFechaDePagoPago").val(response.FechaDePago);
+              $("#editModalPerParticipacion").modal("show");
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+          }
+      });
+  });
+
+  $("#saveChangesBtn").click(function() {
+      var formData = $("#editForm").serialize();
+      $.ajax({
+          url: "update_pago.php",
+          type: "POST",
+          data: formData,
+          success: function(response) {
+              $("#editModal").modal("hide");
+              // Optionally, reload the table or update the row with the edited data
+              location.reload();
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+              // Handle error
+          }
+      });
+  });
+});
+
+</script>
+<script>
+  // JavaScript for handling delete button click
+$(".delete-btnPagoParticipacion").click(function() {
+  var id = $(this).data("id");
+  if (confirm("¿Estás seguro que quieres borrar este pago?")) {
+      $.ajax({
+          url: "delete_pago.php",
+          type: "POST",
+          data: { id: id },
+          success: function(response) {
+              // Optionally, reload the table or update the UI
+              location.reload();
+          },
+          error: function(xhr, status, error) {
+              console.error(xhr.responseText);
+              // Handle error
+          }
+      });
+  }
+});
+
+</script>
+';
 } else {
     echo "Error: " . $sql . "<br>" . $db->error;
 }

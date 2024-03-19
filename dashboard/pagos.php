@@ -325,9 +325,9 @@ if ($result) {
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
   Agregar Pago
-</button>
+</button> -->
 <p></p>
                   <th></th>
                   <th>Acciones</th>
