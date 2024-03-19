@@ -522,7 +522,7 @@ if ($inversion['TipoDeInversion'] == "Fondos de inversión") {
 </li>';
 } else {
     echo '<li class="nav-item">
-    <a class="nav-link" id="pagos-tab" data-toggle="pill" href="#nuevo" role="tab" aria-controls="nuevo" aria-selected="false">Pagos</a>
+    <a class="nav-link" id="pagos-tab" data-toggle="pill" href="#pagosTabForInversiones" role="tab" aria-controls="pagosTabForInversiones" aria-selected="false">Pagos</a>
 </li>';
 }
 ?>
@@ -715,6 +715,119 @@ if($stmt->rowCount() > 0) {
 
                                     echo'</div>';
                                 echo'</div>';
+
+//pagos for inversion
+echo'<div class="tab-pane fade" id="pagosTabForInversiones" role="tabpanel" aria-labelledby="nuevo-tab">';
+// Fetch data from the clientes table
+$sql = "SELECT * FROM pagos WHERE InversionId = ".$inversion['Id']."";
+$result = $db->query($sql);
+
+if ($result) {
+  // Output the table structure
+  echo '<div class="card">
+              <div class="card-header">
+              <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Pagos</h1>
+          </div>
+          <div class="col-sm-6">
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                  <button type="button" class="btn btn-primary bustonAddPago" data-toggle="modal" data-target="#modalAgregarPagoForParticipacion">
+  Agregar Pago
+</button>
+<p></p>
+                  <th></th>
+                  <th>Acciones</th>
+                    <th>Solicitante</th>
+                    <th>Cuenta Remitente</th>
+                    <th>Tipo de Cuenta Remitente</th>
+                    <th>Entidad Bancaria Remitente</th>
+                    <th>Cuenta Destinatario</th>
+                    <th>Tipo de Cuenta Destinatario</th>
+                    <th>Entidad Bancaria Destinatario</th>
+                    <th>Motivo</th>
+                    <th>Monto</th>
+                  </tr>
+                  </thead>
+                  <tbody>';
+
+  // Loop through the fetched results and generate table rows
+  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+    echo '<tr>
+        <td></td>
+        <td>
+          <a style="white-space: nowrap !important;" href="detalle_pago.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+            <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
+        </div>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+            <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
+        </div>
+        </td>
+                <td>' . $row['IdCliente'] . '</td>
+                <td>' . $row['CuentaRemitente'] . '</td>
+                <td>' . $row['TipoCuentaRemitente'] . '</td>
+                <td>' . $row['EntidadBancariaRemitente'] . '</td>
+                <td>' . $row['CuentaDestinatario'] . '</td>
+                <td>' . $row['TipoCuentaDestinatario'] . '</td>
+                <td>' . $row['EntidadBancariaDestinatario'] . '</td>
+                <td>' . $row['Motivo'] . '</td>
+                <td>' . $row['Monto'] . '</td>
+              </tr>';
+  }
+
+  // Close the table body and card
+  echo '</tbody>
+          <tfoot>
+            <tr>
+            <th></th>
+            <th>Acciones</th>
+            <th>Solicitante</th>
+            <th>Cuenta Remitente</th>
+            <th>Tipo de Cuenta Remitente</th>
+            <th>Entidad Bancaria Remitente</th>
+            <th>Cuenta Destinatario</th>
+            <th>Tipo de Cuenta Destinatario</th>
+            <th>Entidad Bancaria Destinatario</th>
+            <th>Motivo</th>
+            <th>Monto</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>';
+}
+echo'</div>';
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //participaciones tab content
 echo'<div class="tab-pane fade" id="nuevo" role="tabpanel" aria-labelledby="nuevo-tab">';
@@ -1023,6 +1136,30 @@ echo '<div id="editModal" class="modal fade" role="dialog">
 </div>
 </div>';
 
+
+// Include jQuery library and custom script for handling click event and populating form fields within the modal
+  echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $(".bustonAddPago").click(function() {
+        var id = $(this).data("id");
+        $.ajax({
+            url: "fetch_inversion.php", // Changed to fetch inversion details
+            type: "GET",
+            data: { id: id },
+            dataType: "json",
+            success: function(response) {
+                $("#addInversionId").val('.$inversion_id.');
+                console.log('.$inversion_id.');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr);
+            }
+        });
+    });
+    });
+
+</script>';
 
 // Include jQuery library and custom script for handling click event and populating form fields within the modal
 echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

@@ -15,16 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $monto = $_POST['addMonto'];
     $motivo = $_POST['addMotivo'];
     $tipo = $_POST['addTipo'];
-      if (isset($_POST['addPrestamoId'])) {
-        $prestamoId = $_POST['addPrestamoId'];
-      } else {
-        $prestamoId = null;
-      }
-    $inversionId = $_POST['addInversionId'];
-    $participacionId = $_POST['addParticipacionId'];
+    $prestamoId = isset($_POST['addPrestamoId']) ? $_POST['addPrestamoId'] : null;
+
+    $inversionId = isset($_POST['addInversionId']) ? $_POST['addInversionId'] : null;
+    $participacionId = isset($_POST['addParticipacionId']) ? $_POST['addParticipacionId'] : null;
     $fechaDePago = $_POST['addFechaDePago'];
     $cliente = null;
     $pago = null;
+  error_log($inversionId);
+  error_log($participacionId);
 
     //QUERY to extract ClientId
      // Prepare an insert statement
@@ -54,14 +53,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($cliente == null) {
     error_log("cliente es null");
   }else {
+    if ($participacionId == null) {
+      $sql = "INSERT INTO pagos (IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, 
+              CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, 
+              InversionId, FechaDePago)
+              VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
+              :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
+              :tipo, :inversionId, :fechaDePago)";
+    } else {
       $sql = "INSERT INTO pagos (IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, 
               CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, 
               InversionId, ParticipacionId, FechaDePago)
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
               :tipo, :inversionId, :participacionId, :fechaDePago)";
-      
+      }
+      error_log($sql);
       error_log("wepa");
+      error_log($participacionId);
       if ($stmt = $db->prepare($sql)) {
           // Bind variables to the prepared statement as parameters
           $stmt->bindParam(":idCliente", $cliente['IdCliente']);
@@ -75,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           $stmt->bindParam(":motivo", $motivo);
           $stmt->bindParam(":tipo", $tipo);
           $stmt->bindParam(":inversionId", $inversionId);
-          $stmt->bindParam(":participacionId", $participacionId);
+          if ($participacionId != null) $stmt->bindParam(":participacionId", $participacionId);
           $stmt->bindParam(":fechaDePago", $fechaDePago);
 
           // Attempt to execute the prepared statement
@@ -139,6 +148,7 @@ error_log("{$pago}");
     if ($stmt = $db->prepare($sql)) {
         // Bind variables to the prepared statement as parameters
         $stmt->bindParam(":IdPago", $pago);
+        $stmt->bindParam(":id", $inversionId);
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
             // Redirect back to the page with success message
