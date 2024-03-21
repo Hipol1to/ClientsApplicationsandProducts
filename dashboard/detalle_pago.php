@@ -444,7 +444,7 @@ echo '</div>';
                 echo '</div>';
             }
 
-            echo '<button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+            echo '
         </div>
     </div>
 </div>';

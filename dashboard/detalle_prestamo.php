@@ -606,7 +606,7 @@ if($stmt->rowCount() > 0) {
     echo '<label for="frecuenciaPago">Cant. min. pagos por mes:</label>';
     echo '<input type="text" class="form-control" id="frecuenciaPago" name="frecuenciaPago" value="'.htmlspecialchars($client['CantPagosPorMes']).'" readonly>';
     echo '</div>';
-    echo '<button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>';
+    echo '';
     echo '</div>';
 
     // Group 3

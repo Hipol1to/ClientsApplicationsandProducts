@@ -331,7 +331,7 @@ if ($result) {
 <p></p>
                   <th></th>
                   <th>Acciones</th>
-                    <th>Solicitante</th>
+                    <th>Id Solicitante</th>
                     <th>Cuenta Remitente</th>
                     <th>Tipo de Cuenta Remitente</th>
                     <th>Entidad Bancaria Remitente</th>
@@ -375,7 +375,7 @@ if ($result) {
             <tr>
             <th></th>
             <th>Acciones</th>
-            <th>Solicitante</th>
+            <th>Id Solicitante</th>
             <th>Cuenta Remitente</th>
             <th>Tipo de Cuenta Remitente</th>
             <th>Entidad Bancaria Remitente</th>

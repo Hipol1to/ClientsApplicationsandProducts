@@ -339,7 +339,7 @@ if ($result) {
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
-                    <th>Solicitante</th>
+                    <th>Id Solicitante</th>
                     <th>Motivo</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
@@ -379,7 +379,7 @@ if ($result) {
             <th></th>
                     <th>Acciones</th>
                     <th>ID</th>
-                    <th>Solicitante</th>
+                    <th>Id Solicitante</th>
                     <th>Motivo</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
