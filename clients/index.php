@@ -1,9 +1,9 @@
 <?php
 require('../includes/config.php');
 
-if (!$user->is_logged_in()) { 
-	header('Location: ../index.php'); 
-	// exit(); 
+if ($user->is_logged_in() && $_SESSION['isAdmin']) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  exit();  
 }
 ?>
 <!DOCTYPE html>

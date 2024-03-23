@@ -4,9 +4,11 @@ require('includes/config.php');
 // If logged in, redirect to the members page
 if ($user->is_logged_in() && $_SESSION['isAdmin']) { 
 	header('Location: ./dashboard/index.php'); 
+  exit();
 	// exit(); 
 } elseif ($user->is_logged_in() && !$_SESSION['isAdmin']) {
   header('Location: ./clients/index.php');  
+  exit();
 }
 
 // If the form has been submitted, process it
@@ -84,9 +86,9 @@ if(isset($_POST['submit'])){
             //send email
 			$to = $_POST['email'];
 			$subject = "Activa tu cuenta";
-			$body = "<p>Gracias por registrarte en Fundacion Vetcap.</p>
-			<p>Para activar tu cuenta, por favor clica este enlace: <a href='".DIR."activate.php?x=$id&y=$activasion'>".DIR."activate.php?x=$id&y=$activasion</a></p>
-			<p>Atentamente, el equipo de Fundacion Vetcap</p>";
+			$body = "<p>Gracias por registrarte en Inversiones Everest.</p>
+			<p>Para activar tu cuenta, por favor haz click en este enlace: <a href='".DIR."activate.php?x=$id&y=$activasion'>".DIR."activate.php?x=$id&y=$activasion</a></p>
+			<p>Atentamente, el equipo de Inversiones Everest</p>";
 
 			$mail = new Mail();
 			$mail->setFrom(SITEEMAIL);
@@ -106,7 +108,7 @@ if(isset($_POST['submit'])){
 }
 
 // Define page title
-$title = 'Usuarios VetCap';
+$title = 'Usuarios Inversiones Everest';
 
 // Include header template
 // require('layout/header.php');

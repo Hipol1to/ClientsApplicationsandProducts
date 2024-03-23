@@ -2,9 +2,12 @@
 // Include the database connection file
 require('../includes/config.php');
 
-if (!$user->is_logged_in()) { 
-	header('Location: ../index.php'); 
-	// exit(); 
+if ($user->is_logged_in() && !$_SESSION['isAdmin']) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/index.php');
+  exit();  
+} elseif (!$user->is_logged_in()) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  exit();  
 }
 
 // Check if the form is submitted and values are set

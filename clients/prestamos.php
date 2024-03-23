@@ -1,69 +1,308 @@
-<?php
+ <?php
 require('../includes/config.php');
 
-if (!$user->is_logged_in()) { 
-	header('Location: ../login.php'); 
-	// exit(); 
+if ($user->is_logged_in() && $_SESSION['isAdmin']) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  exit();  
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loans</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <style>
-        .wrapper {
-            display: flex;
-        }
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prestamos</title>
 
-        .sidebar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 250px;
-            background-color: #343a40;
-            padding-top: 50px;
-            padding-left: 15px;
-        }
 
-        .sidebar a {
-            color: #f8f9fa;
-            display: block;
-            padding: 10px;
-            margin-bottom: 10px;
-            text-decoration: none;
-        }
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
-        .sidebar a:hover {
-            background-color: #495057;
-        }
+<!-- Include jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-        .content {
-            margin-left: 250px;
-            padding: 20px;
-        }
+<!-- Include Bootstrap JS -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        .navbar-brand {
-            color: #f8f9fa !important;
-        }
-    </style>
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="./plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="./plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="./plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="./plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="./dist/css/adminlte.min.css">
+
+  <!-- Bootstrap Datepicker CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+  <!-- Preloader -->
+  <div class="preloader flex-column justify-content-center align-items-center">
+    <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+  </div>
 </head>
-<body>
-<div class="sidebar">
-            <a href="index.php"><i class="fas fa-home"></i> Dashboard</a>
-            <a href="prestamos.php"><i class="fas fa-hand-holding-usd"></i> Prestamos</a>
-            <a href="inversiones.php"><i class="fas fa-chart-pie"></i> Inversiones</a>
-            <a href="perfil.php"><i class="fas fa-user"></i> Ver Perfil</a>
-            <a href="#"><i class="fas fa-sign-out-alt"></i> Sign Out</a>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar and mobile burguer menu -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      </li>
+    </ul>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+      <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Administradores</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
-    <div class="container mt-5">
-        <h1>Préstamos solicitados</h1>
-        <!-- Table to display loans requested -->
-        <?php
+        <div class="info">
+          <a href="#" class="d-block">Usuario Administrador</a>
+        </div>
+      </div>
+
+      <!-- SidebarSearch Form -->
+      <div class="form-inline">
+        <div class="input-group" data-widget="sidebar-search">
+          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+          <div class="input-group-append">
+            <button class="btn btn-sidebar">
+              <i class="fas fa-search fa-fw"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+          <li class="nav-item">
+            <a href="index.php" class="nav-link">
+              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <p>
+                Panel Administrador
+                <!-- <i class="right fas fa-angle-left"></i> -->
+              </p>
+            </a>
+             <li class="nav-item">
+                <a href="clients.php" class="nav-link">
+                  <i class="far fa-user-circle nav-icon"></i>
+                  <p>Clientes</p>
+                </a>
+                </li>
+
+                 <li class="nav-item">
+                <a href="#" class="nav-link active">
+                  <i class="fas fa-handshake nav-icon"></i>
+                  <p>Prestamos</p>
+                </a>
+                 </li>
+
+                 <li class="nav-item">
+                <a href="inversiones.php" class="nav-link">
+                  <i class="fas fa-chart-line nav-icon"></i>
+                  <p>Inversiones</p>
+                </a>
+                 </li>
+                 
+                 <li class="nav-item">
+                <a href="pagos.php" class="nav-link">
+                  <i class="fas fa-money-bill-wave nav-icon"></i>
+                  <p>Pagos</p>
+                </a>
+                 </li>
+                 </ul>
+                 <ul style="position: absolute; bottom: 0;" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+          <li class="nav-item">
+            <a href="../logout.php" class="nav-link" >
+              <p class="text"><i class="nav-icon fas fa-sign-out-alt"></i> Cerrar Sesion</p>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            
+            <!-- /.card -->
+
+            <!-- /.card -->
+
+<!-- Add Client Form -->
+<!-- Add Client Form -->
+
+<!-- Include Bootstrap CSS -->
+
+
+<!-- Button to trigger the modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Agregar Prestamo</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Form -->
+          <!-- Form fields -->
+          <div class="form-group">
+            <div class="card">
+    <div class="card-header">
+        <h3 class="card-title"></h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+    <form onsubmit="return isFormValid()" id="formAddPrestamo" action="add_prestamo.php" method="post">
+        <div class="row">
+            <div class="col-sm-4">
+                <!-- Group 1 -->
+                <div class="form-group">
+                    <label for="motivo">Motivo:</label>
+                    <input type="text" class="form-control" id="motivo" name="motivo" required>
+                </div>
+                <div class="form-group">
+                    <label for="montoSolicitado">Monto Solicitado:</label>
+                    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
+                </div>
+                <div class="form-group">
+                    <label for="montoAprobado">Monto Aprobado:</label>
+                    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado" required>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 2 -->
+                <div class="form-group">
+                    <label for="montoPagado">Monto Pagado:</label>
+                    <input type="text" class="form-control" id="montoPagado" name="montoPagado" required>
+                </div>
+                <div class="form-group">
+                    <label for="tasaDeInteres">Tasa de Interes:</label>
+                    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" required>
+                </div>
+                <div class="form-group">
+                    <label for="montoRecargo">Monto Recargo:</label>
+                    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo" required>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 3 -->
+                <div class="form-group">
+                    <label for="remitente">Remitente:</label>
+                    <input type="text" class="form-control" id="remitente" name="remitente" required>
+                </div>
+                <div class="form-group">
+                  <label for="beneficiario">Usuario Beneficiario:</label>
+                  <input type="text" class="form-control" id="beneficiarioInput" name="beneficiario" required>
+                  <div id="beneficiarioDropdown" class="dropdown-content"></div>
+                </div>
+                <div class="form-group">
+                    <label for="status">Status:</label>
+                    <select class="form-control" id="status" name="status" required>
+                    <option value="Aprobado" selected>Aprobado</option>
+                    <option value="En revisión" selected>En revisión</option>
+                    <option value="Rechazado" selected>Rechazado</option>
+                </select>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 4 -->
+                <div class="form-group">
+    <label for="fechaFinalPrestamo">Fecha Final de prestamo:</label>
+    <input type="text" class="form-control datepicker" id="fechaFinalPrestamo" name="fechaFinalPrestamo" required>
+  </div>
+                <div class="form-group">
+                    <label for="cuotasTotales">Cuotas Totales:</label>
+                    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales" required>
+                </div>
+                
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 5 -->
+                <div class="form-group">
+    <label for="cantPagosPorMes">Cantidad de Pagos por Mes:</label>
+    <input type="number" class="form-control" id="cantPagosPorMes" name="cantPagosPorMes" required>
+</div>
+                <div class="form-group">
+                    <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
+                    <input type="text" class="form-control datepicker" id="fechaDeAprobacion" name="fechaDeAprobacion" required>
+                </div>
+                <!-- Add more form groups for group 5 here -->
+            </div>
+            <div class="col-sm-4">
+                <!-- Group 6 -->
+                <div class="form-group">
+    <label id="labelDiasDePagoDelMes" for="diasDePagoDelMes">Días de Pago del Mes:</label>
+    <div id="diasDePagoContainer"></div>
+    
+    </select>
+</div>
+                <!-- Add more form groups for group 5 here -->
+            </div>
+        </div>
+        <!-- Add more fields as needed -->
+        <div class="modal-footer">
+            <button id="agregarPrestamoSubmitButton" type="submit" class="btn btn-primary">Agregar Préstamo</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
+      </form>
+</div>
+<!-- /.card-body -->
+
+</div>
+          </div>
+          <!-- Add more form fields as needed -->
+          
+          <!-- Modal Footer -->
+          
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+
+
+<!-- /.card -->
+
+<!-- /.card -->
+
+<?php
 // Include the database connection file
 // Assuming your database connection code is included here
 
@@ -79,6 +318,7 @@ if ($result) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
+            <h1>Préstamos</h1>
           </div>
           <div class="col-sm-6">
           </div>
@@ -99,7 +339,7 @@ if ($result) {
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
-                    <th>Solicitante</th>
+                    <th>Id Solicitante</th>
                     <th>Motivo</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
@@ -139,7 +379,7 @@ if ($result) {
             <th></th>
                     <th>Acciones</th>
                     <th>ID</th>
-                    <th>Solicitante</th>
+                    <th>Id Solicitante</th>
                     <th>Motivo</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
@@ -345,6 +585,255 @@ $.ajax({
     echo "Error: " . $db->errorInfo();
 }
 ?>
+
+
+
+
+
+
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <footer class="main-footer">
+    <div class="float-right d-none d-sm-block">
+      <b>Version</b> 3.2.0
     </div>
+    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="./plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="./plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="./plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="./plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="./plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="./plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="./plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="./plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="./plugins/jszip/jszip.min.js"></script>
+<script src="./plugins/pdfmake/pdfmake.min.js"></script>
+<script src="./plugins/pdfmake/vfs_fonts.js"></script>
+<script src="./plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="./plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="./plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+<!-- AdminLTE App -->
+<script src="./dist/js/adminlte.min.js"></script>
+<!-- AdminLTE for demo purposes -->
+
+<!-- Page specific script -->
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+  });
+</script>
+
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+
+<script>
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      startDate: new Date() // Set the start date as today
+    });
+  });
+</script>
+
+<script>
+  // Function to dynamically generate options for select dropdown
+  function generateOptions() {
+    var container = document.getElementById("diasDePagoContainer");
+    var numSelects = document.getElementById("cantPagosPorMes").value;
+
+    // Clear existing selects
+    container.innerHTML = "";
+
+    // Generate select elements
+    for (var i = 0; i < numSelects; i++) {
+        var select = document.createElement("select");
+        select.className = "form-control";
+        select.name = "diasDePagoDelMes_" + (i+1); // Append index to name
+        select.id = "diasDePagoDelMes_" + (i+1); // Append index to id
+
+        // Generate options for each select
+        for (var j = 1; j <= 28; j++) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = "Día# " + j;
+            select.appendChild(option);
+        }
+
+        // Append select to container
+        select.selectedIndex = (i);
+        container.appendChild(select);
+    }
+}
+
+// Event listener to call generateOptions function when the number of days changes
+document.getElementById("cantPagosPorMes").addEventListener("change", generateOptions);
+
+// Initial call to generateOptions function to populate the select dropdown based on initial value
+generateOptions();
+
+
+</script>
+
+<script>
+
+// Flag to track whether an option has been selected
+var optionSelected = false;
+
+// Function to fetch autosuggestion data from the database
+function fetchUsuarios(str) {
+  window.globalVariable = true;
+    if (str.length == 0) {
+        document.getElementById("beneficiarioDropdown").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("beneficiarioDropdown").innerHTML = this.responseText;
+
+                // Add event listeners to the options
+                var options = document.querySelectorAll(".dropdown-content .option");
+                options.forEach(function(option) {
+                    option.addEventListener("click", function() {
+                        // Set the input field value to the selected option
+                        document.getElementById("beneficiarioInput").value = this.textContent;
+                        // Clear the dropdown after selecting an option
+                        document.getElementById("beneficiarioDropdown").innerHTML = "";
+                        // Set the flag to true since an option has been selected
+                        console.log("optionSelected = true")
+                        optionSelected = true;
+                        if (optionSelected) {
+                          console.log("la selesionate");
+                          const beneficiarioTextField = document.getElementById('beneficiarioInput');
+                          const agregarPrestamoButton = document.getElementById('agregarPrestamoSubmitButton');
+                          // Add a class to the element/
+                          beneficiarioTextField.classList.remove('is-invalid');
+                          agregarPrestamoButton.classList.remove('disabled');
+                        }
+    
+                    });
+                });
+            }
+        };
+        xmlhttp.open("GET", "get_usuarios.php?q=" + str, true);
+        xmlhttp.send();
+
+        //terminamo
+        if (!optionSelected) {
+      console.log("no la selesionate");
+      const beneficiarioTextField = document.getElementById('beneficiarioInput');
+    const agregarPrestamoButton = document.getElementById('agregarPrestamoSubmitButton');
+    // Add a class to the element/
+    beneficiarioTextField.classList.add('is-invalid');
+    agregarPrestamoButton.classList.add('disabled');
+    }
+    }
+}
+
+// Event listener to call fetchUsuarios function when the input field value changes
+document.getElementById("beneficiarioInput").addEventListener("input", function() {
+    // Reset the flag when the input changes
+    optionSelected = false;
+    fetchUsuarios(this.value);
+    
+});
+
+
+function isFormValid() {
+    // Check for elements with 'is-invalid' class or disabled buttons
+    const xpathExpression = "//*[contains(@class,'is-invalid')] | //button[contains(@class,'disabled')]";
+    const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    const element = result.singleNodeValue;
+
+    // If any element with 'is-invalid' class or disabled button is found, return false
+    if (element !== null) {
+        console.log("Invalid element found:", element);
+        return false;
+    }
+
+    // Check for duplicate values in 'diasDePagoDelMes' select elements
+    const xpathExpression2 = "//select[contains(@id,'diasDePagoDelMes_')]";
+    const result2 = document.evaluate(xpathExpression2, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    const totalElements2 = result2.snapshotLength;
+    const elementValues2 = [];
+
+    for (let i = 0; i < totalElements2; i++) {
+        const value = result2.snapshotItem(i).value;
+        if (elementValues2.includes(value)) {
+            // If a duplicate value is found, display an error message and return false
+            const message = 'Los días de pago no pueden ser iguales';
+            const existingMessage = document.querySelector('.error-message');
+            if (!existingMessage) {
+                showMessageBelowElement(result2.snapshotItem(i), message);
+                console.log(message);
+            }
+            return false;
+        }
+        elementValues2.push(value);
+    }
+
+    // If all validations pass, return true
+    return true;
+}
+
+function showMessageBelowElement(element, message) {
+    // Create a new div element for the error message
+    const errorMessageDiv = document.createElement('div');
+    errorMessageDiv.textContent = message;
+    errorMessageDiv.style.color = 'red';
+    errorMessageDiv.className = 'error-message'; // Adding a class for identification
+
+    // Insert the error message div below the given element
+    element.parentNode.insertBefore(errorMessageDiv, element.nextSibling);
+}
+
+
+
+
+
+
+
+  
+
+
+
+</script>
+
+
 </body>
 </html>

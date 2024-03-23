@@ -17,7 +17,7 @@ define('DBPASS','');
 define('DBNAME','cap_storage');
 
 //application address
-define('DIR','http://localhost/trestin/');
+define('DIR','http://localhost/ClientsApplicationsandProducts/');
 define('SITEEMAIL','noreply@domain.com');
 
 try {
