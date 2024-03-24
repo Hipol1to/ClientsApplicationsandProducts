@@ -70,7 +70,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
         <div class="image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Usuario nombre</a>
+          <a class="d-block"><?php echo $_SESSION['fullname']; ?></a>
         </div>
       </div>
 
@@ -81,7 +81,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="index.php" class="nav-link ">
+            <a href="index.php" class="nav-link">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Panel Usuario
@@ -343,12 +343,6 @@ if ($result) {
         <td></td>
         <td>
     <a href="detalle_prestamo.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
-    <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-        <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['Id'].'">Editar</button>
-    </div>
-    <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-        <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
-    </div>
 </td>
                 <td>' . $row['Id'] . '</td>
                 <td>' . $row['IdCliente'] . '</td>

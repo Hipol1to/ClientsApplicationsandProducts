@@ -22,7 +22,9 @@ class User
 	private function get_user_hash($username)
 {
     try {
-        $stmt = $this->_db->prepare('SELECT Contraseña as password, Usuario as username, Rol, Id FROM usuarios WHERE LOWER(Usuario) = LOWER(:username) AND Active = "Yes"');
+        $stmt = $this->_db->prepare('SELECT Contraseña as password, Usuario as username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) as fullname, u.Id FROM usuarios as u 
+LEFT OUTER JOIN Clientes c on c.IdUsuario = u.Id
+WHERE LOWER(Usuario) = LOWER(:username) AND Active = "Yes"');
         $stmt->execute(array('username' => $username));
 
         return $stmt->fetch();
@@ -66,7 +68,7 @@ class User
         $_SESSION['loggedin'] = true;
         $_SESSION['username'] = $row['username'];
         $_SESSION['userId'] = $row['Id'];
-        $_SESSION['fullname'] = $row['Id'];
+        $_SESSION['fullname'] = $row['fullname'];
 
         // Check the role of the logged-in user
         $role = $row['Rol'];

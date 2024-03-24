@@ -68,7 +68,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
         <div class="image">
         </div>
         <div class="info">
-          <a href="#" class="d-block">Usuario nombre</a>
+          <a class="d-block"><?php echo $_SESSION['fullname']; ?></a>
         </div>
       </div>
 
