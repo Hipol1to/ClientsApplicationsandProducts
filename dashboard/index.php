@@ -476,7 +476,7 @@ $inversionesEnColaCount = $result['inversionesEnColaCount'];
 
 // Fetch data from the database based on your criteria
 $sql = "SELECT 
-CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, 
+CONCAT(i.Motivo, ' para ', c.Nombre, ' ', c.Apellido) AS DisplayText, 
 i.FechaFinalPrestamo AS FechaFinalEstimada, 
 DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s') AS FechaActual, 
 CONCAT(i.Motivo) AS Motivo, 

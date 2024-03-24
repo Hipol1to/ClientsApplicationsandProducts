@@ -134,7 +134,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Bienvenido usuario</h1>
+            <h1 class="m-0">Bienvenido <?php echo $_SESSION['username'] ?></h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -154,82 +154,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
           <div class="col-lg-3 col-6">
             <!-- small box -->
            <!-- Add a modal -->
-<div class="modal fade" id="prestamosModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-    
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Detalles de Préstamos</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-      
-      <!-- Modal Body -->
-      <!-- Modal Body -->
-<div class="modal-body">
-    <!-- Search Form -->
-    <form id="prestamosSearchForm">
-        <div class="form-group">
-    <label>Search Field:</label><br>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="searchField" id="searchId" value="id">
-        <label class="form-check-label" for="searchId">ID</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="searchField" id="searchBeneficiario" value="beneficiario">
-        <label class="form-check-label" for="searchBeneficiario">Beneficiario</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="searchField" id="searchIdCliente" value="IdCliente">
-        <label class="form-check-label" for="searchIdCliente">ID Cliente</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="searchField" id="searchMotivo" value="Motivo">
-        <label class="form-check-label" for="searchMotivo">Motivo</label>
-    </div>
-    <div class="form-check form-check-inline">
-        <input class="form-check-input" type="radio" name="searchField" id="searchStatus" value="Status">
-        <label class="form-check-label" for="searchStatus">Status</label>
-    </div>
-    <!-- Add more radio buttons for other fields as needed -->
-</div>
 
-        <button type="button" class="btn btn-primary" onclick="searchPrestamos()">Buscar</button>
-    </form>
-
-    <!-- Display Prestamos details here -->
-    <div id="prestamosDetails">
-        <!-- Content to display Préstamos details... This will be populated dynamically based on the search result. -->
-    </div>
-</div>
-
-<!-- Include jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
-<script>
-    function searchPrestamos() {
-        // Fetch data from the server using AJAX
-        $.ajax({
-            type: "POST",
-            url: "search_prestamos.php", // Replace with the actual server-side script handling the search
-            data: $("#prestamosSearchForm").serialize(), // Serialize form data
-            success: function (data) {
-                // Update the #prestamosDetails section with the search results
-                $("#prestamosDetails").html(data);
-            }
-        });
-    }
-</script>
-
-      
-      <!-- Modal Footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-      </div>
-      
-    </div>
-  </div>
-</div>
 
 <!-- Prestamos Box -->
 <div class="small-box bg-info">
@@ -332,7 +257,7 @@ $inversionesCount = $result['inversionesCount'];
 
 // Fetch data from the database based on your criteria
 $sql = "SELECT 
-CONCAT(i.Motivo, ' para ', u.Nombre) AS DisplayText, 
+CONCAT(i.Motivo, ' para ', c.Nombre, ' ', c.Apellido) AS DisplayText, 
 i.FechaFinalPrestamo AS FechaFinalEstimada, 
 DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%s') AS FechaActual, 
 CONCAT(i.Motivo) AS Motivo, 

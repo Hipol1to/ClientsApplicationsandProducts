@@ -32,8 +32,10 @@ if(isset($_POST['submit'])){
 			$_SESSION['username'] = $username;
       if ($_SESSION['isAdmin']) {
         header('Location: ./dashboard/index.php');  
+        exit();
       } else {
         header('Location: ./clients/index.php');  
+        exit();
       }
 			
 			exit;
