@@ -180,24 +180,28 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
             <div class="col-sm-4">
                 <!-- Group 1 -->
                 <div class="form-group">
-                    <label for="motivo">Motivo:</label>
+                    <label for="motivo">Descripcion:</label>
                     <input type="text" class="form-control" id="motivo" name="motivo" required>
                 </div>
                 <div class="form-group">
                     <label for="montoSolicitado">Monto Solicitado:</label>
                     <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
                 </div>
+                <!--
                 <div class="form-group">
                     <label for="montoAprobado">Monto Aprobado:</label>
                     <input type="text" class="form-control" id="montoAprobado" name="montoAprobado" required>
                 </div>
+                -->
             </div>
+             <!--
             <div class="col-sm-4">
-                <!-- Group 2 -->
+                Group 2 -->
+                <!--
                 <div class="form-group">
                     <label for="montoPagado">Monto Pagado:</label>
                     <input type="text" class="form-control" id="montoPagado" name="montoPagado" required>
-                </div>
+                </div> 
                 <div class="form-group">
                     <label for="tasaDeInteres">Tasa de Interes:</label>
                     <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" required>
@@ -207,12 +211,14 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
                     <input type="text" class="form-control" id="montoRecargo" name="montoRecargo" required>
                 </div>
             </div>
+            -->
             <div class="col-sm-4">
                 <!-- Group 3 -->
                 <div class="form-group">
                     <label for="remitente">Remitente:</label>
-                    <input type="text" class="form-control" id="remitente" name="remitente" required>
+                    <input type="text" class="form-control" id="remitente" name="remitente" cc required>
                 </div>
+                <!--
                 <div class="form-group">
                   <label for="beneficiario">Usuario Beneficiario:</label>
                   <input type="text" class="form-control" id="beneficiarioInput" name="beneficiario" required>
@@ -226,6 +232,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
                     <option value="Rechazado" selected>Rechazado</option>
                 </select>
                 </div>
+                -->
             </div>
             <div class="col-sm-4">
                 <!-- Group 4 -->
@@ -326,8 +333,6 @@ if ($result) {
 <p></p>
                   <th></th>
                   <th>Acciones</th>
-                    <th>ID</th>
-                    <th>Id Solicitante</th>
                     <th>Motivo</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
@@ -344,8 +349,6 @@ if ($result) {
         <td>
     <a href="detalle_prestamo.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
 </td>
-                <td>' . $row['Id'] . '</td>
-                <td>' . $row['IdCliente'] . '</td>
                 <td>' . $row['Motivo'] . '</td>
                 <td>' . $row['MontoSolicitado'] . '</td>
                 <td>' . $row['Status'] . '</td>
@@ -360,8 +363,6 @@ if ($result) {
             <tr>
             <th></th>
                     <th>Acciones</th>
-                    <th>ID</th>
-                    <th>Id Solicitante</th>
                     <th>Motivo</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
