@@ -94,12 +94,14 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
                 </a>
                  </li>
 
+                 <!--
                  <li class="nav-item">
                 <a href="inversiones.php" class="nav-link">
                   <i class="fas fa-chart-line nav-icon"></i>
                   <p>Inversiones</p>
                 </a>
                  </li>
+                 -->
                  
                  <li class="nav-item">
                 <a href="pagos.php" class="nav-link">
@@ -188,62 +190,39 @@ if ($user->is_logged_in() && $_SESSION['isAdmin']) {
           <!-- ./col -->
           <div class="col-lg-3 col-6">
             <!-- small box -->
-            <div class="small-box bg-success">
-              <?php
-// Assuming you have a PDO connection named $db
-
-// Fetch the count of records from the inversiones table
-$stmt = $db->prepare("SELECT COUNT(*) AS inversionesCount FROM inversiones");
-$stmt->execute();
-$result = $stmt->fetch(PDO::FETCH_ASSOC);
-
-// Get the count from the result
-$inversionesCount = $result['inversionesCount'];
-?>
-
-
-<!-- Display the count in your HTML -->
-<div class="inner">
-    <h3><?php echo $inversionesCount; ?><sup style="font-size: 20px"> </sup></h3>
-    <p>Inversiones</p>
-</div>
-
-<!-- Bootstrap modal for Inversiones -->
-<div class="modal fade" id="inversionesModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        
-            <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title" style="color: black;">Detalles de Inversiones</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
+            <div class="card bg-gradient-info">
             
-            <!-- Modal Body -->
-            
+              <!-- /.card-body -->
+              <div class="card-footer bg-transparent">
+                <div class="row">
+                  <div class="col-4 text-center">
+                    <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
+                           data-fgColor="#39CCCC">
 
-            <!-- Modal Footer -->
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-            </div>
-            
-        </div>
-    </div>
-</div>
+                    <div class="text-white">Puntaje</div>
+                  </div>
+                  <!-- ./col -->
+                  <!-- ./col -->
+                  <div class="col-4 text-center">
+                    <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
+                           data-fgColor="#39CCCC">
 
-
-
-
-
-              <div class="icon">
-                <i class="fas fa-chart-line"></i>
+                    <div class="text-white">Monto Recargo Activo</div>
+                  </div>
+                  <!-- ./col -->
+                </div>
+                <!-- /.row -->
               </div>
-              <a href="./inversiones" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.card-footer -->
             </div>
           </div>
          
         <!-- Main row -->
-        <div class="row">
+        
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <div class="row">
           <!-- Left col -->
           <section class="col-lg-7 connectedSortable">
             <!-- /.card -->
@@ -274,7 +253,7 @@ Clientes c ON i.IdCliente = c.Id
 JOIN 
 Usuarios u ON c.IdUsuario = u.Id
 WHERE 
-i.FechaPagoMensual >= DATE_ADD(CURDATE(), INTERVAL 1 MINUTE)";
+i.FechaPagoMensual >= DATE_ADD(CURDATE(), INTERVAL 1 MINUTE) AND u.Id = ".$_SESSION['userId']."";
 
 $result = $db->query($sql);
 
@@ -448,31 +427,7 @@ if ($result) {
             <!-- /.card -->
 
             <!-- solid sales graph -->
-            <div class="card bg-gradient-info">
             
-              <!-- /.card-body -->
-              <div class="card-footer bg-transparent">
-                <div class="row">
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
-
-                    <div class="text-white">Puntaje</div>
-                  </div>
-                  <!-- ./col -->
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
-
-                    <div class="text-white">Monto Recargo Activo</div>
-                  </div>
-                  <!-- ./col -->
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.card-footer -->
-            </div>
             <!-- /.card -->
 
             
@@ -480,9 +435,6 @@ if ($result) {
           </section>
           <!-- right col -->
         </div>
-        <!-- /.row (main row) -->
-      </div><!-- /.container-fluid -->
-    </section>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->

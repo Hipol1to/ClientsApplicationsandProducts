@@ -22,9 +22,9 @@ class User
 	private function get_user_hash($username)
 {
     try {
-        $stmt = $this->_db->prepare('SELECT Contraseña as password, Usuario as username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) as fullname, u.Id FROM usuarios as u 
+        $stmt = $this->_db->prepare('SELECT Contraseña as password, Usuario as username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) as fullname, C.IdUsuario AS idusuario, u.Id FROM usuarios as u 
 LEFT OUTER JOIN Clientes c on c.IdUsuario = u.Id
-WHERE LOWER(Usuario) = LOWER(:username) AND Active = "Yes"');
+WHERE LOWER(Usuario) = LOWER(:username) AND Active = "Yes" AND c.IdUsuario = u.Id');
         $stmt->execute(array('username' => $username));
 
         return $stmt->fetch();

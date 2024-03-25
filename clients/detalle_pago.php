@@ -137,12 +137,14 @@ if(isset($_POST['actualizarStatus'])) {
                 </a>
                  </li>
 
+                 <!--
                  <li class="nav-item">
                 <a href="inversiones.php" class="nav-link">
                   <i class="fas fa-chart-line nav-icon"></i>
                   <p>Inversiones</p>
                 </a>
                  </li>
+                 -->
                  
                  <li class="nav-item">
                 <a href="pagos.php" class="nav-link active">
