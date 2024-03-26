@@ -22,9 +22,9 @@ class User
 	private function get_user_hash($username)
 {
     try {
-        $stmt = $this->_db->prepare('SELECT Contraseña as password, Usuario as username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) as fullname, C.IdUsuario AS idusuario, u.Id FROM usuarios as u 
-LEFT OUTER JOIN Clientes c on c.IdUsuario = u.Id
-WHERE LOWER(Usuario) = LOWER(:username) AND Active = "Yes" AND c.IdUsuario = u.Id');
+        $stmt = $this->_db->prepare('SELECT Contraseña AS password, Usuario AS username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) AS fullname, C.IdUsuario AS idusuario, u.Active AS isUserActive, c.PerfilValidado AS isProffileValidated, u.Id FROM usuarios AS u 
+		LEFT OUTER JOIN Clientes c on c.IdUsuario = u.Id
+		WHERE LOWER(Usuario) = LOWER(:username) AND Active = 1 AND c.IdUsuario = u.Id');
         $stmt->execute(array('username' => $username));
 
         return $stmt->fetch();
@@ -69,6 +69,15 @@ WHERE LOWER(Usuario) = LOWER(:username) AND Active = "Yes" AND c.IdUsuario = u.I
         $_SESSION['username'] = $row['username'];
         $_SESSION['userId'] = $row['Id'];
         $_SESSION['fullname'] = $row['fullname'];
+		$_SESSION['isProffileValidated'] = $row['isProffileValidated'] == 1 ? true : false;
+		error_log("validado? " . $_SESSION['isProffileValidated']);
+		$_SESSION['isUserActive'] = $row['isUserActive'] == 1 ? true : false;
+		error_log($_SESSION['loggedin']);
+		error_log($_SESSION['username']);
+		error_log($_SESSION['userId']);
+		error_log($_SESSION['fullname']);
+		error_log($_SESSION['isProffileValidated']);
+		error_log($_SESSION['isUserActive']);
 
         // Check the role of the logged-in user
         $role = $row['Rol'];

@@ -2,7 +2,7 @@
 require('../includes/config.php');
 
 // Check if the user is logged in
-if ($user->is_logged_in() && !$_SESSION['isAdmin']) {
+if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive']) {
   header('Location: http://localhost/ClientsApplicationsandProducts/clients/index.php');
   exit();  
 } elseif (!$user->is_logged_in()) {

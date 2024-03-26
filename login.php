@@ -2,9 +2,13 @@
 //include config
 require_once('includes/config.php');
 
+$isUserAdmin = isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : false;
+$isProffileValidated = isset($_SESSION['isProffileValidated']) ? $_SESSION['isProffileValidated'] : false;
+$isUserActive = isset($_SESSION['isUserActive']) ? $_SESSION['isUserActive'] : false;
+
 //check if already logged in move to home page
-if( $user->is_logged_in() && $_SESSION['isAdmin'] ){ header('Location: index.php'); exit(); }
-elseif ($user->is_logged_in() && !$_SESSION['isAdmin']) {
+if( $user->is_logged_in() && $isUserAdmin && $isProffileValidated && $isUserActive){ header('Location: index.php'); exit(); }
+elseif ($user->is_logged_in() && !$_SESSION['isAdmin'] && $isProffileValidated && $isUserActive) {
   header('Location: ./clients/index.php');  
   exit();
 }
@@ -29,17 +33,30 @@ if(isset($_POST['submit'])){
 		$password = $_POST['password'];
 
 		if ($user->login($username, $password)){
-			$_SESSION['username'] = $username;
-      if ($_SESSION['isAdmin']) {
+      $_SESSION['username'] = $username;
+      $isUserAdmin = isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : false;
+      $isProffileValidated = isset($_SESSION['isProffileValidated']) ? $_SESSION['isProffileValidated'] : false;
+      $isUserActive = isset($_SESSION['isUserActive']) ? $_SESSION['isUserActive'] : false;
+
+      if ($isUserAdmin && $isProffileValidated && $isUserActive) {
+        error_log("Usuario admin validado y activo");
         header('Location: ./dashboard/index.php');  
         exit();
-      } else {
-        header('Location: ./clients/index.php');  
+      } elseif (!$isUserAdmin && $isProffileValidated && $isUserActive) {
+        error_log("Usuario cliente validado y activo");
+        header('Location: ./clients/index.php');
         exit();
+      } elseif (!$isProffileValidated) {
+        error_log("Perfil de usuario no validado");
+        error_log($_SESSION['isProffileValidated']);
+        $error[] = 'Tu usuario aún no ha sido habilitado, por favor intentalo más tarde';
+      } elseif (!$isUserActive) {
+        error_log("Usuario no activo");
+        $error[] = 'Tu usuario no está activo, por favor consulta con el administrador';
+      } else {
+        error_log("Error desconocido, usuario no esta activo ni el perfil fue validado");
+        $error[] = 'Desafortunadamente, tu solicitud no pudo ser ejecutada';
       }
-			
-			exit;
-
 		} else {
 			$error[] = 'Usuario o contraseña incorrecta, asegurate de haber activado tu cuenta';
 		}
