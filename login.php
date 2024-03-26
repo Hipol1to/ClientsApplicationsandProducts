@@ -37,6 +37,7 @@ if(isset($_POST['submit'])){
       $isUserAdmin = isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : false;
       $isProffileValidated = isset($_SESSION['isProffileValidated']) ? $_SESSION['isProffileValidated'] : false;
       $isUserActive = isset($_SESSION['isUserActive']) ? $_SESSION['isUserActive'] : false;
+      $hasUserProffile = isset($_SESSION['ClienteId']) ? $_SESSION['ClienteId'] : null;
 
       if ($isUserAdmin && $isProffileValidated && $isUserActive) {
         error_log("Usuario admin validado y activo");
@@ -46,13 +47,17 @@ if(isset($_POST['submit'])){
         error_log("Usuario cliente validado y activo");
         header('Location: ./clients/index.php');
         exit();
+      } elseif (!$isUserActive) {
+        error_log("Usuario no activo");
+        $error[] = 'Tu usuario no está activo, asegurate de haber activado tu cuenta o consulta con el administrador';
+      } elseif (!$hasUserProffile) {
+        error_log("Usuario no tiene perfil");
+        header('Location: ./clients/completa_perfil.php');
+        exit();
       } elseif (!$isProffileValidated) {
         error_log("Perfil de usuario no validado");
         error_log($_SESSION['isProffileValidated']);
         $error[] = 'Tu usuario aún no ha sido habilitado, por favor intentalo más tarde';
-      } elseif (!$isUserActive) {
-        error_log("Usuario no activo");
-        $error[] = 'Tu usuario no está activo, por favor consulta con el administrador';
       } else {
         error_log("Error desconocido, usuario no esta activo ni el perfil fue validado");
         $error[] = 'Desafortunadamente, tu solicitud no pudo ser ejecutada';

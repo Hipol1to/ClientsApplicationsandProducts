@@ -72,14 +72,13 @@ if(isset($_POST['submit'])){
 
         try {
             // Insert into the database
-            $stmt = $db->prepare('INSERT INTO usuarios (Nombre, Usuario, Contraseña, Rol, Email, Active) VALUES (:nombre, :username, :password, :rol, :email, :active)');
+            $stmt = $db->prepare('INSERT INTO usuarios (Usuario, Contraseña, Rol, Email, Active) VALUES (:username, :password, :rol, :email, :active)');
             $stmt->execute(array(
-            ':nombre' => null, // Provide a value for 'Nombre' here
             ':username' => $username,
             ':password' => $hashedpassword,
-            ':rol' => 'Administrador', // Assuming default role is 'Cliente'
+            ':rol' => 'Cliente', // Assuming default role is 'Cliente'
             ':email' => $email,
-            ':active' => $activasion // You may adjust this based on your activation mechanism
+            ':active' => 0 // You may adjust this based on your activation mechanism
             ));
             $id = $db->lastInsertId('Id');
 

@@ -7,6 +7,9 @@ require('../includes/config.php');
 } elseif (!$user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
   exit();  
+} elseif (!isset($_SESSION['ClienteId'])) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  exit();
 }*/
 ?>
  

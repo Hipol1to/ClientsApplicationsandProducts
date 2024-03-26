@@ -7,6 +7,9 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 } elseif (!$user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
   exit();  
+} elseif (!isset($_SESSION['ClienteId'])) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  exit();
 }
 
 // Check if the form is submitted and values are set

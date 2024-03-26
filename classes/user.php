@@ -22,9 +22,9 @@ class User
 	private function get_user_hash($username)
 {
     try {
-        $stmt = $this->_db->prepare('SELECT Contraseña AS password, Usuario AS username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) AS fullname, C.IdUsuario AS idusuario, u.Active AS isUserActive, c.PerfilValidado AS isProffileValidated, u.Id FROM usuarios AS u 
+        $stmt = $this->_db->prepare('SELECT Contraseña AS password, Usuario AS username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) AS fullname, C.IdUsuario AS idusuario, u.Active AS isUserActive, c.PerfilValidado AS isProffileValidated, u.IdCliente as ClienteId, u.Id FROM usuarios AS u 
 		LEFT OUTER JOIN Clientes c on c.IdUsuario = u.Id
-		WHERE LOWER(Usuario) = LOWER(:username) AND Active = 1 AND c.IdUsuario = u.Id');
+		WHERE LOWER(Usuario) = LOWER(:username) AND Active IS NOT NULL');
         $stmt->execute(array('username' => $username));
 
         return $stmt->fetch();
@@ -72,6 +72,7 @@ class User
 		$_SESSION['isProffileValidated'] = $row['isProffileValidated'] == 1 ? true : false;
 		error_log("validado? " . $_SESSION['isProffileValidated']);
 		$_SESSION['isUserActive'] = $row['isUserActive'] == 1 ? true : false;
+		$_SESSION['ClienteId'] = isset($row['ClienteId']) ? $row['ClienteId'] : null;
 		error_log($_SESSION['loggedin']);
 		error_log($_SESSION['username']);
 		error_log($_SESSION['userId']);

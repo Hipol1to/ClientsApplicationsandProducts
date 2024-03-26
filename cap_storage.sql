@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 26, 2024 at 02:36 AM
+-- Generation Time: Mar 26, 2024 at 03:37 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -467,6 +467,7 @@ INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoA
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `IdCliente` int(11) DEFAULT NULL,
   `Usuario` varchar(50) NOT NULL,
   `Contraseña` varchar(255) NOT NULL,
   `Rol` varchar(20) NOT NULL,
@@ -475,18 +476,20 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
   `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
-  UNIQUE KEY `Usuario` (`Usuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+  UNIQUE KEY `Usuario` (`Usuario`),
+  KEY `IdCliente` (`IdCliente`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`Id`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-26 01:54:04'),
-(2, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-26 01:54:09'),
-(3, 'markDitamai', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Administrador', 'cuentascompaltidas@gmail.com', 1, '2024-02-10 17:16:56', '2024-03-26 01:54:11'),
-(4, 'compainero', '$2y$10$Ul59.UV1GM05y2V2XKlwzuCpnsGQeHAShghQWLqDhnSCoi0SiBeZ6', 'Administrador', 'thelegendstutorials@hotmail.com', 1, '2024-03-23 19:16:49', '2024-03-26 01:54:14');
+INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
+(1, NULL, 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-26 01:54:04'),
+(2, 7, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-26 02:47:10'),
+(3, NULL, 'markDitamai', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Administrador', 'cuentascompaltidas@gmail.com', 1, '2024-02-10 17:16:56', '2024-03-26 01:54:11'),
+(4, NULL, 'compainero', '$2y$10$Ul59.UV1GM05y2V2XKlwzuCpnsGQeHAShghQWLqDhnSCoi0SiBeZ6', 'Administrador', 'thelegendstutorials@hotmail.com', 1, '2024-03-23 19:16:49', '2024-03-26 01:54:14'),
+(6, NULL, 'liluser', '$2y$10$hFX.BA3sjkISNzlcShOQuuivSFSVwFbVYXZUOVDnYuxLvAVxhxGrW', 'Cliente', 'thelegendstutorials@outlook.com', 1, '2024-03-26 02:59:52', '2024-03-26 03:20:37');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

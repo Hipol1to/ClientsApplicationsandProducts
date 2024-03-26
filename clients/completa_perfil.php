@@ -1,7 +1,7 @@
 <?php
 require('../includes/config.php');
 
-if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive']) {
+if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
   header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
   exit();  
 }
