@@ -11,7 +11,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Panel de Usuarios</title>
+  <title>Completa tu perfil</title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -111,12 +111,12 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
           <div class="col-12">
             <div class="card">
               <div class="card-header">
-                <h3 class="card-title">Completar Perfil</h3>
+                <h3 class="card-title">Completa tu Perfil</h3>
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <!-- Form -->
-                <form action="complete_profile_process.php" method="post">
+                <form action="complete_profile_process.php" method="post" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-sm-6">
                       <div class="form-group">
@@ -138,8 +138,12 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
                     </div>
                     <div class="col-sm-6">
                       <div class="form-group">
-                        <label for="subir_foto_cedula">Subir Foto de Cédula:</label>
-                        <input type="file" class="form-control-file" id="subir_foto_cedula" name="subir_foto_cedula">
+                        <label for="subir_foto_cedula_frontal">Foto frontal de Cédula:</label>
+                        <input type="file" class="form-control-file" id="subir_foto_cedula_frontal" name="subir_foto_cedula_frontal">
+                      </div>
+                      <div class="form-group">
+                        <label for="subir_foto_cedula_posterior">Foto posterior de Cédula:</label>
+                        <input type="file" class="form-control-file" id="subir_foto_cedula_posterior" name="subir_foto_cedula_posterior">
                       </div>
                       <div class="form-group">
                         <label for="rnc">RNC:</label>
