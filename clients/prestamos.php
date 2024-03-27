@@ -307,7 +307,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 // Assuming your database connection code is included here
 
 // Fetch data from the clientes table
-$sql = "SELECT * FROM prestamos";
+$sql = "SELECT * FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId']."";
 $result = $db->query($sql);
 
 if ($result) {
@@ -333,7 +333,7 @@ if ($result) {
                   <thead>
                   <tr>
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Agregar Prestamo
+  Solicitar Prestamo
 </button>
 <p></p>
                   <th></th>
