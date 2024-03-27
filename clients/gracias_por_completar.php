@@ -4,8 +4,8 @@ require('../includes/config.php');
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId']) && !$_SESSION['isProffileInReview']) {
   header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
   exit();  
-} elseif ($_SESSION['isProffileInReview']) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
+} elseif (!$_SESSION['isProffileInReview']) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/index.php');
   exit();
 }
 ?>
@@ -113,61 +113,17 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
         <div class="row">
           <div class="col-12">
             <div class="card">
-              <div class="card-header">
-                <h3 class="card-title">Completa tu Perfil</h3>
-              </div>
-              <!-- /.card-header -->
               <div class="card-body">
-                <!-- Form -->
-                <form action="complete_profile_process.php" method="post" enctype="multipart/form-data">
-                  <div class="row">
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="nombre">Nombre:</label>
-                        <input type="text" class="form-control" id="nombre" name="nombre" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="apellido">Apellido:</label>
-                        <input type="text" class="form-control" id="apellido" name="apellido" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="direccion">Dirección:</label>
-                        <input type="text" class="form-control" id="direccion" name="direccion">
-                      </div>
-                      <div class="form-group">
-                        <label for="cedula">Número de Cédula:</label>
-                        <input type="text" class="form-control" id="cedula" name="cedula" required>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="subir_foto_cedula_frontal">Foto frontal de Cédula:</label>
-                        <input type="file" class="form-control-file" id="subir_foto_cedula_frontal" name="subir_foto_cedula_frontal">
-                      </div>
-                      <div class="form-group">
-                        <label for="subir_foto_cedula_posterior">Foto posterior de Cédula:</label>
-                        <input type="file" class="form-control-file" id="subir_foto_cedula_posterior" name="subir_foto_cedula_posterior">
-                      </div>
-                      <div class="form-group">
-                        <label for="rnc">RNC:</label>
-                        <input type="text" class="form-control" id="rnc" name="rnc" required>
-                      </div>
-                      <button type="submit" class="btn btn-primary">Completar Perfil</button>
-                    </div>
-                  </div>
-                </form>
-                <!-- End Form -->
+                <h3 class="card-title">Gracias por enviar tu información</h3>
+                <br>
+                <p>Estaremos revisando tu información, en cuanto sea validada podrás comenzar a realizar y consultar préstamos.</p>
               </div>
-              <!-- /.card-body -->
             </div>
-            <!-- /.card -->
           </div>
-          <!-- /.col -->
         </div>
-        <!-- /.row -->
       </div>
-      </section>
-      </div>
+    </section>
+  </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
     <strong> &copy;  <a href="https://adminlte.io"></a>.</strong>

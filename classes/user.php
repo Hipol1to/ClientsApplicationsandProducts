@@ -71,6 +71,7 @@ class User
         $_SESSION['fullname'] = $row['fullname'];
 		$_SESSION['isProffileValidated'] = $row['isProffileValidated'] == 1 ? true : false;
 		error_log("validado? " . $_SESSION['isProffileValidated']);
+    $_SESSION['isProffileInReview'] = $row['isProffileValidated'] == 2 ? true : false;
 		$_SESSION['isUserActive'] = $row['isUserActive'] == 1 ? true : false;
 		$_SESSION['ClienteId'] = isset($row['ClienteId']) ? $row['ClienteId'] : null;
 		error_log($_SESSION['loggedin']);

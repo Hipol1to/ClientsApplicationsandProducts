@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_FILES['subir_foto_cedula_posterior']['error'] === UPLOAD_ERR_OK
         ) {
             // Define upload directory
-            $upload_directory = "uploads/";
+            $upload_directory = __DIR__ . "\\uploads\\";
 
             // Generate unique file names for both photos
             $front_file_name = uniqid() . '_front_' . $_FILES['subir_foto_cedula_frontal']['name'];
@@ -45,10 +45,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $cedula_path_mixed = $front_cedula_path."_.d1vis10n._".$back_cedula_path;
             error_log($cedula_path_mixed);
             // Prepare SQL statement to insert data into the clientes table
-            $stmt = $db->prepare("INSERT INTO clientes (Nombre, Apellido, Direccion, Cedula, CedulaPath, RNC, FechaCreacion, FechaModificacion) 
-                                   VALUES (:nombre, :apellido, :direccion, :cedula, :cedula_path, :rnc, NOW(), NOW())");
+            $stmt = $db->prepare("INSERT INTO clientes (IdUsuario, Nombre, Apellido, Direccion, Cedula, CedulaPath, RNC, PerfilValidado, FechaCreacion, FechaModificacion) 
+                                   VALUES (:idusuario, :nombre, :apellido, :direccion, :cedula, :cedula_path, :rnc, 2, NOW(), NOW())");
             
             // Bind parameters
+            $stmt->bindParam(':idusuario', $_SESSION['userId']);
             $stmt->bindParam(':nombre', $nombre);
             $stmt->bindParam(':apellido', $apellido);
             $stmt->bindParam(':direccion', $direccion);
@@ -58,8 +59,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             // Execute the statement
             $stmt->execute();
-            
-            echo 'guay mi madre';
+
+            $idNewCliente = $db->lastInsertId('Id');
+             $stmt = $db->prepare("UPDATE usuarios SET IdCliente = :idcliente WHERE Id = :idusuario");
+            // Bind parameters
+            $stmt->bindParam(':idusuario', $_SESSION['userId']);
+            $stmt->bindParam(':idcliente', $idNewCliente);
+            // Execute the statement
+            $stmt->execute();
+
+             $_SESSION['isProffileInReview'] = true;
+            header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
             exit();
             
             echo "Perfil completado exitosamente.";

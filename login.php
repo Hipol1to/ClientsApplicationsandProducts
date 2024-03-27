@@ -9,7 +9,7 @@ $isUserActive = isset($_SESSION['isUserActive']) ? $_SESSION['isUserActive'] : f
 //check if already logged in move to home page
 if( $user->is_logged_in() && $isUserAdmin && $isProffileValidated && $isUserActive){ header('Location: index.php'); exit(); }
 elseif ($user->is_logged_in() && !$_SESSION['isAdmin'] && $isProffileValidated && $isUserActive) {
-  header('Location: ./clients/index.php');  
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/index.php');  
   exit();
 }
 
@@ -35,26 +35,32 @@ if(isset($_POST['submit'])){
 		if ($user->login($username, $password)){
       $_SESSION['username'] = $username;
       $isUserAdmin = isset($_SESSION['isAdmin']) ? $_SESSION['isAdmin'] : false;
+      $isProffileInReview = isset($_SESSION['isProffileInReview']) ? $_SESSION['isProffileInReview'] : false;
       $isProffileValidated = isset($_SESSION['isProffileValidated']) ? $_SESSION['isProffileValidated'] : false;
       $isUserActive = isset($_SESSION['isUserActive']) ? $_SESSION['isUserActive'] : false;
       $hasUserProffile = isset($_SESSION['ClienteId']) ? $_SESSION['ClienteId'] : null;
 
       if ($isUserAdmin && $isProffileValidated && $isUserActive) {
         error_log("Usuario admin validado y activo");
-        header('Location: ./dashboard/index.php');  
+        header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');  
         exit();
       } elseif (!$isUserAdmin && $isProffileValidated && $isUserActive) {
         error_log("Usuario cliente validado y activo");
-        header('Location: ./clients/index.php');
+        header('Location: http://localhost/ClientsApplicationsandProducts/clients/index.php');
         exit();
       } elseif (!$isUserActive) {
         error_log("Usuario no activo");
         $error[] = 'Tu usuario no está activo, asegurate de haber activado tu cuenta o consulta con el administrador';
       } elseif (!$hasUserProffile) {
         error_log("Usuario no tiene perfil");
-        header('Location: ./clients/completa_perfil.php');
+        header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
         exit();
-      } elseif (!$isProffileValidated) {
+      } elseif ($isProffileInReview) {
+        error_log("Perfil de usuario esta en revision");
+        error_log($_SESSION['isProffileInReview']);
+        header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
+        exit();
+      }elseif (!$isProffileValidated) {
         error_log("Perfil de usuario no validado");
         error_log($_SESSION['isProffileValidated']);
         $error[] = 'Tu usuario aún no ha sido habilitado, por favor intentalo más tarde';
