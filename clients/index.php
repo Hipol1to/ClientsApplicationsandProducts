@@ -167,7 +167,8 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
     // Assuming you have a PDO connection named $db
 
     // Fetch the count of records from the prestamos table
-    $stmt = $db->prepare("SELECT COUNT(*) AS prestamosCount FROM prestamos");
+    $stmt = $db->prepare("SELECT COUNT(*) AS prestamosCount FROM prestamos WHERE IdCliente = :idDelCliente");
+    $stmt->bindParam(':idDelCliente', $_SESSION['ClienteId']);
     $stmt->execute();
     $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -196,26 +197,37 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
             <div class="card bg-gradient-info">
             
               <!-- /.card-body -->
-              <div class="card-footer bg-transparent">
-                <div class="row">
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
+              <div class="card-footer bg-info">
+                <?php
+    // Assuming you have a PDO connection named $db
 
-                    <div class="text-white">Puntaje</div>
-                  </div>
-                  <!-- ./col -->
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
+    // Fetch the count of records from the prestamos table
+    $stmt = $db->prepare("SELECT Puntos FROM Clientes WHERE Id = :idDelCliente");
+    $stmt->bindParam(':idDelCliente', $_SESSION['ClienteId']);
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
 
-                    <div class="text-white">Monto Recargo Activo</div>
-                  </div>
-                  <!-- ./col -->
+    // Get the count from the result
+    $puntaje = isset($result['Puntos'])? $result['Puntos'] : 0 ;
+  ?>
+    <div class="row">
+        <div class="col-12 text-center">
+            <div class="small-box bg-info">
+                <div class="inner" style="font-size: 24px;">
+                    <h3 style="font-size: 36px; margin: 0;"><?php echo $puntaje; ?></h3>
+                    <p style="margin: 0;">Puntos Totales</p>
                 </div>
-                <!-- /.row -->
-              </div>
+                <div class="icon" style="margin-top: 10px;">
+                    <i class="fas fa-star" style="font-size: 48px;"></i>
+                </div>
+            </div>
+        </div>
+        <!-- ./col -->
+    </div>
+    <!-- /.row -->
+</div>
+
+
               <!-- /.card-footer -->
             </div>
           </div>
