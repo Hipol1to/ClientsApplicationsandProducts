@@ -4,8 +4,11 @@ require('../includes/config.php');
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
   header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
   exit();  
-} elseif (!isset($_SESSION['ClienteId'])) {
+} elseif (!isset($_SESSION['ClienteId']) && $user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  exit();
+} elseif (!$user->is_logged_in()) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
   exit();
 }
 ?>
@@ -182,7 +185,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
     <div class="card-body">
     <form onsubmit="return isFormValid()" id="formAddPrestamo" action="add_prestamo.php" method="post">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-6">
                 <!-- Group 1 -->
                 <div class="form-group">
                     <label for="motivo">Descripcion:</label>
@@ -190,88 +193,39 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
                 </div>
                 <div class="form-group">
                     <label for="montoSolicitado">Monto Solicitado:</label>
-                    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" required>
-                </div>
-                <!--
-                <div class="form-group">
-                    <label for="montoAprobado">Monto Aprobado:</label>
-                    <input type="text" class="form-control" id="montoAprobado" name="montoAprobado" required>
-                </div>
-                -->
-            </div>
-             <!--
-            <div class="col-sm-4">
-                Group 2 -->
-                <!--
-                <div class="form-group">
-                    <label for="montoPagado">Monto Pagado:</label>
-                    <input type="text" class="form-control" id="montoPagado" name="montoPagado" required>
-                </div> 
-                <div class="form-group">
-                    <label for="tasaDeInteres">Tasa de Interes:</label>
-                    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" required>
+                    <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" step=".01" required>
                 </div>
                 <div class="form-group">
-                    <label for="montoRecargo">Monto Recargo:</label>
-                    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo" required>
-                </div>
-            </div>
-            -->
-            <div class="col-sm-4">
-                <!-- Group 3 -->
-                <div class="form-group">
-                    <label for="remitente">Remitente:</label>
-                    <input type="text" class="form-control" id="remitente" name="remitente" cc required>
-                </div>
-                <!--
-                <div class="form-group">
-                  <label for="beneficiario">Usuario Beneficiario:</label>
-                  <input type="text" class="form-control" id="beneficiarioInput" name="beneficiario" required>
-                  <div id="beneficiarioDropdown" class="dropdown-content"></div>
-                </div>
-                <div class="form-group">
-                    <label for="status">Status:</label>
-                    <select class="form-control" id="status" name="status" required>
-                    <option value="Aprobado" selected>Aprobado</option>
-                    <option value="En revisión" selected>En revisión</option>
-                    <option value="Rechazado" selected>Rechazado</option>
-                </select>
-                </div>
-                -->
-            </div>
-            <div class="col-sm-4">
-                <!-- Group 4 -->
-                <div class="form-group">
-    <label for="fechaFinalPrestamo">Fecha Final de prestamo:</label>
-    <input type="text" class="form-control datepicker" id="fechaFinalPrestamo" name="fechaFinalPrestamo" required>
-  </div>
-                <div class="form-group">
-                    <label for="cuotasTotales">Cuotas Totales:</label>
-                    <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales" required>
-                </div>
-                
-            </div>
-            <div class="col-sm-4">
-                <!-- Group 5 -->
-                <div class="form-group">
-    <label for="cantPagosPorMes">Cantidad de Pagos por Mes:</label>
+    <label for="cantPagosPorMes">Cantidad cuotas mensuales:</label>
     <input type="number" class="form-control" id="cantPagosPorMes" name="cantPagosPorMes" required>
 </div>
-                <div class="form-group">
-                    <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control datepicker" id="fechaDeAprobacion" name="fechaDeAprobacion" required>
-                </div>
-                <!-- Add more form groups for group 5 here -->
+<div class="form-group">
+  <label for="cantPagosPorMes">Monto Cuotas:</label>
+<div id="cuotasDiasDePagoContainer"></div>
+</div>
+                
+               
             </div>
+         
             <div class="col-sm-4">
-                <!-- Group 6 -->
+               <!-- Group 2 -->
+                <div class="form-group">
+                 <label for="cuotasTotales">Plazo:</label>
+                  <select class="form-control" id="cuotasTotales" name="cuotasTotales" required>
+                 <option value="">Seleccione el plazo</option>
+        <!-- JavaScript will populate options here -->
+                </select>
+</div>
+                <div class="form-group">
+    <label for="fechaFinalPrestamo">Fecha Final de préstamo:</label>
+    <input type="text" class="form-control" id="fechaFinalPrestamo" name="fechaFinalPrestamo" required readonly>
+</div>
                 <div class="form-group">
     <label id="labelDiasDePagoDelMes" for="diasDePagoDelMes">Días de Pago del Mes:</label>
     <div id="diasDePagoContainer"></div>
     
     </select>
 </div>
-                <!-- Add more form groups for group 5 here -->
             </div>
         </div>
         <!-- Add more fields as needed -->
@@ -662,6 +616,7 @@ $.ajax({
   // Function to dynamically generate options for select dropdown
   function generateOptions() {
     var container = document.getElementById("diasDePagoContainer");
+    var containerCuotas = document.getElementById("cuotasDiasDePagoContainer");
     var numSelects = document.getElementById("cantPagosPorMes").value;
 
     // Clear existing selects
@@ -669,6 +624,12 @@ $.ajax({
 
     // Generate select elements
     for (var i = 0; i < numSelects; i++) {
+        var inputCuota = document.createElement("input");
+        inputCuota.className = "form-control";
+        inputCuota.name = "cuotasNo_" + (i+1);
+        inputCuota.id = "cuotasNo_" + (i+1);
+        console.log(i);
+
         var select = document.createElement("select");
         select.className = "form-control";
         select.name = "diasDePagoDelMes_" + (i+1); // Append index to name
@@ -685,6 +646,10 @@ $.ajax({
         // Append select to container
         select.selectedIndex = (i);
         container.appendChild(select);
+        containerCuotas.appendChild(inputCuota);
+        
+        
+        
     }
 }
 
@@ -809,19 +774,65 @@ function showMessageBelowElement(element, message) {
     // Insert the error message div below the given element
     element.parentNode.insertBefore(errorMessageDiv, element.nextSibling);
 }
-
-
-
-
-
-
-
-  
-
-
-
 </script>
 
+<script>
+    // Get the select element
+    var select = document.getElementById("cuotasTotales");
+    
+    // Loop to populate options from 0 Meses to 60 Meses
+    for (var i = 1; i <= 60; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        if (i == 1) {
+          option.text = i + " Mes";
+        } else {
+          option.text = i + " Meses";
+        }
+        select.appendChild(option);
+    }
+</script>
+<script>
+  const isObjectEmpty = (objectName) => {
+  return Object.keys(objectName).length === 0
+}
 
+    // Function to calculate the date based on selected option
+    function calculateDate() {
+        var select = document.getElementById("cuotasTotales");
+        var selectedOption = select.options[select.selectedIndex].value;
+        if (selectedOption == null || selectedOption == undefined || isObjectEmpty(selectedOption)) {
+          selectedOption = 0;
+          //console.log(selectedOption);
+        }
+        if (selectedOption != 0) {
+        // Get the current date
+        var currentDate = new Date();
+
+        // Add the selected number of months to the current date
+        currentDate.setMonth(currentDate.getMonth() + parseInt(selectedOption));
+        
+        // Set the value of the date input field
+        document.getElementById("fechaFinalPrestamo").value = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1).toString().padStart(2, '0') + "-" + currentDate.getDate().toString().padStart(2, '0');
+        } else {
+          document.getElementById("fechaFinalPrestamo").value = null;
+        }
+    }
+
+    // Add event listener to the select element
+    document.getElementById("cuotasTotales").addEventListener("change", calculateDate);
+
+    // Populate options for the select element
+    var select = document.getElementById("cuotasTotales");
+    for (var i = 0; i <= 60; i++) {
+        var option = document.createElement("option");
+        option.value = i;
+        option.text = i + " Meses";
+        select.appendChild(option);
+    }
+
+    // Initial calculation based on the default selected option
+    calculateDate();
+</script>
 </body>
 </html>

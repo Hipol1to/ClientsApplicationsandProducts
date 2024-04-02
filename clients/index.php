@@ -7,7 +7,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 } elseif (!isset($_SESSION['ClienteId'])) {
   header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
   exit();
-}
+} 
 ?>
 <!DOCTYPE html>
 <html lang="en">

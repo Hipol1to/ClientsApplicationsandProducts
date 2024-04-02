@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decimal Number Input</title>
+<style>
+  .error-message {
+    color: red;
+  }
+</style>
+</head>
+<body>
+
+<label for="decimalInput">Enter Decimal Number:</label>
+<input type="text" id="decimalInput" oninput="validateDecimal(this)" maxlength="10">
+<div id="error" class="error-message"></div>
+
+<script>
+function validateDecimal(input) {
+    // Remove leading zeros
+    input.value = input.value.replace(/^0+/, '');
+    
+    // Remove any non-digit characters except the decimal point
+    input.value = input.value.replace(/[^\d.]/g, '');
+
+    // Remove extra decimal points
+    input.value = input.value.replace(/(\..*)\./g, '$1');
+
+    // Add .00 if not present after a number
+    if (!/\.\d{2}$/.test(input.value) && input.value !== '') {
+        input.value += '.00';
+    }
+
+    // Display error message if input doesn't match the pattern
+    var errorMessage = document.getElementById('error');
+    if (!/^\d{1,}(\.\d{0,2})?$/.test(input.value) && input.value !== '') {
+        errorMessage.textContent = 'Please enter a valid decimal number.';
+    } else {
+        errorMessage.textContent = '';
+    }
+}
+</script>
+
+</body>
+</html>

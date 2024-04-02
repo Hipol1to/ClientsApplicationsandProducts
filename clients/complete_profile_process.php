@@ -1,5 +1,16 @@
 <?php
 require('../includes/config.php');
+
+if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId']) && !$_SESSION['isProffileInReview']) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  exit();  
+} elseif (isset($_SESSION['isProffileInReview']) && $user->is_logged_in()) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
+  exit();
+} else {
+  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  exit();
+}
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if all required fields are filled

@@ -80,6 +80,11 @@ class User
 		error_log($_SESSION['fullname']);
 		error_log($_SESSION['isProffileValidated']);
 		error_log($_SESSION['isUserActive']);
+    if (isset($_SESSION['ClienteId'])) {
+      error_log($_SESSION['ClienteId']);
+    } else {
+      error_log("perfil de cliente no creado");
+    }
 
         // Check the role of the logged-in user
         $role = $row['Rol'];
