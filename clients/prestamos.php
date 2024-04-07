@@ -210,8 +210,8 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
             <div class="col-sm-4">
                <!-- Group 2 -->
                 <div class="form-group">
-                 <label for="cuotasTotales">Plazo:</label>
-                  <select class="form-control" id="cuotasTotales" name="cuotasTotales" required>
+                 <label for="cantMeses">Plazo:</label>
+                  <select class="form-control" id="cantMeses" name="cantMeses" required>
                  <option value="">Seleccione el plazo</option>
         <!-- JavaScript will populate options here -->
                 </select>
@@ -783,22 +783,7 @@ function showMessageBelowElement(element, message) {
 }
 </script>
 
-<script>
-    // Get the select element
-    var select = document.getElementById("cuotasTotales");
-    
-    // Loop to populate options from 0 Meses to 60 Meses
-    for (var i = 1; i <= 60; i++) {
-        var option = document.createElement("option");
-        option.value = i;
-        if (i == 1) {
-          option.text = i + " Mes";
-        } else {
-          option.text = i + " Meses";
-        }
-        select.appendChild(option);
-    }
-</script>
+
 <script>
   const isObjectEmpty = (objectName) => {
   return Object.keys(objectName).length === 0
@@ -806,7 +791,7 @@ function showMessageBelowElement(element, message) {
 
     // Function to calculate the date based on selected option
     function calculateDate() {
-        var select = document.getElementById("cuotasTotales");
+        var select = document.getElementById("cantMeses");
         var selectedOption = select.options[select.selectedIndex].value;
         if (selectedOption == null || selectedOption == undefined || isObjectEmpty(selectedOption)) {
           selectedOption = 0;
@@ -827,19 +812,63 @@ function showMessageBelowElement(element, message) {
     }
 
     // Add event listener to the select element
-    document.getElementById("cuotasTotales").addEventListener("change", calculateDate);
+    document.getElementById("cantMeses").addEventListener("change", calculateDate);
 
     // Populate options for the select element
-    var select = document.getElementById("cuotasTotales");
-    for (var i = 0; i <= 60; i++) {
+    var select = document.getElementById("cantMeses");
+    for (var i = 1; i <= 60; i++) {
         var option = document.createElement("option");
         option.value = i;
-        option.text = i + " Meses";
+        if (i == 1) {
+          option.text = i + " Mes";
+        } else {
+          option.text = i + " Meses";
+        }
         select.appendChild(option);
     }
 
     // Initial calculation based on the default selected option
     calculateDate();
+</script>
+<script>
+// Get the input element
+var inputElement = document.getElementById('montoSolicitado');
+
+// Attach an event listener to the input element
+inputElement.addEventListener('input', function(event) {
+    if (/[^0-9.]/.test(inputElement.value)) {
+        // If it contains non-numeric characters, handle the validation here
+        inputElement.value = "";
+        // For example, you can show an error message or take appropriate action
+    } else {
+    
+    // Save the cursor position
+    var cursorPosition = inputElement.selectionStart;
+
+    // Get the input value
+    let oldInputValue = inputElement.value;
+
+    // Check if the input value is a valid number
+    if (!isNaN(parseFloat(oldInputValue))) {
+        // Currency formatting
+        let currency = parseFloat(oldInputValue);
+        let formattedValue = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(currency);
+
+        // Remove the dollar sign and commas from the formatted currency string
+        formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+        console.log(formattedValue);
+
+        // Update the value of the input element with the formatted value
+        inputElement.value = formattedValue;
+
+        // Restore the cursor position
+        inputElement.setSelectionRange(cursorPosition, cursorPosition);
+    }
+    }
+});
 </script>
 </body>
 </html>

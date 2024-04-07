@@ -10,9 +10,6 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 } elseif (!isset($_SESSION['ClienteId'])) {
   header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
   exit();
-} else {
-  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
-  exit();
 }
 // Check if ID parameter is set on URL
 if(isset($_GET['id'])) {
