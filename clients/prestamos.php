@@ -203,10 +203,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
   <label for="cantPagosPorMes">Monto Cuotas:</label>
 <div id="cuotasDiasDePagoContainer"></div>
 </div>
-                
-               
             </div>
-         
             <div class="col-sm-4">
                <!-- Group 2 -->
                 <div class="form-group">
@@ -739,10 +736,17 @@ function isFormValid() {
     const xpathExpression = "//*[contains(@class,'is-invalid')] | //button[contains(@class,'disabled')]";
     const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
     const element = result.singleNodeValue;
+    let cantidadCuotasMensualeses =document.getElementById("cantPagosPorMes");
+    let numCuotasMensuales = parseInt(cantidadCuotasMensualeses.value);
 
     // If any element with 'is-invalid' class or disabled button is found, return false
     if (element !== null) {
         console.log("Invalid element found:", element);
+        return false;
+    }
+
+    if (numCuotasMensuales <= 0) {
+        console.log("Invalid number of cuotas mensuales");
         return false;
     }
 
