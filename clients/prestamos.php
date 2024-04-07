@@ -224,7 +224,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
     <label id="labelDiasDePagoDelMes" for="diasDePagoDelMes">Días de Pago del Mes:</label>
     <div id="diasDePagoContainer"></div>
     
-    </select>
+    
 </div>
             </div>
         </div>
@@ -590,7 +590,7 @@ $.ajax({
     $('#example2').DataTable({
       "paging": true,
       "lengthChange": false,
-      "searching": false,
+      "searching": false, 
       "ordering": true,
       "info": true,
       "autoWidth": false,
@@ -621,9 +621,15 @@ $.ajax({
 
     // Clear existing selects
     container.innerHTML = "";
+    containerCuotas.innerHTML = "";
 
     // Generate select elements
     for (var i = 0; i < numSelects; i++) {
+        var labelCuota = document.createElement("label");
+        labelCuota.setAttribute("for", "cuotasNo_" + (i+1));
+        labelCuota.textContent="Monto cuota #" +(i+1);
+        labelCuota.style.fontWeight = 400;
+
         var inputCuota = document.createElement("input");
         inputCuota.className = "form-control";
         inputCuota.name = "cuotasNo_" + (i+1);
@@ -635,7 +641,7 @@ $.ajax({
         select.name = "diasDePagoDelMes_" + (i+1); // Append index to name
         select.id = "diasDePagoDelMes_" + (i+1); // Append index to id
 
-        // Generate options for each select
+         //Generate options for each select
         for (var j = 1; j <= 28; j++) {
             var option = document.createElement("option");
             option.value = j;
@@ -646,6 +652,7 @@ $.ajax({
         // Append select to container
         select.selectedIndex = (i);
         container.appendChild(select);
+        containerCuotas.appendChild(labelCuota);
         containerCuotas.appendChild(inputCuota);
         
         
