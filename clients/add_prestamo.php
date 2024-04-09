@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $diasDePagoDelMes = "";
     for ($i=1; $i <= $cantPagosPorMes ; $i++) {
       $diasDePagoDelMes .= $_POST['diasDePagoDelMes_'.$i];
-      if ($cantPagosPorMes >1) {
+      if ($cantPagosPorMes >1 && $i != $cantPagosPorMes) {
       $diasDePagoDelMes .= "_";
       }
     }

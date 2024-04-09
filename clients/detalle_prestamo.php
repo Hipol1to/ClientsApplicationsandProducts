@@ -4,10 +4,10 @@ require('../includes/config.php');
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
   header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
   exit();  
-} elseif (!isset($_SESSION['ClienteId'])) {
+} elseif (!isset($_SESSION['ClienteId']) && $user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
   exit();
-} else {
+} elseif (!$user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
   exit();
 }
@@ -146,12 +146,14 @@ if(isset($_POST['actualizarStatus'])) {
                 </a>
                  </li>
 
+                 <!--
                  <li class="nav-item">
                 <a href="inversiones.php" class="nav-link">
                   <i class="fas fa-chart-line nav-icon"></i>
                   <p>Inversiones</p>
                 </a>
                  </li>
+                 -->
                  
                  <li class="nav-item">
                 <a href="pagos.php" class="nav-link">
@@ -400,13 +402,11 @@ if(isset($_POST['actualizarStatus'])) {
             <!-- Detalle Perfil Content Here -->
             <div class="form-group">
                 <label for="estadoPrestamo">Status del Préstamo:</label>
-                <select class="form-control" id="estadoPrestamo">
-                    <option value="Aprobado" <?php if($prestamo['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
-                    <option value="En proceso" <?php if($prestamo['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
-                    <option value="Rechazado" <?php if($prestamo['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
-                </select>
+                <input class="form-control" id="estadoPrestamo" value = "<?php if ($prestamo['Status'] == 'Aprobado')
+                      echo 'Aprobado';
+                    if($prestamo['Status'] == 'En proceso') echo 'En proceso'; 
+                    if($prestamo['Status'] == 'Rechazado') echo 'Rechazado'?>" readonly>
             </div>
-            <button type="button" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
             <br><br>
             <?php
             // Check if the ID parameter is set in the URL
@@ -857,11 +857,7 @@ $(document).ready(function() {
 
 <!-- Add your JavaScript code for handling tab navigation and fetching data from the database -->
 
-<script>
-    $(document).ready(function() {
-        // JavaScript code for handling tab navigation and fetching data from the database
-    });
-</script>
+
 
   <!-- /.content-wrapper -->
   <footer class="main-footer">
@@ -878,7 +874,11 @@ $(document).ready(function() {
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
+<script>
+    $(document).ready(function() {
+        // JavaScript code for handling tab navigation and fetching data from the database
+    });
+</script>
 <!-- jQuery -->
 <script src="./plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
