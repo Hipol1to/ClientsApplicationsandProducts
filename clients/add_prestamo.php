@@ -34,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $cuotasTotales = ($plazo * $cantPagosPorMes);
     $diasDePagoDelMes = "";
     for ($i=1; $i <= $cantPagosPorMes ; $i++) {
-      $diasDePagoDelMes .= $_POST['diasDePagoDelMes_'+i];
+      $diasDePagoDelMes .= $_POST['diasDePagoDelMes_'.$i];
       if ($cantPagosPorMes >1) {
       $diasDePagoDelMes .= "_";
       }
@@ -45,15 +45,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     
     //$pagoId = $_POST['pagoId'];
-    $fechaPagoMensual = $_POST['fechaPagoMensual'];
+    //$fechaPagoMensual = $_POST['fechaPagoMensual'];
     
-    $diasDePagoDelMes = $_POST['diasDePagoDelMes'];
     
     
 
     // Prepare an insert statement
-    $sql = "INSERT INTO prestamos (IdCliente, Motivo, MontoSolicitado, Remitente, Beneficiario, Status, , FechaPagoMensual, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes)
-            VALUES (:idCliente, :motivo, :montoSolicitado, :remitente, :beneficiario, :status, :fechaPagoMensual, :fechaFinalPrestamo, :cuotasTotales, :diasDePagoDelMes, :cantPagosPorMes)";
+    $sql = "INSERT INTO prestamos (IdCliente, Motivo, MontoSolicitado, Remitente, Beneficiario, Status, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes)
+            VALUES (:idCliente, :motivo, :montoSolicitado, :remitente, :beneficiario, :status, :fechaFinalPrestamo, :cuotasTotales, :diasDePagoDelMes, :cantPagosPorMes)";
     
     if ($stmt = $db->prepare($sql)) {
         // Bind variables to the prepared statement as parameters
@@ -63,7 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":remitente", $remitente);
         $stmt->bindParam(":beneficiario", $beneficiario);
         $stmt->bindParam(":status", $status);
-        $stmt->bindParam(":fechaPagoMensual", $fechaPagoMensual);
         $stmt->bindParam(":fechaFinalPrestamo", $fechaFinalPrestamo);
         $stmt->bindParam(":cuotasTotales", $cuotasTotales);
         $stmt->bindParam(":diasDePagoDelMes", $diasDePagoDelMes);

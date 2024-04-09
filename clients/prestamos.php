@@ -168,7 +168,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
     
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Agregar Prestamo</h4>
+        <h4 class="modal-title">Agregar Préstamo</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       
@@ -197,10 +197,11 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
                 </div>
                 <div class="form-group">
     <label for="cantPagosPorMes">Cantidad cuotas mensuales:</label>
-    <input type="number" class="form-control" id="cantPagosPorMes" name="cantPagosPorMes" required>
+    <input type="number" class="form-control" id="cantPagosPorMes" name="cantPagosPorMes" min="1" max="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="1" required>
+
 </div>
 <div class="form-group">
-  <label for="cantPagosPorMes">Monto Cuotas:</label>
+  <label id="labelMontoCuotas" for="cantPagosPorMes">Monto Cuotas:</label>
 <div id="cuotasDiasDePagoContainer"></div>
 </div>
             </div>
@@ -627,12 +628,47 @@ $.ajax({
         labelCuota.textContent="Monto cuota #" +(i+1);
         labelCuota.style.fontWeight = 400;
 
-        var inputCuota = document.createElement("input");
+        let inputCuota = document.createElement("input");
         inputCuota.className = "form-control";
         inputCuota.name = "cuotasNo_" + (i+1);
         inputCuota.id = "cuotasNo_" + (i+1);
+        inputCuota.required = true;
         console.log(i);
 
+         inputCuota.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(inputElement.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            inputCuota.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = inputCuota.selectionStart;
+
+              // Get the input value
+              let oldInputValue = inputCuota.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              inputCuota.value = formattedValue;
+
+              // Restore the cursor position
+              inputCuota.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+});
+        
         var select = document.createElement("select");
         select.className = "form-control";
         select.name = "diasDePagoDelMes_" + (i+1); // Append index to name
@@ -730,6 +766,45 @@ document.getElementById("beneficiarioInput").addEventListener("input", function(
     
 });
 
+function validateSumOfQuotes() {
+  
+  // Evaluate the XPath expression
+var xpathResult = document.evaluate(
+    "//input[contains(@id,'cuotasNo_')]",
+    document,
+    null,
+    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+    null
+);
+
+// Initialize variables to store sum and count
+var sum = 0;
+var count = 0;
+
+// Iterate over matching elements
+for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
+    var inputElement = xpathResult.snapshotItem(i);
+    // Extract value and convert to a number
+    var value = parseFloat(inputElement.value);
+    // Add to sum
+    sum += value;
+    count++;
+}
+
+// Compare the sum with the value of another input element
+var otherInputElementValue = parseFloat(document.getElementById('montoSolicitado').value);
+if (sum === otherInputElementValue) {
+    console.log("The sum of values from input elements matches the value of the other input element.");
+    return true;
+} else {
+    console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
+    const menssage = "El monto de las cuotas no es igual al monto solicitado";
+    const existingMenssage = document.querySelector('.error-message');
+    if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
+    return false;
+}
+
+}
 
 function isFormValid() {
     // Check for elements with 'is-invalid' class or disabled buttons
@@ -748,6 +823,11 @@ function isFormValid() {
     if (numCuotasMensuales <= 0) {
         console.log("Invalid number of cuotas mensuales");
         return false;
+    } else {
+            if (!validateSumOfQuotes()) {
+                return false;
+            }
+            
     }
 
     // Check for duplicate values in 'diasDePagoDelMes' select elements

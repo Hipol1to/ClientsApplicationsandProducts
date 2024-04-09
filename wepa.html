@@ -12,10 +12,16 @@
 
 <script>
 // Get the input element
-var inputElement = document.getElementById('textInput');
+var inputElement = document.getElementById('montoSolicitado');
 
 // Attach an event listener to the input element
 inputElement.addEventListener('input', function(event) {
+    if (/[^0-9.]/.test(inputElement.value)) {
+        // If it contains non-numeric characters, handle the validation here
+        inputElement.value = "";
+        // For example, you can show an error message or take appropriate action
+    } else {
+    
     // Save the cursor position
     var cursorPosition = inputElement.selectionStart;
 
@@ -40,6 +46,7 @@ inputElement.addEventListener('input', function(event) {
 
         // Restore the cursor position
         inputElement.setSelectionRange(cursorPosition, cursorPosition);
+    }
     }
 });
 </script>
