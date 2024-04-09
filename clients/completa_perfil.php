@@ -4,10 +4,10 @@ require('../includes/config.php');
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId']) && !$_SESSION['isProffileInReview']) {
   header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
   exit();  
-} elseif (isset($_SESSION['isProffileInReview']) && $user->is_logged_in()) {
+} elseif ($_SESSION['isProffileInReview'] && $user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
   exit();
-} else {
+} elseif (!$user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
   exit();
 }
@@ -145,11 +145,11 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
                     <div class="col-sm-6">
                       <div class="form-group">
                         <label for="subir_foto_cedula_frontal">Foto frontal de Cédula:</label>
-                        <input type="file" class="form-control-file" id="subir_foto_cedula_frontal" name="subir_foto_cedula_frontal">
+                        <input type="file" class="form-control-file" id="subir_foto_cedula_frontal" name="subir_foto_cedula_frontal" required>
                       </div>
                       <div class="form-group">
                         <label for="subir_foto_cedula_posterior">Foto posterior de Cédula:</label>
-                        <input type="file" class="form-control-file" id="subir_foto_cedula_posterior" name="subir_foto_cedula_posterior">
+                        <input type="file" class="form-control-file" id="subir_foto_cedula_posterior" name="subir_foto_cedula_posterior" required>
                       </div>
                       <div class="form-group">
                         <label for="rnc">RNC:</label>

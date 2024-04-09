@@ -205,17 +205,12 @@ if(isset($_POST['actualizarStatus'])) {
     <div class="row">
         <!-- Group 1 -->
         <div class="col-sm-8">
-            <div class="form-group">
-                <label for="clientUser">Usuario cliente:</label>
-                <input type="text" class="form-control" id="clientUser" name="clientUser">
-                <div id="clientUserDropdown" class="dropdown-content"></div>
-            </div>
-            <div class="form-group">
-                <label for="addCuentaRemitente">Cuenta Remitente:</label>
+             <div class="form-group">
+                <label for="addCuentaRemitente">Numero de cuenta:</label>
                 <input type="text" class="form-control" id="addCuentaRemitente" name="addCuentaRemitente">
             </div>
             <div class="form-group">
-                <label for="editTipoCuentaRemitente">Tipo Cuenta Remitente:</label>
+                <label for="editTipoCuentaRemitente">Tipo Cuenta:</label>
                 <select class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente" required>
                   <option value="" selected>--Tipo de Cuenta--</option>
                     <option value="Cuenta de ahorros">Cuenta de ahorros</option>
@@ -223,9 +218,9 @@ if(isset($_POST['actualizarStatus'])) {
                 </select>
             </div>
             <div class="form-group">
-                <label for="addEntidadBancariaRemitente">Entidad Bancaria Remitente:</label>
+                <label for="addEntidadBancariaRemitente">Entidad Bancaria:</label>
                 <select class="form-control" id="addEntidadBancariaRemitente" name="addEntidadBancariaRemitente">
-                <option value="Banreservas" selected>--Entidad Bancaria Remitente--</option>
+                <option value="Banreservas" selected>--Entidad Bancaria--</option>
                 <option value="Banreservas">Banreservas</option>
     <option value="Banco Popular Dominicano">Banco Popular Dominicano</option>
     <option value="Banco BHD">Banco BHD</option>
@@ -276,89 +271,12 @@ if(isset($_POST['actualizarStatus'])) {
 </select>
 
             </div>
-            <div class="form-group">
-                <label for="addCuentaDestinatario">Cuenta Destinatario:</label>
-                <input type="text" class="form-control" id="addCuentaDestinatario" name="addCuentaDestinatario">
-            </div>
-            <div class="form-group">
-                <label for="addTipoCuentaDestinatario">Tipo Cuenta Destinatario:</label>
-                <select class="form-control" id="addTipoCuentaDestinatario" name="addTipoCuentaDestinatario" required>
-                  <option value="" selected>--Tipo de Cuenta--</option>
-                    <option value="Cuenta de ahorros">Cuenta de ahorros</option>
-                    <option value="Cuenta corriente">Cuenta corriente</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="addEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
-                <select class="form-control" id="addEntidadBancariaDestinatario" name="addEntidadBancariaDestinatario">
-                <option value="Banreservas" selected>--Entidad Bancaria Destinatario--</option>
-                <option value="Banreservas">Banreservas</option>
-    <option value="Banco Popular Dominicano">Banco Popular Dominicano</option>
-    <option value="Banco BHD">Banco BHD</option>
-    <option value="Asociación Popular de Ahorros y Préstamos">Asociación Popular de Ahorros y Préstamos</option>
-    <option value="Scotiabank">Scotiabank</option>
-    <option value="Banco Santa Cruz">Banco Santa Cruz</option>
-    <option value="Asociación Cibao de Ahorros y Préstamos">Asociación Cibao de Ahorros y Préstamos</option>
-    <option value="Banco Promerica">Banco Promerica</option>
-    <option value="Banesco">Banesco</option>
-    <option value="Banco Caribe">Banco Caribe</option>
-    <option value="Banco Agrícola">Banco Agrícola</option>
-    <option value="Asociación La Nacional de Ahorros y Préstamos">Asociación La Nacional de Ahorros y Préstamos</option>
-    <option value="Citibank">Citibank</option>
-    <option value="Banco BDI">Banco BDI</option>
-    <option value="Banco Vimenca">Banco Vimenca</option>
-    <option value="Banco López de Haro">Banco López de Haro</option>
-    <option value="Bandex">Bandex</option>
-    <option value="Banco Ademi">Banco Ademi</option>
-    <option value="Banco Lafise">Banco Lafise</option>
-    <option value="Motor Crédit Banco de Ahorro y Crédito">Motor Crédit Banco de Ahorro y Crédito</option>
-    <option value="Alaver Asociación de Ahorros y Préstamos">Alaver Asociación de Ahorros y Préstamos</option>
-    <option value="Banfondesa">Banfondesa</option>
-    <option value="Banco Adopem">Banco Adopem</option>
-    <option value="Asociación Duarte">Asociación Duarte</option>
-    <option value="JMMB Bank">JMMB Bank</option>
-    <option value="Asociación Mocana">Asociación Mocana</option>
-    <option value="ABONAP">ABONAP</option>
-    <option value="Banco Unión">Banco Unión</option>
-    <option value="Banco BACC">Banco BACC</option>
-    <option value="Asociación Romana">Asociación Romana</option>
-    <option value="Asociación Peravia">Asociación Peravia</option>
-    <option value="Banco Confisa">Banco Confisa</option>
-    <option value="Leasing Confisa">Leasing Confisa</option>
-    <option value="Qik Banco Digital">Qik Banco Digital</option>
-    <option value="Banco Fihogar">Banco Fihogar</option>
-    <option value="Asociación Maguana de Ahorros y Préstamos">Asociación Maguana de Ahorros y Préstamos</option>
-    <option value="Banco Atlántico">Banco Atlántico</option>
-    <option value="Bancotui">Bancotui</option>
-    <option value="Banco Activo">Banco Activo</option>
-    <option value="Banco Gruficorp">Banco Gruficorp</option>
-    <option value="Corporación de Crédito Nordestana">Corporación de Crédito Nordestana</option>
-    <option value="Banco Óptima de Ahorro y Crédito">Banco Óptima de Ahorro y Crédito</option>
-    <option value="Banco Cofaci">Banco Cofaci</option>
-    <option value="Bonanza Banco">Bonanza Banco</option>
-    <option value="Corporación de Crédito Monumental">Corporación de Crédito Monumental</option>
-    <option value="Banco Empire">Banco Empire</option>
-    <option value="Corporación de Crédito Oficorp">Corporación de Crédito Oficorp</option>
-</select>
-            </div>
         </div>
         <!-- Group 2 -->
         <div class="col-sm-4">
             <div class="form-group">
-              <div class="form-group">
-                <label for="addMotivo">Motivo:</label>
-                <input type="text" class="form-control" id="addMotivo" name="addMotivo">
-            </div>
                 <label for="addMonto">Monto:</label>
                 <input type="text" class="form-control" id="addMonto" name="addMonto">
-            </div>
-            <div class="form-group">
-                <label for="addTipo">Tipo:</label>
-                <select class="form-control" id="addTipo" name="addTipo">
-                  <option value="">-Tipo de pago-</option>  
-                  <option value="Transferencia bancaria">Transferencia bancaria</option>
-                  <option value="Efectivo">Efectivo</option>
-                </select>
             </div>
             <div class="form-group">
                 <input type="text" class="form-control" id="addPrestamoId" name="addPrestamoId" readonly hidden>
@@ -370,6 +288,10 @@ if(isset($_POST['actualizarStatus'])) {
                 <label for="addFechaDePago">Fecha de Pago:</label>
                 <input type="text" class="form-control datepicker" id="addFechaDePago" name="addFechaDePago">
             </div>
+            <div class="form-group">
+                        <label for="fotoComprobanteDePago">Foto comprobante de pago:</label>
+                        <input type="file" class="form-control-file" id="fotoComprobanteDePago" name="fotoComprobanteDePago" required>
+                      </div>
         </div>
     </div>
     <div class="modal-footer">
@@ -377,9 +299,7 @@ if(isset($_POST['actualizarStatus'])) {
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
 </form>
-
             </div>
-            
         </div>
     </div>
 </div>
@@ -996,7 +916,46 @@ document.getElementById("clientUser").addEventListener("input", function() {
     });
   });
 </script>
+<script>
+// Get the input element
+var inputElement = document.getElementById('addMonto');
 
+// Attach an event listener to the input element
+inputElement.addEventListener('input', function(event) {
+    if (/[^0-9.]/.test(inputElement.value)) {
+        // If it contains non-numeric characters, handle the validation here
+        inputElement.value = "";
+        // For example, you can show an error message or take appropriate action
+    } else {
+    
+    // Save the cursor position
+    var cursorPosition = inputElement.selectionStart;
+
+    // Get the input value
+    let oldInputValue = inputElement.value;
+
+    // Check if the input value is a valid number
+    if (!isNaN(parseFloat(oldInputValue))) {
+        // Currency formatting
+        let currency = parseFloat(oldInputValue);
+        let formattedValue = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(currency);
+
+        // Remove the dollar sign and commas from the formatted currency string
+        formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+        console.log(formattedValue);
+
+        // Update the value of the input element with the formatted value
+        inputElement.value = formattedValue;
+
+        // Restore the cursor position
+        inputElement.setSelectionRange(cursorPosition, cursorPosition);
+    }
+    }
+});
+</script>
 
 </body>
 </html>

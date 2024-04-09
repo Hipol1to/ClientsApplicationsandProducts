@@ -66,22 +66,31 @@ class User
     if (password_verify($password, $row['password'])) {
 
         $_SESSION['loggedin'] = true;
+      error_log("user is loggedin ".$_SESSION['loggedin']);
+
         $_SESSION['username'] = $row['username'];
+        error_log("log for user: " . $_SESSION['username']);
+
         $_SESSION['userId'] = $row['Id'];
+        error_log("user has id: " . $_SESSION['userId']);
+
         $_SESSION['fullname'] = $row['fullname'];
+        error_log("User has fullname: " . $_SESSION['fullname']);
+
 		$_SESSION['isProffileValidated'] = $row['isProffileValidated'] == 1 ? true : false;
-		error_log("validado? " . $_SESSION['isProffileValidated']);
+		error_log("is client proffile validated? " . $_SESSION['isProffileValidated']);
+
     $_SESSION['isProffileInReview'] = $row['isProffileValidated'] == 2 ? true : false;
+    error_log("is client proffile on review? " . $_SESSION['isProffileInReview']);
+
 		$_SESSION['isUserActive'] = $row['isUserActive'] == 1 ? true : false;
+    error_log("Is user active?" . $_SESSION['isUserActive']);
+
 		$_SESSION['ClienteId'] = isset($row['ClienteId']) ? $row['ClienteId'] : null;
-		error_log($_SESSION['loggedin']);
-		error_log($_SESSION['username']);
-		error_log($_SESSION['userId']);
-		error_log($_SESSION['fullname']);
-		error_log($_SESSION['isProffileValidated']);
-		error_log($_SESSION['isUserActive']);
+		
+		error_log("is user active? " . $_SESSION['isUserActive']);
     if (isset($_SESSION['ClienteId'])) {
-      error_log($_SESSION['ClienteId']);
+      error_log("client identifier " . $_SESSION['ClienteId']);
     } else {
       error_log("perfil de cliente no creado");
     }

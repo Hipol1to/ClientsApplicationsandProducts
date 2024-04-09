@@ -116,7 +116,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
               <div class="card-body">
                 <h3 class="card-title">Gracias por enviar tu información</h3>
                 <br>
-                <p>Estaremos revisando tu información, en cuanto sea validada podrás comenzar a realizar y consultar préstamos.</p>
+                <p>Estaremos revisando tu información, en cuanto sea validada podrás comenzar a solicitar y consultar préstamos.</p>
               </div>
             </div>
           </div>

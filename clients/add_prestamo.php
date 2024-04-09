@@ -12,7 +12,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
   header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
   exit();
 }
-error_log("viejo");
+error_log("dentro de agregar eiprestamo aichivo");
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data

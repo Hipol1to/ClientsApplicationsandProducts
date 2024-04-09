@@ -1,18 +1,23 @@
 <?php
 require('../includes/config.php');
 
+error_log("validations to the process");
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId']) && !$_SESSION['isProffileInReview']) {
+  error_log("[PROCESS]you are an admin");
   header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
   exit();  
-} elseif (isset($_SESSION['isProffileInReview']) && $user->is_logged_in()) {
+} elseif ($_SESSION['isProffileInReview'] && $user->is_logged_in()) {
+  error_log("[PROCESS]you already sent your proffile");
   header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
   exit();
-} else {
+} elseif (!$user->is_logged_in()) {
+  error_log("[PROCESS]you are not logged in");
   header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
   exit();
 }
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  error_log("welcome to the process");
     // Check if all required fields are filled
     if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['cedula']) && isset($_POST['rnc'])) {
         // Retrieve form data
