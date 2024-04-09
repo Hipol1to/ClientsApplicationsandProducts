@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 27, 2024 at 03:32 AM
+-- Generation Time: Apr 09, 2024 at 05:25 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
 --
 
 INSERT INTO `clientes` (`Id`, `IdUsuario`, `Nombre`, `Apellido`, `Direccion`, `Cedula`, `CedulaPath`, `RNC`, `MontoSolicitado`, `Interes`, `MontoDeuda`, `Reenganchado`, `PerfilValidado`, `Puntos`, `FechaIngreso`, `FechaSalida`, `MesesEnEmpresa`, `TotalPrestado`, `FechaCreacion`, `FechaModificacion`) VALUES
-(7, 2, 'Jane', 'Smithh', '456 Elm St', '0987654321', NULL, 'XYZ456', '7000.00', '8.00', '2000.00', 1, 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:25:41', '2024-03-26 02:32:43'),
+(7, 4, 'Jane', 'Smithh', '456 Elm St', '0987654321', NULL, 'XYZ456', '7000.00', '8.00', '2000.00', 1, 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:25:41', '2024-03-27 04:12:05'),
 (5, NULL, 'yo mimo', 'po quien ma', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '40229604604', NULL, '430262617', '23455.00', '10.00', '435353.00', 0, 0, 13, '2023-01-01', NULL, 43, '355532.00', '2024-02-16 00:18:13', '2024-02-16 00:18:13'),
 (4, NULL, 'Hipolito', 'Peña', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '40229604604', NULL, '130424555', '23455.00', '10.00', '435353.00', 0, 0, 13, '2023-01-01', '2023-01-01', 23, '44555.00', '2024-02-13 00:56:28', '2024-02-13 00:56:28'),
 (10, NULL, 'Jane', 'Smith', '456 Elm St', '0987654321', NULL, 'XYZ456', '7000.00', '8.00', '2000.00', 1, 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:28:20', '2024-03-26 02:26:39'),
@@ -434,14 +434,14 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `FechaPagoMensual` timestamp NULL DEFAULT NULL,
   `FechaFinalPrestamo` timestamp NULL DEFAULT NULL,
   `CuotasTotales` int(3) DEFAULT NULL,
-  `DiasDePagoDelMes` int(11) DEFAULT NULL,
+  `DiasDePagoDelMes` varchar(255) DEFAULT NULL,
   `CantPagosPorMes` varchar(255) DEFAULT NULL,
   `FechaDeAprobacion` timestamp NULL DEFAULT NULL,
   `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
-) ENGINE=MyISAM AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prestamos`
@@ -454,9 +454,10 @@ INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoA
 (7, 1, 'Education Loan', NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
 (8, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 6, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
 (27, 4, 'Short-term Loan', NULL, NULL, NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En proceso', 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:20:00', '2024-03-19 03:41:59'),
-(28, 7, 'Préstamo para compra de automóvil', '15000.00', '15000.00', '0.00', '8.50', '0.00', 'Banco XYZ', 'John Doe', 'Aprobado', NULL, '2024-03-16 04:00:00', '2024-03-26 04:00:00', 12, 30, 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:31'),
-(29, 7, 'Préstamo para remodelación de casa', '25000.00', '25000.00', '0.00', '7.00', '0.00', 'Banco XYZ', 'Jane Doe', 'Aprobado', NULL, '2024-03-26 04:00:00', '2024-03-26 04:00:00', 24, 15, 'Quincenal', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:36'),
-(30, 7, 'Préstamo para gastos médicos', '10000.00', '10000.00', '0.00', '9.00', '0.00', 'Banco XYZ', 'Alice Smith', 'Aprobado', NULL, '2024-03-14 03:59:00', '2024-03-26 04:00:00', 6, 5, 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 20:47:28');
+(28, 7, 'Préstamo para compra de automóvil', '15000.00', '15000.00', '0.00', '8.50', '0.00', 'Banco XYZ', 'John Doe', 'Aprobado', NULL, '2024-03-16 04:00:00', '2024-03-26 04:00:00', 12, '30', 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:31'),
+(29, 7, 'Préstamo para remodelación de casa', '25000.00', '25000.00', '0.00', '7.00', '0.00', 'Banco XYZ', 'Jane Doe', 'Aprobado', NULL, '2024-03-26 04:00:00', '2024-03-26 04:00:00', 24, '15', 'Quincenal', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:36'),
+(30, 7, 'Préstamo para gastos médicos', '10000.00', '10000.00', '0.00', '9.00', '0.00', 'Banco XYZ', 'Alice Smith', 'Aprobado', NULL, '2024-03-14 03:59:00', '2024-03-26 04:00:00', 6, '5', 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 20:47:28'),
+(31, 38, 'gge4g4eg', '1202.10', NULL, NULL, NULL, NULL, 'Inversiones Everest', 'FalinApart Tan tan', 'En proceso', NULL, NULL, '2024-11-09 04:00:00', 14, '1_2_', '2', NULL, '2024-04-09 17:24:38', '2024-04-09 17:24:38');
 
 -- --------------------------------------------------------
 
@@ -486,9 +487,9 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
 (1, NULL, 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-26 01:54:04'),
-(2, 7, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-26 02:47:10'),
+(2, 0, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-27 04:11:55'),
 (3, NULL, 'markDitamai', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Administrador', 'cuentascompaltidas@gmail.com', 1, '2024-02-10 17:16:56', '2024-03-26 01:54:11'),
-(4, NULL, 'compainero', '$2y$10$Ul59.UV1GM05y2V2XKlwzuCpnsGQeHAShghQWLqDhnSCoi0SiBeZ6', 'Administrador', 'thelegendstutorials@hotmail.com', 1, '2024-03-23 19:16:49', '2024-03-26 01:54:14'),
+(4, 7, 'compainero', '$2y$10$Ul59.UV1GM05y2V2XKlwzuCpnsGQeHAShghQWLqDhnSCoi0SiBeZ6', 'Administrador', 'thelegendstutorials@hotmail.com', 1, '2024-03-23 19:16:49', '2024-03-27 04:11:58'),
 (6, 38, 'liluser', '$2y$10$hFX.BA3sjkISNzlcShOQuuivSFSVwFbVYXZUOVDnYuxLvAVxhxGrW', 'Cliente', 'thelegendstutorials@outlook.com', 1, '2024-03-26 02:59:52', '2024-03-27 03:27:18');
 COMMIT;
 
