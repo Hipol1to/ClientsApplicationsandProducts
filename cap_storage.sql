@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 09, 2024 at 05:25 PM
+-- Generation Time: Apr 10, 2024 at 03:46 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clientes`
@@ -87,7 +87,8 @@ INSERT INTO `clientes` (`Id`, `IdUsuario`, `Nombre`, `Apellido`, `Direccion`, `C
 (4, NULL, 'Hipolito', 'Peña', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '40229604604', NULL, '130424555', '23455.00', '10.00', '435353.00', 0, 0, 13, '2023-01-01', '2023-01-01', 23, '44555.00', '2024-02-13 00:56:28', '2024-02-13 00:56:28'),
 (10, NULL, 'Jane', 'Smith', '456 Elm St', '0987654321', NULL, 'XYZ456', '7000.00', '8.00', '2000.00', 1, 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:28:20', '2024-03-26 02:26:39'),
 (11, 3, 'Alice', 'Johnson', '789 Oak St', '5432167890', NULL, 'DEF789', '10000.00', '12.00', '500.00', 0, 0, 75, '2023-03-20', '2024-01-15', 10, '10500.00', '2024-02-16 00:28:20', '2024-02-16 00:28:20'),
-(38, 6, 'FalinApart', 'Tan tan', 'tenchon, bitwin menchon for nao', '0015553333456', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e652f_front_scat (1).png_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e6532_back_Untitled Workspace.jpg', '644326222', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2024-03-27 03:27:18', '2024-03-27 03:32:22');
+(38, 6, 'FalinApart', 'Tan tan', 'tenchon, bitwin menchon for nao', '0015553333456', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e652f_front_scat (1).png_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e6532_back_Untitled Workspace.jpg', '644326222', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2024-03-27 03:27:18', '2024-03-27 03:32:22'),
+(40, 1, 'Hipolito', 'Perez Peña', 'Calle Pedro Barronte', '40229604604', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351096_front_ENTREGABLE 4- Scampi CMMI.docx_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351098_back_Curriculum Maria Elena Peña Reinoso.pdf', '0', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, '2024-04-09 19:20:51', '2024-04-09 19:20:51');
 
 -- --------------------------------------------------------
 
@@ -486,7 +487,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 --
 
 INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, NULL, 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-26 01:54:04'),
+(1, 40, 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 1, '2024-01-18 03:47:23', '2024-04-09 19:20:51'),
 (2, 0, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-27 04:11:55'),
 (3, NULL, 'markDitamai', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Administrador', 'cuentascompaltidas@gmail.com', 1, '2024-02-10 17:16:56', '2024-03-26 01:54:11'),
 (4, 7, 'compainero', '$2y$10$Ul59.UV1GM05y2V2XKlwzuCpnsGQeHAShghQWLqDhnSCoi0SiBeZ6', 'Administrador', 'thelegendstutorials@hotmail.com', 1, '2024-03-23 19:16:49', '2024-03-27 04:11:58'),
