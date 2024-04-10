@@ -15,20 +15,18 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $cuentaRemitente = $_POST['addCuentaRemitente'];
-    $tipoCuentaRemitente = $_POST['editTipoCuentaRemitente'];
+    $tipoCuentaRemitente = $_POST['addCuentaRemitente'];
     $entidadBancariaRemitente = $_POST['addEntidadBancariaRemitente'];
     $cuentaDestinatario = $_POST['addCuentaDestinatario'];
     $tipoCuentaDestinatario = $_POST['addTipoCuentaDestinatario'];
     $entidadBancariaDestinatario = $_POST['addEntidadBancariaDestinatario'];
     $monto = $_POST['addMonto'];
-    $motivo = $_POST['addMotivo'];
-    $tipo = $_POST['addTipo'];
+    $tipo = "Transferencia bancaria";
     $prestamoId = isset($_POST['addPrestamoId']) ? $_POST['addPrestamoId'] : null;
 
     $inversionId = isset($_POST['addInversionId']) ? $_POST['addInversionId'] : null;
     $participacionId = isset($_POST['addParticipacionId']) ? $_POST['addParticipacionId'] : null;
     $fechaDePago = $_POST['addFechaDePago'];
-    $cliente = null;
     $pago = null;
   error_log("Payment InvestmentId" . $inversionId);
   error_log("stake identification" . $participacionId);
@@ -76,9 +74,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
               :tipo, :prestamoId, :voucherPath, :fechaDePago)";
+              $motivo = "Pago de préstamo del usuario ". $_SESSION['fullname'];
       }
       error_log("query assigned");
-      error_log($participacionId);
+      error_log($sql);
+      error_log("^^Query declared^^\n");
+      //error_log($participacionId);
       if ($stmt = $db->prepare($sql)) {
           // Bind variables to the prepared statement as parameters
           $stmt->bindParam(":idCliente", $_SESSION['ClienteId']);
@@ -94,37 +95,36 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           if($inversionId != null) $stmt->bindParam(":inversionId", $inversionId);
           if ($participacionId != null) $stmt->bindParam(":participacionId", $participacionId);
           if ($prestamoId != null) $stmt->bindParam(":prestamoId", $prestamoId);
+          $stmt->bindParam(":voucherPath", $voucher_path);
           $stmt->bindParam(":fechaDePago", $fechaDePago);
-          error_log($sql);
+
+          $stmt->bindParam(":fechaDePago", $fechaDePago);
+          error_log("Client ID: ". $_SESSION['ClienteId']);
+          error_log("Cuenta remitente: ". $cuentaRemitente);
+          error_log("Tipo cuenta remitente: ". $tipoCuentaRemitente);
+          error_log("Entidad bancaria remitente: ". $entidadBancariaRemitente);
+          error_log("Cuenta destinatario: ". $cuentaDestinatario);
+          error_log("Tipo cuenta destinatario: ". $tipoCuentaDestinatario);
+          error_log("Entidad bancaria destinatario: ". $entidadBancariaDestinatario);
+          error_log("Monto: ". $monto);
+          error_log("Motivo: ". $motivo);
+          error_log("Tipo: ". $tipo);
+          error_log("PrestamoId: ". $prestamoId);
+          error_log("Ruta de Voucher: ". $voucher_path);
+          error_log("Fecha de pago: ". $fechaDePago);
           // Attempt to execute the prepared statement
           if ($stmt->execute()) {
               // Redirect back to the page with success message
               $pago = $db->lastInsertId();
               error_log("{$pago}e");
+              header("location: detalle_prestamo.php?id=".$prestamoId);
+              exit();
           } else {
               // Redirect back to the page with error message
           error_log("error doing query");
           }
       }
-    
-
-error_log("{$usuarioCliente}");
-error_log("{$cuentaRemitente}");
-error_log("{$tipoCuentaRemitente}");
-error_log("$entidadBancariaRemitente}");
-error_log("{$cuentaDestinatario}");
-error_log("{$tipoCuentaDestinatario}");
-error_log("{$entidadBancariaDestinatario}");
-error_log("{$monto}");
-error_log("{$motivo}");
-error_log("{$tipo}");
-error_log("{$prestamoId}");
-error_log("{$inversionId}");
-error_log("{$participacionId}");
-error_log("{$fechaDePago}");
-error_log($cliente['IdCliente']);
-error_log("{$pago}");
-
+/*
     //DETERMINE IF THE PAGO IS FOR INVERSION/PARTICIPACION OR PRESTAMO
     if ($prestamoId != null) {
       //prestamo scenario
@@ -217,7 +217,7 @@ error_log("{$pago}");
     error_log($inversionId);
     error_log($participacionId);
   }
-    
+    */
     
 }
 ?>
