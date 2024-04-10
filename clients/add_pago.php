@@ -14,7 +14,6 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 // Check if form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
-    $usuarioCliente = $_POST['clientUser'];
     $cuentaRemitente = $_POST['addCuentaRemitente'];
     $tipoCuentaRemitente = $_POST['editTipoCuentaRemitente'];
     $entidadBancariaRemitente = $_POST['addEntidadBancariaRemitente'];
@@ -31,65 +30,58 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $fechaDePago = $_POST['addFechaDePago'];
     $cliente = null;
     $pago = null;
-  error_log($inversionId);
-  error_log($participacionId);
+  error_log("Payment InvestmentId" . $inversionId);
+  error_log("stake identification" . $participacionId);
 
-    //QUERY to extract ClientId
-     // Prepare an insert statement
-    $sql = "SELECT clientes.Id as IdCliente
-    FROM clientes
-    JOIN usuarios
-    WHERE clientes.IdUsuario = usuarios.id && usuarios.Usuario = :usuarioCliente";
-    
-    if ($stmt = $db->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bindParam(":usuarioCliente", $usuarioCliente);
+  //voucher handling
+  // Check if both front and back photos of the ID card are uploaded
+  if (isset($_FILES['fotoComprobanteDePago']) && $_FILES['fotoComprobanteDePago']['error'] === UPLOAD_ERR_OK) {
+    // Define upload directory
+    $upload_directory = __DIR__ . "\\uploads\\";
 
-        // Attempt to execute the prepared statement
-        if ($stmt->execute()) {
-            $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
-            // Redirect back to the page with success message
-        } else {
-            // Redirect back to the page with error message
-            header("detalle_inversion.php?id=".$inversionId."&error=1");
-        }
-    }
+    // Generate unique file names for both photos
+    $voucher_file_name = uniqid() . '_front_' . $_FILES['fotoComprobanteDePago']['name'];
 
+    // Move uploaded files to the upload directory
+    move_uploaded_file($_FILES['subir_foto_cedula_frontal']['tmp_name'], $upload_directory . $voucher_file_name);
 
+    // Now you can save the file names or their paths to the database
+    // Construct the full paths to the uploaded files
+    $voucher_path = $upload_directory . $voucher_file_name;
+} else {
+    // Handle the case where the file uploads failed
+    $voucher_path = "Unable to resolve voucher path"; // Set an empty path for front photo
+}
 
     //Query to insert the pago
     // Prepare an insert statement
-    if ($cliente == null) {
-    error_log("cliente es null");
-  }else {
     if ($participacionId == null && $prestamoId == null) {
       $sql = "INSERT INTO pagos (IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, 
               CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, 
-              InversionId, FechaDePago)
+              InversionId, VoucherPath, FechaDePago)
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
-              :tipo, :inversionId, :fechaDePago)";
+              :tipo, :inversionId, :voucherPath, :fechaDePago)";
     } elseif($participacionId != null) {
       $sql = "INSERT INTO pagos (IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, 
               CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, 
-              InversionId, ParticipacionId, FechaDePago)
+              InversionId, ParticipacionId, VoucherPath, FechaDePago)
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
-              :tipo, :inversionId, :participacionId, :fechaDePago)";
+              :tipo, :inversionId, :participacionId, :voucherPath, :fechaDePago)";
       } elseif ($prestamoId != null) {
         $sql = "INSERT INTO pagos (IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, 
               CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, 
-              PrestamoId, FechaDePago)
+              PrestamoId, VoucherPath, FechaDePago)
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
-              :tipo, :prestamoId, :fechaDePago)";
+              :tipo, :prestamoId, :voucherPath, :fechaDePago)";
       }
-      error_log($sql);
-      error_log("wepa");
+      error_log("query assigned");
       error_log($participacionId);
       if ($stmt = $db->prepare($sql)) {
           // Bind variables to the prepared statement as parameters
-          $stmt->bindParam(":idCliente", $cliente['IdCliente']);
+          $stmt->bindParam(":idCliente", $_SESSION['ClienteId']);
           $stmt->bindParam(":cuentaRemitente", $cuentaRemitente);
           $stmt->bindParam(":tipoCuentaRemitente", $tipoCuentaRemitente);
           $stmt->bindParam(":entidadBancariaRemitente", $entidadBancariaRemitente);
@@ -103,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           if ($participacionId != null) $stmt->bindParam(":participacionId", $participacionId);
           if ($prestamoId != null) $stmt->bindParam(":prestamoId", $prestamoId);
           $stmt->bindParam(":fechaDePago", $fechaDePago);
-
+          error_log($sql);
           // Attempt to execute the prepared statement
           if ($stmt->execute()) {
               // Redirect back to the page with success message
@@ -114,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           error_log("error doing query");
           }
       }
-    }
+    
 
 error_log("{$usuarioCliente}");
 error_log("{$cuentaRemitente}");

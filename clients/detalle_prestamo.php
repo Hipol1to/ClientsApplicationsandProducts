@@ -273,7 +273,7 @@ if(isset($_POST['actualizarStatus'])) {
             </div>
         </div>
         <!-- Group 2 -->
-        <div class="col-sm-4">
+        <div class="col-sm-8">
             <div class="form-group">
                 <label for="addMonto">Monto:</label>
                 <input type="text" class="form-control" id="addMonto" name="addMonto">
