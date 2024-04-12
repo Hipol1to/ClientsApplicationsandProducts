@@ -122,7 +122,7 @@ if(isset($_POST['actualizarStatus'])) {
             </a>
 
                  <li class="nav-item">
-                <a href="prestamos.php" class="nav-link active">
+                <a href="prestamos.php" class="nav-link">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
@@ -144,7 +144,7 @@ if(isset($_POST['actualizarStatus'])) {
                 </a>
                  </li>
                  <li class="nav-item">
-                <a href="pagos.php" class="nav-link">
+                <a href="#" class="nav-link active">
                   <i class="fas fa-user-circle nav-icon"></i>
                   <p>Perfil</p>
                 </a>
@@ -196,7 +196,7 @@ if(isset($_POST['actualizarStatus'])) {
                                     <a class="nav-link active" id="detalle-tab" data-toggle="pill" href="#detalle" role="tab" aria-controls="detalle" aria-selected="true">Detalle Préstamo</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="pagos-tab" data-toggle="pill" href="#pagosTabForPrestamos" role="tab" aria-controls="pagosTabForPrestamos" aria-selected="false">Pagos</a>
+                                    <a class="nav-link" id="pagos-tab" data-toggle="pill" href="#pagosTabForPrestamos" role="tab" aria-controls="pagosTabForPrestamos" aria-selected="false">Estado de cuenta</a>
                                 </li>
                                 
                             </ul>
@@ -205,70 +205,74 @@ if(isset($_POST['actualizarStatus'])) {
     <div class="tab-content" id="custom-tabs-one-tabContent">
         <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
             <!-- Detalle Perfil Content Here -->
-            <div class="form-group">
-                <label for="estadoPrestamo">Status del Préstamo:</label>
-                <input class="form-control" id="estadoPrestamo" value = "En proceso" readonly>
-            </div>
-            <br><br>
+            <?php
+             $stmt = $db->prepare("SELECT c.Nombre AS Nombre, c.Apellido As Apellido, c.Direccion AS Direccion, c.Cedula AS Cedula, c.RNC AS RNC, c.MontoSolicitado AS MontoSolicitado, c.MontoDeuda AS MontoDeuda, c.Reenganchado AS Reenganchado, c.Puntos AS Puntos, c.FechaIngreso AS FechaIngreso, c.TotalPrestado AS TotalPrestado, u.Usuario, u.Email FROM clientes as c
+             JOIN usuarios as u
+             WHERE u.Id = :userId AND c.Id = :clientID");
+             $stmt->bindParam(':userId', $_SESSION['userId']);
+             $stmt->bindParam(':clientID', $_SESSION['ClienteId']);
+             $stmt->execute();
+             $result = $stmt->fetch(PDO::FETCH_ASSOC);
+             ?>
             <div class="modal-body">
               <form id="editForm">
                 <div class="row">
                   <div class="col-sm-4">
                     <div class="form-group">
-                      <label for="motivo">Motivo:</label>
-                      <input type="text" class="form-control" id="motivo" name="motivo" value="gge4g4eg" readonly>
+                      <label for="perfilUsuario">Usuario:</label>
+                      <input type="text" class="form-control" id="perfilUsuario" name="perfilUsuario" value="<?php echo $result['Usuario'];?>" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="montoSolicitado">Monto Solicitado:</label>
-                      <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" value="1202.10" readonly>
+                      <label for="perfilEmail">Correo Electrónico:</label>
+                      <input type="text" class="form-control" id="perfilEmail" name="perfilEmail" value="<?php echo $result['Email'];?>" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="montoAprobado">Monto Aprobado:</label>
-                      <input type="text" class="form-control" id="montoAprobado" name="montoAprobado" value="" readonly>
+                      <label for="perfilNombre">Nombre:</label>
+                      <input type="text" class="form-control" id="perfilNombre" name="perfilNombre" value="<?php echo $result['Nombre'];?>" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="montoPagado">Monto Pagado:</label>
-                      <input type="text" class="form-control" id="montoPagado" name="montoPagado" value="" readonly>
+                      <label for="perfilApellido">Apellido:</label>
+                      <input type="text" class="form-control" id="perfilApellido" name="perfilApellido" value="<?php echo $result['Apellido'];?>" readonly>
                     </div>
                   </div>
                   <div class="col-sm-4">
                   <div class="form-group">
-                    <label for="tasaDeInteres">Tasa de interés:</label>
-                    <input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" value="" readonly>
+                    <label for="perfilDireccion">Direccion:</label>
+                    <input type="text" class="form-control" id="perfilDireccion" name="perfilDireccion" value="<?php echo $result['Direccion'];?>" readonly>
                   </div>
                   <div class="form-group">
-                    <label for="montoRecargo">Monto Recargo:</label>
-                    <input type="text" class="form-control" id="montoRecargo" name="montoRecargo" value="" readonly>
+                    <label for="perfilCedula">Cedula:</label>
+                    <input type="text" class="form-control" id="perfilCedula" name="perfilCedula" value="<?php echo $result['Cedula'];?>" readonly>
                   </div>
                   <div class="form-group">
-                    <label for="solicitante">Solicitante:</label
-                  ><input type="text" class="form-control" id="solicitante" name="solicitante" value="" readonly>
-                </div
-                div class="form-group">
-                <label for="fechaSolicitud">Fecha de solicitud:</label>
-                <input type="text" class="form-control" id="fechaSolicitud" name="fechaSolicitud" value="2024-04-09 13:24:38" readonly>
+                    <label for="perfilRnc">RNC:</label>
+                    <input type="text" class="form-control" id="perfilRnc" name="perfilRnc" value="<?php if (!isset($result['RNC'])) echo 'No aplica'; else echo $result['RNC'];?>" readonly>
+                  </div>
+                <div class="form-group">
+                <label for="perfilMontoTotalSolicitado">Monto total solicitado:</label>
+                <input type="text" class="form-control" id="perfilMontoTotalSolicitado" name="perfilMontoTotalSolicitado" value="<?php if (!isset($result['MontoSolicitado'])) echo 'RD$0'; else echo 'RD$'.$result['MontoSolicitado'];?>" readonly>
               </div>
               <div class="form-group">
-                <label for="frecuenciaPago">Cant. min. pagos por mes:</label>
-                <input type="text" class="form-control" id="frecuenciaPago" name="frecuenciaPago" value="2" readonly>
+                <label for="montoDeuda">Monto deuda:</label>
+                <input type="text" class="form-control" id="montoDeuda" name="montoDeuda" value="<?php if (!isset($result['MontoDeuda'])) echo 'RD$0'; else echo 'RD$'.$result['MontoDeuda'];?>" readonly>
               </div>
             </div>
             <div class="col-sm-4">
               <div class="form-group">
-                <label for="cuotasTotales">Cant. total de cuotas:</label>
-                <input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales" value="14 cuotas" readonly>
+                <label for="perfilReenganchado">Reenganchado:</label>
+                <input type="text" class="form-control" id="perfilReenganchado" name="perfilReenganchado" value="<?php if($result['Reenganchado'] == 1)echo 'Si'; else echo 'No'; ?>" readonly>
               </div>
               <div class="form-group">
-                <label for="pagosRealizados">Pagos realizados:</label>
-                <input type="text" class="form-control" id="pagosRealizados" name="pagosRealizados" value="Ningún pago realizado" readonly>
+                <label for="perfilPuntos">Puntos:</label>
+                <input type="text" class="form-control" id="perfilPuntos" name="perfilPuntos" value="<?php if (!isset($result['Puntos'])) echo '0 puntos'; else echo $result['Puntos'].' puntos';?>" readonly>
               </div>
               <div class="form-group">
-                <label for="diasPagoMes">Dias en el mes asignados para pagar:</label>
-                <input type="text" class="form-control" id="diasPagoMes" name="diasPagoMes" value="1_2_" readonly>
+                <label for="perfilFechaDeIngreso">Fecha de ingreso:</label>
+                <input type="text" class="form-control" id="perfilFechaDeIngreso" name="perfilFechaDeIngreso" value="<?php echo $result['FechaIngreso'];?>" readonly>
               </div>
               <div class="form-group">
-              <label for="fechaAprobacion">Fecha de aprobacion:</label>
-              <input type="text" class="form-control datepicker" id="fechaAprobacion" name="fechaAprobacion" value="No aprobado" readonly>
+              <label for="perfilTotalPrestado">Total prestado:</label>
+              <input type="text" class="form-control datepicker" id="perfilTotalPrestado" name="perfilTotalPrestado" value="<?php if (!isset($result['TotalPrestado'])) echo 'RD$0'; else echo 'RD$'.$result['TotalPrestado'];?>" readonly>
             </div>
           </div>
           <div class="col-sm-4">
@@ -305,61 +309,6 @@ if(isset($_POST['actualizarStatus'])) {
         </div>
       </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-  $(".editarButtonPagoPrestamo").click(function() {
-      var id = $(this).data("id");
-      $.ajax({
-          url: "fetch_pago.php",
-          type: "GET",
-          data: { id: id },
-          dataType: "json",
-          success: function(response) {
-              // Clear previous values
-              $("#editForm")[0].reset();
-              // Populate modal fields
-              $("#editIdPago").val(response.Id);
-              $("#editIdClientePago").val(response.IdCliente);
-              $("#editCuentaRemitentePago").val(response.CuentaRemitente);
-              $("#editTipoCuentaRemitentePago").val(response.TipoCuentaRemitente);
-              $("#editEntidadBancariaRemitentePago").val(response.EntidadBancariaRemitente);
-              $("#editCuentaDestinatarioPago").val(response.CuentaDestinatario);
-              $("#editTipoCuentaDestinatarioPago").val(response.TipoCuentaDestinatario);
-              $("#editEntidadBancariaDestinatarioPago").val(response.EntidadBancariaDestinatario);
-              $("#editMontoPago").val(response.Monto);
-              $("#editMotivoPago").val(response.Motivo);
-              $("#editTipoPago").val(response.Tipo);
-              $("#editInversionIdPago").val(response.InversionId);
-              $("#editPrestamoIdPago").val(response.PrestamoId);
-              $("#editFechaDePagoPago").val(response.FechaDePago);
-              $("#editModalPagoPrestamo").modal("show");
-          },
-          error: function(xhr, status, error) {
-              console.error(xhr.responseText);
-          }
-      });
-  });
-
-  $("#saveChangesBtn").click(function() {
-      var formData = $("#editForm").serialize();
-      $.ajax({
-          url: "update_pago.php",
-          type: "POST",
-          data: formData,
-          success: function(response) {
-              $("#editModal").modal("hide");
-              // Optionally, reload the table or update the row with the edited data
-              location.reload();
-          },
-          error: function(xhr, status, error) {
-              console.error(xhr.responseText);
-              // Handle error
-          }
-      });
-  });
-});
-
-</script>
 <script>
   // JavaScript for handling delete button click
 $(".delete-btnPagoParticipacion").click(function() {
