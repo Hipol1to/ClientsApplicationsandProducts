@@ -41,11 +41,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $voucher_file_name = uniqid() . '_front_' . $_FILES['fotoComprobanteDePago']['name'];
 
     // Move uploaded files to the upload directory
-    move_uploaded_file($_FILES['subir_foto_cedula_frontal']['tmp_name'], $upload_directory . $voucher_file_name);
+    $isMoveSuccess = move_uploaded_file($_FILES['fotoComprobanteDePago']['tmp_name'], $upload_directory . $voucher_file_name);
+
+    error_log($isMoveSuccess);
 
     // Now you can save the file names or their paths to the database
     // Construct the full paths to the uploaded files
     $voucher_path = $upload_directory . $voucher_file_name;
+    error_log("old voucher path" . $voucher_path);
+    $voucher_path = explode("clients\\", $voucher_path);
+    $voucher_path = $voucher_path[1];
+    error_log("splitted voucher path" . $voucher_path);
 } else {
     // Handle the case where the file uploads failed
     $voucher_path = "Unable to resolve voucher path"; // Set an empty path for front photo

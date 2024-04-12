@@ -118,7 +118,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
                 </a>
                  </li>
                  <li class="nav-item">
-                <a href="pagos.php" class="nav-link">
+                <a href="perfil.php" class="nav-link">
                   <i class="fas fa-user-circle nav-icon"></i>
                   <p>Perfil</p>
                 </a>

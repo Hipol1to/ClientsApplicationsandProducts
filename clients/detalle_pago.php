@@ -4,10 +4,10 @@ require('../includes/config.php');
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
   header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
   exit();  
-} elseif (!isset($_SESSION['ClienteId'])) {
+} elseif (!isset($_SESSION['ClienteId']) && $user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
   exit();
-} else {
+} elseif (!$user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
   exit();
 }
@@ -205,9 +205,9 @@ if(isset($_POST['actualizarStatus'])) {
             <!-- <div class="form-group">
                 <label for="estadoPago">Status del Pago:</label>
                 <select class="form-control" id="estadoPago">
-                    <option value="Aprobado" <?php if($pago['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
-                    <option value="En proceso" <?php if($pago['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
-                    <option value="Rechazado" <?php if($pago['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
+                    <option value="Aprobado" <?php if($pago == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
+                    <option value="En proceso" <?php if($pago == 'En proceso') echo 'selected'; ?>>En proceso</option>
+                    <option value="Rechazado" <?php if($pago == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
                 </select>
             </div>
             <button type="button" class="btn btn-primary" id="actualizarStatus">Actualizar status</button> -->
@@ -227,16 +227,12 @@ if(isset($_POST['actualizarStatus'])) {
                 if($stmt->rowCount() > 0) {
                     // Fetch the client's details
                     $pago = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $voucerPath = isset($pago['VoucherPath']) ? $pago['VoucherPath'] : null;
                     $isEnabled = false;
                     // Display pago details
 echo '<div class="form-group">';
 echo '<label for="motivo">Motivo:</label>';
 echo '<input type="text" class="form-control" id="motivo" name="motivo" value="'.htmlspecialchars($pago['Motivo']).'" readonly>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="idCliente">ID Cliente:</label>';
-echo '<input type="text" class="form-control" id="idCliente" name="idCliente" value="'.htmlspecialchars($pago['IdCliente']).'" readonly>';
 echo '</div>';
 
 echo '<div class="form-group">';
@@ -280,30 +276,10 @@ echo '<input type="text" class="form-control" id="tipo" name="tipo" value="'.htm
 echo '</div>';
 
 echo '<div class="form-group">';
-echo '<label for="inversionId">Inversión ID:</label>';
-echo '<input type="text" class="form-control" id="inversionId" name="inversionId" value="'.htmlspecialchars($pago['InversionId']).'" readonly>';
+echo '<label for="tipo">Comprobante de pago:</label>';
+echo '<br>';
+echo '<img src="./'.$voucerPath.'" alt="Comprobante de pago" height="500px">';
 echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="prestamoId">Préstamo ID:</label>';
-echo '<input type="text" class="form-control" id="prestamoId" name="prestamoId" value="'.htmlspecialchars($pago['PrestamoId']).'" readonly>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="fechaDePago">Fecha de Pago:</label>';
-echo '<input type="text" class="form-control" id="fechaDePago" name="fechaDePago" value="'.htmlspecialchars($pago['FechaDePago']).'" readonly>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="fechaCreacion">Fecha de Creación:</label>';
-echo '<input type="text" class="form-control" id="fechaCreacion" name="fechaCreacion" value="'.htmlspecialchars($pago['FechaCreacion']).'" readonly>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="fechaModificacion">Fecha de Modificación:</label>';
-echo '<input type="text" class="form-control" id="fechaModificacion" name="fechaModificacion" value="'.htmlspecialchars($pago['FechaModificacion']).'" readonly>';
-echo '</div>';
-
                     // Continue displaying other client details as needed
                 } else {
                     // If no client with the specified ID is found, display an error message

@@ -201,7 +201,7 @@ if(isset($_POST['actualizarStatus'])) {
             </div>
             <div class="modal-body">
                 <!-- Your form goes here -->
-                <form id="editForm" action="add_pago.php" method="post">
+                <form id="editForm" action="add_pago.php" method="post" enctype="multipart/form-data">
     <div class="row">
         <!-- Group 1 -->
         <div class="col-sm-8">

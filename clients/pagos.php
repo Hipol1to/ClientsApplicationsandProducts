@@ -93,7 +93,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
             </a>
 
                  <li class="nav-item">
-                <a href="prestamos.php" class="nav-link active">
+                <a href="prestamos.php" class="nav-link">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
@@ -109,13 +109,13 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
                  -->
                  
                  <li class="nav-item">
-                <a href="pagos.php" class="nav-link">
+                <a href="pagos.php" class="nav-link active">
                   <i class="fas fa-money-bill-wave nav-icon"></i>
                   <p>Pagos</p>
                 </a>
                  </li>
                  <li class="nav-item">
-                <a href="pagos.php" class="nav-link">
+                <a href="perfil.php" class="nav-link">
                   <i class="fas fa-user-circle nav-icon"></i>
                   <p>Perfil</p>
                 </a>
@@ -327,7 +327,6 @@ if ($result) {
 <p></p>
                   <th></th>
                   <th>Acciones</th>
-                    <th>Id Solicitante</th>
                     <th>Cuenta Remitente</th>
                     <th>Tipo de Cuenta Remitente</th>
                     <th>Entidad Bancaria Remitente</th>
@@ -347,7 +346,6 @@ if ($result) {
         <td>
           <a style="white-space: nowrap !important;" href="detalle_pago.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
         </td>
-                <td>' . $row['IdCliente'] . '</td>
                 <td>' . $row['CuentaRemitente'] . '</td>
                 <td>' . $row['TipoCuentaRemitente'] . '</td>
                 <td>' . $row['EntidadBancariaRemitente'] . '</td>
@@ -365,7 +363,6 @@ if ($result) {
             <tr>
             <th></th>
             <th>Acciones</th>
-            <th>Id Solicitante</th>
             <th>Cuenta Remitente</th>
             <th>Tipo de Cuenta Remitente</th>
             <th>Entidad Bancaria Remitente</th>

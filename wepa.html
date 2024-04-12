@@ -1,54 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Input Currency Formatting</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Information</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom styles -->
+  <style>
+    /* Custom styles for user information page */
+    .user-info-card {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .user-info-card h5 {
+      margin-bottom: 20px;
+    }
+
+    .user-info-field {
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="user-info-card">
+          <h5>User Information</h5>
+          <div class="user-info-field">
+            <label for="username">Username:</label>
+            <p id="username">john_doe</p>
+          </div>
+          <div class="user-info-field">
+            <label for="email">Email:</label>
+            <p id="email">john@example.com</p>
+          </div>
+          <div class="user-info-field">
+            <label for="firstName">First Name:</label>
+            <p id="firstName">John</p>
+          </div>
+          <div class="user-info-field">
+            <label for="lastName">Last Name:</label>
+            <p id="lastName">Doe</p>
+          </div>
+          <div class="user-info-field">
+            <label for="address">Address:</label>
+            <p id="address">123 Main St, New York, USA</p>
+          </div>
+          <div class="user-info-field">
+            <label for="cedula">Cedula:</label>
+            <p id="cedula">1234567890</p>
+          </div>
+          <!-- Add more user information fields as needed -->
+        </div>
+      </div>
+    </div>
+  </div>
 
-<!-- Input element -->
-<input type="text" id="textInput" placeholder="Enter amount">
-
-<script>
-// Get the input element
-var inputElement = document.getElementById('montoSolicitado');
-
-// Attach an event listener to the input element
-inputElement.addEventListener('input', function(event) {
-    if (/[^0-9.]/.test(inputElement.value)) {
-        // If it contains non-numeric characters, handle the validation here
-        inputElement.value = "";
-        // For example, you can show an error message or take appropriate action
-    } else {
-    
-    // Save the cursor position
-    var cursorPosition = inputElement.selectionStart;
-
-    // Get the input value
-    let oldInputValue = inputElement.value;
-
-    // Check if the input value is a valid number
-    if (!isNaN(parseFloat(oldInputValue))) {
-        // Currency formatting
-        let currency = parseFloat(oldInputValue);
-        let formattedValue = new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD'
-        }).format(currency);
-
-        // Remove the dollar sign and commas from the formatted currency string
-        formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
-        console.log(formattedValue);
-
-        // Update the value of the input element with the formatted value
-        inputElement.value = formattedValue;
-
-        // Restore the cursor position
-        inputElement.setSelectionRange(cursorPosition, cursorPosition);
-    }
-    }
-});
-</script>
+  <!-- Bootstrap JS (optional, if you need JavaScript functionality) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
