@@ -37,7 +37,7 @@ if(isset($_POST['actualizarStatus'])) {
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Detalle Préstamo</title>
+  <title>Perfil</title>
 
 
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -193,7 +193,7 @@ if(isset($_POST['actualizarStatus'])) {
                         <div class="card-header p-0">
                             <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="detalle-tab" data-toggle="pill" href="#detalle" role="tab" aria-controls="detalle" aria-selected="true">Detalle Préstamo</a>
+                                    <a class="nav-link active" id="detalle-tab" data-toggle="pill" href="#detalle" role="tab" aria-controls="detalle" aria-selected="true">Perfil</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="pagos-tab" data-toggle="pill" href="#pagosTabForPrestamos" role="tab" aria-controls="pagosTabForPrestamos" aria-selected="false">Estado de cuenta</a>
@@ -288,7 +288,9 @@ if(isset($_POST['actualizarStatus'])) {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Pagos</h1>
+          <form action="generate_estado_de_cuenta.php" method="post">
+        <button type="submit" name="generate_pdf">Generar estado de cuenta</button>
+    </form>
           </div>
           <div class="col-sm-6">
           </div>

@@ -392,7 +392,6 @@ if(isset($_POST['actualizarStatus'])) {
                     if($prestamo['Status'] == 'En proceso') echo 'En proceso'; 
                     if($prestamo['Status'] == 'Rechazado') echo 'Rechazado'?>" readonly>
             </div>
-            <br><br>
             <?php
             // Check if the ID parameter is set in the URL
             if(isset($_GET['id'])) {
@@ -425,8 +424,8 @@ if($stmt->rowCount() > 0) {
     // Group 1
     echo '<div class="col-sm-4">';
     echo '<div class="form-group">';
-    echo '<label for="motivo">Motivo:</label>';
-    echo '<input type="text" class="form-control" id="motivo" name="motivo" value="'.htmlspecialchars($client['Motivo']).'" readonly>';
+    echo '<label for="balance">Balance:</label>';
+    echo '<input type="text" class="form-control" id="balance" name="balance" value="'.htmlspecialchars(number_format((floatval($prestamo['MontoSolicitado']) - floatval($prestamo['MontoPagado'])), 2, '.', '') ).'" readonly>';
     echo '</div>';
     echo '<div class="form-group">';
     echo '<label for="montoSolicitado">Monto Solicitado:</label>';
@@ -445,18 +444,22 @@ if($stmt->rowCount() > 0) {
 
     // Group 2
     echo '<div class="col-sm-4">';
-    echo '<div class="form-group">';
+    /*echo '<div class="form-group">';
     echo '<label for="tasaDeInteres">Tasa de interés:</label>';
     echo '<input type="text" class="form-control" id="tasaDeInteres" name="tasaDeInteres" value="'.htmlspecialchars($client['TasaDeInteres']).'" readonly>';
+    echo '</div>';*/
+    echo '<div class="form-group">';
+    echo '<label for="motivo">Concepto:</label>';
+    echo '<input type="text" class="form-control" id="motivo" name="motivo" value="'.htmlspecialchars($client['Motivo']).'" readonly>';
     echo '</div>';
     echo '<div class="form-group">';
     echo '<label for="montoRecargo">Monto Recargo:</label>';
     echo '<input type="text" class="form-control" id="montoRecargo" name="montoRecargo" value="'.htmlspecialchars($client['MontoRecargo']).'" readonly>';
     echo '</div>';
-    echo '<div class="form-group">';
+    /*echo '<div class="form-group">';
     echo '<label for="solicitante">Solicitante:</label>';
     echo '<input type="text" class="form-control" id="solicitante" name="solicitante" value="'.htmlspecialchars($client['Solicitante']).'" readonly>';
-    echo '</div>';
+    echo '</div>';*/
     echo '<div class="form-group">';
     echo '<label for="fechaSolicitud">Fecha de solicitud:</label>';
     echo '<input type="text" class="form-control" id="fechaSolicitud" name="fechaSolicitud" value="'.htmlspecialchars($client['FechaCreacion']).'" readonly>';
@@ -464,6 +467,10 @@ if($stmt->rowCount() > 0) {
     echo '<div class="form-group">';
     echo '<label for="frecuenciaPago">Cant. min. pagos por mes:</label>';
     echo '<input type="text" class="form-control" id="frecuenciaPago" name="frecuenciaPago" value="'.htmlspecialchars($client['CantPagosPorMes']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="fechaProximoPago">Fecha proximo pago:</label>';
+    echo '<input type="text" class="form-control" id="fechaProximoPago" name="fechaProximoPago" value="'.htmlspecialchars($prestamo['FechaPagoMensual']).'" readonly>';
     echo '</div>';
     echo '';
     echo '</div>';
@@ -556,7 +563,7 @@ if ($result) {
                     <th>Cuenta Destinatario</th>
                     <th>Tipo de Cuenta Destinatario</th>
                     <th>Entidad Bancaria Destinatario</th>
-                    <th>Motivo</th>
+                    <th>Concepto</th>
                     <th>Monto</th>
                   </tr>
                   </thead>
@@ -594,7 +601,7 @@ if ($result) {
             <th>Cuenta Destinatario</th>
             <th>Tipo de Cuenta Destinatario</th>
             <th>Entidad Bancaria Destinatario</th>
-            <th>Motivo</th>
+            <th>Concepto</th>
             <th>Monto</th>
             </tr>
           </tfoot>
@@ -637,7 +644,7 @@ echo '<div id="editModalPagoPrestamo" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editCuentaRemitentePago" name="editCuentaRemitente">
                 </div>
                 <div class="form-group">
-                    <label for="editMotivo">Motivo:</label>
+                    <label for="editMotivo">Concepto:</label>
                     <input type="text" class="form-control" id="editMotivoPago" name="editMotivo">
                 </div>
                 <div class="form-group">

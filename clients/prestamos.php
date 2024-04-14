@@ -259,7 +259,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 // Assuming your database connection code is included here
 
 // Fetch data from the clientes table
-$sql = "SELECT * FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId']."";
+$sql = "SELECT * FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId']." && Status = 'Aprobado'";
 $result = $db->query($sql);
 
 if ($result) {
@@ -290,10 +290,12 @@ if ($result) {
 <p></p>
                   <th></th>
                   <th>Acciones</th>
-                    <th>Motivo</th>
+                    <th>Concepto</th>
+                    <th>Balance</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
                     <th>Pagos</th>
+                    <th>Fecha próximo pago</th>
                     <th>Fecha final de prestamo</th>
                   </tr>
                   </thead>
@@ -301,15 +303,21 @@ if ($result) {
 
     // Loop through the fetched results and generate table rows
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+      $montoPagado = isset($row['MontoPagado']) ? $row['MontoPagado'] : 0.00;
+      $row['MontoPagado'] = $montoPagado;
+      error_log($row['MontoPagado']);
+      error_log($row['MontoSolicitado']);
         echo '<tr>
         <td></td>
         <td>
     <a href="detalle_prestamo.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
 </td>
                 <td>' . $row['Motivo'] . '</td>
+                <td>' . number_format((floatval($row['MontoSolicitado']) - floatval($row['MontoPagado'])), 2, '.', '') . '</td>
                 <td>' . $row['MontoSolicitado'] . '</td>
                 <td>' . $row['Status'] . '</td>
                 <td>' . $row['PagoId'] . '</td>
+                <td>' . $row['FechaPagoMensual'] . '</td>
                 <td>' . $row['FechaFinalPrestamo'] . '</td>
               </tr>';
     }
@@ -320,10 +328,12 @@ if ($result) {
             <tr>
             <th></th>
                     <th>Acciones</th>
-                    <th>Motivo</th>
+                    <th>Concepto</th>
+                    <th>Balance</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
                     <th>Pagos</th>
+                    <th>Fecha próximo pago</th>
                     <th>Fecha final de prestamo</th>
             </tr>
           </tfoot>
@@ -352,7 +362,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editId" name="editId" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editMotivo">Motivo:</label>
+                    <label for="editMotivo">Concepto:</label>
                     <input type="text" class="form-control" id="editMotivo" name="editMotivo">
                 </div>
                 <div class="form-group">
@@ -609,7 +619,6 @@ $.ajax({
     });
   });
 </script>
-
 <script>
   // Function to dynamically generate options for select dropdown
   function generateOptions() {
