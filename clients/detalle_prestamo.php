@@ -378,7 +378,9 @@ if(isset($_POST['actualizarStatus'])) {
                                 <li class="nav-item">
                                     <a class="nav-link" id="pagos-tab" data-toggle="pill" href="#pagosTabForPrestamos" role="tab" aria-controls="pagosTabForPrestamos" aria-selected="false">Pagos</a>
                                 </li>
-                                
+                                <li class="nav-item">
+                                    <a class="nav-link" id="historial-tab" data-toggle="pill" href="#historialTabForPrestamos" role="tab" aria-controls="historialTabForPrestamos" aria-selected="false">Historial de pagos</a>
+                                </li>
                             </ul>
                         </div>
                         <div class="card-body">
@@ -522,6 +524,22 @@ if($stmt->rowCount() > 0) {
 
             echo'</div>';
                                 
+            echo '<div class="tab-pane fade" id="historialTabForPrestamos" role="tabpanel" aria-labelledby="nuevo-tabb">
+            <div class="card">
+                      <div class="card-header">
+                      <section class="content-header">
+              <div class="container-fluid">
+                <div class="row mb-2">
+                  <div class="col-sm-6">
+                  <form action="generate_historial_de_prestamo.php" method="post">
+                  <input value="'.$prestamo_id.'" name="prestamoId" hidden readonly>
+                <button type="submit" name="generate_pdf">Generar historial de pago</button>
+            </form>
+                  </div>
+                  <div class="col-sm-6">
+                  </div>
+                </div>
+              </div>';
 //pagos for prestamo
 echo'<div class="tab-pane fade" id="pagosTabForPrestamos" role="tabpanel" aria-labelledby="nuevo-tab">';
 // Fetch data from the clientes table
@@ -556,15 +574,13 @@ if ($result) {
 <p></p>
                   <th></th>
                   <th>Acciones</th>
-                    <th>Solicitante</th>
+                  <th>Concepto</th>
                     <th>Cuenta Remitente</th>
-                    <th>Tipo de Cuenta Remitente</th>
                     <th>Entidad Bancaria Remitente</th>
                     <th>Cuenta Destinatario</th>
-                    <th>Tipo de Cuenta Destinatario</th>
                     <th>Entidad Bancaria Destinatario</th>
-                    <th>Concepto</th>
                     <th>Monto</th>
+                    <th>Fecha de pago</th>
                   </tr>
                   </thead>
                   <tbody>';
@@ -576,15 +592,13 @@ if ($result) {
         <td>
           <a style="white-space: nowrap !important;" href="detalle_pago.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
         </td>
-                <td>' . $row['IdCliente'] . '</td>
+                <td>' . $row['Motivo'] . '</td>
                 <td>' . $row['CuentaRemitente'] . '</td>
-                <td>' . $row['TipoCuentaRemitente'] . '</td>
                 <td>' . $row['EntidadBancariaRemitente'] . '</td>
                 <td>' . $row['CuentaDestinatario'] . '</td>
-                <td>' . $row['TipoCuentaDestinatario'] . '</td>
                 <td>' . $row['EntidadBancariaDestinatario'] . '</td>
-                <td>' . $row['Motivo'] . '</td>
                 <td>' . $row['Monto'] . '</td>
+                <td>' . $row['FechaDePago'] . '</td>
               </tr>';
   }
 
@@ -594,15 +608,13 @@ if ($result) {
             <tr>
             <th></th>
             <th>Acciones</th>
-            <th>Solicitante</th>
+            <th>Concepto</th>
             <th>Cuenta Remitente</th>
-            <th>Tipo de Cuenta Remitente</th>
             <th>Entidad Bancaria Remitente</th>
             <th>Cuenta Destinatario</th>
-            <th>Tipo de Cuenta Destinatario</th>
             <th>Entidad Bancaria Destinatario</th>
-            <th>Concepto</th>
             <th>Monto</th>
+            <th>Fecha de pago</th>
             </tr>
           </tfoot>
         </table>
@@ -841,6 +853,7 @@ $(document).ready(function() {
                     <!-- /.col -->
                 </div>
                 <!-- /.row -->
+                
             </div><!-- /.container-fluid -->
     </section>
     <!-- /.content -->
