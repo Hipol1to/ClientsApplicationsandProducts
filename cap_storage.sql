@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 12, 2024 at 03:39 AM
+-- Generation Time: Apr 14, 2024 at 04:10 AM
 -- Server version: 10.4.10-MariaDB
 -- PHP Version: 7.3.12
 
@@ -107,7 +107,7 @@ CREATE TABLE IF NOT EXISTS `finanzas` (
 --
 
 INSERT INTO `finanzas` (`dineroencaja`, `dineroinvertido`, `dineroenprestamos`) VALUES
-('9716.49', '1287.03', '3184.01');
+('-99987099.49', '1287.03', '99999999.99');
 
 -- --------------------------------------------------------
 
@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `CuentaDestinatario` varchar(255) DEFAULT NULL,
   `TipoCuentaDestinatario` varchar(255) DEFAULT NULL,
   `EntidadBancariaDestinatario` varchar(255) DEFAULT NULL,
-  `Monto` decimal(10,2) DEFAULT NULL,
+  `Monto` decimal(20,2) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
   `Tipo` varchar(50) DEFAULT NULL,
   `InversionId` int(11) DEFAULT NULL,
@@ -182,7 +182,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `FechaCreacion` timestamp NULL DEFAULT current_timestamp(),
   `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pagos`
@@ -206,7 +206,9 @@ INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`
 (34, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '2324434', 'Cuenta de ahorros', 'Bandex', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:20:09', '2024-03-19 04:20:09'),
 (35, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', 'Transferencia bancaria', NULL, 4, NULL, NULL, '2024-03-30 00:00:00', '2024-03-19 04:26:42', '2024-03-19 04:26:42'),
 (36, 7, '999777477', 'Cuenta de ahorros', 'Banco Cofaci', '232443', 'Cuenta corriente', 'Banco Activo', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, 4, NULL, NULL, '2024-07-18 00:00:00', '2024-03-19 04:27:14', '2024-03-19 04:27:14'),
-(43, 38, 'Cuenta de ahorros', 'Cuenta de ahorros', 'Banco Popular Dominicano', '2324434', 'Cuenta de ahorros', 'Banco Vimenca', '46.76', 'Pago de préstamo del usuario FalinApart Tan tan', 'Transferencia bancaria', NULL, 31, NULL, 'uploads\\66189408c8b8a_front_cal b.png', '2024-04-22 00:00:00', '2024-04-12 01:53:12', '2024-04-12 01:53:12');
+(43, 38, 'Cuenta de ahorros', 'Cuenta de ahorros', 'Banco Popular Dominicano', '2324434', 'Cuenta de ahorros', 'Banco Vimenca', '46.76', 'Pago de préstamo del usuario FalinApart Tan tan', 'Transferencia bancaria', NULL, 31, NULL, 'uploads\\66189408c8b8a_front_cal b.png', '2024-04-22 00:00:00', '2024-04-12 01:53:12', '2024-04-12 01:53:12'),
+(44, 38, 'Cuenta de ahorros', 'Cuenta de ahorros', 'Banco Popular Dominicano', '66556654545', 'Cuenta corriente', 'Corporación de Crédito Nordestana', '57457474766.00', 'Pago de préstamo del usuario FalinApart Tan tan', 'Transferencia bancaria', NULL, 31, NULL, 'uploads\\661b4ab6d1f99_front_WIN_20240319_15_25_39_Pro.jpg', '2024-04-22 00:00:00', '2024-04-14 03:17:10', '2024-04-14 03:17:10'),
+(45, 38, 'Cuenta de ahorros', 'Cuenta de ahorros', 'Banco BHD', '2324434', 'Cuenta de ahorros', 'Bandex', '99.99', 'Pago de préstamo del usuario FalinApart Tan tan', 'Transferencia bancaria', NULL, 32, NULL, 'uploads\\661b548d30404_front_WIN_20240326_18_29_57_Pro.jpg', '2024-04-22 00:00:00', '2024-04-14 03:59:09', '2024-04-14 03:59:09');
 
 --
 -- Triggers `pagos`
@@ -443,7 +445,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `FechaModificacion` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
-) ENGINE=MyISAM AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prestamos`
@@ -459,7 +461,8 @@ INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoA
 (28, 7, 'Préstamo para compra de automóvil', '15000.00', '15000.00', '0.00', '8.50', '0.00', 'Banco XYZ', 'John Doe', 'Aprobado', NULL, '2024-03-16 04:00:00', '2024-03-26 04:00:00', 12, '30', 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:31'),
 (29, 7, 'Préstamo para remodelación de casa', '25000.00', '25000.00', '0.00', '7.00', '0.00', 'Banco XYZ', 'Jane Doe', 'Aprobado', NULL, '2024-03-26 04:00:00', '2024-03-26 04:00:00', 24, '15', 'Quincenal', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 18:36:36'),
 (30, 7, 'Préstamo para gastos médicos', '10000.00', '10000.00', '0.00', '9.00', '0.00', 'Banco XYZ', 'Alice Smith', 'Aprobado', NULL, '2024-03-14 03:59:00', '2024-03-26 04:00:00', 6, '5', 'Mensual', '2024-03-12 18:31:08', '2024-03-12 18:31:08', '2024-03-12 20:47:28'),
-(31, 38, 'gge4g4eg', '1202.10', NULL, NULL, NULL, NULL, 'Inversiones Everest', 'FalinApart Tan tan', 'En proceso', NULL, NULL, '2024-11-09 04:00:00', 14, '1_2_', '2', NULL, '2024-04-09 17:24:38', '2024-04-09 17:24:38');
+(31, 38, 'gge4g4eg', '1202.10', NULL, NULL, NULL, NULL, 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', NULL, NULL, '2024-11-09 04:00:00', 14, '1_2_', '2', NULL, '2024-04-09 17:24:38', '2024-04-13 22:23:06'),
+(32, 38, 'prestamo personal', '25.00', NULL, NULL, NULL, NULL, 'Inversiones Everest', 'FalinApart Tan tan', 'En proceso', NULL, NULL, '2024-10-13 04:00:00', 24, '3_8_18_25', '4', NULL, '2024-04-14 03:41:10', '2024-04-14 03:41:10');
 
 -- --------------------------------------------------------
 

@@ -1,9 +1,22 @@
 <?php
 // Include the TCPDF library
+require('../includes/config.php');
+
 require_once('../tcpdf/tcpdf.php');
 
+if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  exit();  
+} elseif (!isset($_SESSION['ClienteId']) && $user->is_logged_in()) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  exit();
+} elseif (!$user->is_logged_in()) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  exit();
+}
+
 // Function to generate the PDF
-function generatePDF() {
+if(isset($_POST['generate_pdf'])) {
     // Create new PDF document
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -22,55 +35,65 @@ function generatePDF() {
     $loanBody = '';
 
     // Fetch data from the clientes table
-$sql = "SELECT COUNT(*) AS prestamosCount FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId']."";
+$sql = "SELECT 	Id, IdCliente, Motivo, MontoSolicitado, MontoAprobado, MontoPagado, TasaDeInteres, MontoRecargo, Remitente, Beneficiario, Status, PagoId, FechaPagoMensual, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes, FechaDeAprobacion, FechaCreacion, FechaModificacion, (SELECT COUNT(*) FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId'].") AS prestamosCount FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId']."";
 $result = $db->query($sql);
 
+
 if ($result) {
+  $i = 1;
+  $o = 1;
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+      $sql2 ="SELECT Id, IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, InversionId, PrestamoId, ParticipacionId, VoucherPath, FechaDePago, FechaCreacion, FechaModificacion,  (SELECT COUNT(*) FROM pagos WHERE PrestamoId =".$row['Id'].") AS pagosCount FROM pagos WHERE PrestamoId =".$row['Id'];
+      $result2 = $db->query($sql2);
+      error_log($sql2);
+
+      if($row['MontoAprobado'] > $row['MontoPagado']) {
+        $row['Balance'] = ($row['MontoAprobado']) - ($row['MontoPagado']);
+      }
+      else {
+        $row['Balance'] = ($row['MontoPagado']) - ($row['MontoAprobado']);
+      }
         $loanBody.='<p style="text-align:center; line-height:108%; font-size:14pt">
-        <strong>Préstamo #1:</strong>
+        <strong>Préstamo #'.$i.':</strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">ID: </span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">ID: '.$row['Id'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Balance:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Balance: '. $row['Balance'] .'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto Solicitado:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto Solicitado: '.$row['MontoSolicitado'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto Aprobado:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto Aprobado: '.$row['MontoAprobado'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto Pagado:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto Pagado: '.$row['MontoPagado'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Concepto:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Concepto: '.$row['Motivo'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto Recargo:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto Recargo: '.$row['MontoRecargo'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Fecha de solicitud:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Fecha de solicitud: '.$row['FechaCreacion'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cant. min. pagos por mes:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cant. min. pagos por mes: '.$row['CantPagosPorMes'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Fecha proximo pago:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Fecha proximo pago: '.$row['FechaPagoMensual'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cant. total de cuotas:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cant. total de cuotas: '.$row['CuotasTotales'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Pagos realizados:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Dias en el mes asignados para pagar: '.$row['DiasDePagoDelMes'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Dias en el mes asignados para pagar:</span></strong>
-      </p>
-      <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Fecha de aprobacion:</span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Fecha de aprobacion: '.$row['FechaDeAprobacion'].'</span></strong>
       </p>
       <p>
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529">&#xa0;</span></strong>
@@ -101,8 +124,54 @@ if ($result) {
       </p>
       <p>
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529">&#xa0;</span></strong>
-      </p>';
+      </p>
+      <div style="page-break-before: always;"></div>';
       $loanBody.='<br><br>';
+      
+      while ($row2 = $result2->fetch(PDO::FETCH_ASSOC)) {
+        error_log($row2['Motivo']);
+        $loanBody .= '<p style="text-align:center; line-height:108%; font-size:14pt">
+        <strong>Pago #'.$o.':</strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Id: '.$row2['Id'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Motivo: '.$row2['Motivo'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cuenta Remitente: '.$row2['CuentaRemitente'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Tipo Cuenta Remitente: '.$row2['TipoCuentaRemitente'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Entidad Bancaria Remitente: '.$row2['EntidadBancariaRemitente'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cuenta Destinatario: '.$row2['CuentaDestinatario'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Tipo Cuenta Destinatario: '.$row2['TipoCuentaDestinatario'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Entidad Bancaria Destinatario: '.$row2['EntidadBancariaDestinatario'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto: '.$row2['Monto'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Tipo: '.$row2['Tipo'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Comprobante de pago:<br><img src="./'.$row2['VoucherPath'].'" alt="Comprobante de pago" height="300px"></span></strong>
+      </p>
+      <div style="page-break-before: always;"></div>
+      ';
+      $o++;
+      }
+      $i++;
+      $o=1;
     }
 }
     
@@ -137,40 +206,7 @@ if ($result) {
           <p style="line-height:108%; font-size:14pt">
             Nombre de la persona
           </p>
-          
-          <p style="text-align:center; line-height:108%; font-size:14pt">
-            <strong>Pago #1:</strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Motivo:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cuenta Remitente:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Tipo Cuenta Remitente:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Entidad Bancaria Remitente:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cuenta Destinatario:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Tipo Cuenta Destinatario:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Entidad Bancaria Destinatario:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Monto:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Tipo:</span></strong>
-          </p>
-          <p>
-            <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Comprobante de pago:</span></strong>
-          </p>
+          '.$loanBody.'
     </body>
     </html>
     ';
@@ -179,12 +215,6 @@ if ($result) {
     $pdf->writeHTML($html, true, false, true, false, '');
 
     // Close and output PDF document
-    $pdf->Output('Estado_de_cuenta.pdf', 'D');
-}
-
-// Check if the button is clicked
-if(isset($_POST['generate_pdf'])) {
-    // Generate the PDF
-    generatePDF();
+    $pdf->Output('Estado_de_cuenta '.$_SESSION['username'].'.pdf', 'D');
 }
 ?>

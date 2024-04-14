@@ -259,7 +259,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 // Assuming your database connection code is included here
 
 // Fetch data from the clientes table
-$sql = "SELECT * FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId']." && Status = 'Aprobado'";
+$sql = "SELECT * FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId'];
 $result = $db->query($sql);
 
 if ($result) {
