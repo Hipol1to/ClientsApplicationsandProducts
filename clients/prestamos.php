@@ -294,7 +294,6 @@ if ($result) {
                     <th>Balance</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
-                    <th>Pagos</th>
                     <th>Fecha próximo pago</th>
                     <th>Fecha final de prestamo</th>
                   </tr>
@@ -316,7 +315,6 @@ if ($result) {
                 <td>' . number_format((floatval($row['MontoSolicitado']) - floatval($row['MontoPagado'])), 2, '.', '') . '</td>
                 <td>' . $row['MontoSolicitado'] . '</td>
                 <td>' . $row['Status'] . '</td>
-                <td>' . $row['PagoId'] . '</td>
                 <td>' . $row['FechaPagoMensual'] . '</td>
                 <td>' . $row['FechaFinalPrestamo'] . '</td>
               </tr>';
@@ -332,7 +330,6 @@ if ($result) {
                     <th>Balance</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
-                    <th>Pagos</th>
                     <th>Fecha próximo pago</th>
                     <th>Fecha final de prestamo</th>
             </tr>
