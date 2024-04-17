@@ -26,6 +26,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
     $editRemitente = !empty($_POST['editRemitente']) ? $_POST['editRemitente'] : null;
     $editBeneficiario = !empty($_POST['editBeneficiario']) ? $_POST['editBeneficiario'] : null;
     $editStatus = $_POST['editStatus'];
+    $cuota1 = isset($_POST['editCuotasNo_1']) ? $_POST['editCuotasNo_1'] : null;
+    $cuota2 = isset($_POST['editCuotasNo_2']) ? $_POST['editCuotasNo_2'] : null;
+    $cuota3 = isset($_POST['editCuotasNo_3']) ? $_POST['editCuotasNo_3'] : null;
+    $cuota4 = isset($_POST['editCuotasNo_4']) ? $_POST['editCuotasNo_4'] : null;
+    $montoPagoMensual = isset($_POST['editMontoPagoMensual']) ? $_POST['editMontoPagoMensual'] : null;
     $editFechaFinalPrestamo = !empty($_POST['editFechaFinalPrestamo']) ? $_POST['editFechaFinalPrestamo'] : null;
     $editCuotasTotales = !empty($_POST['editCuotasTotales']) ? $_POST['editCuotasTotales'] : null;
     $editDiasDePagoDelMes = !empty($_POST['editDiasDePagoDelMes']) ? $_POST['editDiasDePagoDelMes'] : null;
@@ -41,6 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
                                 MontoPagado = :montoPagado, 
                                 TasaDeInteres = :tasaDeInteres, 
                                 MontoRecargo = :montoRecargo, 
+                                MontoCuota1 = :montoCuota1, 
+                                MontoCuota2 = :montoCuota2, 
+                                MontoCuota3 = :montoCuota3, 
+                                MontoCuota4 = :montoCuota4, 
+                                MontoPagoMensual = :montoPagoMensual, 
                                 Remitente = :remitente, 
                                 Beneficiario = :beneficiario, 
                                 Status = :status, 
@@ -56,6 +66,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         $stmt->bindParam(':montoPagado', $editMontoPagado, PDO::PARAM_STR);
         $stmt->bindParam(':tasaDeInteres', $editTasaDeInteres, PDO::PARAM_STR);
         $stmt->bindParam(':montoRecargo', $editMontoRecargo, PDO::PARAM_STR);
+        $stmt->bindParam(":montoCuota1", $cuota1);
+        $stmt->bindParam(":montoCuota2", $cuota2);
+        $stmt->bindParam(":montoCuota3", $cuota3);
+        $stmt->bindParam(":montoCuota4", $cuota4);
+        $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
         $stmt->bindParam(':remitente', $editRemitente, PDO::PARAM_STR);
         $stmt->bindParam(':beneficiario', $editBeneficiario, PDO::PARAM_STR);
         $stmt->bindParam(':status', $editStatus, PDO::PARAM_STR);

@@ -218,6 +218,10 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
     <label for="fechaFinalPrestamo">Fecha Final de préstamo:</label>
     <input type="text" class="form-control" id="fechaFinalPrestamo" name="fechaFinalPrestamo" required readonly>
 </div>
+<div class="form-group">
+    <label for="montoPagoMensual">Monto pago mensual:</label>
+    <input type="text" class="form-control" id="montoPagoMensual" name="montoPagoMensual" required readonly>
+</div>
                 <div class="form-group">
     <label id="labelDiasDePagoDelMes" for="diasDePagoDelMes">Días de Pago del Mes:</label>
     <div id="diasDePagoContainer"></div>
@@ -627,8 +631,19 @@ $.ajax({
     container.innerHTML = "";
     containerCuotas.innerHTML = "";
 
+    
+
     // Generate select elements
     for (var i = 0; i < numSelects; i++) {
+      var montoSolicitadoInputValue = parseFloat(document.getElementById('montoSolicitado').value);
+    console.log(montoSolicitadoInputValue);
+    var plazoInputElementValue = parseFloat(document.getElementById('cantMeses').value);
+    console.log(plazoInputElementValue);
+    var monthlyAmmount = montoSolicitadoInputValue / plazoInputElementValue;
+    console.log(monthlyAmmount);
+    var eachCuotaValue = monthlyAmmount / numSelects;
+    console.log(eachCuotaValue +" wais " + numSelects);
+
         var labelCuota = document.createElement("label");
         labelCuota.setAttribute("for", "cuotasNo_" + (i+1));
         labelCuota.textContent="Monto cuota #" +(i+1);
@@ -639,8 +654,8 @@ $.ajax({
         inputCuota.name = "cuotasNo_" + (i+1);
         inputCuota.id = "cuotasNo_" + (i+1);
         inputCuota.required = true;
-        console.log(i);
-
+        //console.log(i);
+        inputCuota.value = eachCuotaValue.toFixed(2);
          inputCuota.addEventListener('input', function(event) {
           if (/[^0-9.]/.test(inputElement.value)) {
             // If it contains non-numeric characters, handle the validation here
@@ -673,7 +688,8 @@ $.ajax({
               inputCuota.setSelectionRange(cursorPosition, cursorPosition);
               }
             }
-});
+          });
+          
         
         var select = document.createElement("select");
         select.className = "form-control";
@@ -683,7 +699,7 @@ $.ajax({
          //Generate options for each select
         for (var j = 1; j <= 28; j++) {
             var option = document.createElement("option");
-            option.value = j;
+            option.value = "Dia# "+j;
             option.text = "Día# " + j;
             select.appendChild(option);
         }
@@ -765,12 +781,12 @@ function fetchUsuarios(str) {
 }
 
 // Event listener to call fetchUsuarios function when the input field value changes
-document.getElementById("beneficiarioInput").addEventListener("input", function() {
+/*document.getElementById("beneficiarioInput").addEventListener("input", function() {
     // Reset the flag when the input changes
     optionSelected = false;
     fetchUsuarios(this.value);
     
-});
+});*/
 
 function validateSumOfQuotes() {
   
@@ -798,13 +814,22 @@ for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
 }
 
 // Compare the sum with the value of another input element
-var otherInputElementValue = parseFloat(document.getElementById('montoSolicitado').value);
-if (sum === otherInputElementValue) {
+var montoSolicitadoInputValue = parseFloat(document.getElementById('montoSolicitado').value);
+console.log(montoSolicitadoInputValue);
+var plazoInputElementValue = parseFloat(document.getElementById('cantMeses').value);
+console.log(plazoInputElementValue);
+var monthlyAmmount = montoSolicitadoInputValue / plazoInputElementValue;
+monthlyAmmount = Math.floor(monthlyAmmount * 100) / 100;
+monthlyAmmount = monthlyAmmount.toFixed(2);
+console.log(monthlyAmmount);
+console.log(sum);
+
+if (sum == monthlyAmmount) {
     console.log("The sum of values from input elements matches the value of the other input element.");
     return true;
 } else {
     console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
-    const menssage = "El monto de las cuotas no es igual al monto solicitado";
+    const menssage = "La suma de cuotas no coincide con el monto de pago mensual";
     const existingMenssage = document.querySelector('.error-message');
     if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
     return false;
@@ -813,7 +838,6 @@ if (sum === otherInputElementValue) {
 }
 
 function isFormValid() {
-  return false;
     // Check for elements with 'is-invalid' class or disabled buttons
     const xpathExpression = "//*[contains(@class,'is-invalid')] | //button[contains(@class,'disabled')]";
     const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
@@ -882,6 +906,7 @@ function showMessageBelowElement(element, message) {
 
     // Function to calculate the date based on selected option
     function calculateDate() {
+        var montoSolirsistado = document.getElementById("montoSolicitado").value;
         var select = document.getElementById("cantMeses");
         var selectedOption = select.options[select.selectedIndex].value;
         if (selectedOption == null || selectedOption == undefined || isObjectEmpty(selectedOption)) {
@@ -900,6 +925,17 @@ function showMessageBelowElement(element, message) {
         } else {
           document.getElementById("fechaFinalPrestamo").value = null;
         }
+        var eiPlazo = document.getElementById("cantMeses").value;
+        montoSolirsistado = parseFloat(montoSolirsistado).toFixed(2);
+        console.log(eiPlazo);
+        console.log(montoSolirsistado);
+        document.getElementById("montoPagoMensual").value = montoSolirsistado / eiPlazo;
+        var roundedResult = (Math.floor(document.getElementById("montoPagoMensual").value * 100) / 100).toFixed(2);
+        document.getElementById("montoPagoMensual").value =roundedResult;
+        var valueMontoPagoMensual = document.getElementById("montoPagoMensual").value;
+        valueMontoPagoMensual = parseFloat(valueMontoPagoMensual).toFixed(2);
+        document.getElementById("montoPagoMensual").value = valueMontoPagoMensual;
+        console.log("ete esel balor " + document.getElementById("montoPagoMensual").value);
     }
 
     // Add event listener to the select element

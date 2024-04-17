@@ -19,6 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idCliente = $_SESSION['ClienteId'];
     $motivo = "Prestamo";
     $montoSolicitado = $_POST['montoSolicitado'];
+    $cuota1 = isset($_POST['cuotasNo_1']) ? $_POST['cuotasNo_1'] : null;
+    $cuota2 = isset($_POST['cuotasNo_2']) ? $_POST['cuotasNo_2'] : null;
+    $cuota3 = isset($_POST['cuotasNo_3']) ? $_POST['cuotasNo_3'] : null;
+    $cuota4 = isset($_POST['cuotasNo_4']) ? $_POST['cuotasNo_4'] : null;
+    $montoPagoMensual = isset($_POST['montoPagoMensual']) ? $_POST['montoPagoMensual'] : null;
+  error_log($montoPagoMensual);
     //$montoAprobado = $_POST['montoAprobado'];
     //$montoPagado = $_POST['montoPagado'];
     //$tasaDeInteres = $_POST['tasaDeInteres'];
@@ -51,14 +57,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     // Prepare an insert statement
-    $sql = "INSERT INTO prestamos (IdCliente, Motivo, MontoSolicitado, Remitente, Beneficiario, Status, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes)
-            VALUES (:idCliente, :motivo, :montoSolicitado, :remitente, :beneficiario, :status, :fechaFinalPrestamo, :cuotasTotales, :diasDePagoDelMes, :cantPagosPorMes)";
+    $sql = "INSERT INTO prestamos (IdCliente, Motivo, MontoSolicitado, MontoCuota1, MontoCuota2, MontoCuota3, MontoCuota4, MontoPagoMensual, Remitente, Beneficiario, Status, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes)
+            VALUES (:idCliente, :motivo, :montoSolicitado, :montoCuota1, :montoCuota2, :montoCuota3, :montoCuota4, :montoPagoMensual, :remitente, :beneficiario, :status, :fechaFinalPrestamo, :cuotasTotales, :diasDePagoDelMes, :cantPagosPorMes)";
     
     if ($stmt = $db->prepare($sql)) {
         // Bind variables to the prepared statement as parameters
         $stmt->bindParam(":idCliente", $idCliente);
         $stmt->bindParam(":motivo", $motivo);
         $stmt->bindParam(":montoSolicitado", $montoSolicitado);
+        $stmt->bindParam(":montoCuota1", $cuota1);
+        $stmt->bindParam(":montoCuota2", $cuota2);
+        $stmt->bindParam(":montoCuota3", $cuota3);
+        $stmt->bindParam(":montoCuota4", $cuota4);
+        $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
         $stmt->bindParam(":remitente", $remitente);
         $stmt->bindParam(":beneficiario", $beneficiario);
         $stmt->bindParam(":status", $status);

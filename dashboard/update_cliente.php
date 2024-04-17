@@ -24,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
     $editRNC = $_POST['editRNC'];
     $editMontoSolicitado = $_POST['editMontoSolicitado'];
     $editInteres = $_POST['editInteres'];
-    $editIdPago = $_POST['editIdPago'];
     $editMontoDeuda = $_POST['editMontoDeuda'];
     $editReenganchado = $_POST['editReenganchado'];
     $editPuntos = $_POST['editPuntos'];
@@ -49,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
                                 RNC = :rnc, 
                                 MontoSolicitado = :montoSolicitado, 
                                 Interes = :interes, 
-                                IdPago = :idPago, 
                                 MontoDeuda = :montoDeuda, 
                                 Reenganchado = :reenganchado, 
                                 Puntos = :puntos, 
@@ -65,7 +63,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         $stmt->bindParam(':rnc', $editRNC, PDO::PARAM_STR);
         $stmt->bindParam(':montoSolicitado', $editMontoSolicitado, PDO::PARAM_STR);
         $stmt->bindParam(':interes', $editInteres, PDO::PARAM_STR);
-        $stmt->bindParam(':idPago', $editIdPago, PDO::PARAM_INT);
         $stmt->bindParam(':montoDeuda', $editMontoDeuda, PDO::PARAM_STR);
         $stmt->bindParam(':reenganchado', $editReenganchado, PDO::PARAM_INT);
         $stmt->bindParam(':puntos', $editPuntos, PDO::PARAM_INT);

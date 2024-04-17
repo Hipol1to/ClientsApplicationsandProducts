@@ -142,7 +142,6 @@ if(isset($_POST['actualizarStatus'])) {
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Panel Administrador
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
              <li class="nav-item">
@@ -545,9 +544,10 @@ if ($inversion['TipoDeInversion'] == "Fondos de inversión") {
             <div class="form-group">
                 <label for="estadoInversion">Status de la Inversión:</label>
                 <select class="form-control" id="estadoInversion">
-                    <option value="Aprobado" <?php if($inversion['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
-                    <option value="En proceso" <?php if($inversion['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
-                    <option value="Rechazado" <?php if($inversion['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
+                    <option value="En curso" <?php if($inversion['Status'] == 'En curso') echo 'selected'; ?>>En curso</option>
+                    <option value="Cerrada" <?php if($inversion['Status'] == 'Cerrada') echo 'selected'; ?>>Cerrada</option>
+                    <option value="En riesgo" <?php if($inversion['Status'] == 'En riesgo') echo 'selected'; ?>>En riesgo</option>
+                    <option value="En revision" <?php if($inversion['Status'] == 'En revision') echo 'selected'; ?>>En revisión</option>
                 </select>
             </div>
             <button type="button" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>

@@ -91,134 +91,11 @@ if(isset($_POST['actualizarStatus'])) {
       <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="./index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
+      
     </ul>
 
     <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Navbar Search -->
-      <li class="nav-item">
-        <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-          <i class="fas fa-search"></i>
-        </a>
-        <div class="navbar-search-block">
-          <form class="form-inline">
-            <div class="input-group input-group-sm">
-              <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-              <div class="input-group-append">
-                <button class="btn btn-navbar" type="submit">
-                  <i class="fas fa-search"></i>
-                </button>
-                <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                  <i class="fas fa-times"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </li>
-
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-comments"></i>
-          <span class="badge badge-danger navbar-badge">3</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="./dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Brad Diesel
-                  <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">Call me whenever you can...</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="./dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  John Pierce
-                  <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">I got your message bro</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <!-- Message Start -->
-            <div class="media">
-              <img src="./dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-              <div class="media-body">
-                <h3 class="dropdown-item-title">
-                  Nora Silvester
-                  <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                </h3>
-                <p class="text-sm">The subject goes here</p>
-                <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-              </div>
-            </div>
-            <!-- Message End -->
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-        </div>
-      </li>
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
-        </a>
-      </li>
-    </ul>
+    
   </nav>
   <!-- /.navbar -->
 
@@ -264,7 +141,6 @@ if(isset($_POST['actualizarStatus'])) {
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Panel Administrador
-                <i class="right fas fa-angle-left"></i>
               </p>
             </a>
              <li class="nav-item">
@@ -357,16 +233,12 @@ if(isset($_POST['actualizarStatus'])) {
                 if($stmt->rowCount() > 0) {
                     // Fetch the client's details
                     $pago = $stmt->fetch(PDO::FETCH_ASSOC);
+                    $voucerPath = isset($pago['VoucherPath']) ? $pago['VoucherPath'] : null;
                     $isEnabled = false;
                     // Display pago details
 echo '<div class="form-group">';
 echo '<label for="motivo">Motivo:</label>';
 echo '<input type="text" class="form-control" id="motivo" name="motivo" value="'.htmlspecialchars($pago['Motivo']).'" readonly>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="idCliente">ID Cliente:</label>';
-echo '<input type="text" class="form-control" id="idCliente" name="idCliente" value="'.htmlspecialchars($pago['IdCliente']).'" readonly>';
 echo '</div>';
 
 echo '<div class="form-group">';
@@ -410,30 +282,10 @@ echo '<input type="text" class="form-control" id="tipo" name="tipo" value="'.htm
 echo '</div>';
 
 echo '<div class="form-group">';
-echo '<label for="inversionId">Inversión ID:</label>';
-echo '<input type="text" class="form-control" id="inversionId" name="inversionId" value="'.htmlspecialchars($pago['InversionId']).'" readonly>';
+echo '<label for="tipo">Comprobante de pago:</label>';
+echo '<br>';
+echo '<img src="./'.$voucerPath.'" alt="Comprobante de pago no disponible" height="500px">';
 echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="prestamoId">Préstamo ID:</label>';
-echo '<input type="text" class="form-control" id="prestamoId" name="prestamoId" value="'.htmlspecialchars($pago['PrestamoId']).'" readonly>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="fechaDePago">Fecha de Pago:</label>';
-echo '<input type="text" class="form-control" id="fechaDePago" name="fechaDePago" value="'.htmlspecialchars($pago['FechaDePago']).'" readonly>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="fechaCreacion">Fecha de Creación:</label>';
-echo '<input type="text" class="form-control" id="fechaCreacion" name="fechaCreacion" value="'.htmlspecialchars($pago['FechaCreacion']).'" readonly>';
-echo '</div>';
-
-echo '<div class="form-group">';
-echo '<label for="fechaModificacion">Fecha de Modificación:</label>';
-echo '<input type="text" class="form-control" id="fechaModificacion" name="fechaModificacion" value="'.htmlspecialchars($pago['FechaModificacion']).'" readonly>';
-echo '</div>';
-
                     // Continue displaying other client details as needed
                 } else {
                     // If no client with the specified ID is found, display an error message

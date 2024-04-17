@@ -375,12 +375,12 @@ if(isset($_POST['actualizarStatus'])) {
                                 <li class="nav-item">
                                     <a class="nav-link active" id="detalle-tab" data-toggle="pill" href="#detalle" role="tab" aria-controls="detalle" aria-selected="true">Detalle Préstamo</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="pagos-tab" data-toggle="pill" href="#pagosTabForPrestamos" role="tab" aria-controls="pagosTabForPrestamos" aria-selected="false">Pagos</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="historial-tab" data-toggle="pill" href="#historialTabForPrestamos" role="tab" aria-controls="historialTabForPrestamos" aria-selected="false">Historial de pagos</a>
-                                </li>
+                                <?php if ($prestamo['Status'] == 'Aprobado' || $prestamo['Status'] == 'Moroso') {
+                                  echo '<li class="nav-item">
+                                    <a class="nav-link" id="historial-tab" data-toggle="pill" href="#historialTabForPrestamos" role="tab" aria-controls="historialTabForPrestamos" aria-selected="false">Pagos</a>
+                                </li>';
+                                } ?>
+                                
                             </ul>
                         </div>
                         <div class="card-body">
@@ -391,7 +391,7 @@ if(isset($_POST['actualizarStatus'])) {
                 <label for="estadoPrestamo">Status del Préstamo:</label>
                 <input class="form-control" id="estadoPrestamo" value = "<?php if ($prestamo['Status'] == 'Aprobado')
                       echo 'Aprobado';
-                    if($prestamo['Status'] == 'En proceso') echo 'En proceso'; 
+                    if($prestamo['Status'] == 'En revision') echo 'En revision'; 
                     if($prestamo['Status'] == 'Rechazado') echo 'Rechazado'?>" readonly>
             </div>
             <?php
@@ -484,8 +484,8 @@ if($stmt->rowCount() > 0) {
     echo '<input type="text" class="form-control" id="cuotasTotales" name="cuotasTotales" value="'.htmlspecialchars($client['CuotasTotales']).'" readonly>';
     echo '</div>';
     echo '<div class="form-group">';
-    echo '<label for="pagosRealizados">Pagos realizados:</label>';
-    echo '<input type="text" class="form-control" id="pagosRealizados" name="pagosRealizados" value="'.htmlspecialchars($client['PagosRealizados']).'" readonly>';
+    echo '<label for="pagosRealizados">Monto de pago mensual:</label>';
+    echo '<input type="text" class="form-control" id="pagosRealizados" name="pagosRealizados" value="'.htmlspecialchars($client['MontoPagoMensual']).'" readonly>';
     echo '</div>';
     echo '<div class="form-group">';
     echo '<label for="diasPagoMes">Dias en el mes asignados para pagar:</label>';
@@ -541,7 +541,7 @@ if($stmt->rowCount() > 0) {
                 </div>
               </div>';
 //pagos for prestamo
-echo'<div class="tab-pane fade" id="pagosTabForPrestamos" role="tabpanel" aria-labelledby="nuevo-tab">';
+echo'<div class="tab-pane fade" id="pagosTabForPrestamos" role="tabpanel" aria-labelledby="nuevo-tab"> </div>';
 // Fetch data from the clientes table
 $sql = "SELECT * FROM pagos WHERE PrestamoId = ".$prestamo_id."";
 $result = $db->query($sql);

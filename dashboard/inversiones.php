@@ -28,6 +28,8 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 
 <!-- Include Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!-- Bootstrap Datepicker CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
 
 
   <!-- Google Font: Source Sans Pro -->
@@ -182,7 +184,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
       <!-- Modal Body -->
       <div class="modal-body">
         <!-- Form -->
-        <form action="add_client.php" method="post">
+        <form action="add_inversion.php" method="post">
           <!-- Form fields -->
           <div class="form-group">
             <div class="card">
@@ -196,11 +198,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
         <!-- Group 3 -->
         <div class="col-sm-8">
             <div class="form-group">
-                <label for="idCliente">Usuario:</label>
-                <input type="text" class="form-control" id="idCliente" name="idCliente" required>
-            </div>
-            <div class="form-group">
-                <label for="motivo">Motivo:</label>
+                <label for="motivo">Concepto:</label>
                 <input type="text" class="form-control" id="motivo" name="motivo" required>
             </div>
             <div class="form-group">
@@ -209,7 +207,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                   <option value="" selected>--Tipo de inversión--</option>
                     <option value="Por acciones">Inversion por acciones</option>
                     <option value="Por bonos">Inversion por bonos</option>
-                    <option value="Fondos de inversión">Fondos de inversión</option>
+                   <!-- <option value="Fondos de inversión">Fondos de inversión</option>-->
                 </select>
             </div>
         
@@ -222,7 +220,15 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
             </div>
             <div class="form-group">
                 <label for="periodicidadDividendo">Periodicidad Dividendo:</label>
-                <input type="text" class="form-control" id="periodicidadDividendo" name="periodicidadDividendo">
+                <select class="form-control" id="periodicidadDividendo" name="periodicidadDividendo" required>
+                  <option value="" selected>--Periodicidad--</option>
+                    <option value="Quincenal">Quincenal</option>
+                    <option value="Mensual">Mensual</option>
+                    <option value="Trimestral">Trimestral</option>
+                    <option value="Cuatrimestral">Cuatrimestral</option>
+                    <option value="Anual">Anual</option>
+                   <!-- <option value="Fondos de inversión">Fondos de inversión</option>-->
+                </select>
             </div>
             <div class="form-group">
                 <label for="fechaPagoDividendo">Fecha Pago Dividendo:</label>
@@ -284,13 +290,13 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
             </div>
             <div class="form-group">
                 <label for="status">Status:</label>
-                <input type="text" class="form-control" id="status" name="status">
+                <select class="form-control" id="status" name="status" required>
+                    <option value="En curso" selected>En curso</option>
+                    <option value="Cerrada" selected>Cerrada</option>
+                    <option value="En riesgo" selected>En riesgo</option>
+                    <option value="En revision" selected>En revisión</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label for="pagoId">Pago ID:</label>
-                <input type="text" class="form-control" id="pagoId" name="pagoId">
-            </div>
-        
          <div class="form-group">
                 <label for="fechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
                 <input type="text" class="form-control datepicker" id="fechaPagoInicialInversion" name="fechaPagoInicialInversion">
@@ -299,13 +305,15 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                 <label for="fechaFinalInversion">Fecha Final Inversion:</label>
                 <input type="text" class="form-control datepicker" id="fechaFinalInversion" name="fechaFinalInversion">
             </div>
-            <div class="form-group">
-                <label for="fechaDeAprobacion">Fecha de Aprobacion:</label>
-                <input type="text" class="form-control datepicker" id="fechaDeAprobacion" name="fechaDeAprobacion">
-            </div>
+            
             </div>
     </div>
+    </div>
     <!-- Add more fields as needed -->
+    <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Agregar Inversión</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+          </div>
 </form>
 
 </div>
@@ -347,15 +355,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     <!-- /.card-body -->
 </div>
-          </div>
+          
           <!-- Add more form fields as needed -->
           
           <!-- Modal Footer -->
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-primary">Agregar Inversión</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-          </div>
-        </form>
+          
+        
       </div>
       
     </div>
@@ -405,7 +410,6 @@ if ($result) {
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
-                    <th>ID Cliente</th>
                     <th>Motivo</th>
                     <th>Tipo de Inversion</th>
                     <th>Rendimiento Total</th>
@@ -433,7 +437,6 @@ if ($result) {
         </div>
         </td>
                 <td>' . $row['Id'] . '</td>
-                <td>' . $row['IdCliente'] . '</td>
                 <td>' . $row['Motivo'] . '</td>
                 <td>' . $row['TipoDeInversion'] . '</td>
                 <td>' . $row['RendimientoTotal'] . '</td>
@@ -453,7 +456,6 @@ if ($result) {
             <th></th>
                     <th>Acciones</th>
                     <th>ID</th>
-                    <th>ID Cliente</th>
                     <th>Motivo</th>
                     <th>Tipo de Inversion</th>
                     <th>Rendimiento Total</th>
@@ -565,10 +567,6 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                             <div class="form-group">
                                 <label for="editStatus">Status:</label>
                                 <input type="text" class="form-control" id="editStatus" name="editStatus">
-                            </div>
-                            <div class="form-group">
-                                <label for="editPagoId">Pago ID:</label>
-                                <input type="text" class="form-control" id="editPagoId" name="editPagoId">
                             </div>
                             <div class="form-group">
                                 <label for="editFechaPagoInicialInversion">Fecha Pago Inicial Inversion:</label>
@@ -794,6 +792,40 @@ $(".delete-btn").click(function() {
       startDate: new Date() // Set the start date as today
     });
   });
+  var montoDividendoEsperadoInput = document.getElementById("montoDividendoEsperado");
+  montoDividendoEsperadoInput.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(montoDividendoEsperadoInput.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            montoDividendoEsperadoInput.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = montoDividendoEsperadoInput.selectionStart;
+
+              // Get the input value
+              let oldInputValue = montoDividendoEsperadoInput.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              montoDividendoEsperadoInput.value = formattedValue;
+
+              // Restore the cursor position
+              montoDividendoEsperadoInput.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+          });
 </script>
 
 

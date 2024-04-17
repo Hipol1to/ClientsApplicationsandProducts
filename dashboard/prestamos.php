@@ -239,9 +239,11 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                 <div class="form-group">
                     <label for="status">Status:</label>
                     <select class="form-control" id="status" name="status" required>
-                    <option value="Aprobado" selected>Aprobado</option>
-                    <option value="En revisión" selected>En revisión</option>
-                    <option value="Rechazado" selected>Rechazado</option>
+                    <option value="Aprobado">Aprobado</option>
+                    <option value="Rechazado">Rechazado</option>
+                    <option value="En revision">En revisión</option>
+                    <option value="Saldado">Saldado</option>
+                    <option value="Moroso">Moroso</option>
                 </select>
                 </div>
             </div>
@@ -463,7 +465,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="editStatus">Status:</label>
-                    <select class="form-control" id="editStatus" name="statusPrestamo">
+                    <select class="form-control" id="editStatus" name="editStatus">
                     <option value="Aprobado">Aprobado</option>
                     <option value="Rechazado">Rechazado</option>
                     <option value="En revision">En revisión</option>
@@ -509,6 +511,10 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
                     <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
                 </div>
+                <div class="form-group">
+                    <label for="editMontoPagoMensual">Monto de pago mensual sugerido:</label>
+                    <input type="text" class="form-control" id="editMontoPagoMensual" name="editMontoPagoMensual">
+                </div>
             </div>
         </div>
         <div class="modal-footer">
@@ -530,6 +536,11 @@ var montoCuota1 = null;
 var montoCuota2 = null;
 var montoCuota3 = null;
 var montoCuota4 = null;
+
+var dia1 = null;
+var dia2 = null;
+var dia3 = null;
+var dia4 = null;
 function generateOptionsEdit() {
     var container = document.getElementById("editDiasDePagoContainer");
     var containerCuotas = document.getElementById("editCuotasDiasDePagoContainer");
@@ -618,7 +629,36 @@ function generateOptionsEdit() {
         }
 
         // Append select to container
-        select.selectedIndex = (i);
+         switch (i) {
+          case 0:
+            var expectedIndex = dia1.replace(/\D/g, \'\');
+            expectedIndex--;
+            select.selectedIndex = expectedIndex;
+            console.log(expectedIndex);
+            break;
+            case 1:
+            var expectedIndex = dia2.replace(/\D/g, \'\');
+            expectedIndex--;
+            select.selectedIndex = expectedIndex;
+            console.log(expectedIndex);
+            break;
+            case 2:
+            var expectedIndex = dia3.replace(/\D/g, \'\');
+            expectedIndex--;
+            select.selectedIndex = expectedIndex;
+            console.log(expectedIndex);
+            break;
+            case 3:
+            var expectedIndex = dia4.replace(/\D/g, \'\');
+            expectedIndex--;
+            select.selectedIndex = expectedIndex;
+            console.log(expectedIndex);
+            break;
+        
+          default:
+            break;
+        }
+        //select.selectedIndex = (i);
         container.appendChild(select);
         containerCuotas.appendChild(labelCuota);
         containerCuotas.appendChild(inputCuota);
@@ -683,19 +723,37 @@ $.ajax({
 }
         $("#editFechaFinalPrestamo").val(response.FechaFinalPrestamo);
         $("#editCuotasTotales").val(response.CuotasTotales);
+
         var diasDePago = response.DiasDePagoDelMes;
+        console.log(diasDePago);
         var numbers = diasDePago.split(\'_\');
+        console.log(numbers);
 
         // Map each number to a string with the desired format (#1, #2, etc.)
         var formattedNumbers = numbers.map(function(number) {
-        return \'Día#\' + number;
+        return \' \' + number;
         });
+
+        // Join the formatted numbers into a single string
         var formattedString = formattedNumbers.join(\', \');
+        const diasesDePargos = formattedString.split(\', \');
+         dia1 = diasesDePargos[0];
+         console.log(dia1);
+         dia2 = diasesDePargos[1];
+         console.log(dia2);
+         dia3 = diasesDePargos[2];
+         console.log(dia3);
+         dia4 = diasesDePargos[3];
+         console.log(dia4);
+
+        //console.log(formattedString);
         $("#editDiasDePagoDelMes").val(formattedString);
         $("#editCantPagosPorMes").val(response.CantPagosPorMes);
         document.getElementById("editCantPagosPorMes").addEventListener("change", generateOptionsEdit);
         generateOptionsEdit();
         $("#editFechaDeAprobacion").val(response.FechaDeAprobacion);
+        $("#editMontoPagoMensual").val(response.MontoPagoMensual);
+        
         $("#editModal").modal("show");
     },
     error: function(xhr, status, error) {
@@ -1003,8 +1061,18 @@ for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
 }
 
 // Compare the sum with the value of another input element
-var otherInputElementValue = parseFloat(document.getElementById('editMontoSolicitado').value);
-if (sum === otherInputElementValue) {
+var montoSolicitadoInputValue = parseFloat(document.getElementById('editMontoAprobado').value);
+console.log(montoSolicitadoInputValue);
+var plazoInputElementValue = parseFloat(document.getElementById('editCantPagosPorMes').value);
+console.log(plazoInputElementValue);
+var monthlyAmmount = montoSolicitadoInputValue / plazoInputElementValue;
+monthlyAmmount = Math.floor(monthlyAmmount * 100) / 100;
+sum = Math.floor(sum * 100) / 100;
+sum = sum.toFixed(2);
+monthlyAmmount = monthlyAmmount.toFixed(2);
+console.log(monthlyAmmount);
+console.log(sum);
+if (sum === monthlyAmmount) {
     console.log("The sum of values from input elements matches the value of the other input element.");
     return true;
 } else {
@@ -1297,6 +1365,214 @@ document.getElementById("cantPagosPorMes").addEventListener("change", generateOp
 // Initial call to generateOptions function to populate the select dropdown based on initial value
 generateOptions();
 
+
+</script>
+<script>
+  var editMontoSolicitadoInput = document.getElementById("editMontoSolicitado");
+  var editMontoAprobadoInput = document.getElementById("editMontoAprobado");
+  var editMontoPagadoInput = document.getElementById("editMontoPagado");
+  var editTasaDeInteresInput = document.getElementById("editTasaDeInteres");
+  var editMontoRecargoInput = document.getElementById("editMontoRecargo");
+  var editMontoPagoMensualSugeridoInput = document.getElementById("editMontoPagoMensual");
+
+  editMontoSolicitadoInput.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(editMontoSolicitadoInput.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            editMontoSolicitadoInput.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = editMontoSolicitadoInput.selectionStart;
+
+              // Get the input value
+              let oldInputValue = editMontoSolicitadoInput.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              editMontoSolicitadoInput.value = formattedValue;
+
+              // Restore the cursor position
+              editMontoSolicitadoInput.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+          });
+editMontoAprobadoInput.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(editMontoAprobadoInput.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            editMontoAprobadoInput.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = editMontoAprobadoInput.selectionStart;
+
+              // Get the input value
+              let oldInputValue = editMontoAprobadoInput.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              editMontoAprobadoInput.value = formattedValue;
+
+              // Restore the cursor position
+              editMontoAprobadoInput.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+          });
+editMontoPagadoInput.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(editMontoPagadoInput.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            editMontoPagadoInput.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = editMontoPagadoInput.selectionStart;
+
+              // Get the input value
+              let oldInputValue = editMontoPagadoInput.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              editMontoPagadoInput.value = formattedValue;
+
+              // Restore the cursor position
+              editMontoPagadoInput.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+          });
+editTasaDeInteresInput.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(editTasaDeInteresInput.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            editTasaDeInteresInput.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = editTasaDeInteresInput.selectionStart;
+
+              // Get the input value
+              let oldInputValue = editTasaDeInteresInput.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              editTasaDeInteresInput.value = formattedValue;
+
+              // Restore the cursor position
+              editTasaDeInteresInput.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+          });
+editMontoRecargoInput.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(editMontoRecargoInput.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            editMontoRecargoInput.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = editMontoRecargoInput.selectionStart;
+
+              // Get the input value
+              let oldInputValue = editMontoRecargoInput.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              editMontoRecargoInput.value = formattedValue;
+
+              // Restore the cursor position
+              editMontoRecargoInput.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+          });
+editMontoPagoMensualSugeridoInput.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(editMontoPagoMensualSugeridoInput.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            editMontoPagoMensualSugeridoInput.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = editMontoPagoMensualSugeridoInput.selectionStart;
+
+              // Get the input value
+              let oldInputValue = editMontoPagoMensualSugeridoInput.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              editMontoPagoMensualSugeridoInput.value = formattedValue;
+
+              // Restore the cursor position
+              editMontoPagoMensualSugeridoInput.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+          });
 
 </script>
 

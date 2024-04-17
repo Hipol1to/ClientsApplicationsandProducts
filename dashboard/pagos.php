@@ -111,7 +111,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                 </li>
 
                  <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="prestamos.php" class="nav-link">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
@@ -306,7 +306,9 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 // Assuming your database connection code is included here
 
 // Fetch data from the clientes table
-$sql = "SELECT * FROM pagos";
+$sql = "SELECT u.Id AS userId, u.IdCliente AS userIdCliente, u.Usuario, u.Contraseña, u.Rol, u.Email, u.Active, u.FechaCreacion AS userFechaDeCreacion, u.FechaModificacion AS userFechaDeModificacion, p.Id, p.IdCliente, p.CuentaRemitente, p.TipoCuentaRemitente, p.EntidadBancariaRemitente, p.CuentaDestinatario, p.TipoCuentaDestinatario, p.EntidadBancariaDestinatario, p.Monto, p.Motivo, p.Tipo, p.InversionId, p.PrestamoId, p.ParticipacionId, p.VoucherPath, p.FechaDePago, p.FechaCreacion, p.FechaModificacion FROM pagos as p
+join usuarios as u
+where p.IdCliente = u.IdCliente";
 $result = $db->query($sql);
 
 if ($result) {
@@ -337,7 +339,7 @@ if ($result) {
 <p></p>
                   <th></th>
                   <th>Acciones</th>
-                    <th>Id Solicitante</th>
+                    <th>Usuario</th>
                     <th>Cuenta Remitente</th>
                     <th>Tipo de Cuenta Remitente</th>
                     <th>Entidad Bancaria Remitente</th>
@@ -363,7 +365,7 @@ if ($result) {
             <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
         </div>
         </td>
-                <td>' . $row['IdCliente'] . '</td>
+                <td>' . $row['Usuario'] . '</td>
                 <td>' . $row['CuentaRemitente'] . '</td>
                 <td>' . $row['TipoCuentaRemitente'] . '</td>
                 <td>' . $row['EntidadBancariaRemitente'] . '</td>
@@ -381,7 +383,7 @@ if ($result) {
             <tr>
             <th></th>
             <th>Acciones</th>
-            <th>Id Solicitante</th>
+            <th>Usuario</th>
             <th>Cuenta Remitente</th>
             <th>Tipo de Cuenta Remitente</th>
             <th>Entidad Bancaria Remitente</th>
