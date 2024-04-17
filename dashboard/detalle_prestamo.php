@@ -532,13 +532,18 @@ if(isset($_POST['actualizarStatus'])) {
             <!-- Detalle Perfil Content Here -->
             <div class="form-group">
                 <label for="estadoPrestamo">Status del Préstamo:</label>
-                <select class="form-control" id="estadoPrestamo">
+                <form action="update_prestamo.php" method="post">
+                  <input type="text" name="idPrestamo" value="<?php echo $prestamo_id; ?>" hidden readonly>
+                <select class="form-control" id="estadoPrestamo" name="statusPrestamo">
                     <option value="Aprobado" <?php if($prestamo['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
-                    <option value="En proceso" <?php if($prestamo['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
                     <option value="Rechazado" <?php if($prestamo['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
+                    <option value="En revision" <?php if($prestamo['Status'] == 'En proceso') echo 'selected'; ?>>En revisión</option>
+                    <option value="Saldado" <?php if($prestamo['Status'] == 'Saldado') echo 'selected'; ?>>Saldado</option>
+                    <option value="Moroso" <?php if($prestamo['Status'] == 'Moroso') echo 'selected'; ?>>Moroso</option>
                 </select>
             </div>
-            <button type="button" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
+            <button type="submit" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
+            </form>
             <br><br>
             <?php
             // Check if the ID parameter is set in the URL
@@ -556,7 +561,7 @@ if(isset($_POST['actualizarStatus'])) {
 if($stmt->rowCount() > 0) {
     // Fetch the client's details
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
-    $client['Solicitante'] = null;
+    $client['Solicitante'] = $_SESSION['username'];
     $client['PagosRealizados'] = $client['PagoId'] == null ? "Ningún pago realizado" : $client['PagoId'] . " pagos";
     $client['CuotasTotales'] = $client['CuotasTotales'] == null ? "No hay cuotas asignadas" : $client['CuotasTotales'] . " cuotas";
     $client['CantPagosPorMes'] = $client['CantPagosPorMes'] == null ? "N/A" : $client['CantPagosPorMes'];
@@ -601,7 +606,7 @@ if($stmt->rowCount() > 0) {
     echo '<input type="text" class="form-control" id="montoRecargo" name="montoRecargo" value="'.htmlspecialchars($client['MontoRecargo']).'" readonly>';
     echo '</div>';
     echo '<div class="form-group">';
-    echo '<label for="solicitante">Solicitante:</label>';
+    echo '<label for="solicitante">Usuario Solicitante:</label>';
     echo '<input type="text" class="form-control" id="solicitante" name="solicitante" value="'.htmlspecialchars($client['Solicitante']).'" readonly>';
     echo '</div>';
     echo '<div class="form-group">';
@@ -665,7 +670,8 @@ if($stmt->rowCount() > 0) {
 //pagos for prestamo
 echo'<div class="tab-pane fade" id="pagosTabForPrestamos" role="tabpanel" aria-labelledby="nuevo-tab">';
 // Fetch data from the clientes table
-$sql = "SELECT * FROM pagos WHERE PrestamoId = ".$prestamo_id."";
+$sql = "SELECT * FROM pagos WHERE PrestamoId = ".$prestamo_id;
+error_log($sql);
 $result = $db->query($sql);
 
 if ($result) {

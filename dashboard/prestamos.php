@@ -313,7 +313,8 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 // Assuming your database connection code is included here
 
 // Fetch data from the clientes table
-$sql = "SELECT * FROM prestamos";
+$sql = "SELECT p.Id AS IdPrestamo, p.IdCliente AS IdClientePrestamo, Motivo, MontoSolicitado, MontoAprobado, MontoPagado, TasaDeInteres, MontoRecargo, Remitente, Beneficiario, p.Status AS StatusPrestamo, PagoId, FechaPagoMensual, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes, FechaDeAprobacion, p.FechaCreacion, p.FechaModificacion, u.Id AS IdUsuario, u.IdCliente AS IdClienteUsiario, Usuario, Email, Active AS isActive FROM prestamos as p
+JOIN usuarios as u WHERE p.IdCliente = u.IdCliente";
 $result = $db->query($sql);
 
 if ($result) {
@@ -345,8 +346,8 @@ if ($result) {
                   <th></th>
                   <th>Acciones</th>
                     <th>ID</th>
-                    <th>Id Solicitante</th>
-                    <th>Motivo</th>
+                    <th>Usuario Solicitante</th>
+                    <th>Concepto</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
                     <th>Pagos</th>
@@ -360,19 +361,19 @@ if ($result) {
         echo '<tr>
         <td></td>
         <td>
-    <a href="detalle_prestamo.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
+    <a href="detalle_prestamo.php?id='. $row['IdPrestamo'].'" class="btn btn-info btn-sm">Ver detalle</a>
     <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-        <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['Id'].'">Editar</button>
+        <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['IdPrestamo'].'">Editar</button>
     </div>
     <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-        <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
+        <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['IdPrestamo'].'">Eliminar</button>
     </div>
 </td>
-                <td>' . $row['Id'] . '</td>
-                <td>' . $row['IdCliente'] . '</td>
+                <td>' . $row['IdPrestamo'] . '</td>
+                <td>' . $row['Usuario'] . '</td>
                 <td>' . $row['Motivo'] . '</td>
                 <td>' . $row['MontoSolicitado'] . '</td>
-                <td>' . $row['Status'] . '</td>
+                <td>' . $row['StatusPrestamo'] . '</td>
                 <td>' . $row['PagoId'] . '</td>
                 <td>' . $row['FechaFinalPrestamo'] . '</td>
               </tr>';
@@ -385,8 +386,8 @@ if ($result) {
             <th></th>
                     <th>Acciones</th>
                     <th>ID</th>
-                    <th>Id Solicitante</th>
-                    <th>Motivo</th>
+                    <th>Usuario Solicitante</th>
+                    <th>Concepto</th>
                     <th>Monto Solicitado</th>
                     <th>Status</th>
                     <th>Pagos</th>

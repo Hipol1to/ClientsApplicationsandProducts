@@ -17,7 +17,7 @@ error_log("dentro de agregar eiprestamo aichivo");
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $idCliente = $_SESSION['ClienteId'];
-    $motivo = $_POST['motivo'];
+    $motivo = "Prestamo";
     $montoSolicitado = $_POST['montoSolicitado'];
     //$montoAprobado = $_POST['montoAprobado'];
     //$montoPagado = $_POST['montoPagado'];
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //$montoRecargo = $_POST['montoRecargo'];
     $remitente = "Inversiones Everest";
     $beneficiario = $_SESSION['fullname'];
-    $status = "En proceso";
+    $status = "En revision";
     //missing fecha pago mensual
     $fechaFinalPrestamo = $_POST['fechaFinalPrestamo'];
 

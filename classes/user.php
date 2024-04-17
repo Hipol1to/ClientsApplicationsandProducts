@@ -77,6 +77,11 @@ class User
         $_SESSION['fullname'] = $row['fullname'];
         error_log("User has fullname: " . $_SESSION['fullname']);
 
+		$_SESSION['hasRNC'] = isset($row['RNC']);
+        error_log("User has RNC?: " . $_SESSION['hasRNC']);
+
+		$_SESSION['RNC'] = isset($row['RNC']) ? $row['RNC'] : null;
+
 		$_SESSION['isProffileValidated'] = $row['isProffileValidated'] == 1 ? true : false;
 		error_log("is client proffile validated? " . $_SESSION['isProffileValidated']);
 

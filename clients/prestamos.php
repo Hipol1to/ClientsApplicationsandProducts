@@ -186,11 +186,11 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
     <form onsubmit="return isFormValid()" id="formAddPrestamo" action="add_prestamo.php" method="post">
         <div class="row">
             <div class="col-sm-6">
-                <!-- Group 1 -->
+                <!-- Group 1
                 <div class="form-group">
                     <label for="motivo">Descripcion:</label>
                     <input type="text" class="form-control" id="motivo" name="motivo" required>
-                </div>
+                </div> -->
                 <div class="form-group">
                     <label for="montoSolicitado">Monto Solicitado:</label>
                     <input type="text" class="form-control" id="montoSolicitado" name="montoSolicitado" step=".01" required>

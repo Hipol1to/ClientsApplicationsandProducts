@@ -71,14 +71,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         // Check if the update was successful
         $rowCount = $stmt->rowCount();
         if ($rowCount > 0) {
-            error_log(json_encode(['status' => 'success', 'message' => 'Record updated successfully.']));
-        } else {
-            error_log(json_encode(['status' => 'error', 'message' => 'No records updated.']));
-        }
+          error_log(json_encode(['status' => 'success', 'message' => 'Prestamo ID: '.$editId.' Updated successfully.']));
+          header("location: detalle_prestamo.php?id=".$editId."&success=1");
+          exit();
+      } else {
+          error_log(json_encode(['status' => 'error', 'message' => 'Prestamo ID: '.$editId.' Update failed, there was no record found.']));
+          header("location: detalle_prestamo.php?id=".$editId."&error=1");
+          exit();
+      }
     } catch (PDOException $e) {
         // Handle database errors
         error_log(json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]));
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idPrestamo'])) {
+  $idPrestamo = $_POST['idPrestamo'];
+  $newStatusPrestamo = $_POST['statusPrestamo'];
+
+  try {
+    $stmt = $db->prepare("UPDATE prestamos SET Status = :status WHERE Id = :id");
+  $stmt->bindParam(':id', $idPrestamo, PDO::PARAM_INT);
+  $stmt->bindParam(':status', $newStatusPrestamo, PDO::PARAM_INT);
+
+  $stmt->execute();
+
+        // Check if the update was successful
+        $rowCount = $stmt->rowCount();
+        if ($rowCount > 0) {
+            error_log(json_encode(['status' => 'success', 'message' => 'Prestamo ID: '.$idPrestamo.' Updated successfully.']));
+            header("location: detalle_prestamo.php?id=".$idPrestamo."&success=1");
+            exit();
+        } else {
+            error_log(json_encode(['status' => 'error', 'message' => 'Prestamo ID: '.$idPrestamo.' Update failed, there was no record found.']));
+            header("location: detalle_prestamo.php?id=".$idPrestamo."&error=1");
+          exit();
+        }
+  } catch (PDOException $e) {
+    // Handle database errors
+    error_log(json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage()]));
+  }
+  
 } else {
     // Handle the case where the form is not submitted correctly
     error_log(json_encode(['status' => 'error', 'message' => 'Invalid request.']));
