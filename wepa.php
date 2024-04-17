@@ -185,5 +185,128 @@ if(isset($_POST['generate_pdf'])) {
     <form method="post">
         <button type="submit" name="generate_pdf">Generate PDF</button>
     </form>
+    <div id="editModal" class="modal fade" role="dialog">
+<div class="modal-dialog">
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Editar Prestamo</h4>
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+    </div>
+    <div class="modal-body">
+    <script>function isEditFormValido() { return false;}</script>
+    <form onsubmit="return isEditFormValido()" id="editForm" action="update_prestamo.php" method="post">
+        <!-- Input fields for editing inversion information -->
+        <div class="row">
+            <!-- Group 1 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editId">ID:</label>
+                    <input type="text" class="form-control" id="editId" name="editId" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editMotivo">Concepto:</label>
+                    <input type="text" class="form-control" id="editMotivo" name="editMotivo">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoSolicitado">Monto Solicitado:</label>
+                    <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado" step=".01" required>
+                </div>
+            </div>
+            <!-- Group 2 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editMontoAprobado">Monto Aprobado:</label>
+                    <input type="text" class="form-control" id="editMontoAprobado" name="editMontoAprobado">
+                </div>
+                <div class="form-group">
+                    <label for="editMontoPagado">Monto Pagado:</label>
+                    <input type="text" class="form-control" id="editMontoPagado" name="editMontoPagado">
+                </div>
+                <div class="form-group">
+                    <label for="editTasaDeInteres">Tasa de Interes:</label>
+                    <input type="text" class="form-control" id="editTasaDeInteres" name="editTasaDeInteres">
+                </div>
+            </div>
+            <!-- Group 3 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editMontoRecargo">Monto Recargo:</label>
+                    <input type="text" class="form-control" id="editMontoRecargo" name="editMontoRecargo">
+                </div>
+                <div class="form-group">
+                    <label for="editRemitente">Remitente:</label>
+                    <input type="text" class="form-control" id="editRemitente" name="editRemitente">
+                </div>
+                <div class="form-group">
+                    <label for="editBeneficiario">Beneficiario:</label>
+                    <input type="text" class="form-control" id="editBeneficiario" name="editBeneficiario">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- Group 4 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editStatus">Status:</label>
+                    <select class="form-control" id="editStatus" name="statusPrestamo">
+                    <option value="Aprobado">Aprobado</option>
+                    <option value="Rechazado">Rechazado</option>
+                    <option value="En revision">En revisión</option>
+                    <option value="Saldado">Saldado</option>
+                    <option value="Moroso">Moroso</option>
+                </select>
+                <div class="form-group">
+                    <label for="editCantPagosPorMes">Cantidad cuotas mensuales:</label>
+                    <input type="number" class="form-control" id="editCantPagosPorMes" name="editCantPagosPorMes" min="1" max="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="1" required>
+                </div>
+                <div class="form-group">
+  <label id="labelMontoCuotas" for="editCantPagosPorMes">Monto Cuotas:</label>
+<div id="editCuotasDiasDePagoContainer"></div>
+</div>
+
+                </div>
+            </div>
+            <!-- Group 5 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editFechaFinalPrestamo">Fecha Final de prestamo:</label>
+                    <input type="text" class="form-control datepicker" id="editFechaFinalPrestamo" name="editFechaFinalPrestamo">
+                </div>
+                <div class="form-group">
+                    <label for="editCuotasTotales">Cuotas Totales:</label>
+                    <input type="text" class="form-control" id="editCuotasTotales" name="editCuotasTotales">
+                </div>
+                <div class="form-group">
+                  <label id="labelDiasDePagoDelMes" for="diasDePagoDelMes">Días de Pago del Mes:</label>
+                  <div id="editDiasDePagoContainer"></div>
+                </div>
+            </div>
+            <!-- Group 6 -->
+            <div class="col-sm-4">
+                <div class="form-group">
+                    <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
+                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
+                </div>
+                
+                
+ 
+                <div class="form-group">
+                    <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
+                    <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                </div>
+            </div>
+        </div>
+</div>
+
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
+      
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
+    </form>
+  </div>
+</div>
+</div>
 </body>
 </html>

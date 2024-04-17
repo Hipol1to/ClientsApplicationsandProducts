@@ -114,7 +114,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                 </li>
 
                  <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="prestamos.php" class="nav-link active">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
@@ -409,7 +409,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
       <button type="button" class="close" data-dismiss="modal">&times;</button>
     </div>
     <div class="modal-body">
-    <form id="editForm">
+    <form onsubmit="return isEditFormValid()" id="editForm" action="update_prestamo.php" method="post">
         <!-- Input fields for editing inversion information -->
         <div class="row">
             <!-- Group 1 -->
@@ -419,12 +419,12 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editId" name="editId" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editMotivo">Motivo:</label>
+                    <label for="editMotivo">Concepto:</label>
                     <input type="text" class="form-control" id="editMotivo" name="editMotivo">
                 </div>
                 <div class="form-group">
                     <label for="editMontoSolicitado">Monto Solicitado:</label>
-                    <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado">
+                    <input type="text" class="form-control" id="editMontoSolicitado" name="editMontoSolicitado" step=".01" required>
                 </div>
             </div>
             <!-- Group 2 -->
@@ -463,11 +463,22 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="editStatus">Status:</label>
-                    <input type="text" class="form-control" id="editStatus" name="editStatus">
+                    <select class="form-control" id="editStatus" name="statusPrestamo">
+                    <option value="Aprobado">Aprobado</option>
+                    <option value="Rechazado">Rechazado</option>
+                    <option value="En revision">En revisión</option>
+                    <option value="Saldado">Saldado</option>
+                    <option value="Moroso">Moroso</option>
+                </select>
+                <div class="form-group">
+                    <label for="editCantPagosPorMes">Cantidad cuotas mensuales:</label>
+                    <input type="number" class="form-control" id="editCantPagosPorMes" name="editCantPagosPorMes" min="1" max="4" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);" maxlength="1" required>
                 </div>
                 <div class="form-group">
-                    <label for="editPagoId">Pago ID:</label>
-                    <input type="text" class="form-control" id="editPagoId" name="editPagoId">
+  <label id="labelMontoCuotas" for="editCantPagosPorMes">Monto Cuotas:</label>
+<div id="editCuotasDiasDePagoContainer"></div>
+</div>
+
                 </div>
             </div>
             <!-- Group 5 -->
@@ -480,6 +491,10 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <label for="editCuotasTotales">Cuotas Totales:</label>
                     <input type="text" class="form-control" id="editCuotasTotales" name="editCuotasTotales">
                 </div>
+                <div class="form-group">
+                  <label id="labelDiasDePagoDelMes" for="diasDePagoDelMes">Días de Pago del Mes:</label>
+                  <div id="editDiasDePagoContainer"></div>
+                </div>
             </div>
             <!-- Group 6 -->
             <div class="col-sm-4">
@@ -487,23 +502,23 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
                     <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
                 </div>
-                <div class="form-group">
-                    <label for="editCantPagosPorMes">Frecuencia Pago Mensual:</label>
-                    <input type="text" class="form-control" id="editCantPagosPorMes" name="editCantPagosPorMes">
-                </div>
+                
+                
+ 
                 <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
                     <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
                 </div>
             </div>
         </div>
+        <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" id="saveChangesEditBtn">Guardar Cambios</button>
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+    </div>
     </form>
 </div>
 
-    <div class="modal-footer">
-      <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
-      <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-    </div>
+    
   </div>
 </div>
 </div>';
@@ -511,9 +526,118 @@ echo '<div id="editModal" class="modal fade" role="dialog">
 // Include jQuery library and custom script for handling click event and populating form fields within the modal
 echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
+var montoCuota1 = null;
+var montoCuota2 = null;
+var montoCuota3 = null;
+var montoCuota4 = null;
+function generateOptionsEdit() {
+    var container = document.getElementById("editDiasDePagoContainer");
+    var containerCuotas = document.getElementById("editCuotasDiasDePagoContainer");
+    var numSelects = document.getElementById("editCantPagosPorMes").value;
+
+    // Clear existing selects
+    container.innerHTML = "";
+    containerCuotas.innerHTML = "";
+
+    // Generate select elements
+    for (var i = 0; i < numSelects; i++) {
+        var labelCuota = document.createElement("label");
+        labelCuota.setAttribute("for", "editCuotasNo_" + (i+1));
+        labelCuota.textContent="Monto cuota #" +(i+1);
+        labelCuota.style.fontWeight = 400;
+
+        let inputCuota = document.createElement("input");
+        inputCuota.className = "form-control";
+        inputCuota.name = "editCuotasNo_" + (i+1);
+        inputCuota.id = "editCuotasNo_" + (i+1);
+        inputCuota.required = true;
+        switch (i) {
+          case 0:
+            inputCuota.value = montoCuota1;
+            break;
+            case 1:
+            inputCuota.value = montoCuota2;
+            break;
+            case 2:
+            inputCuota.value = montoCuota3;
+            break;
+            case 3:
+            inputCuota.value = montoCuota4;
+            break;
+        
+          default:
+            break;
+        }
+        //console.log(i);
+
+         inputCuota.addEventListener(\'input\', function(event) {
+          if (/[^0-9.]/.test(inputElement.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            inputCuota.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = inputCuota.selectionStart;
+
+              // Get the input value
+              let oldInputValue = inputCuota.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat(\'en-US\', {
+              style: \'currency\',
+              currency: \'USD\'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              inputCuota.value = formattedValue;
+
+              // Restore the cursor position
+              inputCuota.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+});
+        
+        var select = document.createElement("select");
+        select.className = "form-control";
+        select.name = "editDiasDePagoDelMes_" + (i+1); // Append index to name
+        select.id = "editDiasDePagoDelMes_" + (i+1); // Append index to id
+
+         //Generate options for each select
+        for (var j = 1; j <= 28; j++) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = "Día# " + j;
+            select.appendChild(option);
+        }
+
+        // Append select to container
+        select.selectedIndex = (i);
+        container.appendChild(select);
+        containerCuotas.appendChild(labelCuota);
+        containerCuotas.appendChild(inputCuota);
+        
+        
+        
+    }
+}
+
+
+
+
+
+
+
 $(document).ready(function() {
 $(".edit-btn").click(function() {
 var id = $(this).data("id");
+console.log(id);
 $.ajax({
     url: "fetch_prestamo.php",
     type: "GET",
@@ -530,13 +654,47 @@ $.ajax({
         $("#editMontoPagado").val(response.MontoPagado);
         $("#editTasaDeInteres").val(response.TasaDeInteres);
         $("#editMontoRecargo").val(response.MontoRecargo);
+        montoCuota1 = response.MontoCuota1;
+        montoCuota2 = response.MontoCuota2;
+        montoCuota3 = response.MontoCuota3;
+        montoCuota4 = response.MontoCuota4;
         $("#editRemitente").val(response.Remitente);
         $("#editBeneficiario").val(response.Beneficiario);
-        $("#editStatus").val(response.Status);
+        var statusSelectElement = document.getElementById("editStatus");
+        let erEstatus = response.Status;
+        switch(erEstatus) {
+          case "Aprobado":
+            statusSelectElement.selectedIndex = 0;
+          break;
+          case "Rechazado":
+          statusSelectElement.selectedIndex = 1;
+          break;
+          case "En revision":
+          statusSelectElement.selectedIndex = 2;
+          break;
+          case "Saldado":
+          statusSelectElement.selectedIndex = 3;
+          break;
+          case "Moroso":
+          statusSelectElement.selectedIndex = 4;
+          break;
+          default:
+          // code block
+}
         $("#editFechaFinalPrestamo").val(response.FechaFinalPrestamo);
         $("#editCuotasTotales").val(response.CuotasTotales);
-        $("#editDiasDePagoDelMes").val(response.DiasDePagoDelMes);
+        var diasDePago = response.DiasDePagoDelMes;
+        var numbers = diasDePago.split(\'_\');
+
+        // Map each number to a string with the desired format (#1, #2, etc.)
+        var formattedNumbers = numbers.map(function(number) {
+        return \'Día#\' + number;
+        });
+        var formattedString = formattedNumbers.join(\', \');
+        $("#editDiasDePagoDelMes").val(formattedString);
         $("#editCantPagosPorMes").val(response.CantPagosPorMes);
+        document.getElementById("editCantPagosPorMes").addEventListener("change", generateOptionsEdit);
+        generateOptionsEdit();
         $("#editFechaDeAprobacion").val(response.FechaDeAprobacion);
         $("#editModal").modal("show");
     },
@@ -676,46 +834,6 @@ $.ajax({
     });
   });
 </script>
-
-<script>
-  // Function to dynamically generate options for select dropdown
-  function generateOptions() {
-    var container = document.getElementById("diasDePagoContainer");
-    var numSelects = document.getElementById("cantPagosPorMes").value;
-
-    // Clear existing selects
-    container.innerHTML = "";
-
-    // Generate select elements
-    for (var i = 0; i < numSelects; i++) {
-        var select = document.createElement("select");
-        select.className = "form-control";
-        select.name = "diasDePagoDelMes_" + (i+1); // Append index to name
-        select.id = "diasDePagoDelMes_" + (i+1); // Append index to id
-
-        // Generate options for each select
-        for (var j = 1; j <= 28; j++) {
-            var option = document.createElement("option");
-            option.value = j;
-            option.text = "Día# " + j;
-            select.appendChild(option);
-        }
-
-        // Append select to container
-        select.selectedIndex = (i);
-        container.appendChild(select);
-    }
-}
-
-// Event listener to call generateOptions function when the number of days changes
-document.getElementById("cantPagosPorMes").addEventListener("change", generateOptions);
-
-// Initial call to generateOptions function to populate the select dropdown based on initial value
-generateOptions();
-
-
-</script>
-
 <script>
 
 // Flag to track whether an option has been selected
@@ -818,6 +936,136 @@ function isFormValid() {
     return true;
 }
 
+function validateSumOfQuotes() {
+  
+  // Evaluate the XPath expression
+var xpathResult = document.evaluate(
+    "//input[contains(@id,'cuotasNo_')]",
+    document,
+    null,
+    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+    null
+);
+
+// Initialize variables to store sum and count
+var sum = 0;
+var count = 0;
+
+// Iterate over matching elements
+for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
+    var inputElement = xpathResult.snapshotItem(i);
+    // Extract value and convert to a number
+    var value = parseFloat(inputElement.value);
+    // Add to sum
+    sum += value;
+    count++;
+}
+
+// Compare the sum with the value of another input element
+var otherInputElementValue = parseFloat(document.getElementById('montoSolicitado').value);
+if (sum === otherInputElementValue) {
+    console.log("The sum of values from input elements matches the value of the other input element.");
+    return true;
+} else {
+    console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
+    const menssage = "El monto de las cuotas no es igual al monto solicitado";
+    const existingMenssage = document.querySelector('.error-message');
+    if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
+    return false;
+}
+
+}
+
+
+function validateEditSumOfQuotes() {
+  
+  // Evaluate the XPath expression
+var xpathResult = document.evaluate(
+    "//input[contains(@id,'editCuotasNo_')]",
+    document,
+    null,
+    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+    null
+);
+
+// Initialize variables to store sum and count
+var sum = 0;
+var count = 0;
+
+// Iterate over matching elements
+for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
+    var inputElement = xpathResult.snapshotItem(i);
+    // Extract value and convert to a number
+    var value = parseFloat(inputElement.value);
+    // Add to sum
+    sum += value;
+    count++;
+}
+
+// Compare the sum with the value of another input element
+var otherInputElementValue = parseFloat(document.getElementById('editMontoSolicitado').value);
+if (sum === otherInputElementValue) {
+    console.log("The sum of values from input elements matches the value of the other input element.");
+    return true;
+} else {
+    console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
+    const menssage = "El monto de las cuotas no es igual al monto solicitado";
+    const existingMenssage = document.querySelector('.error-message');
+    if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
+    return false;
+}
+
+}
+
+function isEditFormValid() {
+    // Check for elements with 'is-invalid' class or disabled buttons
+    const xpathExpression = "//*[contains(@class,'is-invalid')] | //button[contains(@class,'disabled')]";
+    const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+    const element = result.singleNodeValue;
+    let cantidadCuotasMensualeses =document.getElementById("editCantPagosPorMes");
+    let numCuotasMensuales = parseInt(cantidadCuotasMensualeses.value);
+
+    // If any element with 'is-invalid' class or disabled button is found, return false
+    if (element !== null) {
+        console.log("Invalid element found:", element);
+        return false;
+    }
+
+    if (numCuotasMensuales <= 0) {
+        console.log("Invalid number of cuotas mensuales");
+        return false;
+    } else {
+            if (!validateEditSumOfQuotes()) {
+                return false;
+            }
+            
+    }
+
+    // Check for duplicate values in 'diasDePagoDelMes' select elements
+    const xpathExpression2 = "//select[contains(@id,'editDiasDePagoDelMes_')]";
+    const result2 = document.evaluate(xpathExpression2, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
+    const totalElements2 = result2.snapshotLength;
+    const elementValues2 = [];
+
+    for (let i = 0; i < totalElements2; i++) {
+        const value = result2.snapshotItem(i).value;
+        if (elementValues2.includes(value)) {
+            // If a duplicate value is found, display an error message and return false
+            const message = 'Los días de pago no pueden ser iguales';
+            const existingMessage = document.querySelector('.error-message');
+            if (!existingMessage) {
+                showMessageBelowElement(result2.snapshotItem(i), message);
+                console.log(message);
+            }
+            return false;
+        }
+        elementValues2.push(value);
+    }
+
+    // If all validations pass, return true
+    return true;
+}
+
 function showMessageBelowElement(element, message) {
     // Create a new div element for the error message
     const errorMessageDiv = document.createElement('div');
@@ -840,7 +1088,217 @@ function showMessageBelowElement(element, message) {
 
 
 </script>
+<script>
+// Get the input element
+var inputElement = document.getElementById('editMontoSolicitado');
 
+// Attach an event listener to the input element
+inputElement.addEventListener('input', function(event) {
+    if (/[^0-9.]/.test(inputElement.value)) {
+        // If it contains non-numeric characters, handle the validation here
+        inputElement.value = "";
+        // For example, you can show an error message or take appropriate action
+    } else {
+    
+    // Save the cursor position
+    var cursorPosition = inputElement.selectionStart;
+
+    // Get the input value
+    let oldInputValue = inputElement.value;
+
+    // Check if the input value is a valid number
+    if (!isNaN(parseFloat(oldInputValue))) {
+        // Currency formatting
+        let currency = parseFloat(oldInputValue);
+        let formattedValue = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(currency);
+
+        // Remove the dollar sign and commas from the formatted currency string
+        formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+        console.log(formattedValue);
+
+        // Update the value of the input element with the formatted value
+        inputElement.value = formattedValue;
+
+        // Restore the cursor position
+        inputElement.setSelectionRange(cursorPosition, cursorPosition);
+    }
+    }
+});
+</script>
+<script>
+// Get the input element
+var inputElement = document.getElementById('editMontoAprobado');
+
+// Attach an event listener to the input element
+inputElement.addEventListener('input', function(event) {
+    if (/[^0-9.]/.test(inputElement.value)) {
+        // If it contains non-numeric characters, handle the validation here
+        inputElement.value = "";
+        // For example, you can show an error message or take appropriate action
+    } else {
+    
+    // Save the cursor position
+    var cursorPosition = inputElement.selectionStart;
+
+    // Get the input value
+    let oldInputValue = inputElement.value;
+
+    // Check if the input value is a valid number
+    if (!isNaN(parseFloat(oldInputValue))) {
+        // Currency formatting
+        let currency = parseFloat(oldInputValue);
+        let formattedValue = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(currency);
+
+        // Remove the dollar sign and commas from the formatted currency string
+        formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+        console.log(formattedValue);
+
+        // Update the value of the input element with the formatted value
+        inputElement.value = formattedValue;
+
+        // Restore the cursor position
+        inputElement.setSelectionRange(cursorPosition, cursorPosition);
+    }
+    }
+});
+</script>
+<script>
+// Get the input element
+var inputElement = document.getElementById('editMontoPagado');
+
+// Attach an event listener to the input element
+inputElement.addEventListener('input', function(event) {
+    if (/[^0-9.]/.test(inputElement.value)) {
+        // If it contains non-numeric characters, handle the validation here
+        inputElement.value = "";
+        // For example, you can show an error message or take appropriate action
+    } else {
+    
+    // Save the cursor position
+    var cursorPosition = inputElement.selectionStart;
+
+    // Get the input value
+    let oldInputValue = inputElement.value;
+
+    // Check if the input value is a valid number
+    if (!isNaN(parseFloat(oldInputValue))) {
+        // Currency formatting
+        let currency = parseFloat(oldInputValue);
+        let formattedValue = new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(currency);
+
+        // Remove the dollar sign and commas from the formatted currency string
+        formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+        console.log(formattedValue);
+
+        // Update the value of the input element with the formatted value
+        inputElement.value = formattedValue;
+
+        // Restore the cursor position
+        inputElement.setSelectionRange(cursorPosition, cursorPosition);
+    }
+    }
+});
+</script>
+<script>
+  // Function to dynamically generate options for select dropdown
+  function generateOptions() {
+    var container = document.getElementById("diasDePagoContainer");
+    var containerCuotas = document.getElementById("cuotasDiasDePagoContainer");
+    var numSelects = document.getElementById("cantPagosPorMes").value;
+
+    // Clear existing selects
+    container.innerHTML = "";
+    //containerCuotas.innerHTML = "";
+
+    // Generate select elements
+    for (var i = 0; i < numSelects; i++) {
+        var labelCuota = document.createElement("label");
+        labelCuota.setAttribute("for", "cuotasNo_" + (i+1));
+        labelCuota.textContent="Monto cuota #" +(i+1);
+        labelCuota.style.fontWeight = 400;
+
+        let inputCuota = document.createElement("input");
+        inputCuota.className = "form-control";
+        inputCuota.name = "cuotasNo_" + (i+1);
+        inputCuota.id = "cuotasNo_" + (i+1);
+        inputCuota.required = true;
+        console.log(i);
+
+         inputCuota.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(inputElement.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            inputCuota.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = inputCuota.selectionStart;
+
+              // Get the input value
+              let oldInputValue = inputCuota.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              inputCuota.value = formattedValue;
+
+              // Restore the cursor position
+              inputCuota.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+});
+        
+        var select = document.createElement("select");
+        select.className = "form-control";
+        select.name = "diasDePagoDelMes_" + (i+1); // Append index to name
+        select.id = "diasDePagoDelMes_" + (i+1); // Append index to id
+
+         //Generate options for each select
+        for (var j = 1; j <= 28; j++) {
+            var option = document.createElement("option");
+            option.value = j;
+            option.text = "Día# " + j;
+            select.appendChild(option);
+        }
+
+        // Append select to container
+        select.selectedIndex = (i);
+        container.appendChild(select);
+        containerCuotas.appendChild(labelCuota);
+        containerCuotas.appendChild(inputCuota);
+        
+        
+        
+    }
+}
+
+// Event listener to call generateOptions function when the number of days changes
+document.getElementById("cantPagosPorMes").addEventListener("change", generateOptions);
+
+// Initial call to generateOptions function to populate the select dropdown based on initial value
+generateOptions();
+
+
+</script>
 
 </body>
 </html>

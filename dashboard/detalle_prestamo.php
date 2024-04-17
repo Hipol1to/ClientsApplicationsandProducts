@@ -278,7 +278,7 @@ if(isset($_POST['actualizarStatus'])) {
                 </li>
 
                  <li class="nav-item">
-                <a href="#" class="nav-link active">
+                <a href="prestamos.php" class="nav-link active">
                   <i class="fas fa-handshake nav-icon active"></i>
                   <p>Prestamos</p>
                 </a>

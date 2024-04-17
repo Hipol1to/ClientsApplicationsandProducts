@@ -813,6 +813,7 @@ if (sum === otherInputElementValue) {
 }
 
 function isFormValid() {
+  return false;
     // Check for elements with 'is-invalid' class or disabled buttons
     const xpathExpression = "//*[contains(@class,'is-invalid')] | //button[contains(@class,'disabled')]";
     const result = document.evaluate(xpathExpression, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
