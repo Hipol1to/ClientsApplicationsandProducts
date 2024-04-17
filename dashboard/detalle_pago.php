@@ -151,7 +151,7 @@ if(isset($_POST['actualizarStatus'])) {
                 </li>
 
                  <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="prestamos.php" class="nav-link">
                   <i class="fas fa-handshake nav-icon"></i>
                   <p>Prestamos</p>
                 </a>
@@ -211,9 +211,9 @@ if(isset($_POST['actualizarStatus'])) {
             <!-- <div class="form-group">
                 <label for="estadoPago">Status del Pago:</label>
                 <select class="form-control" id="estadoPago">
-                    <option value="Aprobado" <?php if($pago['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
-                    <option value="En proceso" <?php if($pago['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
-                    <option value="Rechazado" <?php if($pago['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
+                    <option value="Aprobado" <?php //if($pago['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
+                    <option value="En proceso" <?php //if($pago['Status'] == 'En proceso') echo 'selected'; ?>>En proceso</option>
+                    <option value="Rechazado" <?php// if($pago['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
                 </select>
             </div>
             <button type="button" class="btn btn-primary" id="actualizarStatus">Actualizar status</button> -->
@@ -284,7 +284,7 @@ echo '</div>';
 echo '<div class="form-group">';
 echo '<label for="tipo">Comprobante de pago:</label>';
 echo '<br>';
-echo '<img src="./'.$voucerPath.'" alt="Comprobante de pago no disponible" height="500px">';
+echo '<img src="../clients/'.$voucerPath.'" alt="Comprobante de pago no disponible" height="500px">';
 echo '</div>';
                     // Continue displaying other client details as needed
                 } else {
@@ -503,7 +503,7 @@ $(".delete-btn").click(function() {
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.2.0
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2024 <a href="https://www.linkedin.com/in/hipolito-perez/">Desarrollado por Hipolito Perez</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->

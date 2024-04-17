@@ -34,6 +34,35 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   error_log($inversionId);
   error_log($participacionId);
 
+  //voucher handling
+  // Check if both front and back photos of the ID card are uploaded
+  if (isset($_FILES['fotoComprobanteDePago']) && $_FILES['fotoComprobanteDePago']['error'] === UPLOAD_ERR_OK) {
+    // Define upload directory
+    $currentDirectory = __DIR__;
+    $parentDirectory = dirname($currentDirectory);
+    error_log("file directory: ".$parentDirectory);
+    $upload_directory = $parentDirectory . "\\clients\\" . "\\uploads\\";
+
+    // Generate unique file names for both photos
+    $voucher_file_name = uniqid() . '_front_' . $_FILES['fotoComprobanteDePago']['name'];
+
+    // Move uploaded files to the upload directory
+    $isMoveSuccess = move_uploaded_file($_FILES['fotoComprobanteDePago']['tmp_name'], $upload_directory . $voucher_file_name);
+
+    error_log($isMoveSuccess);
+
+    // Now you can save the file names or their paths to the database
+    // Construct the full paths to the uploaded files
+    $voucher_path = $upload_directory . $voucher_file_name;
+    error_log("old voucher path" . $voucher_path);
+    $voucher_path = explode("clients\\", $voucher_path);
+    $voucher_path = $voucher_path[1];
+    error_log("splitted voucher path" . $voucher_path);
+} else {
+    // Handle the case where the file uploads failed
+    $voucher_path = "Unable to resolve voucher path"; // Set an empty path for front photo
+}
+
     //QUERY to extract ClientId
      // Prepare an insert statement
     $sql = "SELECT clientes.Id as IdCliente
@@ -65,24 +94,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($participacionId == null && $prestamoId == null) {
       $sql = "INSERT INTO pagos (IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, 
               CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, 
-              InversionId, FechaDePago)
+              InversionId, VoucherPath, FechaDePago)
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
-              :tipo, :inversionId, :fechaDePago)";
+              :tipo, :inversionId, :voucherPath, :fechaDePago)";
     } elseif($participacionId != null) {
       $sql = "INSERT INTO pagos (IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, 
               CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, 
-              InversionId, ParticipacionId, FechaDePago)
+              InversionId, ParticipacionId, VoucherPath, FechaDePago)
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
-              :tipo, :inversionId, :participacionId, :fechaDePago)";
+              :tipo, :inversionId, :participacionId, :voucherPath, :fechaDePago)";
       } elseif ($prestamoId != null) {
         $sql = "INSERT INTO pagos (IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, 
               CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, 
-              PrestamoId, FechaDePago)
+              PrestamoId, VoucherPath, FechaDePago)
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
-              :tipo, :prestamoId, :fechaDePago)";
+              :tipo, :prestamoId, :voucherPath, :fechaDePago)";
       }
       error_log($sql);
       error_log("wepa");
@@ -102,6 +131,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           if($inversionId != null) $stmt->bindParam(":inversionId", $inversionId);
           if ($participacionId != null) $stmt->bindParam(":participacionId", $participacionId);
           if ($prestamoId != null) $stmt->bindParam(":prestamoId", $prestamoId);
+          $stmt->bindParam(":voucherPath", $voucher_path);
           $stmt->bindParam(":fechaDePago", $fechaDePago);
 
           // Attempt to execute the prepared statement

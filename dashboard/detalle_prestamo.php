@@ -211,7 +211,7 @@ if(isset($_POST['actualizarStatus'])) {
             </div>
             <div class="modal-body">
                 <!-- Your form goes here -->
-                <form id="editForm" action="add_pago.php" method="post">
+                <form id="editForm" action="add_pago.php" method="post" enctype="multipart/form-data">
     <div class="row">
         <!-- Group 1 -->
         <div class="col-sm-8">
@@ -356,7 +356,7 @@ if(isset($_POST['actualizarStatus'])) {
         <div class="col-sm-4">
             <div class="form-group">
               <div class="form-group">
-                <label for="addMotivo">Motivo:</label>
+                <label for="addMotivo">Concepto:</label>
                 <input type="text" class="form-control" id="addMotivo" name="addMotivo">
             </div>
                 <label for="addMonto">Monto:</label>
@@ -364,10 +364,8 @@ if(isset($_POST['actualizarStatus'])) {
             </div>
             <div class="form-group">
                 <label for="addTipo">Tipo:</label>
-                <select class="form-control" id="addTipo" name="addTipo">
-                  <option value="">-Tipo de pago-</option>  
-                  <option value="Transferencia bancaria">Transferencia bancaria</option>
-                  <option value="Efectivo">Efectivo</option>
+                <select class="form-control" id="addTipo" name="addTipo" hidden>
+                  <option value="Transferencia bancaria" selected>Transferencia bancaria</option>
                 </select>
             </div>
             <div class="form-group">
@@ -380,6 +378,10 @@ if(isset($_POST['actualizarStatus'])) {
                 <label for="addFechaDePago">Fecha de Pago:</label>
                 <input type="text" class="form-control datepicker" id="addFechaDePago" name="addFechaDePago">
             </div>
+            <div class="form-group">
+                        <label for="fotoComprobanteDePago">Foto comprobante de pago:</label>
+                        <input type="file" class="form-control-file" id="fotoComprobanteDePago" name="fotoComprobanteDePago" required>
+                      </div>
         </div>
     </div>
     <div class="modal-footer">
@@ -892,7 +894,7 @@ $(document).ready(function() {
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.2.0
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2024 <a href="https://www.linkedin.com/in/hipolito-perez/">Desarrollado por Hipolito Perez</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->

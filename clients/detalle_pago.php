@@ -278,7 +278,7 @@ echo '</div>';
 echo '<div class="form-group">';
 echo '<label for="tipo">Comprobante de pago:</label>';
 echo '<br>';
-echo '<img src="./'.$voucerPath.'" alt="Comprobante de pago" height="500px">';
+echo '<img src="./'.$voucerPath.'" alt="Comprobante de pago no disponible" height="500px">';
 echo '</div>';
                     // Continue displaying other client details as needed
                 } else {
@@ -497,7 +497,7 @@ $(".delete-btn").click(function() {
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.2.0
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2024 <a href="https://www.linkedin.com/in/hipolito-perez/">Desarrollado por Hipolito Perez</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->

@@ -769,7 +769,7 @@ if ($result) {
   </div>
   <!-- /.content-wrapper -->
   <footer class="main-footer">
-    <strong> &copy;  <a href="https://adminlte.io"></a>.</strong>
+    <strong> &copy;  <a href="https://www.linkedin.com/in/hipolito-perez/">Desarrollado por Hipolito Perez</a>.</strong>
     
     <div class="float-right d-none d-sm-inline-block">
       <b>Version</b> 0.0.0
