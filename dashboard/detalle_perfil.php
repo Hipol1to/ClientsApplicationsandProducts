@@ -96,7 +96,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
+          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
         </div>
         <div class="info">
           <a href="#" class="d-block">Usuario Administrador</a>
@@ -194,69 +194,80 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                             </ul>
                         </div>
                         <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-one-tabContent">
-                                <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
-                                    <!-- Detalle Perfil Content Here -->
-                                    <div class="form-group">
-                                        <label for="estadoCliente">Estado del Cliente:</label>
-                                        <select class="form-control" id="estadoCliente">
-                                            <option value="activo">Activo</option>
-                                            <option value="inactivo">Inactivo</option>
-                                        </select>
-                                    </div>
-                                    <button type="button" class="btn btn-primary" id="guardarEstado">Guardar Cambio</button>
-                                    <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
-                                    <!-- Detalle Perfil Content Here -->
-                                    <br>
-                                    <div class="form-group">
-                                        <label for="estadoCliente">Puntaje:</label>
-                                        
-                                    </div>
-                                  <!--  <button type="button" class="btn btn-primary" id="guardarEstado">Guardar Cambio</button> -->
-                                </div>
-                                </div>
-                                
-                                <div class="tab-pane fade" id="prestamos" role="tabpanel" aria-labelledby="prestamos-tab">
-                                    <!-- Prestamos Content Here -->
-                                    <table id="tablaPrestamos" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Motivo</th>
-                                                <th>Monto</th>
-                                                <th>Remitente</th>
-                                                <th>Beneficiario</th>
-                                                <th>Cuotas</th>
-                                                <th>Días de pago en el mes</th>
-                                                <th>Cant. minima de pagos esperados por mes</th>
-                                                <th>Status</th>
-                                                <th>Fecha Final Estimada</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Populate this table dynamically with loan data from the database -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="tab-pane fade" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
-                                    <!-- Pagos Content Here -->
-                                    <table id="tablaPagos" class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Fecha</th>
-                                                <th>Monto</th>
-                                                <th>Desde cuenta</th>
-                                                <th>Hasta cuenta</th>
-                                                <th>Tipo de pago</th>
-                                                <th>Fecha de pago</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <!-- Populate this table dynamically with payment data from the database -->
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
+        <div class="tab-content" id="custom-tabs-one-tabContent">
+            <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
+                <!-- Detalle Préstamo Content Here -->
+                <?php
+                // Check if the ID parameter is set in the URL
+                if(isset($_GET['id'])) {
+                    // Sanitize the input to prevent SQL injection
+                    $cliente_id = htmlspecialchars($_GET['id']);
+
+                    // Fetch prestamo details from the database using the ID
+                    $sql = "SELECT * FROM clientes WHERE Id = :id";
+                    $stmt = $db->prepare($sql);
+                    $stmt->bindParam(':id', $cliente_id);
+                    $stmt->execute();
+
+                    // Check if a prestamo with the specified ID exists
+                    if($stmt->rowCount() > 0) {
+                        // Fetch the prestamo's details
+                        $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                        // Display prestamo details
+                        echo '<div class="modal-body">';
+                        echo '<form id="editForm">';
+                        echo '<div class="row">';
+
+                        // Group 1
+                        echo '<div class="col-sm-4">';
+                        echo '<div class="form-group">';
+                        echo '<label for="nombre">Nombre:</label>';
+                        echo '<input type="text" class="form-control" id="nombre" name="nombre" value="'.htmlspecialchars($cliente['Nombre']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="nombre">Apellido:</label>';
+                        echo '<input type="text" class="form-control" id="apellido" name="apellido" value="'.htmlspecialchars($cliente['Apellido']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="montoAprobado">Monto Aprobado:</label>';
+                        echo '<input type="text" class="form-control" id="montoAprobado" name="montoAprobado" value="'.htmlspecialchars($cliente['MontoAprobado']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="montoPagado">Monto Pagado:</label>';
+                        echo '<input type="text" class="form-control" id="montoPagado" name="montoPagado" value="'.htmlspecialchars($cliente['MontoPagado']).'" readonly>';
+                        echo '</div>';
+                        echo '</div>';
+
+                        // Group 2 (continue similar structure for other groups)
+                        // Group 3
+                        // Group 4
+                        echo '</div>'; // Close row
+                        echo '</form>';
+                        echo '</div>'; 
+                    } else {
+                        // If no prestamo with the specified ID is found, display an error message
+                        echo '<div class="container">';
+                        echo '<h1>Error</h1>';
+                        echo '<p>No se pudo encontrar el préstamo</p>';
+                        echo '</div>';
+                    }
+                } else {
+                    // If the ID parameter is not set in the URL, display an error message
+                    echo '<div class="container">';
+                    echo '<h1>Error</h1>';
+                    echo '<p>No se pudo encontrar el préstamo</p>';
+                    echo '</div>';
+                }
+                ?>
+            </div>
+
+            <div class="tab-pane fade" id="pagosTabForPrestamos" role="tabpanel" aria-labelledby="pagos-tab">
+                <!-- Pagos Content Here -->
+                <!-- Add content for the pagos tab if needed -->
+            </div>
+        </div>
+    </div>
                         <!-- /.card -->
                     </div>
                     <!-- /.col -->
@@ -281,7 +292,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.2.0
     </div>
-    <strong>Copyright &copy; 2024 <a href="https://www.linkedin.com/in/hipolito-perez/">Desarrollado por Hipolito Perez</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2014-2021 <a href="https://www.linkedin.com/in/hipolito-perez/">Desarrollado por Hipolito Perez</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->

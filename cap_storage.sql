@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 17, 2024 at 11:12 PM
+-- Generation Time: Apr 18, 2024 at 03:41 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clientes`
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `finanzas` (
 --
 
 INSERT INTO `finanzas` (`dineroencaja`, `dineroinvertido`, `dineroenprestamos`) VALUES
-('-224691.75', '1287.03', '237592.25');
+('9326.99', '1287.03', '3173.01');
 
 -- --------------------------------------------------------
 
@@ -181,7 +181,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pagos`
@@ -205,7 +205,7 @@ INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`
 (34, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '2324434', 'Cuenta de ahorros', 'Bandex', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:20:09', '2024-03-19 04:20:09'),
 (35, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', 'Transferencia bancaria', NULL, 4, NULL, NULL, '2024-03-30 00:00:00', '2024-03-19 04:26:42', '2024-03-19 04:26:42'),
 (36, 7, '999777477', 'Cuenta de ahorros', 'Banco Cofaci', '232443', 'Cuenta corriente', 'Banco Activo', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, 4, NULL, NULL, '2024-07-18 00:00:00', '2024-03-19 04:27:14', '2024-03-19 04:27:14'),
-(37, 38, 'Cuenta corriente', 'Cuenta corriente', 'Banco Popular Dominicano', '94999555', 'Cuenta corriente', 'Banco BHD', '234455.00', 'Pago de préstamo del usuario FalinApart Tan tan', 'Transferencia bancaria', NULL, 39, NULL, 'uploads\\662051d38a5d5_front_image-1-1.png', '2024-04-29 00:00:00', '2024-04-17 22:48:51', '2024-04-17 22:48:51');
+(41, 38, '543745754376534765y', 'Cuenta corriente', 'Bancotui', '2324434', 'Cuenta de ahorros', 'Banco Óptima de Ahorro y Crédito', '35.76', 'ei compa', 'Transferencia bancaria', NULL, 39, NULL, '\\uploads\\66205eaa7fd73_front_427612882_8035330343159946_6645521912125190457_n.jpg', '2024-04-25 00:00:00', '2024-04-17 23:43:38', '2024-04-17 23:43:38');
 
 --
 -- Triggers `pagos`
@@ -454,13 +454,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
 --
 
 INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `TasaDeInteres`, `MontoRecargo`, `MontoCuota1`, `MontoCuota2`, `MontoCuota3`, `MontoCuota4`, `MontoPagoMensual`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaPagoMensual`, `FechaFinalPrestamo`, `CuotasTotales`, `DiasDePagoDelMes`, `CantPagosPorMes`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(4, 3, 'Prestamo educativo', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 36, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-03-19 04:27:14'),
-(5, 1, 'Education Loan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', 5, NULL, '2024-12-18 04:00:00', NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-02-08 22:45:47'),
-(6, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:56:04'),
-(7, 1, 'Education Loan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Sender1', 'Receiver1', 'En proceso', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:30:00', '2024-01-22 12:56:04'),
-(8, 3, 'Business Loan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Sender3', 'Receiver3', 'Aprobado', 6, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:28:00', '2024-01-22 12:57:26'),
-(27, 4, 'Short-term Loan', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Sender4', 'Receiver4', 'En proceso', 2, NULL, NULL, NULL, NULL, NULL, NULL, '2024-01-18 08:20:00', '2024-03-19 03:41:59'),
-(39, 38, 'Prestamo', '12300.00', '10000.00', '0.00', '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', NULL, NULL, '2025-01-17 04:00:00', 18, '   Dia# 6,  Dia# 16', '2', NULL, '2024-04-17 20:14:59', '2024-04-17 21:00:58');
+(39, 38, 'Prestamo', '12300.00', '10000.00', '0.00', '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', 41, NULL, '2025-01-17 04:00:00', 18, '   Dia# 6,  Dia# 16', '2', NULL, '2024-04-17 20:14:59', '2024-04-17 23:43:38');
 
 -- --------------------------------------------------------
 
@@ -482,14 +476,13 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`),
   KEY `IdCliente` (`IdCliente`)
-) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 40, 'opal', '$2y$10$sPM10Zpplsqi95aUS4XhHel9D5jS975zFt07QYprMQiW5q5EUfGxq', 'Cliente', 'hipolitoprz2001@gmail.com', 1, '2024-01-18 03:47:23', '2024-04-09 19:20:51'),
 (2, 0, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-27 04:11:55'),
 (3, NULL, 'markDitamai', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Administrador', 'cuentascompaltidas@gmail.com', 1, '2024-02-10 17:16:56', '2024-03-26 01:54:11'),
 (4, 7, 'compainero', '$2y$10$Ul59.UV1GM05y2V2XKlwzuCpnsGQeHAShghQWLqDhnSCoi0SiBeZ6', 'Administrador', 'thelegendstutorials@hotmail.com', 1, '2024-03-23 19:16:49', '2024-03-27 04:11:58'),

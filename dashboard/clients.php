@@ -514,6 +514,13 @@ if ($result) {
                                 <label for="editTotalPrestado">Total Prestado:</label>
                                 <input type="text" class="form-control" id="editTotalPrestado" name="editTotalPrestado">
                             </div>
+                            <div class="form-group">
+                                <label for="editTotalPrestado">Perfil validado:</label>
+                                <select class="form-control" id="perfilValidado" name="perfilValidado" required>
+                                <option value="0" selected>No</option>
+                                <option value="1">Si</option>
+                                </select>
+                            </div>
                             <!-- Add more form groups for group 6 here -->
                         </div>
                     </div>
