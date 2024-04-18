@@ -72,7 +72,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
         </div>
         <div class="info">
           <a href="#" class="d-block">Usuario Administrador</a>
@@ -278,7 +278,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
   </div>
 
   <!-- Add a data-toggle attribute to trigger the modal -->
-  <a href="#" class="small-box-footer" data-toggle="modal" data-target="#prestamosModal">Más información <i class="fas fa-arrow-circle-right"></i></a>
+  <!--<a href="#" class="small-box-footer" data-toggle="modal" data-target="#prestamosModal">Más información <i class="fas fa-arrow-circle-right"></i></a>-->
 </div>
 
           </div>
@@ -312,54 +312,29 @@ $inversionesCount = $result['inversionesCount'];
         
             <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title" style="color: black;">Detalles de Inversiones</h4>
+                <h4 class="modal-title" style="color: black;">Actualizar Finanzas</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             
             <!-- Modal Body -->
             <div class="modal-body">
-                <!-- Search Form -->
-                <form id="inversionesSearchForm">
+                <!-- Update Form -->
+                <form id="finanzasUpdateForm" method="post" action="update_finanzas.php">
                     <div class="form-group">
-                        <label for="searchText" style="color: black;">Search Text:</label>
-                        <input type="text" class="form-control" id="searchText" name="searchText">
+                        <label for="dineroencaja" style="color: black;">Dinero en Caja:</label>
+                        <input type="text" class="form-control" id="dineroencaja" name="dineroencaja">
                     </div>
                     <div class="form-group">
-                        <label style="color: black;">Search Field:</label><br>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="searchField" id="searchId" value="Id">
-                            <label class="form-check-label" for="searchId" style="color: black;">ID</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="searchField" id="searchBeneficiario" value="Beneficiario">
-                            <label class="form-check-label" for="searchBeneficiario" style="color: black;">Beneficiario</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="searchField" id="searchIdCliente" value="IdCliente">
-                            <label class="form-check-label" for="searchIdCliente" style="color: black;">ID Cliente</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="searchField" id="searchMotivo" value="Motivo">
-                            <label class="form-check-label" for="searchMotivo" style="color: black;">Motivo</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="searchField" id="searchStatus" value="Status">
-                            <label class="form-check-label" for="searchStatus" style="color: black;">Status</label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="searchField" id="searchRemitente" value="Remitente">
-                            <label class="form-check-label" for="searchRemitente" style="color: black;">Remitente</label>
-                        </div>
-                        <!-- Add more radio buttons for other fields as needed -->
+                        <label for="dineroinvertido" style="color: black;">Dinero Invertido:</label>
+                        <input type="text" class="form-control" id="dineroinvertido" name="dineroinvertido">
+                    </div>
+                    <div class="form-group">
+                        <label for="dineroenprestamos" style="color: black;">Dinero en Prestamos:</label>
+                        <input type="text" class="form-control" id="dineroenprestamos" name="dineroenprestamos">
                     </div>
 
-                    <button type="button" class="btn btn-primary" onclick="searchInversiones()">Buscar</button>
+                    <button type="submit" class="btn btn-primary">Actualizar Finanzas</button>
                 </form>
-
-                <!-- Display Inversiones details here -->
-                <div id="inversionesDetails" style="color: black;">
-                    <!-- Content to display Inversiones details... This will be populated dynamically based on the search result. -->
-                </div>
             </div>
 
             <!-- Modal Footer -->
@@ -375,10 +350,11 @@ $inversionesCount = $result['inversionesCount'];
 
 
 
+
               <div class="icon">
                 <i class="fas fa-chart-line"></i>
               </div>
-              <a href="#" class="small-box-footer" data-toggle="modal" data-target="#inversionesModal">Más información <i class="fas fa-arrow-circle-right"></i></a>
+             <!-- <a href="#" class="small-box-footer" data-toggle="modal" data-target="#inversionesModal">Más información <i class="fas fa-arrow-circle-right"></i></a>-->
             </div>
           </div>
           <!-- ./col -->
@@ -422,7 +398,7 @@ $inversionesEnColaCount = $result['inversionesEnColaCount'];
     }
 </script>
 
-              <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- <a href="#" class="small-box-footer">Más información <i class="fas fa-arrow-circle-right"></i></a> -->
             </div>
           </div>
           <!-- ./col -->
@@ -443,7 +419,8 @@ $inversionesEnColaCount = $result['inversionesEnColaCount'];
                 <h3 class="card-title">
                   <i class="fas fa-chart-pie mr-1"></i>
                   Dinero en miles de pesos
-                </h3>
+                </h3><br>
+                <a href="#" class="small-box-footer" data-toggle="modal" data-target="#inversionesModal">Modificar finanzas <i class="fas fa-arrow-circle-right"></i></a>
                 <div class="card-tools">
                   <!-- <ul class="nav nav-pills ml-auto">
                     <li class="nav-item">
@@ -670,54 +647,7 @@ if ($result) {
             <!-- /.card -->
 
             <!-- solid sales graph -->
-            <div class="card bg-gradient-info">
-              <div class="card-header border-0">
-                <h3 class="card-title">
-                  <i class="fas fa-th mr-1"></i>
-                  Ganancias
-                </h3>
-
-                <div class="card-tools">
-                  <button type="button" class="btn bg-info btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn bg-info btn-sm" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
-                </div>
-              </div>
-              <div class="card-body">
-                <canvas class="chart" id="line-chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
-              </div>
-              <!-- /.card-body -->
-              <div class="card-footer bg-transparent">
-                <div class="row">
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
-
-                    <div class="text-white">Dinero Invertido</div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
-
-                    <div class="text-white">Dinero en caja</div>
-                  </div>
-                  <!-- ./col -->
-                  <div class="col-4 text-center">
-                    <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60"
-                           data-fgColor="#39CCCC">
-
-                    <div class="text-white">Dinero en prestamos</div>
-                  </div>
-                  <!-- ./col -->
-                </div>
-                <!-- /.row -->
-              </div>
-              <!-- /.card-footer -->
-            </div>
+            
             <!-- /.card -->
 
             <!-- Calendar -->

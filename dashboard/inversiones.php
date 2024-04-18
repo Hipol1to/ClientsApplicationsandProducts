@@ -73,7 +73,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
       <!-- Sidebar user panel (optional) -->
       <div class="user-panel mt-3 pb-3 mb-3 d-flex">
         <div class="image">
-          <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"> -->
         </div>
         <div class="info">
           <a href="#" class="d-block">Usuario Administrador</a>
@@ -482,7 +482,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-                <form id="editForm">
+                <form id="editForm" action="update_inversion.php" method="post">
                     <!-- Input fields for editing inversion information -->
                     <div class="row">
                         <!-- Group 1 -->
