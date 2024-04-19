@@ -14,7 +14,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 }
 
 // Check if the form is submitted and values are set
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId']) && !isset($_POST['idCliente'])) {
     // Get the data from the POST request
     $editId = $_POST['editId'];
     $editNombre = $_POST['editNombre'];
@@ -88,6 +88,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage() . ', Fields: ' . json_encode($_POST)]);
         error_log(json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage() . ', Fields: ' . json_encode($_POST)]));
     }
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCliente'])) {
+  try {
+    //code...
+  
+  $clientIdToUpdate = $_POST['idCliente'];
+  error_log("id to udate" . $clientIdToUpdate);
+  $isPerfilValidado = $_POST['isPerfilValidado'];
+  error_log("isperfil validado" . $isPerfilValidado);
+
+  $stmt = $db->prepare("UPDATE clientes SET 
+                                PerfilValidado = :totalPrestado 
+                                WHERE Id = :id");
+        $stmt->bindParam(':id', $clientIdToUpdate, PDO::PARAM_STR);
+        $stmt->bindParam(':totalPrestado', $isPerfilValidado, PDO::PARAM_STR);
+
+        
+        $stmt->execute();
+
+        // Check if the update was successful
+        $rowCount = $stmt->rowCount();
+        if ($rowCount > 0) {
+            echo json_encode(['status' => 'success', 'message' => 'Record updated successfully.']);
+            error_log(json_encode(['status' => 'success', 'message' => 'Record updated successfully.']));
+            header("location: detalle_perfil.php?id=".$clientIdToUpdate."&success=1");
+            exit();
+        } else {
+            echo json_encode(['status' => 'error', 'message' => 'No records updated.']);
+            error_log(json_encode(['status' => 'error', 'message' => 'No records updated.']));
+            header("location: detalle_prestamo.php?id=".$idPrestamo."&error=1");
+            exit();
+        }
+        } catch (PDOException $e) {
+    // Handle database errors
+        echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage() . ', Fields: ' . json_encode($_POST)]);
+        error_log(json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage() . ', Fields: ' . json_encode($_POST)]));
+  }
 } else {
     // Handle the case where the form is not submitted correctly
     echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);

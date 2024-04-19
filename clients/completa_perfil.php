@@ -153,7 +153,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
                       </div>
                       <div class="form-group">
                         <label for="rnc">RNC:</label>
-                        <input type="text" class="form-control" id="rnc" name="rnc" required>
+                        <input type="text" class="form-control" id="rnc" name="rnc">
                       </div>
                       <button type="submit" class="btn btn-primary">Completar Perfil</button>
                     </div>

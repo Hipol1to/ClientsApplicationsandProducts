@@ -206,7 +206,7 @@ if(isset($_POST['actualizarStatus'])) {
         <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
             <!-- Detalle Perfil Content Here -->
             <?php
-             $stmt = $db->prepare("SELECT c.Nombre AS Nombre, c.Apellido As Apellido, c.Direccion AS Direccion, c.Cedula AS Cedula, c.RNC AS RNC, c.MontoSolicitado AS MontoSolicitado, c.MontoDeuda AS MontoDeuda, c.Reenganchado AS Reenganchado, c.Puntos AS Puntos, c.FechaIngreso AS FechaIngreso, c.TotalPrestado AS TotalPrestado, u.Usuario, u.Email FROM clientes as c
+             $stmt = $db->prepare("SELECT c.Nombre AS Nombre, c.Apellido As Apellido, c.Direccion AS Direccion, c.Cedula AS Cedula, c.RNC AS RNC, c.MontoTotalSolicitado AS MontoSolicitado, c.MontoDeuda AS MontoDeuda, c.Reenganchado AS Reenganchado, c.Puntos AS Puntos, c.FechaIngreso AS FechaIngreso, c.MontoTotalPrestado AS TotalPrestado, u.Usuario, u.Email FROM clientes as c
              JOIN usuarios as u
              WHERE u.Id = :userId AND c.Id = :clientID");
              $stmt->bindParam(':userId', $_SESSION['userId']);

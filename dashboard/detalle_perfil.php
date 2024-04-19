@@ -196,23 +196,54 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         <div class="card-body">
         <div class="tab-content" id="custom-tabs-one-tabContent">
             <div class="tab-pane fade show active" id="detalle" role="tabpanel" aria-labelledby="detalle-tab">
-                <!-- Detalle Préstamo Content Here -->
-                <?php
-                // Check if the ID parameter is set in the URL
-                if(isset($_GET['id'])) {
+                <!-- Detalle Perfil Content Here -->
+
+
+
+
+                <div class="form-group">
+                <label for="estatusPerfil">Status perfil:</label>
+                <form action="update_cliente.php" method="post">
+                  <input type="text" name="idCliente" value="<?php if (isset($_GET['id'])) {
+                    echo $_GET['id'];
                     // Sanitize the input to prevent SQL injection
                     $cliente_id = htmlspecialchars($_GET['id']);
 
                     // Fetch prestamo details from the database using the ID
-                    $sql = "SELECT * FROM clientes WHERE Id = :id";
+                    $sql = "SELECT c.Id, c.IdUsuario, c.Nombre, c.Apellido, c.Direccion, c.Cedula, c.CedulaPath, c.RNC, c.MontoTotalSolicitado, c.MontoTotalPrestado, c.MontoTotalPagado, c.Interes, c.MontoDeuda, c.Reenganchado, c.PerfilValidado, c.Puntos, c.FechaIngreso, c.FechaSalida, c.MesesEnEmpresa, usuarios.Usuario, c.FechaCreacion, c.FechaModificacion
+                    FROM clientes as c
+                    INNER JOIN usuarios ON c.Id = :id";
+
                     $stmt = $db->prepare($sql);
                     $stmt->bindParam(':id', $cliente_id);
                     $stmt->execute();
+                    if ($stmt->rowCount() > 0) {
+                      // Fetch the prestamo's details
+                      $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+                    }
+                  } ?>" hidden readonly>
+                <select class="form-control" id="isPerfilValidado" name="isPerfilValidado">
+                    <option value="1" <?php if($cliente['PerfilValidado'] == 1) echo 'selected'; ?>>Aprobado</option>
+                    <option value="0" <?php if($cliente['PerfilValidado'] == 0) echo 'selected'; ?>>Rechazado</option>
+                    <option value="2" <?php if($cliente['PerfilValidado'] == 2) echo 'selected'; ?>>En revisión</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
+            </form>
+            <br><br>
+                <?php
+                // Check if the ID parameter is set in the URL
+                if(isset($_GET['id'])) {
+                    
 
                     // Check if a prestamo with the specified ID exists
                     if($stmt->rowCount() > 0) {
-                        // Fetch the prestamo's details
-                        $cliente = $stmt->fetch(PDO::FETCH_ASSOC);
+                        
+                        $cedulaPathValues = explode("_.d1vis10n._", $cliente['CedulaPath']);
+                        $capturaFrontalPath = isset($cedulaPathValues[0]) && isset(explode("\clients\\", $cedulaPathValues[0])[1]) ? "../clients/".explode("\clients\\", $cedulaPathValues[0])[1] : null;
+                        error_log("Frontal Cedula path: ".$capturaFrontalPath);
+                        $capturaReversoPath = isset($cedulaPathValues[1]) && isset(explode("\clients\\", $cedulaPathValues[1])[1]) ? "../clients/".explode("\clients\\", $cedulaPathValues[1])[1] : null; 
+                        error_log("Reverse Cedula path: ".$capturaReversoPath);
 
                         // Display prestamo details
                         echo '<div class="modal-body">';
@@ -230,13 +261,94 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         echo '<input type="text" class="form-control" id="apellido" name="apellido" value="'.htmlspecialchars($cliente['Apellido']).'" readonly>';
                         echo '</div>';
                         echo '<div class="form-group">';
-                        echo '<label for="montoAprobado">Monto Aprobado:</label>';
-                        echo '<input type="text" class="form-control" id="montoAprobado" name="montoAprobado" value="'.htmlspecialchars($cliente['MontoAprobado']).'" readonly>';
+                        echo '<label for="direcion">Dirección:</label>';
+                        echo '<input type="text" class="form-control" id="direcion" name="direcion" value="'.htmlspecialchars($cliente['Direccion']).'" readonly>';
                         echo '</div>';
                         echo '<div class="form-group">';
-                        echo '<label for="montoPagado">Monto Pagado:</label>';
-                        echo '<input type="text" class="form-control" id="montoPagado" name="montoPagado" value="'.htmlspecialchars($cliente['MontoPagado']).'" readonly>';
+                        echo '<label for="cedula">Cedula:</label>';
+                        echo '<input type="text" class="form-control" id="cedula" name="cedula" value="'.htmlspecialchars($cliente['Cedula']).'" readonly>';
                         echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="rnc">RNC:</label>';
+                        echo '<input type="text" class="form-control" id="rnc" name="rnc" value="'.htmlspecialchars($cliente['RNC']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="usuarioCliente">Usuario:</label>';
+                        echo '<input type="text" class="form-control" id="usuarioCliente" name="usuarioCliente" value="'.htmlspecialchars($cliente['Usuario']).'" readonly>';
+                        echo '</div>';
+                        echo '</div>';
+
+                        //other group
+                        echo '<div class="col-sm-4">';
+                        echo '<div class="form-group">';
+                        echo '<label for="montoTotalSolicitado">Monto total solicitado:</label>';
+                        echo '<input type="text" class="form-control" id="montoTotalSolicitado" name="montoTotalSolicitado" value="'.htmlspecialchars($cliente['MontoTotalSolicitado']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="montoTotalPrestado">Monto total prestado:</label>';
+                        echo '<input type="text" class="form-control" id="montoTotalPrestado" name="montoTotalPrestado" value="'.htmlspecialchars($cliente['MontoTotalPrestado']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="montoTotalPagado">Monto total pagado:</label>';
+                        echo '<input type="text" class="form-control" id="montoTotalPagado" name="montoTotalPagado" value="'.htmlspecialchars($cliente['MontoTotalPagado']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="interes">Tasa de interes:</label>';
+                        echo '<input type="text" class="form-control" id="interes" name="interes" value="'.htmlspecialchars($cliente['Interes']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="montoDeuda">Monto deuda:</label>';
+                        echo '<input type="text" class="form-control" id="montoDeuda" name="montoDeuda" value="'.htmlspecialchars($cliente['MontoDeuda']).'" readonly>';
+                        echo '</div>';
+
+
+                        
+
+
+                        echo '</div>';
+
+
+                        echo '<div class="col-sm-4">';
+                        echo '<div class="form-group">';
+                        echo '<label for="reenganchado">Reenganchado:</label>';
+                        echo '<input type="text" class="form-control" id="reenganchado" name="reenganchado" value="'.htmlspecialchars($cliente['Reenganchado']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="perfilValidado">Perfil validado:</label>';
+                        echo '<input type="text" class="form-control" id="perfilValidado" name="perfilValidado" value="'.htmlspecialchars($cliente['PerfilValidado']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="puntos">Puntos:</label>';
+                        echo '<input type="text" class="form-control" id="puntos" name="puntos" value="'.htmlspecialchars($cliente['Puntos']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="fechaIngreso">Fecha de ingreso:</label>';
+                        echo '<input type="text" class="form-control" id="fechaIngreso" name="fechaIngreso" value="'.htmlspecialchars($cliente['FechaIngreso']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="fechaSalida">Fecha de salida:</label>';
+                        echo '<input type="text" class="form-control" id="fechaSalida" name="fechaSalida" value="'.htmlspecialchars($cliente['FechaSalida']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="mesesEnEmpresa">Meses en la empresa:</label>';
+                        echo '<input type="text" class="form-control" id="mesesEnEmpresa" name="mesesEnEmpresa" value="'.htmlspecialchars($cliente['MesesEnEmpresa']).'" readonly>';
+                        echo '</div>';
+                        echo '</div>';
+
+
+                        
+                        
+
+                        echo '<div class="form-group">';
+                        echo '<label for="capturaFrontalCedula">Captura frontal de Cedula:</label>';
+                        echo '<br>';
+                        echo '<img src="../clients/'.htmlspecialchars($capturaFrontalPath).'" alt="Captura de cedula no disponible" height="300px">';
+                        echo '</div>';
+
+                        echo '<div class="form-group">';
+                        echo '<label for="capturaReversoCedula">Captura reverso de Cedula:</label>';
+                        echo '<br>';
+                        echo '<img src="../clients/'.htmlspecialchars($capturaReversoPath).'" alt="Captura de cedula no disponible" height="300px">';
                         echo '</div>';
 
                         // Group 2 (continue similar structure for other groups)
@@ -262,9 +374,200 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                 ?>
             </div>
 
-            <div class="tab-pane fade" id="pagosTabForPrestamos" role="tabpanel" aria-labelledby="pagos-tab">
+            <div class="tab-pane fade" id="prestamos" role="tabpanel" aria-labelledby="pagos-tab">
                 <!-- Pagos Content Here -->
-                <!-- Add content for the pagos tab if needed -->
+                <?php
+// Include the database connection file
+// Assuming your database connection code is included here
+
+// Fetch data from the clientes table
+$sql = "SELECT p.Id AS IdPrestamo, p.IdCliente AS IdClientePrestamo, Motivo, MontoSolicitado, MontoAprobado, MontoPagado, TasaDeInteres, MontoRecargo, Remitente, Beneficiario, p.Status AS StatusPrestamo, PagoId, FechaPagoMensual, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes, FechaDeAprobacion, p.FechaCreacion, p.FechaModificacion, u.Id AS IdUsuario, u.IdCliente AS IdClienteUsiario, Usuario, Email, Active AS isActive FROM prestamos as p
+JOIN usuarios as u WHERE p.IdCliente = ".$cliente_id;
+$result = $db->query($sql);
+
+                if ($result) {
+                  // Output the table structure
+                  echo '<div class="card">
+              <div class="card-header">
+              <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Préstamos</h1>
+          </div>
+          <div class="col-sm-6">
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Agregar Prestamo
+</button>
+<p></p>
+                  <th></th>
+                  <th>Acciones</th>
+                    <th>ID</th>
+                    <th>Usuario Solicitante</th>
+                    <th>Concepto</th>
+                    <th>Monto Solicitado</th>
+                    <th>Status</th>
+                    <th>Pagos</th>
+                    <th>Fecha final de prestamo</th>
+                  </tr>
+                  </thead>
+                  <tbody>';
+
+                  // Loop through the fetched results and generate table rows
+                  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    echo '<tr>
+        <td></td>
+        <td>
+    <a href="detalle_prestamo.php?id=' . $row['IdPrestamo'] . '" class="btn btn-info btn-sm">Ver detalle</a>
+    <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+        <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['IdPrestamo'] . '">Editar</button>
+    </div>
+    <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+        <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['IdPrestamo'] . '">Eliminar</button>
+    </div>
+</td>
+                <td>' . $row['IdPrestamo'] . '</td>
+                <td>' . $row['Usuario'] . '</td>
+                <td>' . $row['Motivo'] . '</td>
+                <td>' . $row['MontoSolicitado'] . '</td>
+                <td>' . $row['StatusPrestamo'] . '</td>
+                <td>' . $row['PagoId'] . '</td>
+                <td>' . $row['FechaFinalPrestamo'] . '</td>
+              </tr>';
+                  }
+
+                  // Close the table body and card
+                  echo '</tbody>
+          <tfoot>
+            <tr>
+            <th></th>
+                    <th>Acciones</th>
+                    <th>ID</th>
+                    <th>Usuario Solicitante</th>
+                    <th>Concepto</th>
+                    <th>Monto Solicitado</th>
+                    <th>Status</th>
+                    <th>Pagos</th>
+                    <th>Fecha final de prestamo</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>';
+                }?>
+            </div>
+            <div class="tab-pane fade" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
+                <!-- Pagos Content Here -->
+                <?php
+// Include the database connection file
+// Assuming your database connection code is included here
+
+// Fetch data from the clientes table
+$sql = "SELECT u.Id AS userId, u.IdCliente AS userIdCliente, u.Usuario, u.Contraseña, u.Rol, u.Email, u.Active, u.FechaCreacion AS userFechaDeCreacion, u.FechaModificacion AS userFechaDeModificacion, p.Id, p.IdCliente, p.CuentaRemitente, p.TipoCuentaRemitente, p.EntidadBancariaRemitente, p.CuentaDestinatario, p.TipoCuentaDestinatario, p.EntidadBancariaDestinatario, p.Monto, p.Motivo, p.Tipo, p.InversionId, p.PrestamoId, p.ParticipacionId, p.VoucherPath, p.FechaDePago, p.FechaCreacion, p.FechaModificacion FROM pagos as p
+join usuarios as u
+where p.IdCliente = ".$cliente_id;
+$result = $db->query($sql);
+
+                if ($result) {
+                  // Output the table structure
+                  echo '<div class="card">
+              <div class="card-header">
+              <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Pagos</h1>
+          </div>
+          <div class="col-sm-6">
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                 <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+  Agregar Pago
+</button> -->
+<p></p>
+                  <th></th>
+                  <th>Acciones</th>
+                    <th>Usuario</th>
+                    <th>Cuenta Remitente</th>
+                    <th>Tipo de Cuenta Remitente</th>
+                    <th>Entidad Bancaria Remitente</th>
+                    <th>Cuenta Destinatario</th>
+                    <th>Tipo de Cuenta Destinatario</th>
+                    <th>Entidad Bancaria Destinatario</th>
+                    <th>Motivo</th>
+                    <th>Monto</th>
+                  </tr>
+                  </thead>
+                  <tbody>';
+
+                  // Loop through the fetched results and generate table rows
+                  while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                    echo '<tr>
+        <td></td>
+        <td>
+          <a style="white-space: nowrap !important;" href="detalle_pago.php?id=' . $row['Id'] . '" class="btn btn-info btn-sm">Ver detalle</a>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+            <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
+        </div>
+        <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
+            <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
+        </div>
+        </td>
+                <td>' . $row['Usuario'] . '</td>
+                <td>' . $row['CuentaRemitente'] . '</td>
+                <td>' . $row['TipoCuentaRemitente'] . '</td>
+                <td>' . $row['EntidadBancariaRemitente'] . '</td>
+                <td>' . $row['CuentaDestinatario'] . '</td>
+                <td>' . $row['TipoCuentaDestinatario'] . '</td>
+                <td>' . $row['EntidadBancariaDestinatario'] . '</td>
+                <td>' . $row['Motivo'] . '</td>
+                <td>' . $row['Monto'] . '</td>
+              </tr>';
+                  }
+
+                  // Close the table body and card
+                  echo '</tbody>
+          <tfoot>
+            <tr>
+            <th></th>
+            <th>Acciones</th>
+            <th>Usuario</th>
+            <th>Cuenta Remitente</th>
+            <th>Tipo de Cuenta Remitente</th>
+            <th>Entidad Bancaria Remitente</th>
+            <th>Cuenta Destinatario</th>
+            <th>Tipo de Cuenta Destinatario</th>
+            <th>Entidad Bancaria Destinatario</th>
+            <th>Motivo</th>
+            <th>Monto</th>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+      <!-- /.card-body -->
+    </div>';
+                }?>
             </div>
         </div>
     </div>

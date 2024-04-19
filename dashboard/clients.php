@@ -306,7 +306,9 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 // Assuming your database connection code is included here
 
 // Fetch data from the clientes table
-$sql = "SELECT * FROM clientes";
+$sql = "SELECT c.Id, c.IdUsuario, c.Nombre, c.Apellido, c.Direccion, c.Cedula, c.CedulaPath, c.RNC, c.MontoTotalSolicitado, c.MontoTotalPrestado, c.MontoTotalPagado, c.Interes, c.MontoDeuda, c.Reenganchado, c.PerfilValidado, c.Puntos, c.FechaIngreso, c.FechaSalida, c.MesesEnEmpresa, usuarios.Usuario, c.FechaCreacion, c.FechaModificacion
+FROM clientes as c
+INNER JOIN usuarios ON c.Id = usuarios.IdCliente";
 $result = $db->query($sql);
 
 if ($result) {
@@ -342,7 +344,7 @@ if ($result) {
                   
                   <th></th>
                   <th>Acciones</th>
-                    <th>ID</th>
+                    <th>Usuario</th>
                     <th>Nombre</th>
                     <th>Apellido</th>
                     <th>Dirección</th>
@@ -372,13 +374,13 @@ if ($result) {
           <button class="btn btn-primary btn-sm edit-btn" data-id="' . $row['Id'] . '">Editar</button>
           <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
         </td>
-                <td>' . $row['Id'] . '</td>
+                <td>' . $row['Usuario'] . '</td>
                 <td>' . $row['Nombre'] . '</td>
                 <td>' . $row['Apellido'] . '</td>
                 <td>' . $row['Direccion'] . '</td>
                 <td>' . $row['Cedula'] . '</td>
                 <td>' . $row['RNC'] . '</td>
-                <td>' . $row['MontoSolicitado'] . '</td>
+                <td>' . $row['MontoTotalSolicitado'] . '</td>
                 <td>' . $row['Interes'] . '</td>
                 <td>' . $row['MontoDeuda'] . '</td>
                 <td>' . $row['Reenganchado'] . '</td>
@@ -386,7 +388,7 @@ if ($result) {
                 <td>' . $row['FechaIngreso'] . '</td>
                 <td>' . $row['FechaSalida'] . '</td>
                 <td>' . $row['MesesEnEmpresa'] . '</td>
-                <td>' . $row['TotalPrestado'] . '</td>
+                <td>' . $row['MontoTotalPrestado'] . '</td>
                 <td>' . $row['FechaCreacion'] . '</td>
                 <td>' . $row['FechaModificacion'] . '</td>
               </tr>';
@@ -398,7 +400,7 @@ if ($result) {
             <tr>
             <th></th>
             <th>Acciones</th>
-            <th>ID</th>
+            <th>Usuario</th>
             <th>Nombre</th>
             <th>Apellido</th>
             <th>Dirección</th>
@@ -560,7 +562,7 @@ if ($result) {
                   console.log(response);
                   $("#editCedula").val(response.Cedula);
                   $("#editRNC").val(response.RNC);
-                  $("#editMontoSolicitado").val(response.MontoSolicitado);
+                  $("#editMontoSolicitado").val(response.MontoTotalSolicitado);
                   $("#editInteres").val(response.Interes);
                   $("#editMontoDeuda").val(response.MontoDeuda);
                   $("#editReenganchado").val(response.Reenganchado);
