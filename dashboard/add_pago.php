@@ -245,7 +245,7 @@ error_log("{$pago}");
             exit();
         } else {
             // Redirect back to the page with error message
-            header("detalle_inversion.php?id=".$inversionId."&error=1");
+            header("location: detalle_inversion.php?id=".$inversionId."&error=1");
             exit();
         }
     }

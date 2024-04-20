@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 20, 2024 at 07:43 PM
+-- Generation Time: Apr 20, 2024 at 10:31 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -203,7 +203,7 @@ INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`
 (34, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '2324434', 'Cuenta de ahorros', 'Bandex', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:20:09', '2024-03-19 04:20:09'),
 (35, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, 4, NULL, NULL, '2024-03-30 00:00:00', '2024-03-19 04:26:42', '2024-03-19 04:26:42'),
 (36, 7, '999777477', 'Cuenta de ahorros', 'Banco Cofaci', '232443', 'Cuenta corriente', 'Banco Activo', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, 4, NULL, NULL, '2024-07-18 00:00:00', '2024-03-19 04:27:14', '2024-03-19 04:27:14'),
-(41, 38, '543745754376534765y', 'Cuenta corriente', 'Bancotui', '2324434', 'Cuenta de ahorros', 'Banco Óptima de Ahorro y Crédito', '35.76', 'ei compa', 'Transferencia bancaria', NULL, NULL, 39, NULL, '\\uploads\\66205eaa7fd73_front_427612882_8035330343159946_6645521912125190457_n.jpg', '2024-04-25 00:00:00', '2024-04-17 23:43:38', '2024-04-17 23:43:38');
+(41, 38, '12345678900', 'Cuenta corriente', 'Bancotui', '2324434', 'Cuenta de ahorros', 'Banco Óptima de Ahorro y Crédito', '35.76', 'ei compa', 'Transferencia bancaria', NULL, NULL, 39, NULL, '\\uploads\\662440fae22d6_front_mqdefault.jpg', '2024-04-25 00:00:00', '2024-04-17 23:43:38', '2024-04-20 22:26:02');
 
 --
 -- Triggers `pagos`
@@ -452,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
 --
 
 INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `TasaDeInteres`, `MontoRecargo`, `MontoCuota1`, `MontoCuota2`, `MontoCuota3`, `MontoCuota4`, `MontoPagoMensual`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaPagoMensual`, `FechaFinalPrestamo`, `CuotasTotales`, `DiasDePagoDelMes`, `CantPagosPorMes`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(39, 38, 'Prestamo', '12300.00', '10000.00', '0.00', '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', 41, NULL, '2025-01-17 04:00:00', 18, '         Dia# 6,  Dia# 16', '2', NULL, '2024-04-17 20:14:59', '2024-04-20 17:41:27');
+(39, 38, 'Prestamoss', '12300.00', '10000.00', '0.00', '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', 41, NULL, '2025-01-17 04:00:00', 18, 'Dia# 6,  Dia# 16', '2', NULL, '2024-04-17 20:14:59', '2024-04-20 20:42:18');
 
 -- --------------------------------------------------------
 

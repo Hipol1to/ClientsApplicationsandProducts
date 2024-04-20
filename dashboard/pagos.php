@@ -412,7 +412,7 @@ echo '<div id="editModalForPago" class="modal fade" role="dialog">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-    <form id="editFormForPagoMain" action="update_pago.php" method="post" enctype="multipart/form-data">>
+    <form id="editFormForPagoMain" action="update_pago.php" method="post" enctype="multipart/form-data">
         <div class="row">
             <!-- Group 1 -->
             <div class="col-sm-4">
@@ -505,8 +505,9 @@ echo '<div id="editModalForPago" class="modal fade" role="dialog">
                 </div>
                 <div class="form-group">
                 <div class="form-group">
-                        <label for="editCuentaDestinatarioForPago">Foto comprobante de pago:</label>
-                        <input type="file" class="form-control-file" id="editCuentaDestinatarioForPago" name="editCuentaDestinatarioForPago" required>
+                        <label for="editComprobanteDePago">Foto comprobante de pago:</label>
+                        <input type="file" class="form-control-file" id="editComprobanteDePago" name="editComprobanteDePago" accept="image/*">
+                        <input type="text" class="form-control" id="editVoucherPath" name="editVoucherPath" readonly hidden>
                       </div>
                     <label for="editInversionIdForPago"></label>
                     <input type="text" class="form-control" id="editInversionIdForPago" name="editInversionIdForPago" readonly hidden>
@@ -645,6 +646,8 @@ $(document).ready(function() {
               $("#editInversionIdForPago").val(response.InversionId);
               $("#editPrestamoIdForPago").val(response.PrestamoId);
               $("#editFechaDePagoForPago").val(response.FechaDePago);
+
+              $("#editVoucherPath").val(response.VoucherPath);
               $("#editModalForPago").modal("show");
           },
           error: function(xhr, status, error) {
