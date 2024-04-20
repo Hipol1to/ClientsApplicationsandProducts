@@ -500,14 +500,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             </div>
             <!-- Group 6 -->
             <div class="col-sm-4">
-                <div class="form-group">
-                    <label for="editDiasDePagoDelMes">Dias de Pago del Mes:</label>
-                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes">
-                </div>
-                
-                
- 
-                <div class="form-group">
+                    <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
                     <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
                 </div>

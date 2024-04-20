@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 18, 2024 at 03:41 AM
+-- Generation Time: Apr 20, 2024 at 07:43 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -61,7 +61,9 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `Cedula` varchar(20) DEFAULT NULL,
   `CedulaPath` varchar(1020) DEFAULT NULL,
   `RNC` varchar(20) DEFAULT NULL,
-  `MontoSolicitado` decimal(10,2) DEFAULT NULL,
+  `MontoTotalSolicitado` decimal(10,2) DEFAULT NULL,
+  `MontoTotalPrestado` decimal(10,2) DEFAULT NULL,
+  `MontoTotalPagado` decimal(10,2) DEFAULT NULL,
   `Interes` decimal(5,2) DEFAULT NULL,
   `MontoDeuda` decimal(10,2) DEFAULT NULL,
   `Reenganchado` tinyint(1) DEFAULT NULL,
@@ -70,25 +72,20 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `FechaIngreso` date DEFAULT NULL,
   `FechaSalida` date DEFAULT NULL,
   `MesesEnEmpresa` int(11) DEFAULT NULL,
-  `TotalPrestado` decimal(10,2) DEFAULT NULL,
   `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=42 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=44 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clientes`
 --
 
-INSERT INTO `clientes` (`Id`, `IdUsuario`, `Nombre`, `Apellido`, `Direccion`, `Cedula`, `CedulaPath`, `RNC`, `MontoSolicitado`, `Interes`, `MontoDeuda`, `Reenganchado`, `PerfilValidado`, `Puntos`, `FechaIngreso`, `FechaSalida`, `MesesEnEmpresa`, `TotalPrestado`, `FechaCreacion`, `FechaModificacion`) VALUES
-(7, 4, 'Jane', 'Smithh', '456 Elm St', '0987654321', NULL, '', '7000.00', '8.00', '2000.00', 1, 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:25:41', '2024-04-17 21:09:23'),
-(5, NULL, 'yo mimo', 'po quien ma', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '40229604604', NULL, '430262617', '23455.00', '10.00', '435353.00', 0, 0, 13, '2023-01-01', NULL, 43, '355532.00', '2024-02-16 00:18:13', '2024-02-16 00:18:13'),
-(4, NULL, 'Hipolito', 'Peña', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '40229604604', NULL, '130424555', '23455.00', '10.00', '435353.00', 0, 0, 13, '2023-01-01', '2023-01-01', 23, '44555.00', '2024-02-13 00:56:28', '2024-02-13 00:56:28'),
-(10, NULL, 'Jane', 'Smith', '456 Elm St', '0987654321', NULL, '', '7000.00', '8.00', '2000.00', 1, 1, 150, '2022-12-15', NULL, 12, '9000.00', '2024-02-16 00:28:20', '2024-04-17 21:09:31'),
-(11, 3, 'Alice', 'Johnson', '789 Oak St', '5432167890', NULL, '', '10000.00', '12.00', '500.00', 0, 0, 75, '2023-03-20', '2024-01-15', 10, '10500.00', '2024-02-16 00:28:20', '2024-04-17 21:09:41'),
-(38, 6, 'FalinApart', 'Tan tan', 'tenchon, bitwin menchon for nao', '0015553333456', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e652f_front_scat (1).png_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e6532_back_Untitled Workspace.jpg', '644326222', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, '2024-03-27 03:27:18', '2024-03-27 03:32:22'),
-(40, 1, 'Hipolito', 'Perez Peña', 'Calle Pedro Barronte', '40229604604', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351096_front_ENTREGABLE 4- Scampi CMMI.docx_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351098_back_Curriculum Maria Elena Peña Reinoso.pdf', '0', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, NULL, '2024-04-09 19:20:51', '2024-04-09 19:20:51');
+INSERT INTO `clientes` (`Id`, `IdUsuario`, `Nombre`, `Apellido`, `Direccion`, `Cedula`, `CedulaPath`, `RNC`, `MontoTotalSolicitado`, `MontoTotalPrestado`, `MontoTotalPagado`, `Interes`, `MontoDeuda`, `Reenganchado`, `PerfilValidado`, `Puntos`, `FechaIngreso`, `FechaSalida`, `MesesEnEmpresa`, `FechaCreacion`, `FechaModificacion`) VALUES
+(43, 10, 'pablo alberto', 'sanchez carrasco', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '0015553333456', 'C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png_.d1vis10n._C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6621f3714fd93_back_como.jpg', '', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-19 04:30:41', '2024-04-19 04:31:40'),
+(38, 6, 'FalinApart', 'Tan tan', 'tenchon, bitwin menchon for nao', '0015553333456', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e652f_front_scat (1).png_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e6532_back_Untitled Workspace.jpg', '644326222', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-03-27 03:27:18', '2024-03-27 03:32:22'),
+(40, 1, 'Hipolito', 'Perez Peña', 'Calle Pedro Barronte', '40229604604', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351096_front_ENTREGABLE 4- Scampi CMMI.docx_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351098_back_Curriculum Maria Elena Peña Reinoso.pdf', '0', NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2024-04-09 19:20:51', '2024-04-09 19:20:51');
 
 -- --------------------------------------------------------
 
@@ -173,6 +170,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `Monto` decimal(10,2) DEFAULT NULL,
   `Motivo` varchar(255) DEFAULT NULL,
   `Tipo` varchar(50) DEFAULT NULL,
+  `PagoValidado` tinyint(1) DEFAULT NULL,
   `InversionId` int(11) DEFAULT NULL,
   `PrestamoId` int(11) DEFAULT NULL,
   `ParticipacionId` int(11) DEFAULT NULL,
@@ -187,25 +185,25 @@ CREATE TABLE IF NOT EXISTS `pagos` (
 -- Dumping data for table `pagos`
 --
 
-INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`, `EntidadBancariaRemitente`, `CuentaDestinatario`, `TipoCuentaDestinatario`, `EntidadBancariaDestinatario`, `Monto`, `Motivo`, `Tipo`, `InversionId`, `PrestamoId`, `ParticipacionId`, `VoucherPath`, `FechaDePago`, `FechaCreacion`, `FechaModificacion`) VALUES
-(1, 1, 'Cuentaa1', '', 'Banco1', 'CuentaDest1', '', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, NULL, NULL, '2023-12-15 08:30:00', '2024-01-18 04:48:27', '2024-03-02 23:05:50'),
-(2, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1500.50', 'Pago de deuda', 'Depósito', NULL, NULL, NULL, NULL, '2023-12-20 10:45:00', '2024-01-18 04:48:27', '2024-01-18 04:48:27'),
-(3, 3, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, 5, NULL, NULL, '2023-12-25 12:15:00', '2024-01-18 04:48:27', '2024-02-08 21:55:46'),
-(5, 2, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, 5, NULL, NULL, '2023-12-25 12:15:00', '2024-01-22 12:15:48', '2024-03-19 03:40:48'),
-(6, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1400.00', 'Pago adicional', 'Transferencia', NULL, 8, NULL, NULL, '2023-12-28 09:00:00', '2024-01-22 12:56:30', '2024-03-19 03:41:00'),
-(7, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1800.75', 'Pago extra', 'Depósito', NULL, NULL, NULL, NULL, '2023-12-30 14:30:00', '2024-01-22 12:56:30', '2024-01-22 12:56:30'),
-(26, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', 2, NULL, NULL, NULL, '2023-12-15 08:30:00', '2024-01-28 19:41:34', '2024-02-08 21:58:43'),
-(27, 7, '999777477', 'Cuenta de ahorros', 'Banco Popular Dominicano', '94999555', 'Cuenta de ahorros', 'Banco Vimenca', '99.99', 'Compra de acciones', 'Transferencia bancaria', 6, NULL, 4, NULL, '2024-03-26 00:00:00', '2024-03-18 03:35:28', '2024-03-18 03:35:28'),
-(28, 7, '2344', 'Cuenta corriente', 'Bandex', '232443', 'Cuenta de ahorros', 'Citibank', '46.76', 'Compra de acciones', 'Transferencia bancaria', 6, NULL, 5, NULL, '2024-03-25 00:00:00', '2024-03-18 03:56:01', '2024-03-18 03:56:01'),
-(29, 7, '2344', 'Cuenta de ahorros', 'Banco Popular Dominicano', '2324434', 'Cuenta de ahorros', 'Banco López de Haro', '46.76', 'Compra de acciones', 'Transferencia bancaria', 6, NULL, 1, NULL, '2024-03-27 00:00:00', '2024-03-19 00:44:03', '2024-03-19 00:44:03'),
-(30, 7, '234', 'Cuenta corriente', 'Banreservas', '232443', 'Cuenta corriente', 'Banco Vimenca', '46.76', 'Compra de acciones', 'Transferencia bancaria', 5, NULL, NULL, NULL, '2024-04-23 00:00:00', '2024-03-19 02:39:47', '2024-03-19 02:39:47'),
-(31, 7, '234', 'Cuenta corriente', 'Banreservas', '232443', 'Cuenta corriente', 'Banco Vimenca', '46.76', 'Compra de acciones', 'Transferencia bancaria', 5, NULL, NULL, NULL, '2024-04-23 00:00:00', '2024-03-19 02:40:46', '2024-03-19 02:40:46'),
-(32, 7, '234', 'Cuenta de ahorros', 'Banreservas', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', '', NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:16:02', '2024-03-19 04:16:02'),
-(33, 7, '234', 'Cuenta de ahorros', 'Banreservas', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', '', NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:17:26', '2024-03-19 04:17:26'),
-(34, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '2324434', 'Cuenta de ahorros', 'Bandex', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:20:09', '2024-03-19 04:20:09'),
-(35, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', 'Transferencia bancaria', NULL, 4, NULL, NULL, '2024-03-30 00:00:00', '2024-03-19 04:26:42', '2024-03-19 04:26:42'),
-(36, 7, '999777477', 'Cuenta de ahorros', 'Banco Cofaci', '232443', 'Cuenta corriente', 'Banco Activo', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, 4, NULL, NULL, '2024-07-18 00:00:00', '2024-03-19 04:27:14', '2024-03-19 04:27:14'),
-(41, 38, '543745754376534765y', 'Cuenta corriente', 'Bancotui', '2324434', 'Cuenta de ahorros', 'Banco Óptima de Ahorro y Crédito', '35.76', 'ei compa', 'Transferencia bancaria', NULL, 39, NULL, '\\uploads\\66205eaa7fd73_front_427612882_8035330343159946_6645521912125190457_n.jpg', '2024-04-25 00:00:00', '2024-04-17 23:43:38', '2024-04-17 23:43:38');
+INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`, `EntidadBancariaRemitente`, `CuentaDestinatario`, `TipoCuentaDestinatario`, `EntidadBancariaDestinatario`, `Monto`, `Motivo`, `Tipo`, `PagoValidado`, `InversionId`, `PrestamoId`, `ParticipacionId`, `VoucherPath`, `FechaDePago`, `FechaCreacion`, `FechaModificacion`) VALUES
+(1, 1, 'Cuentaa1', '', 'Banco1', 'CuentaDest1', '', 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, NULL, NULL, NULL, NULL, '2023-12-15 08:30:00', '2024-01-18 04:48:27', '2024-03-02 23:05:50'),
+(2, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1500.50', 'Pago de deuda', 'Depósito', NULL, NULL, NULL, NULL, NULL, '2023-12-20 10:45:00', '2024-01-18 04:48:27', '2024-01-18 04:48:27'),
+(3, 3, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, NULL, 5, NULL, NULL, '2023-12-25 12:15:00', '2024-01-18 04:48:27', '2024-02-08 21:55:46'),
+(5, 2, 'Cuenta3', NULL, 'Banco3', 'CuentaDest3', NULL, 'BancoDest3', '800.75', 'Pago parcial', 'Cheque', NULL, NULL, 5, NULL, NULL, '2023-12-25 12:15:00', '2024-01-22 12:15:48', '2024-03-19 03:40:48'),
+(6, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1400.00', 'Pago adicional', 'Transferencia', NULL, NULL, 8, NULL, NULL, '2023-12-28 09:00:00', '2024-01-22 12:56:30', '2024-03-19 03:41:00'),
+(7, 2, 'Cuenta2', NULL, 'Banco2', 'CuentaDest2', NULL, 'BancoDest2', '1800.75', 'Pago extra', 'Depósito', NULL, NULL, NULL, NULL, NULL, '2023-12-30 14:30:00', '2024-01-22 12:56:30', '2024-01-22 12:56:30'),
+(26, 1, 'Cuenta1', NULL, 'Banco1', 'CuentaDest1', NULL, 'BancoDest1', '1000.00', 'Pago mensual', 'Transferencia', NULL, 2, NULL, NULL, NULL, '2023-12-15 08:30:00', '2024-01-28 19:41:34', '2024-02-08 21:58:43'),
+(27, 7, '999777477', 'Cuenta de ahorros', 'Banco Popular Dominicano', '94999555', 'Cuenta de ahorros', 'Banco Vimenca', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, 6, NULL, 4, NULL, '2024-03-26 00:00:00', '2024-03-18 03:35:28', '2024-03-18 03:35:28'),
+(28, 7, '2344', 'Cuenta corriente', 'Bandex', '232443', 'Cuenta de ahorros', 'Citibank', '46.76', 'Compra de acciones', 'Transferencia bancaria', NULL, 6, NULL, 5, NULL, '2024-03-25 00:00:00', '2024-03-18 03:56:01', '2024-03-18 03:56:01'),
+(29, 7, '2344', 'Cuenta de ahorros', 'Banco Popular Dominicano', '2324434', 'Cuenta de ahorros', 'Banco López de Haro', '46.76', 'Compra de acciones', 'Transferencia bancaria', NULL, 6, NULL, 1, NULL, '2024-03-27 00:00:00', '2024-03-19 00:44:03', '2024-03-19 00:44:03'),
+(30, 7, '234', 'Cuenta corriente', 'Banreservas', '232443', 'Cuenta corriente', 'Banco Vimenca', '46.76', 'Compra de acciones', 'Transferencia bancaria', NULL, 5, NULL, NULL, NULL, '2024-04-23 00:00:00', '2024-03-19 02:39:47', '2024-03-19 02:39:47'),
+(31, 7, '234', 'Cuenta corriente', 'Banreservas', '232443', 'Cuenta corriente', 'Banco Vimenca', '46.76', 'Compra de acciones', 'Transferencia bancaria', NULL, 5, NULL, NULL, NULL, '2024-04-23 00:00:00', '2024-03-19 02:40:46', '2024-03-19 02:40:46'),
+(32, 7, '234', 'Cuenta de ahorros', 'Banreservas', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', '', NULL, NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:16:02', '2024-03-19 04:16:02'),
+(33, 7, '234', 'Cuenta de ahorros', 'Banreservas', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', '', NULL, NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:17:26', '2024-03-19 04:17:26'),
+(34, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '2324434', 'Cuenta de ahorros', 'Bandex', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, NULL, NULL, NULL, '2024-03-29 00:00:00', '2024-03-19 04:20:09', '2024-03-19 04:20:09'),
+(35, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, 4, NULL, NULL, '2024-03-30 00:00:00', '2024-03-19 04:26:42', '2024-03-19 04:26:42'),
+(36, 7, '999777477', 'Cuenta de ahorros', 'Banco Cofaci', '232443', 'Cuenta corriente', 'Banco Activo', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, 4, NULL, NULL, '2024-07-18 00:00:00', '2024-03-19 04:27:14', '2024-03-19 04:27:14'),
+(41, 38, '543745754376534765y', 'Cuenta corriente', 'Bancotui', '2324434', 'Cuenta de ahorros', 'Banco Óptima de Ahorro y Crédito', '35.76', 'ei compa', 'Transferencia bancaria', NULL, NULL, 39, NULL, '\\uploads\\66205eaa7fd73_front_427612882_8035330343159946_6645521912125190457_n.jpg', '2024-04-25 00:00:00', '2024-04-17 23:43:38', '2024-04-17 23:43:38');
 
 --
 -- Triggers `pagos`
@@ -454,7 +452,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
 --
 
 INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `TasaDeInteres`, `MontoRecargo`, `MontoCuota1`, `MontoCuota2`, `MontoCuota3`, `MontoCuota4`, `MontoPagoMensual`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaPagoMensual`, `FechaFinalPrestamo`, `CuotasTotales`, `DiasDePagoDelMes`, `CantPagosPorMes`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(39, 38, 'Prestamo', '12300.00', '10000.00', '0.00', '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', 41, NULL, '2025-01-17 04:00:00', 18, '   Dia# 6,  Dia# 16', '2', NULL, '2024-04-17 20:14:59', '2024-04-17 23:43:38');
+(39, 38, 'Prestamo', '12300.00', '10000.00', '0.00', '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', 41, NULL, '2025-01-17 04:00:00', 18, '         Dia# 6,  Dia# 16', '2', NULL, '2024-04-17 20:14:59', '2024-04-20 17:41:27');
 
 -- --------------------------------------------------------
 
@@ -476,17 +474,15 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`),
   KEY `IdCliente` (`IdCliente`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usuarios`
 --
 
 INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
-(2, 0, 'opaopa', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Cliente', 'thelegendstutorials@gmail.com', 1, '2024-01-18 03:47:23', '2024-03-27 04:11:55'),
-(3, NULL, 'markDitamai', '$2y$10$9AgJyP.8jSKxssN93oZpYeJvTofR5MXQOI6wisxT.5RXeVVOkHabC', 'Administrador', 'cuentascompaltidas@gmail.com', 1, '2024-02-10 17:16:56', '2024-03-26 01:54:11'),
-(4, 7, 'compainero', '$2y$10$Ul59.UV1GM05y2V2XKlwzuCpnsGQeHAShghQWLqDhnSCoi0SiBeZ6', 'Administrador', 'thelegendstutorials@hotmail.com', 1, '2024-03-23 19:16:49', '2024-03-27 04:11:58'),
-(6, 38, 'liluser', '$2y$10$hFX.BA3sjkISNzlcShOQuuivSFSVwFbVYXZUOVDnYuxLvAVxhxGrW', 'Cliente', 'thelegendstutorials@outlook.com', 1, '2024-03-26 02:59:52', '2024-03-27 03:27:18');
+(10, 43, 'compainero', '$2y$10$48TH3pRN3mu/t5seSRU6weq6Ox20MaGuEXncnhejMbK8jo/XVYvr6', 'Administrador', 'thelegendstutorials@gmail.com', 1, '2024-04-19 04:29:50', '2024-04-19 04:32:26'),
+(6, 38, 'liluser', '$2y$10$hFX.BA3sjkISNzlcShOQuuivSFSVwFbVYXZUOVDnYuxLvAVxhxGrW', 'Cliente', 'thelegendstutorials@outlook.com', 1, '2024-03-26 02:59:52', '2024-04-19 04:32:21');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
