@@ -15,22 +15,22 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 }
 
 // Check if the form is submitted and values are set
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editIdForPago'])) {
     // Get the data from the POST request
-    $editId = $_POST['editId'];
-    $editIdCliente = $_POST['editIdCliente'];
+    $editId = $_POST['editIdForPago'];
+    $editIdCliente = $_POST['editIdClienteForPago'];
     $editCuentaRemitente = $_POST['editCuentaRemitente'];
-    $editTipoCuentaRemitente = $_POST['editTipoCuentaRemitente'];
-    $editEntidadBancariaRemitente = $_POST['editEntidadBancariaRemitente'];
-    $editCuentaDestinatario = $_POST['editCuentaDestinatario'];
-    $editTipoCuentaDestinatario = $_POST['editTipoCuentaDestinatario'];
-    $editEntidadBancariaDestinatario = $_POST['editEntidadBancariaDestinatario'];
-    $editMonto = $_POST['editMonto'];
-    $editMotivo = $_POST['editMotivo'];
-    $editTipo = $_POST['editTipo'];
-    $editInversionId = !empty($_POST['editInversionId']) ? $_POST['editInversionId'] : null;
-    $editPrestamoId = !empty($_POST['editPrestamoId']) ? $_POST['editPrestamoId'] : null;
-    $editFechaDePago = $_POST['editFechaDePago'];
+    $editTipoCuentaRemitente = $_POST['editTipoCuentaRemitenteForPago'];
+    $editEntidadBancariaRemitente = $_POST['editEntidadBancariaRemitenteForPago'];
+    $editCuentaDestinatario = $_POST['editCuentaDestinatarioForPago'];
+    $editTipoCuentaDestinatario = $_POST['editTipoCuentaDestinatarioForPago'];
+    $editEntidadBancariaDestinatario = $_POST['editEntidadBancariaDestinatarioForPago'];
+    $editMonto = $_POST['editMontoForPago'];
+    $editMotivo = $_POST['editMotivoForPago'];
+    $editTipo = $_POST['editTipoForPago'];
+    $editInversionId = !empty($_POST['editInversionIdForPago']) ? $_POST['editInversionIdForPago'] : null;
+    $editPrestamoId = !empty($_POST['editPrestamoIdForPago']) ? $_POST['editPrestamoIdForPago'] : null;
+    $editFechaDePago = $_POST['editFechaDePagoForPago'];
 
     // Assuming you have a PDO connection named $db
     try {

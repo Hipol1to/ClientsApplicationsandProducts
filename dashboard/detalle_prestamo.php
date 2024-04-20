@@ -902,23 +902,7 @@ $(document).ready(function() {
       });
   });
 
-  $("#saveChangesBtnPago").click(function() {
-      var formData = $("#editForm").serialize();
-      $.ajax({
-          url: "update_pago.php",
-          type: "POST",
-          data: formData,
-          success: function(response) {
-              $("#editModal").modal("hide");
-              // Optionally, reload the table or update the row with the edited data
-              location.reload();
-          },
-          error: function(xhr, status, error) {
-              console.error(xhr.responseText);
-              // Handle error
-          }
-      });
-  });
+  
 });
 
 </script>

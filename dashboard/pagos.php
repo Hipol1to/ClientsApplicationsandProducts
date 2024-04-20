@@ -29,6 +29,9 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 <!-- Include Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+<!-- Bootstrap Datepicker CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css" rel="stylesheet">
+
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -359,7 +362,7 @@ if ($result) {
         <td>
           <a style="white-space: nowrap !important;" href="detalle_pago.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
         <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-            <button class="btn btn-primary btn-sm edit-btn" data-id="'. $row['Id'].'">Editar</button>
+            <button class="btn btn-primary btn-sm edit-btn editarButtonPagoPrestamo" data-id="'. $row['Id'].'">Editar</button>
         </div>
         <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
             <button class="btn btn-danger btn-sm delete-btn" data-id="'. $row['Id'].'">Eliminar</button>
@@ -400,7 +403,7 @@ if ($result) {
     </div>';
 
     // Add a hidden form to hold the details for editing within the modal
-echo '<div id="editModal" class="modal fade" role="dialog">
+echo '<div id="editModalForPago" class="modal fade" role="dialog">
         <div class="modal-dialog">
           <!-- Modal content-->
           <div class="modal-content">
@@ -409,71 +412,180 @@ echo '<div id="editModal" class="modal fade" role="dialog">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-    <form id="editForm">
+    <form id="editFormForPagoMain" action="update_pago.php" method="post" enctype="multipart/form-data">>
         <div class="row">
             <!-- Group 1 -->
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="editId">ID:</label>
-                    <input type="text" class="form-control" id="editId" name="editId" readonly>
+                    <label for="editIdForPago">ID:</label>
+                    <input type="text" class="form-control" id="editIdForPago" name="editIdForPago" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editIdCliente">ID Cliente:</label>
-                    <input type="text" class="form-control" id="editIdCliente" name="editIdCliente">
+                    <label for="editIdClienteForPago">ID Cliente:</label>
+                    <input type="text" class="form-control" id="editIdClienteForPago" name="editIdClienteForPago" readonly>
                 </div>
                 <div class="form-group">
-                    <label for="editCuentaRemitente">Cuenta Remitente:</label>
-                    <input type="text" class="form-control" id="editCuentaRemitente" name="editCuentaRemitente">
+                    <label for="editCuentaRemitenteForPago">Cuenta Remitente:</label>
+                    <input type="text" class="form-control" id="editCuentaRemitenteForPago" name="editCuentaRemitenteForPago">
                 </div>
                 <div class="form-group">
-                    <label for="editMotivo">Motivo:</label>
-                    <input type="text" class="form-control" id="editMotivo" name="editMotivo">
+                    <label for="editMotivoForPago">Concepto:</label>
+                    <input type="text" class="form-control" id="editMotivoForPago" name="editMotivoForPago">
                 </div>
                 <div class="form-group">
-                    <label for="editTipo">Tipo:</label>
-                    <input type="text" class="form-control" id="editTipo" name="editTipo">
+                    <label for="editTipoForPago">Tipo:</label>
+                    <input type="text" class="form-control" id="editTipoForPago" name="editTipoForPago" readonly>
                 </div>
             </div>
             <!-- Group 2 -->
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="editTipoCuentaRemitente">Tipo de Cuenta Remitente:</label>
-                    <input type="text" class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente">
+                    <label for="editTipoCuentaRemitenteForPago">Tipo de Cuenta Remitente:</label>
+                    <select type="text" class="form-control" id="editTipoCuentaRemitenteForPago" name="editTipoCuentaRemitenteForPago">
+                    <option value="Cuenta de ahorros">Cuenta de ahorros</option>
+                    <option value="Cuenta corriente">Cuenta corriente</option>
+                </select>
                 </div>
                 <div class="form-group">
-                    <label for="editEntidadBancariaRemitente">Entidad Bancaria Remitente:</label>
-                    <input type="text" class="form-control" id="editEntidadBancariaRemitente" name="editEntidadBancariaRemitente">
+                    <label for="editEntidadBancariaRemitenteForPago">Entidad Bancaria Remitente:</label>
+                    <select type="text" class="form-control" id="editEntidadBancariaRemitenteForPago" name="editEntidadBancariaRemitenteForPago">
+                <option value="Banreservas" selected>--Entidad Bancaria Remitente--</option>
+                <option value="Banreservas">Banreservas</option>
+                <option value="Banco Popular Dominicano">Banco Popular Dominicano</option>
+                <option value="Banco BHD">Banco BHD</option>
+                <option value="Asociación Popular de Ahorros y Préstamos">Asociación Popular de Ahorros y Préstamos</option>
+                <option value="Scotiabank">Scotiabank</option>
+                <option value="Banco Santa Cruz">Banco Santa Cruz</option>
+                <option value="Asociación Cibao de Ahorros y Préstamos">Asociación Cibao de Ahorros y Préstamos</option>
+                <option value="Banco Promerica">Banco Promerica</option>
+                <option value="Banesco">Banesco</option>
+                <option value="Banco Caribe">Banco Caribe</option>
+                <option value="Banco Agrícola">Banco Agrícola</option>
+                <option value="Asociación La Nacional de Ahorros y Préstamos">Asociación La Nacional de Ahorros y Préstamos</option>
+                <option value="Citibank">Citibank</option>
+                <option value="Banco BDI">Banco BDI</option>
+                <option value="Banco Vimenca">Banco Vimenca</option>
+                <option value="Banco López de Haro">Banco López de Haro</option>
+                <option value="Bandex">Bandex</option>
+                <option value="Banco Ademi">Banco Ademi</option>
+                <option value="Banco Lafise">Banco Lafise</option>
+                <option value="Motor Crédit Banco de Ahorro y Crédito">Motor Crédit Banco de Ahorro y Crédito</option>
+                <option value="Alaver Asociación de Ahorros y Préstamos">Alaver Asociación de Ahorros y Préstamos</option>
+                <option value="Banfondesa">Banfondesa</option>
+                <option value="Banco Adopem">Banco Adopem</option>
+                <option value="Asociación Duarte">Asociación Duarte</option>
+                <option value="JMMB Bank">JMMB Bank</option>
+                <option value="Asociación Mocana">Asociación Mocana</option>
+                <option value="ABONAP">ABONAP</option>
+                <option value="Banco Unión">Banco Unión</option>
+                <option value="Banco BACC">Banco BACC</option>
+                <option value="Asociación Romana">Asociación Romana</option>
+                <option value="Asociación Peravia">Asociación Peravia</option>
+                <option value="Banco Confisa">Banco Confisa</option>
+                <option value="Leasing Confisa">Leasing Confisa</option>
+                <option value="Qik Banco Digital">Qik Banco Digital</option>
+                <option value="Banco Fihogar">Banco Fihogar</option>
+                <option value="Asociación Maguana de Ahorros y Préstamos">Asociación Maguana de Ahorros y Préstamos</option>
+                <option value="Banco Atlántico">Banco Atlántico</option>
+                <option value="Bancotui">Bancotui</option>
+                <option value="Banco Activo">Banco Activo</option>
+                <option value="Banco Gruficorp">Banco Gruficorp</option>
+                <option value="Corporación de Crédito Nordestana">Corporación de Crédito Nordestana</option>
+                <option value="Banco Óptima de Ahorro y Crédito">Banco Óptima de Ahorro y Crédito</option>
+                <option value="Banco Cofaci">Banco Cofaci</option>
+                <option value="Bonanza Banco">Bonanza Banco</option>
+                <option value="Corporación de Crédito Monumental">Corporación de Crédito Monumental</option>
+                <option value="Banco Empire">Banco Empire</option>
+                <option value="Corporación de Crédito Oficorp">Corporación de Crédito Oficorp</option>
+              </select>
                 </div>
                 <div class="form-group">
-                    <label for="editCuentaDestinatario">Cuenta Destinatario:</label>
-                    <input type="text" class="form-control" id="editCuentaDestinatario" name="editCuentaDestinatario">
+                    <label for="editCuentaDestinatarioForPago">Cuenta Destinatario:</label>
+                    <input type="text" class="form-control" id="editCuentaDestinatarioForPago" name="editCuentaDestinatarioForPago">
                 </div>
                 <div class="form-group">
-                    <label for="editInversionId">ID de Inversion:</label>
-                    <input type="text" class="form-control" id="editInversionId" name="editInversionId">
+                <div class="form-group">
+                        <label for="editCuentaDestinatarioForPago">Foto comprobante de pago:</label>
+                        <input type="file" class="form-control-file" id="editCuentaDestinatarioForPago" name="editCuentaDestinatarioForPago" required>
+                      </div>
+                    <label for="editInversionIdForPago"></label>
+                    <input type="text" class="form-control" id="editInversionIdForPago" name="editInversionIdForPago" readonly hidden>
                 </div>
                 <div class="form-group">
-                    <label for="editPrestamoId">ID de Préstamo:</label>
-                    <input type="text" class="form-control" id="editPrestamoId" name="editPrestamoId">
+                    <label for="editPrestamoIdForPago"></label>
+                    <input type="text" class="form-control" id="editPrestamoIdForPago" name="editPrestamoIdForPago" readonly hidden>
                 </div>
             </div>
             <!-- Group 3 -->
             <div class="col-sm-4">
                 <div class="form-group">
-                    <label for="editTipoCuentaDestinatario">Tipo de Cuenta Destinatario:</label>
-                    <input type="text" class="form-control" id="editTipoCuentaDestinatario" name="editTipoCuentaDestinatario">
+                    <label for="editTipoCuentaDestinatarioForPago">Tipo de Cuenta Destinatario:</label>
+                    <select type="text" class="form-control" id="editTipoCuentaDestinatarioForPago" name="editTipoCuentaDestinatarioForPago">
+                  <option value="" selected>--Tipo de Cuenta--</option>
+                    <option value="Cuenta de ahorros">Cuenta de ahorros</option>
+                    <option value="Cuenta corriente">Cuenta corriente</option>
+                </select>
                 </div>
                 <div class="form-group">
-                    <label for="editEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
-                    <input type="text" class="form-control" id="editEntidadBancariaDestinatario" name="editEntidadBancariaDestinatario">
+                    <label for="editEntidadBancariaDestinatarioForPago">Entidad Bancaria Destinatario:</label>
+                    <select type="text" class="form-control" id="editEntidadBancariaDestinatarioForPago" name="editEntidadBancariaDestinatarioForPago">
+                <option value="Banreservas" selected>--Entidad Bancaria Destinatario--</option>
+                <option value="Banreservas">Banreservas</option>
+                <option value="Banco Popular Dominicano">Banco Popular Dominicano</option>
+                <option value="Banco BHD">Banco BHD</option>
+                <option value="Asociación Popular de Ahorros y Préstamos">Asociación Popular de Ahorros y Préstamos</option>
+                <option value="Scotiabank">Scotiabank</option>
+                <option value="Banco Santa Cruz">Banco Santa Cruz</option>
+                <option value="Asociación Cibao de Ahorros y Préstamos">Asociación Cibao de Ahorros y Préstamos</option>
+                <option value="Banco Promerica">Banco Promerica</option>
+                <option value="Banesco">Banesco</option>
+                <option value="Banco Caribe">Banco Caribe</option>
+                <option value="Banco Agrícola">Banco Agrícola</option>
+                <option value="Asociación La Nacional de Ahorros y Préstamos">Asociación La Nacional de Ahorros y Préstamos</option>
+                <option value="Citibank">Citibank</option>
+                <option value="Banco BDI">Banco BDI</option>
+                <option value="Banco Vimenca">Banco Vimenca</option>
+                <option value="Banco López de Haro">Banco López de Haro</option>
+                <option value="Bandex">Bandex</option>
+                <option value="Banco Ademi">Banco Ademi</option>
+                <option value="Banco Lafise">Banco Lafise</option>
+                <option value="Motor Crédit Banco de Ahorro y Crédito">Motor Crédit Banco de Ahorro y Crédito</option>
+                <option value="Alaver Asociación de Ahorros y Préstamos">Alaver Asociación de Ahorros y Préstamos</option>
+                <option value="Banfondesa">Banfondesa</option>
+                <option value="Banco Adopem">Banco Adopem</option>
+                <option value="Asociación Duarte">Asociación Duarte</option>
+                <option value="JMMB Bank">JMMB Bank</option>
+                <option value="Asociación Mocana">Asociación Mocana</option>
+                <option value="ABONAP">ABONAP</option>
+                <option value="Banco Unión">Banco Unión</option>
+                <option value="Banco BACC">Banco BACC</option>
+                <option value="Asociación Romana">Asociación Romana</option>
+                <option value="Asociación Peravia">Asociación Peravia</option>
+                <option value="Banco Confisa">Banco Confisa</option>
+                <option value="Leasing Confisa">Leasing Confisa</option>
+                <option value="Qik Banco Digital">Qik Banco Digital</option>
+                <option value="Banco Fihogar">Banco Fihogar</option>
+                <option value="Asociación Maguana de Ahorros y Préstamos">Asociación Maguana de Ahorros y Préstamos</option>
+                <option value="Banco Atlántico">Banco Atlántico</option>
+                <option value="Bancotui">Bancotui</option>
+                <option value="Banco Activo">Banco Activo</option>
+                <option value="Banco Gruficorp">Banco Gruficorp</option>
+                <option value="Corporación de Crédito Nordestana">Corporación de Crédito Nordestana</option>
+                <option value="Banco Óptima de Ahorro y Crédito">Banco Óptima de Ahorro y Crédito</option>
+                <option value="Banco Cofaci">Banco Cofaci</option>
+                <option value="Bonanza Banco">Bonanza Banco</option>
+                <option value="Corporación de Crédito Monumental">Corporación de Crédito Monumental</option>
+                <option value="Banco Empire">Banco Empire</option>
+                <option value="Corporación de Crédito Oficorp">Corporación de Crédito Oficorp</option>
+              </select>
                 </div>
                 <div class="form-group">
-                    <label for="editMonto">Monto:</label>
-                    <input type="text" class="form-control" id="editMonto" name="editMonto">
+                    <label for="editMontoForPago">Monto:</label>
+                    <input type="text" class="form-control" id="editMontoForPago" name="editMontoForPago">
                 </div>
                 <div class="form-group">
-                    <label for="editFechaDePago">Fecha de Pago:</label>
-                    <input type="text" class="form-control" id="editFechaDePago" name="editFechaDePago">
+                    <label for="editFechaDePagoForPago">Fecha de Pago:</label>
+                    <input type="text" class="form-control datepicker" id="editFechaDePagoForPago" name="editFechaDePagoForPago">
                 </div>
             </div>
         </div>
@@ -491,23 +603,24 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                 
             </div>
         </div>
+        <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" id="saveChangesBtnPago">Guardar Cambios</button>
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
     </form>
 </div>
 
 
-            <div class="modal-footer">
-              <button type="button" class="btn btn-primary" id="saveChangesBtn">Guardar Cambios</button>
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
+            
           </div>
         </div>
-      </div>';
-
+      </div>
+';
 // Include jQuery library and custom script for handling click event and populating form fields within the modal
 echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
-  $(".edit-btn").click(function() {
+  $(".editarButtonPagoPrestamo").click(function() {
       var id = $(this).data("id");
       $.ajax({
           url: "fetch_pago.php",
@@ -516,23 +629,23 @@ $(document).ready(function() {
           dataType: "json",
           success: function(response) {
               // Clear previous values
-              $("#editForm")[0].reset();
+              $("#editFormForPagoMain")[0].reset();
               // Populate modal fields
-              $("#editId").val(response.Id);
-              $("#editIdCliente").val(response.IdCliente);
-              $("#editCuentaRemitente").val(response.CuentaRemitente);
-              $("#editTipoCuentaRemitente").val(response.TipoCuentaRemitente);
-              $("#editEntidadBancariaRemitente").val(response.EntidadBancariaRemitente);
-              $("#editCuentaDestinatario").val(response.CuentaDestinatario);
-              $("#editTipoCuentaDestinatario").val(response.TipoCuentaDestinatario);
-              $("#editEntidadBancariaDestinatario").val(response.EntidadBancariaDestinatario);
-              $("#editMonto").val(response.Monto);
-              $("#editMotivo").val(response.Motivo);
-              $("#editTipo").val(response.Tipo);
-              $("#editInversionId").val(response.InversionId);
-              $("#editPrestamoId").val(response.PrestamoId);
-              $("#editFechaDePago").val(response.FechaDePago);
-              $("#editModal").modal("show");
+              $("#editIdForPago").val(response.Id);
+              $("#editIdClienteForPago").val(response.IdCliente);
+              $("#editCuentaRemitenteForPago").val(response.CuentaRemitente);
+              $("#editTipoCuentaRemitenteForPago").val(response.TipoCuentaRemitente);
+              $("#editEntidadBancariaRemitenteForPago").val(response.EntidadBancariaRemitente);
+              $("#editCuentaDestinatarioForPago").val(response.CuentaDestinatario);
+              $("#editTipoCuentaDestinatarioForPago").val(response.TipoCuentaDestinatario);
+              $("#editEntidadBancariaDestinatarioForPago").val(response.EntidadBancariaDestinatario);
+              $("#editMontoForPago").val(response.Monto);
+              $("#editMotivoForPago").val(response.Motivo);
+              $("#editTipoForPago").val(response.Tipo);
+              $("#editInversionIdForPago").val(response.InversionId);
+              $("#editPrestamoIdForPago").val(response.PrestamoId);
+              $("#editFechaDePagoForPago").val(response.FechaDePago);
+              $("#editModalForPago").modal("show");
           },
           error: function(xhr, status, error) {
               console.error(xhr.responseText);
@@ -540,30 +653,15 @@ $(document).ready(function() {
       });
   });
 
-  $("#saveChangesBtn").click(function() {
-      var formData = $("#editForm").serialize();
-      $.ajax({
-          url: "update_pago.php",
-          type: "POST",
-          data: formData,
-          success: function(response) {
-              $("#editModal").modal("hide");
-              // Optionally, reload the table or update the row with the edited data
-              location.reload();
-          },
-          error: function(xhr, status, error) {
-              console.error(xhr.responseText);
-              // Handle error
-          }
-      });
-  });
+
 });
 
 </script>
 <script>
   // JavaScript for handling delete button click
-$(".delete-btn").click(function() {
+$(".delete-btnPagoParticipacion").click(function() {
   var id = $(this).data("id");
+  console.log(id);
   if (confirm("¿Estás seguro que quieres borrar este pago?")) {
       $.ajax({
           url: "delete_pago.php",
@@ -659,6 +757,56 @@ $(".delete-btn").click(function() {
       "responsive": true,
     });
   });
+</script>
+
+<!-- Bootstrap Datepicker JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      startDate: new Date() // Set the start date as today
+    });
+  });
+</script>
+
+<script>
+  var editMontoForPagoInput = document.getElementById("editMontoForPago");
+  
+  editMontoForPagoInput.addEventListener('input', function(event) {
+          if (/[^0-9.]/.test(editMontoForPagoInput.value)) {
+            // If it contains non-numeric characters, handle the validation here
+            editMontoForPagoInput.value = "";
+            // For example, you can show an error message or take appropriate action
+          } else {
+              // Save the cursor position
+              var cursorPosition = editMontoForPagoInput.selectionStart;
+
+              // Get the input value
+              let oldInputValue = editMontoForPagoInput.value;
+
+              // Check if the input value is a valid number
+              if (!isNaN(parseFloat(oldInputValue))) {
+              // Currency formatting
+              let currency = parseFloat(oldInputValue);
+              let formattedValue = new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD'
+              }).format(currency);
+
+              // Remove the dollar sign and commas from the formatted currency string
+              formattedValue = formattedValue.replace(/\$/g, "").replaceAll(",", "");
+              console.log(formattedValue);
+
+              // Update the value of the input element with the formatted value
+              editMontoForPagoInput.value = formattedValue;
+
+              // Restore the cursor position
+              editMontoForPagoInput.setSelectionRange(cursorPosition, cursorPosition);
+              }
+            }
+          });
 </script>
 </body>
 </html>
