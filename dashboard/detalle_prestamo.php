@@ -419,7 +419,7 @@ if(isset($_POST['actualizarStatus'])) {
                 <select class="form-control" id="estadoPrestamo" name="statusPrestamo">
                     <option value="Aprobado" <?php if($prestamo['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
                     <option value="Rechazado" <?php if($prestamo['Status'] == 'Rechazado') echo 'selected'; ?>>Rechazado</option>
-                    <option value="En revision" <?php if($prestamo['Status'] == 'En proceso') echo 'selected'; ?>>En revisión</option>
+                    <option value="En revision" <?php if($prestamo['Status'] == 'En revision') echo 'selected'; ?>>En revisión</option>
                     <option value="Saldado" <?php if($prestamo['Status'] == 'Saldado') echo 'selected'; ?>>Saldado</option>
                     <option value="Moroso" <?php if($prestamo['Status'] == 'Moroso') echo 'selected'; ?>>Moroso</option>
                 </select>

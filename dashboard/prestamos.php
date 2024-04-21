@@ -503,10 +503,15 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
                     <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes" hidden>
                 </div>
                 <div class="form-group">
-                    <label for="editMontoPagoMensual">Monto de pago mensual sugerido:</label>
-                    <input type="text" class="form-control" id="editMontoPagoMensual" name="editMontoPagoMensual">
+                    <label for="editMontoPagoMensual">Monto de pago mensual calculado:</label>
+                    <input type="text" class="form-control" id="editMontoPagoMensual" name="editMontoPagoMensual" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editMontoPagoMensual">Monto de pago mensual esperado:</label>
+                    <input type="text" class="form-control" id="editMontoPagoEsperado" name="editMontoPagoEsperado" readonly>
                 </div>
             </div>
         </div>
@@ -605,6 +610,21 @@ function generateOptionsEdit() {
               // Restore the cursor position
               inputCuota.setSelectionRange(cursorPosition, cursorPosition);
               }
+              let sumOfTheQuotes = getEditSumOfQuotes();
+              var montoMensualInput = document.getElementById("editMontoPagoMensual");
+              montoMensualInput.value = sumOfTheQuotes;
+              var currentMontoMensual = parseFloat(montoMensualInput.value).toFixed(2);
+
+              var montoMensualAprobadoInput = document.getElementById("editMontoAprobado");
+              var montoAprobadoValue =parseFloat(montoMensualAprobadoInput.value).toFixed(2);
+
+              var cuotasTotalesInput = document.getElementById("editCuotasTotales");
+              var cantidadDeCuotasTotales =parseFloat(cuotasTotalesInput.value).toFixed(2);
+
+              console.log("monto mensual esperado is: "+montoEsperado);
+              var montoEsperado = parseFloat(montoAprobadoValue/cantidadDeCuotasTotales).toFixed(2);
+              var montoMensualEsperado = document.getElementById("editMontoPagoEsperado");
+              montoMensualEsperado.value = montoEsperado;
             }
 });
         
@@ -624,26 +644,59 @@ function generateOptionsEdit() {
         // Append select to container
          switch (i) {
           case 0:
-            var expectedIndex = dia1.replace(/\D/g, \'\');
-            expectedIndex--;
+            if(!isNullOrUndefinedOrEmpty(dia1)){
+              var expectedIndex = dia1.replace(/\D/g, \'\');
+              expectedIndex--;
+            }else {
+              var expectedIndex = 0;
+            }
             select.selectedIndex = expectedIndex;
             console.log(expectedIndex);
             break;
             case 1:
-            var expectedIndex = dia2.replace(/\D/g, \'\');
-            expectedIndex--;
+            if(!isNullOrUndefinedOrEmpty(dia2)){
+              var expectedIndex = dia2.replace(/\D/g, \'\');
+              expectedIndex--;
+            }else {
+              if(dia1.replace(/\D/g, \'\') == 1){
+                var expectedIndex = 2;
+              }else{
+                var expectedIndex = 1;
+              }
+              
+            }
             select.selectedIndex = expectedIndex;
             console.log(expectedIndex);
             break;
             case 2:
-            var expectedIndex = dia3.replace(/\D/g, \'\');
-            expectedIndex--;
+            if(!isNullOrUndefinedOrEmpty(dia3)){
+              var expectedIndex = dia3.replace(/\D/g, \'\');
+              expectedIndex--;
+            }else {
+              if(dia1.replace(/\D/g, \'\') == 2){
+                var expectedIndex = 3;
+                dia2 = "Dia #3";
+              }else{
+                var expectedIndex = 2;
+                dia2 = "Dia #2";
+              }
+            }
             select.selectedIndex = expectedIndex;
             console.log(expectedIndex);
             break;
             case 3:
-            var expectedIndex = dia4.replace(/\D/g, \'\');
-            expectedIndex--;
+            if(!isNullOrUndefinedOrEmpty(dia4)){
+              var expectedIndex = dia4.replace(/\D/g, \'\');
+              expectedIndex--;
+            }else {
+              if(dia2.replace(/\D/g, \'\') == 3){
+                var expectedIndex = 4;
+                dia2 = "Dia #4";
+              }else{
+                var expectedIndex = 3;
+                dia2 = "Dia #3";
+              }
+            }
             select.selectedIndex = expectedIndex;
             console.log(expectedIndex);
             break;
@@ -731,13 +784,13 @@ $.ajax({
         var formattedString = formattedNumbers.join(\', \');
         const diasesDePargos = formattedString.split(\', \');
          dia1 = diasesDePargos[0];
-         console.log(dia1);
+         console.log("dia 1: "+dia1);
          dia2 = diasesDePargos[1];
-         console.log(dia2);
+         console.log("dia 2: "+dia2);
          dia3 = diasesDePargos[2];
-         console.log(dia3);
+         console.log("dia 3: "+dia3);
          dia4 = diasesDePargos[3];
-         console.log(dia4);
+         console.log("dia 4: "+dia4);
 
         //console.log(formattedString);
         $("#editDiasDePagoDelMes").val(formattedString);
@@ -877,6 +930,9 @@ $.ajax({
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 
 <script>
+  function isNullOrUndefinedOrEmpty(value) {
+    return value === null || value === undefined || value === "";
+}
   $(document).ready(function(){
     $('.datepicker').datepicker({
       format: 'yyyy-mm-dd',
@@ -1056,7 +1112,7 @@ for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
 // Compare the sum with the value of another input element
 var montoSolicitadoInputValue = parseFloat(document.getElementById('editMontoAprobado').value);
 console.log(montoSolicitadoInputValue);
-var plazoInputElementValue = parseFloat(document.getElementById('editCantPagosPorMes').value);
+var plazoInputElementValue = parseFloat(document.getElementById('editCuotasTotales').value);
 console.log(plazoInputElementValue);
 var monthlyAmmount = montoSolicitadoInputValue / plazoInputElementValue;
 monthlyAmmount = Math.floor(monthlyAmmount * 100) / 100;
@@ -1070,11 +1126,62 @@ if (sum === monthlyAmmount) {
     return true;
 } else {
     console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
-    const menssage = "El monto de las cuotas no es igual al monto solicitado";
+    const menssage = "El monto de las cuotas no corresponde con el monto aprobado";
     const existingMenssage = document.querySelector('.error-message');
     if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
     return false;
 }
+
+}
+
+function getEditSumOfQuotes() {
+  
+  // Evaluate the XPath expression
+var xpathResult = document.evaluate(
+    "//input[contains(@id,'editCuotasNo_')]",
+    document,
+    null,
+    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+    null
+);
+
+// Initialize variables to store sum and count
+var sum = 0;
+var count = 0;
+
+// Iterate over matching elements
+for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
+    var inputElement = xpathResult.snapshotItem(i);
+    // Extract value and convert to a number
+    var value = parseFloat(inputElement.value);
+    // Add to sum
+    sum += value;
+    count++;
+}
+
+// Compare the sum with the value of another input element
+var montoSolicitadoInputValue = parseFloat(document.getElementById('editMontoAprobado').value);
+console.log(montoSolicitadoInputValue);
+var plazoInputElementValue = parseFloat(document.getElementById('editCantPagosPorMes').value);
+console.log(plazoInputElementValue);
+var monthlyAmmount = montoSolicitadoInputValue / plazoInputElementValue;
+monthlyAmmount = Math.floor(monthlyAmmount * 100) / 100;
+sum = Math.floor(sum * 100) / 100;
+sum = sum.toFixed(2);
+monthlyAmmount = monthlyAmmount.toFixed(2);
+console.log(monthlyAmmount);
+console.log(sum);
+return sum;
+/*if (sum === monthlyAmmount) {
+    console.log("The sum of values from input elements matches the value of the other input element.");
+    return true;
+} else {
+    console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
+    const menssage = "El monto de las cuotas no corresponde con el monto aprobado";
+    const existingMenssage = document.querySelector('.error-message');
+    if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
+    return false;
+}*/
 
 }
 
@@ -1227,6 +1334,21 @@ inputElement.addEventListener('input', function(event) {
         inputElement.setSelectionRange(cursorPosition, cursorPosition);
     }
     }
+    let sumOfTheQuotes = getEditSumOfQuotes();
+              var montoMensualInput = document.getElementById("editMontoPagoMensual");
+              montoMensualInput.value = sumOfTheQuotes;
+              var currentMontoMensual = parseFloat(montoMensualInput.value).toFixed(2);
+
+              var montoMensualAprobadoInput = document.getElementById("editMontoAprobado");
+              var montoAprobadoValue =parseFloat(montoMensualAprobadoInput.value).toFixed(2);
+
+              var cuotasTotalesInput = document.getElementById("editCuotasTotales");
+              var cantidadDeCuotasTotales =parseFloat(cuotasTotalesInput.value).toFixed(2);
+
+              var montoEsperado = parseFloat(montoAprobadoValue/cantidadDeCuotasTotales).toFixed(2);
+              console.log("monto mensual esperado is: "+montoEsperado);
+              var montoMensualEsperado = document.getElementById("editMontoPagoEsperado");
+              montoMensualEsperado.value = montoEsperado;
 });
 </script>
 <script>

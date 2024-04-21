@@ -417,6 +417,7 @@ if($stmt->rowCount() > 0) {
     $client['DiasDePagoDelMes'] = $client['DiasDePagoDelMes'] == null ? "Ninguno" : $client['DiasDePagoDelMes'];
     $client['FechaDeAprobacion'] = $client['FechaDeAprobacion'] == null ? "No aprobado" : $client['FechaDeAprobacion'];
     $isEnabled = false;
+    $balancePrestamo = $client['MontoAprobado']!=null? htmlspecialchars(number_format((floatval($prestamo['MontoSolicitado']) - floatval($prestamo['MontoPagado'])), 2, '.', '') ): "No aprobado" ;
 
     // Display client details
     echo '<div class="modal-body">';
@@ -427,7 +428,7 @@ if($stmt->rowCount() > 0) {
     echo '<div class="col-sm-4">';
     echo '<div class="form-group">';
     echo '<label for="balance">Balance:</label>';
-    echo '<input type="text" class="form-control" id="balance" name="balance" value="'.htmlspecialchars(number_format((floatval($prestamo['MontoSolicitado']) - floatval($prestamo['MontoPagado'])), 2, '.', '') ).'" readonly>';
+    echo '<input type="text" class="form-control" id="balance" name="balance" value="'.$balancePrestamo.'" readonly>';
     echo '</div>';
     echo '<div class="form-group">';
     echo '<label for="montoSolicitado">Monto Solicitado:</label>';

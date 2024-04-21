@@ -168,7 +168,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
     
       <!-- Modal Header -->
       <div class="modal-header">
-        <h4 class="modal-title">Agregar Préstamo</h4>
+        <h4 class="modal-title">Solicitar Préstamo</h4>
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
       
@@ -232,7 +232,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
         </div>
         <!-- Add more fields as needed -->
         <div class="modal-footer">
-            <button id="agregarPrestamoSubmitButton" type="submit" class="btn btn-primary">Agregar Préstamo</button>
+            <button id="agregarPrestamoSubmitButton" type="submit" class="btn btn-primary">Solicitar Préstamo</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
           </div>
       </form>

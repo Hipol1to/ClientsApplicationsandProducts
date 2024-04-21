@@ -118,10 +118,15 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">Completa tu Perfil</h3>
+                <br>  
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <!-- Form -->
+                <p>
+                Introduce tu información para validar tu identidad.
+              </p>
+              <br>
                 <form action="complete_profile_process.php" method="post" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-sm-6">

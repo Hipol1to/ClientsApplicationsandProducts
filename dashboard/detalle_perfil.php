@@ -243,6 +243,24 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         error_log("Frontal Cedula path: ".$capturaFrontalPath);
                         $capturaReversoPath = isset($cedulaPathValues[1]) && isset(explode("\clients\\", $cedulaPathValues[1])[1]) ? "../clients/".explode("\clients\\", $cedulaPathValues[1])[1] : null; 
                         error_log("Reverse Cedula path: ".$capturaReversoPath);
+                        $userProffileStatus = null;
+                        switch (htmlspecialchars($cliente['PerfilValidado'])) {
+                          case 0:
+                            $userProffileStatus = "Rechazado";
+                            break;
+
+                            case 1:
+                            $userProffileStatus = "Aprobado";
+                            break;
+
+                            case 2:
+                            $userProffileStatus = "En revisión";
+                            break;
+                          
+                          default:
+                            $userProffileStatus = htmlspecialchars($cliente['PerfilValidado']);
+                            break;
+                        }
 
                         // Display prestamo details
                         echo '<div class="modal-body">';
@@ -314,7 +332,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         echo '</div>';
                         echo '<div class="form-group">';
                         echo '<label for="perfilValidado">Perfil validado:</label>';
-                        echo '<input type="text" class="form-control" id="perfilValidado" name="perfilValidado" value="'.htmlspecialchars($cliente['PerfilValidado']).'" readonly>';
+                        echo '<input type="text" class="form-control" id="perfilValidado" name="perfilValidado" value="'.$userProffileStatus.'" readonly>';
                         echo '</div>';
                         echo '<div class="form-group">';
                         echo '<label for="puntos">Puntos:</label>';
@@ -385,6 +403,9 @@ WHERE p.IdCliente = ".$cliente_id;
 $result = $db->query($sql);
 
                 if ($result) {
+                  $buttonAddPrestamo = $userProffileStatus == "Aprobado" ? '<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+                                        Agregar Prestamo
+                                        </button>' :'';
                   // Output the table structure
                   echo '<div class="card">
               <div class="card-header">
@@ -406,9 +427,7 @@ $result = $db->query($sql);
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-  Agregar Prestamo
-</button>
+                  '.$buttonAddPrestamo.'
 <p></p>
                   <th></th>
                   <th>Acciones</th>
@@ -590,7 +609,7 @@ $result = $db->query($sql);
     <?php
     
     // Add a hidden form to hold the details for editing within the modal
-echo '<div id="editModalForPrestamo" class="modal fade" role="dialog">
+echo '<div id="editModal" class="modal fade" role="dialog">
 <div class="modal-dialog">
   <!-- Modal content-->
   <div class="modal-content">
@@ -688,16 +707,18 @@ echo '<div id="editModalForPrestamo" class="modal fade" role="dialog">
             </div>
             <!-- Group 6 -->
             <div class="col-sm-4">
-                
-                
- 
-                <div class="form-group">
+                    <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
                     <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                    <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes" hidden>
                 </div>
                 <div class="form-group">
-                    <label for="editMontoPagoMensual">Monto de pago mensual sugerido:</label>
-                    <input type="text" class="form-control" id="editMontoPagoMensual" name="editMontoPagoMensual">
+                    <label for="editMontoPagoMensual">Monto de pago mensual calculado:</label>
+                    <input type="text" class="form-control" id="editMontoPagoMensual" name="editMontoPagoMensual" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="editMontoPagoMensual">Monto de pago mensual esperado:</label>
+                    <input type="text" class="form-control" id="editMontoPagoEsperado" name="editMontoPagoEsperado" readonly>
                 </div>
             </div>
         </div>
@@ -713,13 +734,7 @@ echo '<div id="editModalForPrestamo" class="modal fade" role="dialog">
 </div>
 </div>';
 
-
-
-
-
-
-
-    // Include jQuery library and custom script for handling click event and populating form fields within the modal
+// Include jQuery library and custom script for handling click event and populating form fields within the modal
 echo '<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 var montoCuota1 = null;
@@ -772,7 +787,7 @@ function generateOptionsEdit() {
         //console.log(i);
 
          inputCuota.addEventListener(\'input\', function(event) {
-          if (/[^0-9.]/.test(inputElement.value)) {
+          if (/[^0-9.]/.test(inputCuota.value)) {
             // If it contains non-numeric characters, handle the validation here
             inputCuota.value = "";
             // For example, you can show an error message or take appropriate action
@@ -802,6 +817,21 @@ function generateOptionsEdit() {
               // Restore the cursor position
               inputCuota.setSelectionRange(cursorPosition, cursorPosition);
               }
+              let sumOfTheQuotes = getEditSumOfQuotes();
+              var montoMensualInput = document.getElementById("editMontoPagoMensual");
+              montoMensualInput.value = sumOfTheQuotes;
+              var currentMontoMensual = parseFloat(montoMensualInput.value).toFixed(2);
+
+              var montoMensualAprobadoInput = document.getElementById("editMontoAprobado");
+              var montoAprobadoValue =parseFloat(montoMensualAprobadoInput.value).toFixed(2);
+
+              var cuotasTotalesInput = document.getElementById("editCuotasTotales");
+              var cantidadDeCuotasTotales =parseFloat(cuotasTotalesInput.value).toFixed(2);
+
+              var montoEsperado = parseFloat(montoAprobadoValue/cantidadDeCuotasTotales).toFixed(2);
+              console.log("monto mensual esperado is: "+montoEsperado);
+              var montoMensualEsperado = document.getElementById("editMontoPagoEsperado");
+              montoMensualEsperado.value = montoEsperado;
             }
 });
         
@@ -821,26 +851,59 @@ function generateOptionsEdit() {
         // Append select to container
          switch (i) {
           case 0:
-            var expectedIndex = dia1.replace(/\D/g, \'\');
-            expectedIndex--;
+            if(!isNullOrUndefinedOrEmpty(dia1)){
+              var expectedIndex = dia1.replace(/\D/g, \'\');
+              expectedIndex--;
+            }else {
+              var expectedIndex = 0;
+            }
             select.selectedIndex = expectedIndex;
             console.log(expectedIndex);
             break;
             case 1:
-            var expectedIndex = dia2.replace(/\D/g, \'\');
-            expectedIndex--;
+            if(!isNullOrUndefinedOrEmpty(dia2)){
+              var expectedIndex = dia2.replace(/\D/g, \'\');
+              expectedIndex--;
+            }else {
+              if(dia1.replace(/\D/g, \'\') == 1){
+                var expectedIndex = 2;
+              }else{
+                var expectedIndex = 1;
+              }
+              
+            }
             select.selectedIndex = expectedIndex;
             console.log(expectedIndex);
             break;
             case 2:
-            var expectedIndex = dia3.replace(/\D/g, \'\');
-            expectedIndex--;
+            if(!isNullOrUndefinedOrEmpty(dia3)){
+              var expectedIndex = dia3.replace(/\D/g, \'\');
+              expectedIndex--;
+            }else {
+              if(dia1.replace(/\D/g, \'\') == 2){
+                var expectedIndex = 3;
+                dia2 = "Dia #3";
+              }else{
+                var expectedIndex = 2;
+                dia2 = "Dia #2";
+              }
+            }
             select.selectedIndex = expectedIndex;
             console.log(expectedIndex);
             break;
             case 3:
-            var expectedIndex = dia4.replace(/\D/g, \'\');
-            expectedIndex--;
+            if(!isNullOrUndefinedOrEmpty(dia4)){
+              var expectedIndex = dia4.replace(/\D/g, \'\');
+              expectedIndex--;
+            }else {
+              if(dia2.replace(/\D/g, \'\') == 3){
+                var expectedIndex = 4;
+                dia2 = "Dia #4";
+              }else{
+                var expectedIndex = 3;
+                dia2 = "Dia #3";
+              }
+            }
             select.selectedIndex = expectedIndex;
             console.log(expectedIndex);
             break;
@@ -865,7 +928,7 @@ function generateOptionsEdit() {
 
 
 $(document).ready(function() {
-$(".btn-edit-prestamo").click(function() {
+$(".edit-btn").click(function() {
 var id = $(this).data("id");
 console.log(id);
 $.ajax({
@@ -928,13 +991,13 @@ $.ajax({
         var formattedString = formattedNumbers.join(\', \');
         const diasesDePargos = formattedString.split(\', \');
          dia1 = diasesDePargos[0];
-         console.log(dia1);
+         console.log("dia 1: "+dia1);
          dia2 = diasesDePargos[1];
-         console.log(dia2);
+         console.log("dia 2: "+dia2);
          dia3 = diasesDePargos[2];
-         console.log(dia3);
+         console.log("dia 3: "+dia3);
          dia4 = diasesDePargos[3];
-         console.log(dia4);
+         console.log("dia 4: "+dia4);
 
         //console.log(formattedString);
         $("#editDiasDePagoDelMes").val(formattedString);
@@ -944,7 +1007,7 @@ $.ajax({
         $("#editFechaDeAprobacion").val(response.FechaDeAprobacion);
         $("#editMontoPagoMensual").val(response.MontoPagoMensual);
         
-        $("#editModalForPrestamo").modal("show");
+        $("#editModal").modal("show");
     },
     error: function(xhr, status, error) {
         console.error(xhr.responseText);
@@ -959,7 +1022,7 @@ $.ajax({
     type: "POST",
     data: formData,
     success: function(response) {
-        $("#editModalForPrestamo").modal("hide");
+        $("#editModal").modal("hide");
         // Optionally, reload the table or update the row with the edited data
         location.reload();
     },
@@ -969,6 +1032,27 @@ $.ajax({
     }
 });
 });
+});
+</script>';
+// JavaScript for handling delete button click
+echo '<script>
+$(".delete-btn").click(function() {
+var id = $(this).data("id");
+if (confirm("¿Estás seguro que quieres borrar este préstamo?")) {
+$.ajax({
+    url: "delete_prestamo.php",
+    type: "POST",
+    data: { id: id },
+    success: function(response) {
+        // Optionally, reload the table or update the UI
+        location.reload();
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error
+    }
+});
+}
 });
 </script>';
 
@@ -1341,6 +1425,9 @@ $(".delete-btnPagoParticipacion").click(function() {
 <!-- Bootstrap Datepicker JS -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 <script>
+  function isNullOrUndefinedOrEmpty(value) {
+    return value === null || value === undefined || value === "";
+}
   $(document).ready(function(){
     $('.datepicker').datepicker({
       format: 'yyyy-mm-dd',
@@ -1517,7 +1604,7 @@ for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
 // Compare the sum with the value of another input element
 var montoSolicitadoInputValue = parseFloat(document.getElementById('editMontoAprobado').value);
 console.log(montoSolicitadoInputValue);
-var plazoInputElementValue = parseFloat(document.getElementById('editCantPagosPorMes').value);
+var plazoInputElementValue = parseFloat(document.getElementById('editCuotasTotales').value);
 console.log(plazoInputElementValue);
 var monthlyAmmount = montoSolicitadoInputValue / plazoInputElementValue;
 monthlyAmmount = Math.floor(monthlyAmmount * 100) / 100;
@@ -1531,11 +1618,61 @@ if (sum === monthlyAmmount) {
     return true;
 } else {
     console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
-    const menssage = "El monto de las cuotas no es igual al monto solicitado";
+    const menssage = "El monto de las cuotas no corresponde con el monto aprobado";
     const existingMenssage = document.querySelector('.error-message');
     if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
     return false;
 }
+
+}
+function getEditSumOfQuotes() {
+  
+  // Evaluate the XPath expression
+var xpathResult = document.evaluate(
+    "//input[contains(@id,'editCuotasNo_')]",
+    document,
+    null,
+    XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,
+    null
+);
+
+// Initialize variables to store sum and count
+var sum = 0;
+var count = 0;
+
+// Iterate over matching elements
+for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
+    var inputElement = xpathResult.snapshotItem(i);
+    // Extract value and convert to a number
+    var value = parseFloat(inputElement.value);
+    // Add to sum
+    sum += value;
+    count++;
+}
+
+// Compare the sum with the value of another input element
+var montoSolicitadoInputValue = parseFloat(document.getElementById('editMontoAprobado').value);
+console.log(montoSolicitadoInputValue);
+var plazoInputElementValue = parseFloat(document.getElementById('editCantPagosPorMes').value);
+console.log(plazoInputElementValue);
+var monthlyAmmount = montoSolicitadoInputValue / plazoInputElementValue;
+monthlyAmmount = Math.floor(monthlyAmmount * 100) / 100;
+sum = Math.floor(sum * 100) / 100;
+sum = sum.toFixed(2);
+monthlyAmmount = monthlyAmmount.toFixed(2);
+console.log(monthlyAmmount);
+console.log(sum);
+return sum;
+/*if (sum === monthlyAmmount) {
+    console.log("The sum of values from input elements matches the value of the other input element.");
+    return true;
+} else {
+    console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
+    const menssage = "El monto de las cuotas no corresponde con el monto aprobado";
+    const existingMenssage = document.querySelector('.error-message');
+    if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
+    return false;
+}*/
 
 }
 

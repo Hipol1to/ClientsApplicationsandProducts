@@ -30,10 +30,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
     $cuota2 = isset($_POST['editCuotasNo_2']) ? $_POST['editCuotasNo_2'] : null;
     $cuota3 = isset($_POST['editCuotasNo_3']) ? $_POST['editCuotasNo_3'] : null;
     $cuota4 = isset($_POST['editCuotasNo_4']) ? $_POST['editCuotasNo_4'] : null;
-    $montoPagoMensual = isset($_POST['editMontoPagoMensual']) ? $_POST['editMontoPagoMensual'] : null;
+
+        $montoPagoMensual = isset($_POST['editMontoPagoMensual']) ? $_POST['editMontoPagoMensual'] : null;
     $editFechaFinalPrestamo = !empty($_POST['editFechaFinalPrestamo']) ? $_POST['editFechaFinalPrestamo'] : null;
     $editCuotasTotales = !empty($_POST['editCuotasTotales']) ? $_POST['editCuotasTotales'] : null;
     $editDiasDePagoDelMes = !empty($_POST['editDiasDePagoDelMes']) ? $_POST['editDiasDePagoDelMes'] : null;
+    error_log($editDiasDePagoDelMes);
     $editCantPagosPorMes = !empty($_POST['editCantPagosPorMes']) ? $_POST['editCantPagosPorMes'] : null;
     $editFechaDeAprobacion = !empty($_POST['editFechaDeAprobacion']) ? $_POST['editFechaDeAprobacion'] : null;
 
@@ -75,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         $stmt->bindParam(':beneficiario', $editBeneficiario, PDO::PARAM_STR);
         $stmt->bindParam(':status', $editStatus, PDO::PARAM_STR);
         $stmt->bindParam(':fechaFinalPrestamo', $editFechaFinalPrestamo, PDO::PARAM_STR);
+        $stmt->bindParam(':cuotasTotales', $editCuotasTotales, PDO::PARAM_INT);
         $stmt->bindParam(':cuotasTotales', $editCuotasTotales, PDO::PARAM_INT);
         $stmt->bindParam(':diasDePagoDelMes', $editDiasDePagoDelMes, PDO::PARAM_INT);
         $stmt->bindParam(':cantPagosPorMes', $editCantPagosPorMes, PDO::PARAM_STR);
