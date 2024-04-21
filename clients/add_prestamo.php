@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //missing fecha pago mensual
     $fechaFinalPrestamo = $_POST['fechaFinalPrestamo'];
 
-    $plazo = $_POST['cantMeses'];
+    $plazo = (int)preg_replace('/[^0-9]/', '', $_POST['cantMeses']);
     $cantPagosPorMes = $_POST['cantPagosPorMes'];
     $cuotasTotales = ($plazo * $cantPagosPorMes);
     $diasDePagoDelMes = "";
@@ -57,8 +57,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
 
     // Prepare an insert statement
-    $sql = "INSERT INTO prestamos (IdCliente, Motivo, MontoSolicitado, MontoCuota1, MontoCuota2, MontoCuota3, MontoCuota4, MontoPagoMensual, Remitente, Beneficiario, Status, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes)
-            VALUES (:idCliente, :motivo, :montoSolicitado, :montoCuota1, :montoCuota2, :montoCuota3, :montoCuota4, :montoPagoMensual, :remitente, :beneficiario, :status, :fechaFinalPrestamo, :cuotasTotales, :diasDePagoDelMes, :cantPagosPorMes)";
+    $sql = "INSERT INTO prestamos (IdCliente, Motivo, MontoSolicitado, MontoCuota1, MontoCuota2, MontoCuota3, MontoCuota4, MontoPagoMensual, Remitente, Beneficiario, Status, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes, CantMesesDuracionPrestamo)
+            VALUES (:idCliente, :motivo, :montoSolicitado, :montoCuota1, :montoCuota2, :montoCuota3, :montoCuota4, :montoPagoMensual, :remitente, :beneficiario, :status, :fechaFinalPrestamo, :cuotasTotales, :diasDePagoDelMes, :cantPagosPorMes, :cantMesesDuracionPrestamo)";
     
     if ($stmt = $db->prepare($sql)) {
         // Bind variables to the prepared statement as parameters
@@ -77,6 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->bindParam(":cuotasTotales", $cuotasTotales);
         $stmt->bindParam(":diasDePagoDelMes", $diasDePagoDelMes);
         $stmt->bindParam(":cantPagosPorMes", $cantPagosPorMes);
+        $stmt->bindParam(":cantMesesDuracionPrestamo", $plazo);
 
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {

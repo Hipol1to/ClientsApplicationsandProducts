@@ -146,20 +146,85 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
                         <label for="cedula">Número de Cédula:</label>
                         <input type="text" class="form-control" id="cedula" name="cedula" required>
                       </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="form-group">
-                        <label for="subir_foto_cedula_frontal">Foto frontal de Cédula:</label>
-                        <input type="file" class="form-control-file" id="subir_foto_cedula_frontal" name="subir_foto_cedula_frontal" required>
-                      </div>
-                      <div class="form-group">
-                        <label for="subir_foto_cedula_posterior">Foto posterior de Cédula:</label>
-                        <input type="file" class="form-control-file" id="subir_foto_cedula_posterior" name="subir_foto_cedula_posterior" required>
-                      </div>
                       <div class="form-group">
                         <label for="rnc">RNC:</label>
                         <input type="text" class="form-control" id="rnc" name="rnc">
                       </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label for="subir_foto_cedula_frontal">Foto frontal de Cédula:</label>
+                        <input type="file" class="form-control-file" id="subir_foto_cedula_frontal" name="subir_foto_cedula_frontal" accept="image/*" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="subir_foto_cedula_posterior">Foto posterior de Cédula:</label>
+                        <input type="file" class="form-control-file" id="subir_foto_cedula_posterior" name="subir_foto_cedula_posterior" accept="image/*" required>
+                      </div>
+                      <div class="form-group">
+                <label for="clienteCuentaBancaria">Numero de cuenta bancaria:</label>
+                <input type="text" class="form-control" id="clienteCuentaBancaria" name="clienteCuentaBancaria" required>
+            </div>
+            <div class="form-group">
+                <label for="clienteTipoCuentaBancaria">Tipo cuenta bancaria:</label>
+                <select class="form-control" id="clienteTipoCuentaBancaria" name="clienteTipoCuentaBancaria" required>
+                  <option value="" selected>--Tipo de Cuenta--</option>
+                    <option value="Cuenta de ahorros">Cuenta de ahorros</option>
+                    <option value="Cuenta corriente">Cuenta corriente</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="clienteEntidadBancaria">Entidad Bancaria:</label>
+                <select class="form-control" id="clienteEntidadBancaria" name="clienteEntidadBancaria" required>
+                    <option value="Banreservas" selected>--Entidad Bancaria--</option>
+                    <option value="Banreservas">Banreservas</option>
+                    <option value="Banco Popular Dominicano">Banco Popular Dominicano</option>
+                    <option value="Banco BHD">Banco BHD</option>
+                    <option value="Asociación Popular de Ahorros y Préstamos">Asociación Popular de Ahorros y Préstamos</option>
+                    <option value="Scotiabank">Scotiabank</option>
+                    <option value="Banco Santa Cruz">Banco Santa Cruz</option>
+                    <option value="Asociación Cibao de Ahorros y Préstamos">Asociación Cibao de Ahorros y Préstamos</option>
+                    <option value="Banco Promerica">Banco Promerica</option>
+                    <option value="Banesco">Banesco</option>
+                    <option value="Banco Caribe">Banco Caribe</option>
+                    <option value="Banco Agrícola">Banco Agrícola</option>
+                    <option value="Asociación La Nacional de Ahorros y Préstamos">Asociación La Nacional de Ahorros y Préstamos</option>
+                    <option value="Citibank">Citibank</option>
+                    <option value="Banco BDI">Banco BDI</option>
+                    <option value="Banco Vimenca">Banco Vimenca</option>
+                    <option value="Banco López de Haro">Banco López de Haro</option>
+                    <option value="Bandex">Bandex</option>
+                    <option value="Banco Ademi">Banco Ademi</option>
+                    <option value="Banco Lafise">Banco Lafise</option>
+                    <option value="Motor Crédit Banco de Ahorro y Crédito">Motor Crédit Banco de Ahorro y Crédito</option>
+                    <option value="Alaver Asociación de Ahorros y Préstamos">Alaver Asociación de Ahorros y Préstamos</option>
+                    <option value="Banfondesa">Banfondesa</option>
+                    <option value="Banco Adopem">Banco Adopem</option>
+                    <option value="Asociación Duarte">Asociación Duarte</option>
+                    <option value="JMMB Bank">JMMB Bank</option>
+                    <option value="Asociación Mocana">Asociación Mocana</option>
+                    <option value="ABONAP">ABONAP</option>
+                    <option value="Banco Unión">Banco Unión</option>
+                    <option value="Banco BACC">Banco BACC</option>
+                    <option value="Asociación Romana">Asociación Romana</option>
+                    <option value="Asociación Peravia">Asociación Peravia</option>
+                    <option value="Banco Confisa">Banco Confisa</option>
+                    <option value="Leasing Confisa">Leasing Confisa</option>
+                    <option value="Qik Banco Digital">Qik Banco Digital</option>
+                    <option value="Banco Fihogar">Banco Fihogar</option>
+                    <option value="Asociación Maguana de Ahorros y Préstamos">Asociación Maguana de Ahorros y Préstamos</option>
+                    <option value="Banco Atlántico">Banco Atlántico</option>
+                    <option value="Bancotui">Bancotui</option>
+                    <option value="Banco Activo">Banco Activo</option>
+                    <option value="Banco Gruficorp">Banco Gruficorp</option>
+                    <option value="Corporación de Crédito Nordestana">Corporación de Crédito Nordestana</option>
+                    <option value="Banco Óptima de Ahorro y Crédito">Banco Óptima de Ahorro y Crédito</option>
+                    <option value="Banco Cofaci">Banco Cofaci</option>
+                    <option value="Bonanza Banco">Bonanza Banco</option>
+                    <option value="Corporación de Crédito Monumental">Corporación de Crédito Monumental</option>
+                    <option value="Banco Empire">Banco Empire</option>
+                    <option value="Corporación de Crédito Oficorp">Corporación de Crédito Oficorp</option>
+                </select>
+            </div>
                       <button type="submit" class="btn btn-primary">Completar Perfil</button>
                     </div>
                   </div>

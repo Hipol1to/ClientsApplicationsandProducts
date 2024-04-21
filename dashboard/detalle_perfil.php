@@ -209,7 +209,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                     $cliente_id = htmlspecialchars($_GET['id']);
 
                     // Fetch prestamo details from the database using the ID
-                    $sql = "SELECT c.Id, c.IdUsuario, c.Nombre, c.Apellido, c.Direccion, c.Cedula, c.CedulaPath, c.RNC, c.MontoTotalSolicitado, c.MontoTotalPrestado, c.MontoTotalPagado, c.Interes, c.MontoDeuda, c.Reenganchado, c.PerfilValidado, c.Puntos, c.FechaIngreso, c.FechaSalida, c.MesesEnEmpresa, usuarios.Usuario, c.FechaCreacion, c.FechaModificacion
+                    $sql = "SELECT c.Id, c.IdUsuario, c.Nombre, c.Apellido, c.Direccion, c.Cedula, c.CedulaPath, c.RNC, c.NumeroCuentaBancaria, c.EntidadBancaria, c.TipoDeCuentaBancaria, c.MontoTotalSolicitado, c.MontoTotalPrestado, c.MontoTotalPagado, c.Interes, c.MontoDeuda, c.Reenganchado, c.PerfilValidado, c.Puntos, c.FechaIngreso, c.FechaSalida, c.MesesEnEmpresa, usuarios.Usuario, c.FechaCreacion, c.FechaModificacion
                     FROM clientes as c
                     INNER JOIN usuarios ON c.Id = :id";
 
@@ -293,6 +293,10 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         echo '<label for="usuarioCliente">Usuario:</label>';
                         echo '<input type="text" class="form-control" id="usuarioCliente" name="usuarioCliente" value="'.htmlspecialchars($cliente['Usuario']).'" readonly>';
                         echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="tipoCuentaBancaria">Tipo cuenta bancaria:</label>';
+                        echo '<input type="text" class="form-control" id="tipoCuentaBancaria" name="tipoCuentaBancaria" value="'.htmlspecialchars($cliente['TipoDeCuentaBancaria']).'" readonly>';
+                        echo '</div>';
                         echo '</div>';
 
                         //other group
@@ -317,11 +321,10 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         echo '<label for="montoDeuda">Monto deuda:</label>';
                         echo '<input type="text" class="form-control" id="montoDeuda" name="montoDeuda" value="'.htmlspecialchars($cliente['MontoDeuda']).'" readonly>';
                         echo '</div>';
-
-
-                        
-
-
+                        echo '<div class="form-group">';
+                        echo '<label for="numeroCuentaBancaria">Numero cuenta bancaria:</label>';
+                        echo '<input type="text" class="form-control" id="numeroCuentaBancaria" name="numeroCuentaBancaria" value="'.htmlspecialchars($cliente['NumeroCuentaBancaria']).'" readonly>';
+                        echo '</div>';
                         echo '</div>';
 
 
@@ -349,6 +352,10 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         echo '<div class="form-group">';
                         echo '<label for="mesesEnEmpresa">Meses en la empresa:</label>';
                         echo '<input type="text" class="form-control" id="mesesEnEmpresa" name="mesesEnEmpresa" value="'.htmlspecialchars($cliente['MesesEnEmpresa']).'" readonly>';
+                        echo '</div>';
+                        echo '<div class="form-group">';
+                        echo '<label for="entidadCuentaBancaria">Entida cuenta bancaria:</label>';
+                        echo '<input type="text" class="form-control" id="entidadCuentaBancaria" name="v" value="'.htmlspecialchars($cliente['EntidadBancaria']).'" readonly>';
                         echo '</div>';
                         echo '</div>';
 

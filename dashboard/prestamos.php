@@ -494,6 +494,10 @@ echo '<div id="editModal" class="modal fade" role="dialog">
                     <input type="text" class="form-control" id="editCuotasTotales" name="editCuotasTotales">
                 </div>
                 <div class="form-group">
+                    <label for="editCantMeses">Cant. total meses:</label>
+                    <input type="text" class="form-control" id="editCantMeses" name="editCantMeses">
+                </div>
+                <div class="form-group">
                   <label id="labelDiasDePagoDelMes" for="diasDePagoDelMes">Días de Pago del Mes:</label>
                   <div id="editDiasDePagoContainer"></div>
                 </div>
@@ -769,6 +773,7 @@ $.ajax({
 }
         $("#editFechaFinalPrestamo").val(response.FechaFinalPrestamo);
         $("#editCuotasTotales").val(response.CuotasTotales);
+        $("#editCantMeses").val(response.CantMesesDuracionPrestamo);
 
         var diasDePago = response.DiasDePagoDelMes;
         console.log(diasDePago);
@@ -1112,7 +1117,7 @@ for (var i = 0; i < xpathResult.snapshotLength && count < 4; i++) {
 // Compare the sum with the value of another input element
 var montoSolicitadoInputValue = parseFloat(document.getElementById('editMontoAprobado').value);
 console.log(montoSolicitadoInputValue);
-var plazoInputElementValue = parseFloat(document.getElementById('editCuotasTotales').value);
+var plazoInputElementValue = parseFloat(document.getElementById('editCantMeses').value);
 console.log(plazoInputElementValue);
 var monthlyAmmount = montoSolicitadoInputValue / plazoInputElementValue;
 monthlyAmmount = Math.floor(monthlyAmmount * 100) / 100;
@@ -1342,10 +1347,10 @@ inputElement.addEventListener('input', function(event) {
               var montoMensualAprobadoInput = document.getElementById("editMontoAprobado");
               var montoAprobadoValue =parseFloat(montoMensualAprobadoInput.value).toFixed(2);
 
-              var cuotasTotalesInput = document.getElementById("editCuotasTotales");
-              var cantidadDeCuotasTotales =parseFloat(cuotasTotalesInput.value).toFixed(2);
+              var mesesTotalesInput = document.getElementById("editCantMeses");
+              var cantidadDeMesesTotales =parseFloat(mesesTotalesInput.value).toFixed(2);
 
-              var montoEsperado = parseFloat(montoAprobadoValue/cantidadDeCuotasTotales).toFixed(2);
+              var montoEsperado = parseFloat(montoAprobadoValue/cantidadDeMesesTotales).toFixed(2);
               console.log("monto mensual esperado is: "+montoEsperado);
               var montoMensualEsperado = document.getElementById("editMontoPagoEsperado");
               montoMensualEsperado.value = montoEsperado;

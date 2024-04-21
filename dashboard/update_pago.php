@@ -33,6 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editIdForPago'])) {
     $editInversionId = !empty($_POST['editInversionIdForPago']) ? $_POST['editInversionIdForPago'] : null;
     $editPrestamoId = !empty($_POST['editPrestamoIdForPago']) ? $_POST['editPrestamoIdForPago'] : null;
     $editFechaDePago = $_POST['editFechaDePagoForPago'];
+    $shouldUpdateImage = false;
 
 
     //voucher handling
@@ -45,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editIdForPago'])) {
     $upload_directory = $parentDirectory . "\\clients\\" . "\\uploads\\";
 
     if (isset($_POST['editVoucherPath'])) {
+      $shouldUpdateImage = true;
       $oldVoucherDirectory = $parentDirectory . "\\clients\\" . $_POST['editVoucherPath'];
       error_log("Path of old voucher: ".$oldVoucherDirectory);
       // Check if the file exists before attempting to remove it
@@ -77,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editIdForPago'])) {
     error_log("splitted voucher path" . $voucher_path);
 } else {
     // Handle the case where the file uploads failed
-    $voucher_path = "Unable to resolve voucher path"; // Set an empty path for front photo
+    $voucher_path = false;
 }
 error_log("tha voucher " . $voucher_path);
 
@@ -86,7 +88,38 @@ error_log("tha voucher " . $voucher_path);
     //PDO connection 
     try {
         // Prepare and execute the SQL update statement
-        $stmt = $db->prepare("UPDATE pagos SET 
+        if (!$voucher_path) {
+          $stmt = $db->prepare("UPDATE pagos SET 
+                                IdCliente = :idCliente, 
+                                CuentaRemitente = :cuentaRemitente, 
+                                TipoCuentaRemitente = :tipoCuentaRemitente, 
+                                EntidadBancariaRemitente = :entidadBancariaRemitente, 
+                                CuentaDestinatario = :cuentaDestinatario, 
+                                TipoCuentaDestinatario = :tipoCuentaDestinatario, 
+                                EntidadBancariaDestinatario = :entidadBancariaDestinatario, 
+                                Monto = :monto, 
+                                Motivo = :motivo, 
+                                Tipo = :tipo, 
+                                InversionId = :inversionId, 
+                                PrestamoId = :prestamoId, 
+                                FechaDePago = :fechaDePago 
+                                WHERE Id = :id");
+        $stmt->bindParam(':idCliente', $editIdCliente, PDO::PARAM_INT);
+        $stmt->bindParam(':cuentaRemitente', $editCuentaRemitente, PDO::PARAM_STR);
+        $stmt->bindParam(':tipoCuentaRemitente', $editTipoCuentaRemitente, PDO::PARAM_STR);
+        $stmt->bindParam(':entidadBancariaRemitente', $editEntidadBancariaRemitente, PDO::PARAM_STR);
+        $stmt->bindParam(':cuentaDestinatario', $editCuentaDestinatario, PDO::PARAM_STR);
+        $stmt->bindParam(':tipoCuentaDestinatario', $editTipoCuentaDestinatario, PDO::PARAM_STR);
+        $stmt->bindParam(':entidadBancariaDestinatario', $editEntidadBancariaDestinatario, PDO::PARAM_STR);
+        $stmt->bindParam(':monto', $editMonto, PDO::PARAM_STR);
+        $stmt->bindParam(':motivo', $editMotivo, PDO::PARAM_STR);
+        $stmt->bindParam(':tipo', $editTipo, PDO::PARAM_STR);
+        $stmt->bindParam(':inversionId', $editInversionId, PDO::PARAM_INT);
+        $stmt->bindParam(':prestamoId', $editPrestamoId, PDO::PARAM_INT);
+        $stmt->bindParam(':fechaDePago', $editFechaDePago, PDO::PARAM_STR);
+        $stmt->bindParam(':id', $editId, PDO::PARAM_INT);
+        } else {
+          $stmt = $db->prepare("UPDATE pagos SET 
                                 IdCliente = :idCliente, 
                                 CuentaRemitente = :cuentaRemitente, 
                                 TipoCuentaRemitente = :tipoCuentaRemitente, 
@@ -117,6 +150,8 @@ error_log("tha voucher " . $voucher_path);
         $stmt->bindParam(':voucherPath', $voucher_path, PDO::PARAM_INT);
         $stmt->bindParam(':fechaDePago', $editFechaDePago, PDO::PARAM_STR);
         $stmt->bindParam(':id', $editId, PDO::PARAM_INT);
+        }
+        
 
         $stmt->execute();
 

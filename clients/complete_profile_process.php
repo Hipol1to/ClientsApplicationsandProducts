@@ -26,6 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $direccion = isset($_POST['direccion']) ? $_POST['direccion'] : "";
         $cedula = $_POST['cedula'];
         $rnc = $_POST['rnc'];
+        $numeroCuentaBancaria = $_POST['clienteCuentaBancaria'];
+        $tipoCuentaBancaria = $_POST['clienteTipoCuentaBancaria'];
+        $entidadBancaria = $_POST['clienteEntidadBancaria'];
 
         // Check if both front and back photos of the ID card are uploaded
         if (
@@ -61,8 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $cedula_path_mixed = $front_cedula_path."_.d1vis10n._".$back_cedula_path;
             error_log($cedula_path_mixed);
             // Prepare SQL statement to insert data into the clientes table
-            $stmt = $db->prepare("INSERT INTO clientes (IdUsuario, Nombre, Apellido, Direccion, Cedula, CedulaPath, RNC, PerfilValidado, FechaCreacion, FechaModificacion) 
-                                   VALUES (:idusuario, :nombre, :apellido, :direccion, :cedula, :cedula_path, :rnc, 2, NOW(), NOW())");
+            $stmt = $db->prepare("INSERT INTO clientes (IdUsuario, Nombre, Apellido, Direccion, Cedula, CedulaPath, RNC, NumeroCuentaBancaria, EntidadBancaria, TipoDeCuentaBancaria, PerfilValidado, FechaCreacion, FechaModificacion) 
+                                   VALUES (:idusuario, :nombre, :apellido, :direccion, :cedula, :cedula_path, :rnc, :numeroCuentaBancaria, :entidadBancaria, :tipoDeCuentaBancaria, 2, NOW(), NOW())");
             
             // Bind parameters
             $stmt->bindParam(':idusuario', $_SESSION['userId']);
@@ -72,6 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':cedula', $cedula);
             $stmt->bindParam(':cedula_path', $cedula_path_mixed);
             $stmt->bindParam(':rnc', $rnc);
+            $stmt->bindParam(':numeroCuentaBancaria', $numeroCuentaBancaria);
+            $stmt->bindParam(':entidadBancaria', $entidadBancaria);
+            $stmt->bindParam(':tipoDeCuentaBancaria', $tipoCuentaBancaria);
             
             // Execute the statement
             $stmt->execute();

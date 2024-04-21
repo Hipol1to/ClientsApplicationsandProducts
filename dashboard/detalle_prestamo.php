@@ -28,6 +28,22 @@ if(isset($_GET['id'])) {
         echo "Prestamo not found!";
         exit();
     }
+
+    $sql2 = "SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = ".$prestamo_id."
+             LIMIT 1";
+    $stmt2 = $db->prepare($sql2);
+    //$stmt2->bindParam(':id', $prestamo_id);
+    error_log($sql2);
+    $stmt2->execute();
+    $clienteis = $stmt2->fetch(PDO::FETCH_ASSOC);
+    if(!$clienteis) {
+        error_log("client not found!");
+        exit();
+    }
 } else {
     echo "Prestamo ID not provided!";
     exit();
@@ -216,17 +232,12 @@ if(isset($_POST['actualizarStatus'])) {
         <!-- Group 1 -->
         <div class="col-sm-8">
             <div class="form-group">
-                <label for="clientUser">Usuario cliente:</label>
-                <input type="text" class="form-control" id="clientUser" name="clientUser">
-                <div id="clientUserDropdown" class="dropdown-content"></div>
-            </div>
-            <div class="form-group">
                 <label for="addCuentaRemitente">Cuenta Remitente:</label>
                 <input type="text" class="form-control" id="addCuentaRemitente" name="addCuentaRemitente">
             </div>
             <div class="form-group">
                 <label for="editTipoCuentaRemitente">Tipo Cuenta Remitente:</label>
-                <select class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente" required>
+                <select class="form-control" id="editTipoCuentaRemitente" name="editTipoCuentaRemitente">
                   <option value="" selected>--Tipo de Cuenta--</option>
                     <option value="Cuenta de ahorros">Cuenta de ahorros</option>
                     <option value="Cuenta corriente">Cuenta corriente</option>
@@ -284,11 +295,15 @@ if(isset($_POST['actualizarStatus'])) {
                 <option value="Banco Empire">Banco Empire</option>
                 <option value="Corporación de Crédito Oficorp">Corporación de Crédito Oficorp</option>
               </select>
-
+            </div>
+            <div class="form-group">
+                <label for="clientUser">Usuario cliente:</label>
+                <input type="text" class="form-control" id="clientUser" name="clientUser" value="<?php echo $clienteis['Usuario']; ?>" readonly>
+                <div id="clientUserDropdown" class="dropdown-content"></div>
             </div>
             <div class="form-group">
                 <label for="addCuentaDestinatario">Cuenta Destinatario:</label>
-                <input type="text" class="form-control" id="addCuentaDestinatario" name="addCuentaDestinatario">
+                <input type="text" class="form-control" id="addCuentaDestinatario" name="addCuentaDestinatario" value="<?php echo $clienteis['NumeroCuentaBancaria']; ?>" required readonly>
             </div>
             <div class="form-group">
                 <label for="addTipoCuentaDestinatario">Tipo Cuenta Destinatario:</label>
@@ -297,6 +312,20 @@ if(isset($_POST['actualizarStatus'])) {
                     <option value="Cuenta de ahorros">Cuenta de ahorros</option>
                     <option value="Cuenta corriente">Cuenta corriente</option>
                 </select>
+                <script>
+                   // Get the select element
+                   var selectElement = document.getElementById("addTipoCuentaDestinatario");
+                   // Set the value you want to select
+                   var valueToSelect = "<?php echo $clienteis['TipoDeCuentaBancaria']; ?>";
+                   // Loop through options to find the one with the matching value
+                   for (var i = 0; i < selectElement.options.length; i++) {
+                     if (selectElement.options[i].value === valueToSelect) {
+                       // Set the selectedIndex of the select element
+                       selectElement.selectedIndex = i;
+                       break;
+                     }
+                   }
+                </script>
             </div>
             <div class="form-group">
                 <label for="addEntidadBancariaDestinatario">Entidad Bancaria Destinatario:</label>
@@ -350,6 +379,20 @@ if(isset($_POST['actualizarStatus'])) {
                 <option value="Banco Empire">Banco Empire</option>
                 <option value="Corporación de Crédito Oficorp">Corporación de Crédito Oficorp</option>
               </select>
+              <script>
+                   // Get the select element
+                   var selectElement = document.getElementById("addEntidadBancariaDestinatario");
+                   // Set the value you want to select
+                   var valueToSelect = "<?php echo $clienteis['EntidadBancaria']; ?>";
+                   // Loop through options to find the one with the matching value
+                   for (var i = 0; i < selectElement.options.length; i++) {
+                     if (selectElement.options[i].value === valueToSelect) {
+                       // Set the selectedIndex of the select element
+                       selectElement.selectedIndex = i;
+                       break;
+                     }
+                   }
+                </script>
             </div>
         </div>
         <!-- Group 2 -->
@@ -414,7 +457,7 @@ if(isset($_POST['actualizarStatus'])) {
             <!-- Detalle Perfil Content Here -->
             <div class="form-group">
                 <label for="estadoPrestamo">Status del Préstamo:</label>
-                <form action="update_prestamo.php" method="post">
+                <form onsubmit="return isMontoAprobadoSetted()" action="update_prestamo.php" method="post">
                   <input type="text" name="idPrestamo" value="<?php echo $prestamo_id; ?>" hidden readonly>
                 <select class="form-control" id="estadoPrestamo" name="statusPrestamo">
                     <option value="Aprobado" <?php if($prestamo['Status'] == 'Aprobado') echo 'selected'; ?>>Aprobado</option>
@@ -1156,6 +1199,20 @@ document.getElementById("clientUser").addEventListener("input", function() {
               }
             }
           });
+</script>
+<script>
+  function isMontoAprobadoSetted() {
+    var detalleMontoAprobadoInput = document.getElementById("montoAprobado");
+    
+    // Check if the input element exists and has a value
+    if (detalleMontoAprobadoInput && detalleMontoAprobadoInput.value.trim() !== "" && detalleMontoAprobadoInput.value.trim() !== "0.00") {
+        return true; // Return true if value is set and not "0.00"
+    } else {
+      alert("No se puede aprobar el prestamo\n \nEl monto aprobado debe ser especificado antes de aprobar el prestamo");
+        return false; // Return false if value is not set or is "0.00"
+    }
+}
+
 </script>
 </body>
 </html>

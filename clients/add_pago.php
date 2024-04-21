@@ -15,7 +15,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Retrieve form data
     $cuentaRemitente = $_POST['addCuentaRemitente'];
-    $tipoCuentaRemitente = $_POST['addCuentaRemitente'];
+    $tipoCuentaRemitente = $_POST['addTipoCuentaRemitente'];
     $entidadBancariaRemitente = $_POST['addEntidadBancariaRemitente'];
     $cuentaDestinatario = $_POST['addCuentaDestinatario'];
     $tipoCuentaDestinatario = $_POST['addTipoCuentaDestinatario'];
@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               VALUES (:idCliente, :cuentaRemitente, :tipoCuentaRemitente, :entidadBancariaRemitente, 
               :cuentaDestinatario, :tipoCuentaDestinatario, :entidadBancariaDestinatario, :monto, :motivo, 
               :tipo, :prestamoId, :voucherPath, :fechaDePago)";
-              $motivo = "Pago de préstamo del usuario ". $_SESSION['fullname'];
+              $motivo = "Pago de préstamo del usuario ". $_SESSION['username'];
       }
       error_log("query assigned");
       error_log($sql);
