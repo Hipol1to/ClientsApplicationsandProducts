@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 21, 2024 at 08:25 PM
+-- Generation Time: Apr 22, 2024 at 01:34 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -110,7 +110,7 @@ CREATE TABLE IF NOT EXISTS `finanzas` (
 --
 
 INSERT INTO `finanzas` (`dineroencaja`, `dineroinvertido`, `dineroenprestamos`) VALUES
-('-2673.01', '1287.03', '15173.01');
+('-247096.01', '1287.03', '259596.01');
 
 -- --------------------------------------------------------
 
@@ -184,7 +184,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pagos`
@@ -211,7 +211,8 @@ INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`
 (41, 38, '12345678900', 'Cuenta corriente', 'Bancotui', '2324434', 'Cuenta de ahorros', 'Banco Óptima de Ahorro y Crédito', '35.76', 'ei compa', 'Transferencia bancaria', NULL, NULL, 39, NULL, '\\uploads\\662440fae22d6_front_mqdefault.jpg', '2024-04-25 00:00:00', '2024-04-17 23:43:38', '2024-04-20 22:26:02'),
 (42, 44, '2222222222', 'Cuenta de ahorros', 'Banco Popular Dominicano', '444444444444444', 'Cuenta corriente', 'Banreservas', '1000.00', 'pago prestamo', 'Transferencia bancaria', NULL, NULL, 40, NULL, '\\uploads\\66254ce2851d0_front_ad0967b583094395a083163f6465cfdb.jpg', '2024-04-21 00:00:00', '2024-04-21 17:29:06', '2024-04-21 17:29:06'),
 (43, 46, '568658568568', 'Cuenta corriente', 'Asociación Popular de Ahorros y Préstamos', '38477753433', 'Cuenta de ahorros', 'Asociación La Nacional de Ahorros y Préstamos', '10000.00', 'desembolso de prestamo', 'Transferencia bancaria', NULL, NULL, 42, NULL, '\\uploads\\66256d609d269_front_Eclipse Front Bumper.png', '2024-04-21 00:00:00', '2024-04-21 19:47:44', '2024-04-21 19:47:44'),
-(45, 46, '38477753433', 'Cuenta de ahorros', 'Asociación La Nacional de Ahorros y Préstamos', '23245553343', 'Cuenta de ahorros', 'Banco Popular Dominicano', '1000.00', 'Pago de préstamo del usuario userprueba2', 'Transferencia bancaria', NULL, NULL, 42, NULL, '\\uploads\\662575b0c9316_front_1af67c9f09fb820df90716dc83863211.jpg', '2024-04-21 00:00:00', '2024-04-21 20:06:12', '2024-04-21 20:23:33');
+(45, 46, '38477753433', 'Cuenta de ahorros', 'Asociación La Nacional de Ahorros y Préstamos', '23245553343', 'Cuenta de ahorros', 'Banco Popular Dominicano', '1000.00', 'Pago de préstamo del usuario userprueba2', 'Transferencia bancaria', NULL, NULL, 42, NULL, '\\uploads\\662575b0c9316_front_1af67c9f09fb820df90716dc83863211.jpg', '2024-04-21 00:00:00', '2024-04-21 20:06:12', '2024-04-21 20:23:33'),
+(46, 46, '999777477', 'Cuenta corriente', 'Banco Popular Dominicano', '38477753433', 'Cuenta de ahorros', 'Asociación La Nacional de Ahorros y Préstamos', '244423.00', 'desembolso de prestamo', 'Transferencia bancaria', NULL, NULL, 43, NULL, '\\uploads\\662598d39fef8_front_CAP Storage Model Diagram.png', '2024-04-25 00:00:00', '2024-04-21 22:53:07', '2024-04-21 22:53:07');
 
 --
 -- Triggers `pagos`
@@ -432,6 +433,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `MontoSolicitado` decimal(10,2) DEFAULT NULL,
   `MontoAprobado` decimal(10,2) DEFAULT NULL,
   `MontoPagado` decimal(10,2) DEFAULT NULL,
+  `MontoPendiente` decimal(10,2) DEFAULT NULL,
   `TasaDeInteres` decimal(10,2) DEFAULT NULL,
   `MontoRecargo` decimal(10,2) DEFAULT NULL,
   `MontoCuota1` decimal(10,2) DEFAULT NULL,
@@ -444,6 +446,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `Status` varchar(50) DEFAULT NULL,
   `PagoId` int(11) DEFAULT NULL,
   `FechaPagoMensual` timestamp NULL DEFAULT NULL,
+  `FechaDesembolso` timestamp NULL DEFAULT NULL,
   `FechaFinalPrestamo` timestamp NULL DEFAULT NULL,
   `CuotasTotales` int(3) DEFAULT NULL,
   `DiasDePagoDelMes` varchar(255) DEFAULT NULL,
@@ -454,16 +457,17 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prestamos`
 --
 
-INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `TasaDeInteres`, `MontoRecargo`, `MontoCuota1`, `MontoCuota2`, `MontoCuota3`, `MontoCuota4`, `MontoPagoMensual`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaPagoMensual`, `FechaFinalPrestamo`, `CuotasTotales`, `DiasDePagoDelMes`, `CantPagosPorMes`, `CantMesesDuracionPrestamo`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(39, 38, 'Prestamoss', '12300.00', '10000.00', '0.00', '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', 41, NULL, '2025-01-17 04:00:00', 18, 'Dia# 6,  Dia# 16', '2', NULL, NULL, '2024-04-17 20:14:59', '2024-04-20 20:42:18'),
-(40, 44, 'Prestamo', '10000.00', '6000.00', NULL, NULL, NULL, '1000.00', '100.00', '100.00', NULL, '1200.00', 'Inversiones Everest', 'felipe garibo', 'Aprobado', 42, NULL, '2024-09-20 04:00:00', 5, '   Dia# 6,  Dia# 16', '3', NULL, NULL, '2024-04-20 23:01:22', '2024-04-21 17:29:06'),
-(42, 46, 'Prestamo', '10000.00', '10000.00', NULL, NULL, NULL, '1000.00', '1000.00', NULL, NULL, '2000.00', 'Inversiones Everest', 'Alfredo Pereira Guzman', 'Aprobado', 43, NULL, '2024-09-21 04:00:00', 10, ' Dia# 15,  Dia# 28', '2', 5, NULL, '2024-04-21 19:44:01', '2024-04-21 19:47:44');
+INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `MontoPendiente`, `TasaDeInteres`, `MontoRecargo`, `MontoCuota1`, `MontoCuota2`, `MontoCuota3`, `MontoCuota4`, `MontoPagoMensual`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaPagoMensual`, `FechaDesembolso`, `FechaFinalPrestamo`, `CuotasTotales`, `DiasDePagoDelMes`, `CantPagosPorMes`, `CantMesesDuracionPrestamo`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
+(39, 38, 'Prestamoss', '12300.00', '10000.00', '0.00', NULL, '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', 41, NULL, NULL, '2025-01-17 04:00:00', 18, 'Dia# 6,  Dia# 16', '2', NULL, NULL, '2024-04-17 20:14:59', '2024-04-20 20:42:18'),
+(40, 44, 'Prestamo', '10000.00', '6000.00', NULL, NULL, NULL, NULL, '1000.00', '100.00', '100.00', NULL, '1200.00', 'Inversiones Everest', 'felipe garibo', 'Aprobado', 42, NULL, NULL, '2024-09-20 04:00:00', 5, '   Dia# 6,  Dia# 16', '3', NULL, NULL, '2024-04-20 23:01:22', '2024-04-21 17:29:06'),
+(42, 46, 'Prestamo', '10000.00', '10000.00', NULL, NULL, NULL, NULL, '1000.00', '1000.00', NULL, NULL, '2000.00', 'Inversiones Everest', 'Alfredo Pereira Guzman', 'Aprobado', 43, NULL, NULL, '2024-09-21 04:00:00', 10, ' Dia# 15,  Dia# 28', '2', 5, NULL, '2024-04-21 19:44:01', '2024-04-21 19:47:44'),
+(44, 46, 'Prestamo', '20000.00', '15000.00', NULL, NULL, NULL, NULL, '1000.00', '1000.00', '1000.00', NULL, '3000.00', 'Inversiones Everest', 'Alfredo Pereira Guzman', 'Aprobado', NULL, NULL, NULL, '2024-09-21 04:00:00', 10, ' Dia# 12,  Dia# 27', '3', 5, '2024-04-21 04:00:00', '2024-04-22 00:22:12', '2024-04-22 00:53:09');
 
 -- --------------------------------------------------------
 

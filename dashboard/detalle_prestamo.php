@@ -425,6 +425,15 @@ if(isset($_POST['actualizarStatus'])) {
                         <label for="fotoComprobanteDePago">Foto comprobante de pago:</label>
                         <input type="file" class="form-control-file" id="fotoComprobanteDePago" name="fotoComprobanteDePago" accept="image/*" required>
                       </div>
+                      <div class="form-group">
+        <label for="addDesembolsoSi">Este pago es un desembolso?</label>
+    <input type="radio" id="addDesembolsoSi" name="desembolsow" value="Si">
+    <label for="addDesembolsoSi">Si</label>
+    <br>
+    <input type="radio" id="addDesembolsoNo" name="desembolsow" value="No">
+    <label for="addDesembolsoNo">No</label>
+</div>
+
         </div>
     </div>
     <div class="modal-footer">

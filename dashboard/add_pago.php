@@ -25,6 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $motivo = $_POST['addMotivo'];
     $tipo = $_POST['addTipo'];
     $prestamoId = isset($_POST['addPrestamoId']) ? $_POST['addPrestamoId'] : null;
+    if (isset($_POST['desembolsow'])) {
+      $isDesembolso = $_POST['desembolsow'] == "Si" ? true : false;
+    } else {
+      $isDesembolso = false;
+    }
 
     $inversionId = isset($_POST['addInversionId']) ? $_POST['addInversionId'] : null;
     $participacionId = isset($_POST['addParticipacionId']) ? $_POST['addParticipacionId'] : null;
@@ -165,9 +170,35 @@ error_log("{$pago}");
 
     //DETERMINE IF THE PAGO IS FOR INVERSION/PARTICIPACION OR PRESTAMO
     if ($prestamoId != null) {
+      if ($isDesembolso) {
       //prestamo scenario
       $sql = "UPDATE prestamos SET 
-                                PagoId = :idPago  
+                                PagoId = :idPago,
+                                FechaDesembolso = :fechaDesembolso
+                                WHERE Id = :id";
+    
+    if ($stmt = $db->prepare($sql)) {
+        // Bind variables to the prepared statement as parameters
+        $stmt->bindParam(":idPago", $pago);
+        $stmt->bindParam(":id", $prestamoId);
+        $stmt->bindParam(":fechaDesembolso", $fechaDePago);
+        // Attempt to execute the prepared statement
+        if ($stmt->execute()) {
+            // Redirect back to the page with success message
+            header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
+            exit();
+        } else {
+            // Redirect back to the page with error message
+            header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
+            exit();
+        }
+      } else {
+        error_log("hubo un bobo con el query");
+      }
+    } else {
+      //prestamo scenario
+      $sql = "UPDATE prestamos SET 
+                                PagoId = :idPago
                                 WHERE Id = :id";
     
     if ($stmt = $db->prepare($sql)) {
@@ -184,8 +215,9 @@ error_log("{$pago}");
             header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
             exit();
         }
-    } else {
-      error_log("hubo un bobo con el query");
+      } else {
+        error_log("hubo un bobo con el query");
+      }
     }
   } elseif ($inversionId != null && $participacionId == null) {
     //Inversion type Acciones/Bonos

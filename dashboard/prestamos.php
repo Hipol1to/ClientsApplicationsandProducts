@@ -487,7 +487,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             <div class="col-sm-4">
                 <div class="form-group">
                     <label for="editFechaFinalPrestamo">Fecha Final de prestamo:</label>
-                    <input type="text" class="form-control datepicker" id="editFechaFinalPrestamo" name="editFechaFinalPrestamo">
+                    <input type="text" class="form-control datepicker" id="editFechaFinalPrestamo" name="editFechaFinalPrestamo" required>
                 </div>
                 <div class="form-group">
                     <label for="editCuotasTotales">Cuotas Totales:</label>
@@ -506,7 +506,7 @@ echo '<div id="editModal" class="modal fade" role="dialog">
             <div class="col-sm-4">
                     <div class="form-group">
                     <label for="editFechaDeAprobacion">Fecha de Aprobacion:</label>
-                    <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion">
+                    <input type="text" class="form-control datepicker" id="editFechaDeAprobacion" name="editFechaDeAprobacion" required>
                     <input type="text" class="form-control" id="editDiasDePagoDelMes" name="editDiasDePagoDelMes" hidden>
                 </div>
                 <div class="form-group">
@@ -625,10 +625,10 @@ function generateOptionsEdit() {
               var cuotasTotalesInput = document.getElementById("editCuotasTotales");
               var cantidadDeCuotasTotales =parseFloat(cuotasTotalesInput.value).toFixed(2);
 
-              console.log("monto mensual esperado is: "+montoEsperado);
               var montoEsperado = parseFloat(montoAprobadoValue/cantidadDeCuotasTotales).toFixed(2);
-              var montoMensualEsperado = document.getElementById("editMontoPagoEsperado");
-              montoMensualEsperado.value = montoEsperado;
+              //console.log("monto mensual esperado is: "+montoEsperado);
+              var montoMensualEsperado = document.getElementById("editMontoPagoMensual");
+              //montoMensualEsperado.value = montoEsperado;
             }
 });
         
@@ -1131,7 +1131,7 @@ if (sum === monthlyAmmount) {
     return true;
 } else {
     console.log("eeeThe sum of values from input elements does not match the value of the other input element.");
-    const menssage = "El monto de las cuotas no corresponde con el monto aprobado";
+    const menssage = "La suma de las cuotas no corresponde al monto mensual esperado";
     const existingMenssage = document.querySelector('.error-message');
     if (!existingMenssage) showMessageBelowElement(inputElement, menssage);
     return false;
@@ -1453,6 +1453,21 @@ inputElement.addEventListener('input', function(event) {
               inputCuota.setSelectionRange(cursorPosition, cursorPosition);
               }
             }
+            let sumOfTheQuotes = getEditSumOfQuotes();
+              var montoMensualInput = document.getElementById("editMontoPagoMensual");
+              montoMensualInput.value = sumOfTheQuotes;
+              var currentMontoMensual = parseFloat(montoMensualInput.value).toFixed(2);
+
+              var montoMensualAprobadoInput = document.getElementById("editMontoAprobado");
+              var montoAprobadoValue =parseFloat(montoMensualAprobadoInput.value).toFixed(2);
+
+              var mesesTotalesInput = document.getElementById("editCantMeses");
+              var cantidadDeMesesTotales =parseFloat(mesesTotalesInput.value).toFixed(2);
+
+              var montoEsperado = parseFloat(montoAprobadoValue/cantidadDeMesesTotales).toFixed(2);
+              console.log("monto mensual esperado is: "+montoEsperado);
+              var montoMensualEsperado = document.getElementById("editMontoPagoEsperado");
+              montoMensualEsperado.value = montoEsperado;
 });
         
         var select = document.createElement("select");
@@ -1560,6 +1575,21 @@ editMontoAprobadoInput.addEventListener('input', function(event) {
               editMontoAprobadoInput.setSelectionRange(cursorPosition, cursorPosition);
               }
             }
+            let sumOfTheQuotes = getEditSumOfQuotes();
+              var montoMensualInput = document.getElementById("editMontoPagoMensual");
+              montoMensualInput.value = sumOfTheQuotes;
+              var currentMontoMensual = parseFloat(montoMensualInput.value).toFixed(2);
+
+              var montoMensualAprobadoInput = document.getElementById("editMontoAprobado");
+              var montoAprobadoValue =parseFloat(montoMensualAprobadoInput.value).toFixed(2);
+
+              var mesesTotalesInput = document.getElementById("editCantMeses");
+              var cantidadDeMesesTotales =parseFloat(mesesTotalesInput.value).toFixed(2);
+
+              var montoEsperado = parseFloat(montoAprobadoValue/cantidadDeMesesTotales).toFixed(2);
+              console.log("monto mensual esperado is: "+montoEsperado);
+              var montoMensualEsperado = document.getElementById("editMontoPagoEsperado");
+              montoMensualEsperado.value = montoEsperado;
           });
 editMontoPagadoInput.addEventListener('input', function(event) {
           if (/[^0-9.]/.test(editMontoPagadoInput.value)) {
