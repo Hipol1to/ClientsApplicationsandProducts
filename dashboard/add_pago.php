@@ -170,54 +170,119 @@ error_log("{$pago}");
 
     //DETERMINE IF THE PAGO IS FOR INVERSION/PARTICIPACION OR PRESTAMO
     if ($prestamoId != null) {
-      if ($isDesembolso) {
-      //prestamo scenario
-      $sql = "UPDATE prestamos SET 
-                                PagoId = :idPago,
-                                FechaDesembolso = :fechaDesembolso
-                                WHERE Id = :id";
-    
-    if ($stmt = $db->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bindParam(":idPago", $pago);
-        $stmt->bindParam(":id", $prestamoId);
-        $stmt->bindParam(":fechaDesembolso", $fechaDePago);
-        // Attempt to execute the prepared statement
-        if ($stmt->execute()) {
-            // Redirect back to the page with success message
-            header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
-            exit();
-        } else {
-            // Redirect back to the page with error message
-            header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
-            exit();
-        }
-      } else {
-        error_log("hubo un bobo con el query");
-      }
+          if ($isDesembolso) {
+            //behavior if payment is a desembolso
+            $sql2 = "SELECT * FROM prestamos
+                      WHERE p.Id = :id";
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->bindParam(':id', $prestamo_id);
+            error_log($sql2);
+            $stmt2->execute();
+            $erPrestamo = $stmt2->fetch(PDO::FETCH_ASSOC);
+
+            $montoPendiente = ((float)$erPrestamo['MontoAprobado']*(float)$erPrestamo['TasaDeInteres']);
+            $diasDePagoArray = explode(",", $erPrestamo['DiasDePagoDelMes']);
+            $numbers = array();
+            foreach ($diasDePagoArray as $string) {
+                preg_match_all('!\d+!', $string, $matches);
+                foreach ($matches[0] as $match) {
+                    $numbers[] = (int) $match;
+                }
+            }
+            // Sort the numbers in ascending order
+            sort($numbers);
+          
+            // Store the sorted numbers in $sortedDiasDePago
+            $sortedDiasDePago = $numbers;
+
+            $dateString = $fechaDePago;
+            $fechaDePagoMensual = null;
+            $isFechaDePagoDefined = false;
+            
+            for ($i=0; $i < count($sortedDiasDePago); $i++) { 
+                $lowestDay = $sortedDiasDePago[i]; // New day value
+
+                // Create a DateTime object from the date string
+                $date = new DateTime($dateString);
+
+                // Set the new day value
+                $date->setDate($date->format('Y'), $date->format('m'), $lowestDay);
+
+                // Format the modified date as a string
+                $possibleFechaDePagoMensual = $date->format('Y-m-d');
+                $formattedFechaDePago = new DateTime($fechaDePago);
+
+                if (!$isFechaDePagoDefined) {
+                  if ($possibleFechaDePagoMensual > $formattedFechaDePago) {
+                    // Create a DateTime object from the date string
+                    $dateObj = new DateTime($possibleFechaDePagoMensual);
+                  
+                    // Add one month to the date
+                    $dateObj->modify('+1 month');
+                  
+                    // Get the modified date as a string
+                    $fechaDePagoMensual = $dateObj->format('Y-m-d');
+                    $montoPagoMensual = $erPrestamo['MontoCuota' . $i];
+                    $isFechaDePagoDefined = true;
+                  } else {
+                    $fechaDePagoMensual = $possibleFechaDePagoMensual;
+                    $montoPagoMensual = $erPrestamo['MontoCuota1'];
+                  }
+                }
+            }
+
+          //prestamo scenario
+          $sql = "UPDATE prestamos SET 
+                                    PagoId = :idPago,
+                                    FechaDesembolso = :fechaDesembolso,
+                                    FechaPagoMensual = :fechaPagoMensual,
+                                    MontoPagoMensual = :montoPagoMensual
+                                    WHERE Id = :id";
+
+        if ($stmt = $db->prepare($sql)) {
+            // Bind variables to the prepared statement as parameters
+            $stmt->bindParam(":idPago", $pago);
+            $stmt->bindParam(":id", $prestamoId);
+            $stmt->bindParam(":fechaDesembolso", $fechaDePago);
+            $stmt->bindParam(":fechaPagoMensual", $fechaDePagoMensual);
+            $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
+            // Attempt to execute the prepared statement
+            if ($stmt->execute()) {
+                // Redirect back to the page with success message
+                header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
+                exit();
+            } else {
+                // Redirect back to the page with error message
+                header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
+                exit();
+            }
+          } else {
+            error_log("hubo un bobo con el query");
+          }
     } else {
-      //prestamo scenario
-      $sql = "UPDATE prestamos SET 
-                                PagoId = :idPago
-                                WHERE Id = :id";
-    
-    if ($stmt = $db->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bindParam(":idPago", $pago);
-        $stmt->bindParam(":id", $prestamoId);
-        // Attempt to execute the prepared statement
-        if ($stmt->execute()) {
-            // Redirect back to the page with success message
-            header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
-            exit();
+        //behavior if pago is not a desembolso
+        //prestamo scenario
+        $sql = "UPDATE prestamos SET 
+                                  PagoId = :idPago
+                                  WHERE Id = :id";
+      
+      if ($stmt = $db->prepare($sql)) {
+          // Bind variables to the prepared statement as parameters
+          $stmt->bindParam(":idPago", $pago);
+          $stmt->bindParam(":id", $prestamoId);
+          // Attempt to execute the prepared statement
+          if ($stmt->execute()) {
+              // Redirect back to the page with success message
+              header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
+              exit();
+          } else {
+              // Redirect back to the page with error message
+              header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
+              exit();
+          }
         } else {
-            // Redirect back to the page with error message
-            header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
-            exit();
+          error_log("hubo un bobo con el query");
         }
-      } else {
-        error_log("hubo un bobo con el query");
-      }
     }
   } elseif ($inversionId != null && $participacionId == null) {
     //Inversion type Acciones/Bonos
