@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 22, 2024 at 01:34 AM
+-- Generation Time: Apr 22, 2024 at 10:59 PM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -500,6 +500,22 @@ INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Ema
 (11, 44, 'userprueba', '$2y$10$3Asb7CsImahZqoulz7SHJuQzdYkD3cilbLuywo1U8B1r73c73Unzy', 'Cliente', 'cuentacompaltidas@gmail.com', 1, '2024-04-20 22:37:19', '2024-04-20 22:41:46'),
 (12, 46, 'userprueba2', '$2y$10$zxcUaTa25sOrYYeVmTS4PeEBzAli0uiR3bsiX639t/MRgp0u6t.ve', 'Cliente', 'thelegendstutorials@hotmail.com', 1, '2024-04-21 18:00:12', '2024-04-21 18:28:42'),
 (6, 38, 'liluser', '$2y$10$hFX.BA3sjkISNzlcShOQuuivSFSVwFbVYXZUOVDnYuxLvAVxhxGrW', 'Cliente', 'thelegendstutorials@outlook.com', 1, '2024-03-26 02:59:52', '2024-04-19 04:32:21');
+
+DELIMITER $$
+--
+-- Events
+--
+DROP EVENT `updatePrestamoStatus`$$
+CREATE DEFINER=`root`@`localhost` EVENT `updatePrestamoStatus` ON SCHEDULE EVERY 1 DAY STARTS '2024-04-23 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE prestamos
+    SET Status = "Moroso"
+    WHERE Status IN ('Aprobado', 'Moroso', 'Atrasado') 
+    AND MontoCuota1 IS NOT NULL 
+    AND DiasDePagoDelMes IS NOT NULL 
+    AND MontoPagoMensual IS NOT NULL 
+    AND MontoPagoMensual != 0.00
+    AND DAY(CURRENT_DATE()) = 28$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

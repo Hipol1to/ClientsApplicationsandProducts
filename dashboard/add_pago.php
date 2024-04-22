@@ -234,6 +234,7 @@ error_log("{$pago}");
           //prestamo scenario
           $sql = "UPDATE prestamos SET 
                                     PagoId = :idPago,
+                                    MontoPendiente = :montoPendiente,
                                     FechaDesembolso = :fechaDesembolso,
                                     FechaPagoMensual = :fechaPagoMensual,
                                     MontoPagoMensual = :montoPagoMensual
@@ -242,6 +243,7 @@ error_log("{$pago}");
         if ($stmt = $db->prepare($sql)) {
             // Bind variables to the prepared statement as parameters
             $stmt->bindParam(":idPago", $pago);
+            $stmt->bindParam(":montoPendiente", $montoPendiente);
             $stmt->bindParam(":id", $prestamoId);
             $stmt->bindParam(":fechaDesembolso", $fechaDePago);
             $stmt->bindParam(":fechaPagoMensual", $fechaDePagoMensual);
@@ -272,6 +274,41 @@ error_log("{$pago}");
           $stmt->bindParam(":id", $prestamoId);
           // Attempt to execute the prepared statement
           if ($stmt->execute()) {
+              $sql2 = "SELECT * FROM prestamos
+                      WHERE p.Id = :id";
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->bindParam(':id', $prestamoId);
+            error_log($sql2);
+            $stmt2->execute();
+            $erPrestamo = $stmt2->fetch(PDO::FETCH_ASSOC);
+            $montoPagoMensual = ((float)$erPrestamo['MontoPagoMensual'] - $monto);
+            $montoPendiente = ((float)$erPrestamo['MontoPendiente'] - $monto);
+
+            $sql = "UPDATE prestamos SET 
+                                PagoId = :idPago,
+                                MontoPagoMensual = :montoPagoMensual,
+                                MontoPendiente = :montoPendiente
+                                WHERE Id = :id";
+    
+            if ($stmt = $db->prepare($sql)) {
+                // Bind variables to the prepared statement as parameters
+                $stmt->bindParam(":idPago", $pago);
+                $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
+                $stmt->bindParam(":montoPendiente", $montoPendiente);
+                $stmt->bindParam(":id", $prestamoId);
+                // Attempt to execute the prepared statement
+                if ($stmt->execute()) {
+                    // Redirect back to the page with success message
+                    header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
+                    exit();
+                } else {
+                    // Redirect back to the page with error message
+                    header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
+                    exit();
+                }
+            } else {
+              error_log("hubo un bobo con el query");
+            }
               // Redirect back to the page with success message
               header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
               exit();
@@ -307,7 +344,7 @@ error_log("{$pago}");
     }
 
   } elseif ($inversionId != null && $participacionId != null) {
-    //Inversion type Fondos de inversion
+    //Inversion type Fondos de inversionf
     $sql = "UPDATE inversiones SET 
                                 PagoId = :IdPago  
                                 WHERE Id = :id";

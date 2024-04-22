@@ -31,6 +31,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   error_log("Payment InvestmentId" . $inversionId);
   error_log("stake identification" . $participacionId);
 
+    
+
+
+
   //voucher handling
   // Check if both front and back photos of the ID card are uploaded
   if (isset($_FILES['fotoComprobanteDePago']) && $_FILES['fotoComprobanteDePago']['error'] === UPLOAD_ERR_OK) {
@@ -123,6 +127,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               // Redirect back to the page with success message
               $pago = $db->lastInsertId();
               error_log("{$pago}e");
+
+              $sql2 = "SELECT * FROM prestamos
+                      WHERE p.Id = :id";
+            $stmt2 = $db->prepare($sql2);
+            $stmt2->bindParam(':id', $prestamoId);
+            error_log($sql2);
+            $stmt2->execute();
+            $erPrestamo = $stmt2->fetch(PDO::FETCH_ASSOC);
+            $montoPagoMensual = ((float)$erPrestamo['MontoPagoMensual'] - $monto);
+            $montoPendiente = ((float)$erPrestamo['MontoPendiente'] - $monto);
+
+            $sql = "UPDATE prestamos SET 
+                                PagoId = :idPago,
+                                MontoPagoMensual = :montoPagoMensual,
+                                MontoPendiente = :montoPendiente
+                                WHERE Id = :id";
+    
+            if ($stmt = $db->prepare($sql)) {
+                // Bind variables to the prepared statement as parameters
+                $stmt->bindParam(":idPago", $pago);
+                $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
+                $stmt->bindParam(":montoPendiente", $montoPendiente);
+                $stmt->bindParam(":id", $prestamoId);
+                // Attempt to execute the prepared statement
+                if ($stmt->execute()) {
+                    // Redirect back to the page with success message
+                    header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
+                    exit();
+                } else {
+                    // Redirect back to the page with error message
+                    header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
+                    exit();
+                }
+            } else {
+              error_log("hubo un bobo con el query");
+            }
+
+
+
+
               header("location: detalle_prestamo.php?id=".$prestamoId);
               exit();
           } else {

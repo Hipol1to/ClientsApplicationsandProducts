@@ -630,9 +630,10 @@ if ($result) {
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <button type="button" class="btn btn-primary bustonAddPago" data-toggle="modal" data-target="#modalAgregarPagoForParticipacion">
+                  <?php if($prestamo[\'Status\'] == \'Aprobado\' || $prestamo[\'Status\'] == \'Moroso\') echo \'<button type="button" class="btn btn-primary bustonAddPago" data-toggle="modal" data-target="#modalAgregarPagoForParticipacion">
   Agregar Pago
-</button>
+</button>\'; ?>
+                  
 <p></p>
                   <th></th>
                   <th>Acciones</th>
