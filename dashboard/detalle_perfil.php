@@ -473,7 +473,7 @@ $result = $db->query($sql);
         <button class="btn btn-primary btn-sm edit-btn btn-edit-prestamo" data-id="' . $row['IdPrestamo'] . '">Editar</button>
     </div>
     <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-        <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['IdPrestamo'] . '">Eliminar</button>
+        <button class="btn btn-danger btn-sm delete-btn dilitprestamo" data-id="' . $row['IdPrestamo'] . '">Eliminar</button>
     </div>
 </td>
                 <td>' . $row['IdPrestamo'] . '</td>
@@ -569,7 +569,7 @@ $result = $db->query($sql);
             <button class="btn btn-primary btn-sm edit-btn editarButtonPagoPrestamo" data-id="' . $row['Id'] . '">Editar</button>
         </div>
         <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-            <button class="btn btn-danger btn-sm delete-btn" data-id="' . $row['Id'] . '">Eliminar</button>
+            <button class="btn btn-danger btn-sm delete-btn dilitpagos" data-id="' . $row['Id'] . '">Eliminar</button>
         </div>
         </td>
                 <td>' . $cliente['Id'] . '</td>
@@ -1058,7 +1058,7 @@ $.ajax({
 </script>';
 // JavaScript for handling delete button click
 echo '<script>
-$(".delete-btn").click(function() {
+$(".dilitprestamo").click(function() {
 var id = $(this).data("id");
 if (confirm("¿Estás seguro que quieres borrar este préstamo?")) {
 $.ajax({
@@ -1346,7 +1346,7 @@ $(document).ready(function() {
 </script>
 <script>
   // JavaScript for handling delete button click
-$(".delete-btnPagoParticipacion").click(function() {
+$(".dilitpagos").click(function() {
   var id = $(this).data("id");
   console.log(id);
   if (confirm("¿Estás seguro que quieres borrar este pago?")) {
@@ -1705,6 +1705,7 @@ function isEditFormValid() {
     const element = result.singleNodeValue;
     let cantidadCuotasMensualeses =document.getElementById("editCantPagosPorMes");
     let numCuotasMensuales = parseInt(cantidadCuotasMensualeses.value);
+    
 
     // If any element with 'is-invalid' class or disabled button is found, return false
     if (element !== null) {
@@ -1741,6 +1742,23 @@ function isEditFormValid() {
             return false;
         }
         elementValues2.push(value);
+    }
+
+    let fechaDeAprobacionInput =document.getElementById("editFechaDeAprobacion");
+    let fechaDeAprobacionInputValue = fechaDeAprobacionInput.value;
+    let statusSelect =document.getElementById("editStatus");
+    let statusSelectValue = statusSelect.value;
+    let mensajeAprobacion = "La fecha de aprobacion no puede estar vacía";
+
+    if (!fechaDeAprobacionInputValue && typeof fechaDeAprobacionInputValue !== "undefined" && statusSelectValue == "Aprobado") {
+      showMessageBelowElement(fechaDeAprobacionInputValue, mensajeAprobacion);
+      return false;
+    } else if (fechaDeAprobacionInputValue === null && statusSelectValue == "Aprobado") {
+        showMessageBelowElement(fechaDeAprobacionInputValue, mensajeAprobacion);
+        return false;
+    } else if (typeof fechaDeAprobacionInputValue === "undefined" && statusSelectValue == "Aprobado") {
+        showMessageBelowElement(fechaDeAprobacionInputValue, mensajeAprobacion);
+        return false;
     }
 
     // If all validations pass, return true

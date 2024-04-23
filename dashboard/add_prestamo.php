@@ -74,6 +74,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
+          $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $idCliente;
+            $resultClient = $db->query($sqlClient);
+            $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
+            $montoTotalPrestado = (float)$clienteRecord['MontoTotalSolicitado'];
+            $montoSolicitadoo = (float) $montoSolicitado;
+            $montoTotalPrestadoValue = $montoTotalPrestado > $montoSolicitadoo ? (float)($montoTotalPrestado + $montoSolicitadoo) : (float)( $montoSolicitadoo + $montoTotalPrestado );
+
+            $sqlCliente = "UPDATE Clientes 
+                          SET MontoTotalPrestado = ".$montoTotalPrestadoValue."
+            WHERE Id = ". $idCliente;
+            $resultCliente = $db->query($sqlCliente);
+            $clienteRecord = $resultCliente->fetch(PDO::FETCH_ASSOC);
+
+
             // Redirect back to prestamos.php with success message
             header("location: prestamos.php?success=1");
             exit();

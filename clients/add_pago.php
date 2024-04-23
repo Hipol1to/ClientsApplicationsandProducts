@@ -152,7 +152,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $stmt->bindParam(":id", $prestamoId);
                 // Attempt to execute the prepared statement
                 if ($stmt->execute()) {
-                    // Redirect back to the page with success message
+                    $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $_SESSION['ClienteId'];
+                    $resultClient = $db->query($sqlClient);
+                    $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
+                    $montoTotalPrestado = (float)$clienteRecord['MontoTotalSolicitado'];
+                    $montoSolicitadoo = (float) $montoSolicitado;
+                    $montoTotalPagadoValue = $montoTotalPrestado > $montoSolicitadoo ? (float)($montoTotalPrestado + $montoSolicitadoo) : (float)( $montoSolicitadoo + $montoTotalPrestado );
+                        
+                    $sqlCliente = "UPDATE Clientes 
+                                  SET MontoTotalPagado = ".$montoTotalPagadoValue."
+                    WHERE Id = ". $_SESSION['ClienteId'];
+                    $resultCliente = $db->query($sqlCliente);
+                    $clienteRecord = $resultCliente->fetch(PDO::FETCH_ASSOC);
+
+
+                  // Redirect back to the page with success message
                     header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
                     exit();
                 } else {
