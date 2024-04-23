@@ -2,11 +2,12 @@
 require('includes/config.php');
 
 // If logged in, redirect to the members page
-if ($user->is_logged_in() && $_SESSION['isAdmin']) { 
+$isProffileValidated = isset($_SESSION['isProffileValidated']) ? $_SESSION['isProffileValidated'] : false;
+if ($user->is_logged_in() && $_SESSION['isAdmin'] && $isProffileValidated) { 
 	header('Location: ./dashboard/index.php'); 
   exit();
 	// exit(); 
-} elseif ($user->is_logged_in() && !$_SESSION['isAdmin']) {
+} elseif ($user->is_logged_in() && !$_SESSION['isAdmin'] && $isProffileValidated) {
   header('Location: ./clients/index.php');  
   exit();
 }

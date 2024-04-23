@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 22, 2024 at 10:59 PM
+-- Generation Time: Apr 23, 2024 at 01:19 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -79,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `clientes` (
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `UserId` (`IdUsuario`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clientes`
@@ -90,7 +90,8 @@ INSERT INTO `clientes` (`Id`, `IdUsuario`, `Nombre`, `Apellido`, `Direccion`, `C
 (44, 11, 'felipe', 'garibo', 'calle almanzar #1, el tamarindo, santo domingo este', '0015553333456', 'C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\662444aa94a3b_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png_.d1vis10n._C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\662444aa94a3f_back_como.jpg', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-20 22:41:46', '2024-04-20 22:57:51'),
 (38, 6, 'FalinApart', 'Tan tan', 'tenchon, bitwin menchon for nao', '0015553333456', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e652f_front_scat (1).png_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e6532_back_Untitled Workspace.jpg', '644326222', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-03-27 03:27:18', '2024-03-27 03:32:22'),
 (40, 1, 'Hipolito', 'Perez Peña', 'Calle Pedro Barronte', '40229604604', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351096_front_ENTREGABLE 4- Scampi CMMI.docx_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351098_back_Curriculum Maria Elena Peña Reinoso.pdf', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2024-04-09 19:20:51', '2024-04-09 19:20:51'),
-(46, 12, 'Alfredo', 'Pereira Guzman', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '0015553333456', 'C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png_.d1vis10n._C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66255ada4cd3a_back_como.jpg', '', '38477753433', 'Asociación La Nacional de Ahorros y Préstamos', 'Cuenta de ahorros', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-21 18:28:42', '2024-04-21 18:41:49');
+(46, 12, 'Alfredo', 'Pereira Guzman', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '0015553333456', 'C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png_.d1vis10n._C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66255ada4cd3a_back_como.jpg', '', '38477753433', 'Asociación La Nacional de Ahorros y Préstamos', 'Cuenta de ahorros', NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-21 18:28:42', '2024-04-21 18:41:49'),
+(1, 13, 'Admin', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-19 08:30:41', '2024-04-23 01:13:52');
 
 -- --------------------------------------------------------
 
@@ -482,24 +483,27 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `Usuario` varchar(50) NOT NULL,
   `Contraseña` varchar(255) NOT NULL,
   `Rol` varchar(20) NOT NULL,
-  `Email` varchar(255) NOT NULL,
+  `Email` varchar(255) DEFAULT NULL,
   `Active` tinyint(1) NOT NULL DEFAULT '0',
+  `resetToken` varchar(255) DEFAULT NULL,
+  `resetComplete` varchar(3) DEFAULT 'No',
   `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`),
   KEY `IdCliente` (`IdCliente`)
-) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usuarios`
 --
 
-INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `FechaCreacion`, `FechaModificacion`) VALUES
-(10, 43, 'compainero', '$2y$10$48TH3pRN3mu/t5seSRU6weq6Ox20MaGuEXncnhejMbK8jo/XVYvr6', 'Administrador', 'thelegendstutorials@gmail.com', 1, '2024-04-19 04:29:50', '2024-04-19 04:32:26'),
-(11, 44, 'userprueba', '$2y$10$3Asb7CsImahZqoulz7SHJuQzdYkD3cilbLuywo1U8B1r73c73Unzy', 'Cliente', 'cuentacompaltidas@gmail.com', 1, '2024-04-20 22:37:19', '2024-04-20 22:41:46'),
-(12, 46, 'userprueba2', '$2y$10$zxcUaTa25sOrYYeVmTS4PeEBzAli0uiR3bsiX639t/MRgp0u6t.ve', 'Cliente', 'thelegendstutorials@hotmail.com', 1, '2024-04-21 18:00:12', '2024-04-21 18:28:42'),
-(6, 38, 'liluser', '$2y$10$hFX.BA3sjkISNzlcShOQuuivSFSVwFbVYXZUOVDnYuxLvAVxhxGrW', 'Cliente', 'thelegendstutorials@outlook.com', 1, '2024-03-26 02:59:52', '2024-04-19 04:32:21');
+INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Email`, `Active`, `resetToken`, `resetComplete`, `FechaCreacion`, `FechaModificacion`) VALUES
+(10, 43, 'compainero', '$2y$10$48TH3pRN3mu/t5seSRU6weq6Ox20MaGuEXncnhejMbK8jo/XVYvr6', 'Administrador', 'thelegendstutorials@gmail.com', 1, NULL, 'No', '2024-04-19 08:29:50', '2024-04-19 08:32:26'),
+(11, 44, 'userprueba', '$2y$10$16R/2KnmGgV43OwoX/IcvOIzYgxp09cjXBUbBk0FBmH6meSdAJFQ6', 'Cliente', 'cuentacompaltidas@gmail.com', 1, '40c001303b645ee498c79d7b464c396d', 'Yes', '2024-04-20 22:37:19', '2024-04-22 23:35:14'),
+(12, 46, 'userprueba2', '$2y$10$zxcUaTa25sOrYYeVmTS4PeEBzAli0uiR3bsiX639t/MRgp0u6t.ve', 'Cliente', 'thelegendstutorials@hotmail.com', 1, NULL, 'No', '2024-04-21 18:00:12', '2024-04-21 18:28:42'),
+(6, 38, 'liluser', '$2y$10$hFX.BA3sjkISNzlcShOQuuivSFSVwFbVYXZUOVDnYuxLvAVxhxGrW', 'Cliente', 'thelegendstutorials@outlook.com', 1, NULL, 'No', '2024-03-26 02:59:52', '2024-04-19 04:32:21'),
+(13, 1, 'wepale', '$2y$10$dqLjEA6bsVjTaew7zmSlx.eGEqSpcwQbxyGkXbjL/r5cLqLbellBG', 'Administrador', NULL, 1, NULL, 'No', '2024-04-23 00:21:27', '2024-04-23 01:07:15');
 
 DELIMITER $$
 --

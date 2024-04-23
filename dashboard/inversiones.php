@@ -132,6 +132,12 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                   <p>Pagos</p>
                 </a>
                  </li>
+                 <li class="nav-item">
+                <a href="usuarios.php" class="nav-link">
+                  <i class="fas fa-user nav-icon"></i>
+                  <p>Usuarios</p>
+                </a>
+                 </li>
                  </ul>
                  <ul style="position: absolute; bottom: 0;" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">

@@ -2,7 +2,7 @@
 
 //if logged in redirect to members page
 if ($user->is_logged_in()){ 
-	header('Location: memberpage.php'); 
+	header('Location: index.php'); 
 	exit(); 
 }
 
@@ -17,14 +17,14 @@ if (isset($_POST['submit'])){
 
 	//email validation
 	if (! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
-	    $error[] = 'Please enter a valid email address';
+	    $error[] = 'Por favor inserta un correo electrónico valido';
 	} else {
-		$stmt = $db->prepare('SELECT email FROM members WHERE email = :email');
+		$stmt = $db->prepare('SELECT email FROM Usuarios WHERE email = :email');
 		$stmt->execute(array(':email' => $_POST['email']));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 		if (empty($row['email'])){
-			$error[] = 'Email provided is not recognised.';
+			$error[] = 'Correo electrónico no encontrado.';
 		}
 
 	}
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])){
 
 		try {
 
-			$stmt = $db->prepare("UPDATE members SET resetToken = :token, resetComplete='No' WHERE email = :email");
+			$stmt = $db->prepare("UPDATE Usuarios SET resetToken = :token, resetComplete='No' WHERE email = :email");
 			$stmt->execute(array(
 				':email' => $row['email'],
 				':token' => $token
@@ -45,10 +45,10 @@ if (isset($_POST['submit'])){
 
 			//send email
 			$to = $row['email'];
-			$subject = "Password Reset";
-			$body = "<p>Someone requested that the password be reset.</p>
-			<p>If this was a mistake, just ignore this email and nothing will happen.</p>
-			<p>To reset your password, visit the following address: <a href='".DIR."resetPassword.php?key=$token'>".DIR."resetPassword.php?key=$token</a></p>";
+			$subject = "Reinicio de contraseña";
+			$body = "<p>Hemos recibido una solicitud de cambio de contraseña.</p>
+			<p>Si no reconoces esta solicitud, por favor ignora este correo.</p>
+			<p>Pare reiniciar tu contraseña accede al siguiente enlace: <a href='".DIR."resetPassword.php?key=$token'>".DIR."resetPassword.php?key=$token</a></p>";
 
 			$mail = new Mail();
 			$mail->setFrom(SITEEMAIL);
@@ -72,57 +72,104 @@ if (isset($_POST['submit'])){
 $title = 'Reset Account';
 
 //include header template
-require('layout/header.php');
+//require('layout/header.php');
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Account</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
 
-<div class="container">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<style>
+  .containerrr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: linear-gradient(to left, #305454, #40546c, #305454) !important
+  }
 
-	<div class="row">
+  .form-containerrr {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    background-color: rgba(248, 249, 250, 0.8);
+    border-radius: 10px;
+  }
 
-	    <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-			<form role="form" method="post" action="" autocomplete="off">
-				<h2>Reset Password</h2>
-				<p><a href='login.php'>Back to login page</a></p>
-				<hr>
+  .form-containerrr h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2e5653 !important;
+  }
+</style>
+<div class="containerrr">
+  <div class="form-containerrr">
+    <form role="form" method="post" action="" autocomplete="off">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Resetear contraseña</h2>
+                        </div>
+                        <div class="panel-body">
+                            <p><a href='login.php'>Volver a inciar sesión</a></p>
+                            <hr>
 
-				<?php
-				//check for any errors
-				if (isset($error)){
-					foreach($error as $error){
-						echo '<p class="bg-danger">'.$error.'</p>';
-					}
-				}
+                            <?php
+                            // Check for any errors
+                            if (isset($error)){
+                                foreach($error as $error){
+                                    echo '<div class="alert alert-danger">'.$error.'</div>';
+                                }
+                            }
 
-				if (isset($_GET['action'])){
+                            if (isset($_GET['action'])){
+                                // Check the action
+                                switch ($_GET['action']) {
+                                    case 'active':
+                                        echo "<div class='alert alert-success'>Your account is now active. You may now log in.</div>";
+                                        break;
+                                    case 'reset':
+                                        echo "<div class='alert alert-success'>Please check your inbox for a reset link.</div>";
+                                        break;
+                                }
+                            }
+                            ?>
 
-					//check the action
-					switch ($_GET['action']) {
-						case 'active':
-							echo "<h2 class='bg-success'>Your account is now active you may now log in.</h2>";
-							break;
-						case 'reset':
-							echo "<h2 class='bg-success'>Please check your inbox for a reset link.</h2>";
-							break;
-					}
-				}
-				?>
+                            <div class="form-group">
+                                <label for="email">Correo electrónico</label>
+                                <input type="email" name="email" id="email" class="form-control input-lg" placeholder="Correo electrónico" value="" tabindex="1">
+                            </div>
 
-				<div class="form-group">
-					<input type="email" name="email" id="email" class="form-control input-lg" placeholder="Email" value="" tabindex="1">
-				</div>
-
-				<hr>
-				<div class="row">
-					<div class="col-xs-6 col-md-6"><input type="submit" name="submit" value="Sent Reset Link" class="btn btn-primary btn-block btn-lg" tabindex="2"></div>
-				</div>
-			</form>
-		</div>
-	</div>
-
-
+                            <hr>
+                            <div class="row">
+                                <div class="col-xs-6 col-md-6">
+                                    <input type="submit" name="submit" value="Enviar enlace" class="btn btn-primary btn-block btn-lg" tabindex="2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+  </div>
 </div>
+
+
+    
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+
 
 <?php
 //include header template
-require('layout/footer.php');
+//require('layout/footer.php');
 ?>
