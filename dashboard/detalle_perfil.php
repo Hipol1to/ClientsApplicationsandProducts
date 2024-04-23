@@ -24,7 +24,9 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- Include jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="icon" href="../assets/img/inversiones_everest.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../assets/img/inversiones_everest.png" type="image/x-icon">
 
 <!-- Include Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -230,6 +232,19 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
             <button type="submit" class="btn btn-primary" id="actualizarStatus">Actualizar status</button>
             </form>
             <br><br>
+            <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+          <form action="generate_estado_de_cuenta.php" method="post">
+            <input type="text" name="idClient" value="<?php echo $cliente_id; ?>" hidden readonly>
+            <input type="text" name="c" value="<?php echo $cliente['Usuario']; ?>" hidden readonly>
+        <button type="submit" name="generate_pdf">Generar estado de cuenta</button>
+    </form>
+          </div>
+          <div class="col-sm-6">
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
                 <?php
                 // Check if the ID parameter is set in the URL
                 if(isset($_GET['id'])) {

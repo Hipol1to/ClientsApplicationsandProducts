@@ -24,7 +24,9 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- Include jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="icon" href="../assets/img/inversiones_everest.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../assets/img/inversiones_everest.png" type="image/x-icon">
 
 <!-- Include Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

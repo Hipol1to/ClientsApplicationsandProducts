@@ -77,7 +77,9 @@ if(isset($_POST['actualizarStatus'])) {
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 
 <!-- Include jQuery -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <link rel="icon" href="../assets/img/inversiones_everest.png" type="image/x-icon">
+  <link rel="shortcut icon" href="../assets/img/inversiones_everest.png" type="image/x-icon">
 
 <!-- Include Bootstrap JS -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -630,11 +632,7 @@ if ($result) {
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr>
-                  <?php if($prestamo[\'Status\'] == \'Aprobado\' || $prestamo[\'Status\'] == \'Moroso\') echo \'<button type="button" class="btn btn-primary bustonAddPago" data-toggle="modal" data-target="#modalAgregarPagoForParticipacion">
-  Agregar Pago
-</button>\'; ?>
-                  
-<p></p>
+                  <button type="button" class="btn btn-primary bustonAddPago" data-toggle="modal" data-target="#modalAgregarPagoForParticipacion">Agregar Pago</button>
                   <th></th>
                   <th>Acciones</th>
                     <th>Solicitante</th>

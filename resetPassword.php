@@ -78,6 +78,8 @@ $title = 'Reincio de contraseña';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Reset Account</title>
     <!-- Bootstrap CSS -->
+    <link rel="icon" href="assets/img/inversiones_everest.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/img/inversiones_everest.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -116,6 +118,11 @@ $title = 'Reincio de contraseña';
 	    	} else { ?>
 
 				<form role="form" method="post" action="" autocomplete="off">
+          <div class="row justify-content-center">
+      <div class="col-md-6 text-center">
+        <img src="assets/img/inversiones_everest.png" alt="" width="100%">
+      </div>
+    </div>
 					<h2>Cambiar contraseña</h2>
 					<hr>
 

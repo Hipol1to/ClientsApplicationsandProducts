@@ -79,8 +79,10 @@ $title = 'Reset Account';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Account</title>
+    <title>Inversiones Everest</title>
     <!-- Bootstrap CSS -->
+    <link rel="icon" href="assets/img/inversiones_everest.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/img/inversiones_everest.png" type="image/x-icon">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -115,6 +117,11 @@ $title = 'Reset Account';
     <form role="form" method="post" action="" autocomplete="off">
                     <div class="panel panel-default">
                         <div class="panel-heading">
+                          <div class="row justify-content-center">
+      <div class="col-md-6 text-center">
+        <img src="assets/img/inversiones_everest.png" alt="" width="100%">
+      </div>
+    </div>
                             <h2 class="panel-title">Resetear contraseña</h2>
                         </div>
                         <div class="panel-body">

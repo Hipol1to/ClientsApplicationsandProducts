@@ -83,9 +83,14 @@ $title = 'Iniciar Sesion';
 //include header template
 //require('layout/header.php'); 
 ?>
-
-	
+<head>
+  <title>Inversiones Everest</title>
+  <link rel="icon" href="assets/img/inversiones_everest.png" type="image/x-icon">
+  <link rel="shortcut icon" href="assets/img/inversiones_everest.png" type="image/x-icon">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+	
+
 <style>
   .containerrr {
     display: flex;
@@ -114,6 +119,11 @@ $title = 'Iniciar Sesion';
 <div class="containerrr">
   <div class="form-containerrr">
     <form role="form" method="post" action="" autocomplete="off">
+      <div class="row justify-content-center">
+      <div class="col-md-6 text-center">
+        <img src="assets/img/inversiones_everest.png" alt="" width="100%">
+      </div>
+    </div>
       <h2 style="color: #2e5653 !important;">Iniciar Sesión</h2>
       <p style="color: #2e5653 !important;">¿Todavía no eres miembro? <a href="index.php"><b style="color: #2e5653 !important;">Regístrate</b> </a></p>
       <hr>

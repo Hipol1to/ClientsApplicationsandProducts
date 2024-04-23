@@ -4,14 +4,14 @@ require('../includes/config.php');
 
 require_once('../tcpdf/tcpdf.php');
 
-if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive']) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/index.php');
   exit();  
-} elseif (!isset($_SESSION['ClienteId']) && $user->is_logged_in()) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
-  exit();
 } elseif (!$user->is_logged_in()) {
   header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  exit();  
+} elseif (!isset($_SESSION['ClienteId'])) {
+  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
   exit();
 }
 
@@ -35,11 +35,11 @@ if(isset($_POST['generate_pdf'])) {
     $loanBody = '';
 
     // Fetch data from the clientes table
-$sql = "SELECT 	Id, IdCliente, Motivo, MontoSolicitado, MontoAprobado, MontoPagado, TasaDeInteres, MontoRecargo, Remitente, Beneficiario, Status, PagoId, FechaPagoMensual, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes, FechaDeAprobacion, FechaCreacion, FechaModificacion, (SELECT COUNT(*) FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId'].") AS prestamosCount FROM prestamos WHERE IdCliente = ".$_SESSION['ClienteId']."";
-error_log($sql);
+$sql = "SELECT 	Id, IdCliente, Motivo, MontoSolicitado, MontoAprobado, MontoPagado, TasaDeInteres, MontoRecargo, Remitente, Beneficiario, Status, PagoId, FechaPagoMensual, FechaFinalPrestamo, CuotasTotales, DiasDePagoDelMes, CantPagosPorMes, FechaDeAprobacion, FechaCreacion, FechaModificacion, (SELECT COUNT(*) FROM prestamos WHERE IdCliente = ".$_POST['idClient'].") AS prestamosCount FROM prestamos WHERE IdCliente = ".$_POST['idClient']."";
+  error_log($sql);
 $result = $db->query($sql);
 
-  $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $_SESSION['ClienteId'];
+  $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $_POST['idClient'];
   $resultClient = $db->query($sqlClient);
   $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
 
@@ -52,7 +52,6 @@ if ($result) {
   $i = 1;
   $o = 1;
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      error_log("optimarr");
       $sql2 ="SELECT Id, IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, InversionId, PrestamoId, ParticipacionId, VoucherPath, FechaDePago, FechaCreacion, FechaModificacion,  (SELECT COUNT(*) FROM pagos WHERE PrestamoId =".$row['Id'].") AS pagosCount FROM pagos WHERE PrestamoId =".$row['Id'];
       $result2 = $db->query($sql2);
       error_log($sql2);
