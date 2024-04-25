@@ -83,17 +83,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
         </div>
       </div>
 
-      <!-- SidebarSearch Form -->
-      <div class="form-inline">
-        <div class="input-group" data-widget="sidebar-search">
-          <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-          <div class="input-group-append">
-            <button class="btn btn-sidebar">
-              <i class="fas fa-search fa-fw"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+      
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
@@ -241,6 +231,47 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
   </div>
 </div>
 
+<div class="modal fade" id="myModales">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Revelar contraseña</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <!-- Form -->
+          <!-- Form fields -->
+          <div class="form-group">
+            <div class="card">
+    <div class="card-header">
+        <h3 class="card-title"></h3>
+    </div>
+    <!-- /.card-header -->
+    <div class="card-body">
+    <div class="form-group">
+                    <label for="tempPassword">Contraseña temporal:</label>
+                    <input type="text" class="form-control" id="tempPassword" name="tempPassword" value="zU7543Mjk!" readonly>
+                </div>
+</div>
+<!-- /.card-body -->
+
+</div>
+          </div>
+          <!-- Add more form fields as needed -->
+          
+          <!-- Modal Footer -->
+          
+        
+      </div>
+      
+    </div>
+  </div>
+</div>
+
 
 
 <!-- /.card -->
@@ -279,6 +310,9 @@ if ($result) {
                   <tr>
                   <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
   Agregar administrador
+</button><br><br>
+<button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModales">
+  Mostrar contraseña temporal
 </button>
 <p></p>
                   <th></th>
@@ -298,7 +332,7 @@ if ($result) {
         <td></td>
         <td>
         <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-    <button class="btn btn-info btn-sm resetiarusuario">Resetear contraseña</a>
+    <button class="btn btn-info btn-sm resetiarusuario" data-id="'. $row['Id'].'">Resetear contraseña</a>
     </div>
     
     <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
@@ -426,6 +460,7 @@ if ($result) {
 <script>
 $(".resetiarusuario").click(function() {
 var id = $(this).data("id");
+console.log(id);
 if (confirm("¿Estás seguro que quieres resetear la contraseña de este usuario? \n la contraseña sera: \"zU7543Mjk!\"")) {
 $.ajax({
     url: "add_admin.php",
