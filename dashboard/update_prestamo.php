@@ -78,11 +78,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId'])) {
         $stmt->bindParam(':status', $editStatus, PDO::PARAM_STR);
         $stmt->bindParam(':fechaFinalPrestamo', $editFechaFinalPrestamo, PDO::PARAM_STR);
         $stmt->bindParam(':cuotasTotales', $editCuotasTotales, PDO::PARAM_INT);
-        $stmt->bindParam(':cuotasTotales', $editCuotasTotales, PDO::PARAM_INT);
         $stmt->bindParam(':diasDePagoDelMes', $editDiasDePagoDelMes, PDO::PARAM_INT);
         $stmt->bindParam(':cantPagosPorMes', $editCantPagosPorMes, PDO::PARAM_STR);
         $stmt->bindParam(':fechaDeAprobacion', $editFechaDeAprobacion, PDO::PARAM_STR);
         $stmt->bindParam(':id', $editId, PDO::PARAM_INT);
+
+        error_log($sql);
+
+        error_log("motivo: " . $editMotivo);
+        error_log("montoSolicitado: " . $editMontoSolicitado);
+        error_log("montoAprobado: " . $editMontoAprobado);
+        error_log("montoPagado: " . $editMontoPagado);
+        error_log("tasaDeInteres: " . $editTasaDeInteres);
+        error_log("montoRecargo: " . $editMontoRecargo);
+        error_log("montoCuota1: " . $cuota1);
+        error_log("montoCuota2: " . $cuota2);
+        error_log("montoCuota3: " . $cuota3);
+        error_log("montoCuota4: " . $cuota4);
+        error_log("montoPagoMensual: " . $montoPagoMensual);
+        error_log("remitente: " . $editRemitente);
+        error_log("beneficiario: " . $editBeneficiario);
+        error_log("status: " . $editStatus);
+        error_log("fechaFinalPrestamo: " . $editFechaFinalPrestamo);
+        error_log("cuotasTotales: " . $editCuotasTotales);
+        error_log("diasDePagoDelMes: " . $editDiasDePagoDelMes);
+        error_log("cantPagosPorMes: " . $editCantPagosPorMes);
+        error_log("fechaDeAprobacion: " . $editFechaDeAprobacion);
+
 
         $stmt->execute();
 

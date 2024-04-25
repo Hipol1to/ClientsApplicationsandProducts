@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 23, 2024 at 08:52 PM
+-- Generation Time: Apr 25, 2024 at 03:48 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -90,7 +90,7 @@ INSERT INTO `clientes` (`Id`, `IdUsuario`, `Nombre`, `Apellido`, `Direccion`, `C
 (44, 11, 'felipe', 'garibo', 'calle almanzar #1, el tamarindo, santo domingo este', '0015553333456', 'C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\662444aa94a3b_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png_.d1vis10n._C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\662444aa94a3f_back_como.jpg', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-20 22:41:46', '2024-04-20 22:57:51'),
 (38, 6, 'FalinApart', 'Tan tan', 'tenchon, bitwin menchon for nao', '0015553333456', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e652f_front_scat (1).png_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66039216e6532_back_Untitled Workspace.jpg', '644326222', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-03-27 03:27:18', '2024-03-27 03:32:22'),
 (40, 1, 'Hipolito', 'Perez Peña', 'Calle Pedro Barronte', '40229604604', 'F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351096_front_ENTREGABLE 4- Scampi CMMI.docx_.d1vis10n._F:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\6615951351098_back_Curriculum Maria Elena Peña Reinoso.pdf', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, '2024-04-09 19:20:51', '2024-04-09 19:20:51'),
-(46, 12, 'Alfredo', 'Pereira Guzman', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '0015553333456', 'C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png_.d1vis10n._C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66255ada4cd3a_back_como.jpg', '', '38477753433', 'Asociación La Nacional de Ahorros y Préstamos', 'Cuenta de ahorros', '8510.02', NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-21 18:28:42', '2024-04-23 20:30:18'),
+(46, 12, 'Alfredo', 'Pereira Guzman', 'Santo Domingo Este, Invi Cea, Calle Pedro Barronte #8', '0015553333456', 'C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png_.d1vis10n._C:\\wamp64\\www\\ClientsApplicationsandProducts\\clients\\uploads\\66255ada4cd3a_back_como.jpg', '', '38477753433', 'Asociación La Nacional de Ahorros y Préstamos', 'Cuenta de ahorros', '8000.00', '5000.00', '800.00', NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-21 18:28:42', '2024-04-24 23:41:00'),
 (1, 13, 'Admin', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, '2024-04-19 08:30:41', '2024-04-23 01:13:52');
 
 -- --------------------------------------------------------
@@ -111,7 +111,7 @@ CREATE TABLE IF NOT EXISTS `finanzas` (
 --
 
 INSERT INTO `finanzas` (`dineroencaja`, `dineroinvertido`, `dineroenprestamos`) VALUES
-('8326.99', '1287.03', '4173.01');
+('12500.00', '0.00', '0.00');
 
 -- --------------------------------------------------------
 
@@ -148,14 +148,15 @@ CREATE TABLE IF NOT EXISTS `inversiones` (
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
-) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `inversiones`
 --
 
 INSERT INTO `inversiones` (`Id`, `IdCliente`, `Motivo`, `TipoDeInversion`, `MontoDividendoEsperado`, `PeriodicidadDividendo`, `FechaPagoDividendo`, `MontoBono`, `TasaInteresBono`, `PlazoBono`, `PeriodicidadInteres`, `FechaPagoInteres`, `MontoFondoInversion`, `TarifaAdministracion`, `PeriodicidadTarifaAdm`, `CantParticipacion`, `ParticipacionId`, `RendimientoTotal`, `Status`, `PagoId`, `FechaPagoInicialInversion`, `FechaFinalInversion`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
-(7, NULL, 'prestamo a fulanito', 'Por acciones', '2424524.00', 'Trimestral', '2024-04-18 04:00:00', '0.00', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 'En revision', NULL, '2024-06-21 04:00:00', '2024-04-26 04:00:00', NULL, '2024-04-17 22:22:22', '2024-04-17 22:22:22');
+(7, NULL, 'inversion comercial', 'Por acciones', '2424524.00', 'Trimestral', '2024-04-18 04:00:00', '0.00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '0.00', 'En revision', NULL, '2024-06-21 04:00:00', '2024-04-26 04:00:00', NULL, '2024-04-17 22:22:22', '2024-04-24 23:59:26'),
+(8, NULL, 'inversion', 'Por acciones', '233.00', 'Mensual', '2024-04-24 04:00:00', '0.00', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, '512.00', 'En curso', NULL, '2024-04-26 04:00:00', '2024-05-29 04:00:00', NULL, '2024-04-24 23:55:26', '2024-04-24 23:55:26');
 
 -- --------------------------------------------------------
 
@@ -185,7 +186,7 @@ CREATE TABLE IF NOT EXISTS `pagos` (
   `FechaCreacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`)
-) ENGINE=MyISAM AUTO_INCREMENT=47 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pagos`
@@ -210,7 +211,9 @@ INSERT INTO `pagos` (`Id`, `IdCliente`, `CuentaRemitente`, `TipoCuentaRemitente`
 (35, 7, '2344', 'Cuenta de ahorros', 'Banco BHD', '232443', 'Cuenta de ahorros', 'Citibank', '35.76', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, 4, NULL, NULL, '2024-03-30 00:00:00', '2024-03-19 04:26:42', '2024-03-19 04:26:42'),
 (36, 7, '999777477', 'Cuenta de ahorros', 'Banco Cofaci', '232443', 'Cuenta corriente', 'Banco Activo', '99.99', 'Compra de acciones', 'Transferencia bancaria', NULL, NULL, 4, NULL, NULL, '2024-07-18 00:00:00', '2024-03-19 04:27:14', '2024-03-19 04:27:14'),
 (41, 38, '12345678900', 'Cuenta corriente', 'Bancotui', '2324434', 'Cuenta de ahorros', 'Banco Óptima de Ahorro y Crédito', '35.76', 'ei compa', 'Transferencia bancaria', NULL, NULL, 39, NULL, '\\uploads\\662440fae22d6_front_mqdefault.jpg', '2024-04-25 00:00:00', '2024-04-17 23:43:38', '2024-04-20 22:26:02'),
-(42, 44, '2222222222', 'Cuenta de ahorros', 'Banco Popular Dominicano', '444444444444444', 'Cuenta corriente', 'Banreservas', '1000.00', 'pago prestamo', 'Transferencia bancaria', NULL, NULL, 40, NULL, '\\uploads\\66254ce2851d0_front_ad0967b583094395a083163f6465cfdb.jpg', '2024-04-21 00:00:00', '2024-04-21 17:29:06', '2024-04-21 17:29:06');
+(42, 44, '2222222222', 'Cuenta de ahorros', 'Banco Popular Dominicano', '444444444444444', 'Cuenta corriente', 'Banreservas', '1000.00', 'pago prestamo', 'Transferencia bancaria', NULL, NULL, 40, NULL, '\\uploads\\66254ce2851d0_front_ad0967b583094395a083163f6465cfdb.jpg', '2024-04-21 00:00:00', '2024-04-21 17:29:06', '2024-04-21 17:29:06'),
+(70, 46, '568658568568', 'Cuenta corriente', 'Asociación Popular de Ahorros y Préstamos', '38477753433', 'Cuenta de ahorros', 'Asociación La Nacional de Ahorros y Préstamos', '5000.00', 'desembolso de prestamo', 'Transferencia bancaria', NULL, NULL, 57, NULL, '\\uploads\\6629986cbd7cc_front_WhatsApp Image 2024-03-24 at 21.20.05_7038e933.jpg', '2024-04-24 00:00:00', '2024-04-24 23:40:28', '2024-04-24 23:40:28'),
+(71, 46, '38477753433', 'Cuenta de ahorros', 'Asociación La Nacional de Ahorros y Préstamos', '66556654545', 'Cuenta corriente', 'Banco BDI', '800.00', 'Pago de préstamo del usuario userprueba2', 'Transferencia bancaria', NULL, NULL, 57, NULL, 'uploads\\6629988cec741_front_WhatsApp Image 2024-03-24 at 21.20.05_7038e933.jpg', '2024-04-24 00:00:00', '2024-04-24 23:41:00', '2024-04-24 23:41:00');
 
 --
 -- Triggers `pagos`
@@ -455,7 +458,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
   `FechaModificacion` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`Id`),
   KEY `PagoId` (`PagoId`)
-) ENGINE=MyISAM AUTO_INCREMENT=46 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prestamos`
@@ -464,7 +467,7 @@ CREATE TABLE IF NOT EXISTS `prestamos` (
 INSERT INTO `prestamos` (`Id`, `IdCliente`, `Motivo`, `MontoSolicitado`, `MontoAprobado`, `MontoPagado`, `MontoPendiente`, `TasaDeInteres`, `MontoRecargo`, `MontoCuota1`, `MontoCuota2`, `MontoCuota3`, `MontoCuota4`, `MontoPagoMensual`, `Remitente`, `Beneficiario`, `Status`, `PagoId`, `FechaPagoMensual`, `FechaDesembolso`, `FechaFinalPrestamo`, `CuotasTotales`, `DiasDePagoDelMes`, `CantPagosPorMes`, `CantMesesDuracionPrestamo`, `FechaDeAprobacion`, `FechaCreacion`, `FechaModificacion`) VALUES
 (39, 38, 'Prestamoss', '12300.00', '10000.00', '0.00', NULL, '5.35', '0.00', '2500.00', '2500.00', NULL, NULL, '5000.00', 'Inversiones Everest', 'FalinApart Tan tan', 'Aprobado', 41, NULL, NULL, '2025-01-17 04:00:00', 18, 'Dia# 6,  Dia# 16', '2', NULL, NULL, '2024-04-17 20:14:59', '2024-04-20 20:42:18'),
 (40, 44, 'Prestamo', '10000.00', '6000.00', NULL, NULL, NULL, NULL, '1000.00', '100.00', '100.00', NULL, '1200.00', 'Inversiones Everest', 'felipe garibo', 'Aprobado', 42, NULL, NULL, '2024-09-20 04:00:00', 5, '   Dia# 6,  Dia# 16', '3', NULL, NULL, '2024-04-20 23:01:22', '2024-04-21 17:29:06'),
-(45, 46, 'Prestamo', '8510.02', '8000.00', '0.00', NULL, '5.35', NULL, '1142.86', NULL, NULL, NULL, '1142.85', 'Inversiones Everest', 'Alfredo Pereira Guzman', 'Aprobado', NULL, NULL, NULL, '2024-11-23 04:00:00', 7, '  Dia# 1', '1', 7, '2024-04-23 04:00:00', '2024-04-23 20:30:18', '2024-04-23 20:39:14');
+(57, 46, 'Prestamo', '8000.00', '5000.00', '800.00', '4550.00', '5.35', '0.00', '1000.00', NULL, NULL, NULL, '200.00', 'Inversiones Everest', 'Alfredo Pereira Guzman', 'Aprobado', 71, '2024-05-20 04:00:00', '2024-04-24 04:00:00', '2024-09-24 04:00:00', 5, ' Dia# 23', '1', 5, '2024-04-24 04:00:00', '2024-04-24 23:39:40', '2024-04-25 00:11:27');
 
 --
 -- Triggers `prestamos`
@@ -501,7 +504,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Usuario` (`Usuario`),
   KEY `IdCliente` (`IdCliente`)
-) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `usuarios`
@@ -512,7 +515,8 @@ INSERT INTO `usuarios` (`Id`, `IdCliente`, `Usuario`, `Contraseña`, `Rol`, `Ema
 (11, 44, 'userprueba', '$2y$10$16R/2KnmGgV43OwoX/IcvOIzYgxp09cjXBUbBk0FBmH6meSdAJFQ6', 'Cliente', 'cuentacompaltidas@gmail.com', 1, '40c001303b645ee498c79d7b464c396d', 'Yes', '2024-04-20 22:37:19', '2024-04-22 23:35:14'),
 (12, 46, 'userprueba2', '$2y$10$zxcUaTa25sOrYYeVmTS4PeEBzAli0uiR3bsiX639t/MRgp0u6t.ve', 'Cliente', 'thelegendstutorials@hotmail.com', 1, NULL, 'No', '2024-04-21 18:00:12', '2024-04-21 18:28:42'),
 (6, 38, 'liluser', '$2y$10$hFX.BA3sjkISNzlcShOQuuivSFSVwFbVYXZUOVDnYuxLvAVxhxGrW', 'Cliente', 'thelegendstutorials@outlook.com', 1, NULL, 'No', '2024-03-26 02:59:52', '2024-04-19 04:32:21'),
-(13, 1, 'wepale', '$2y$10$dqLjEA6bsVjTaew7zmSlx.eGEqSpcwQbxyGkXbjL/r5cLqLbellBG', 'Administrador', NULL, 1, NULL, 'No', '2024-04-23 00:21:27', '2024-04-23 01:07:15');
+(13, 1, 'wepale', '$2y$10$dqLjEA6bsVjTaew7zmSlx.eGEqSpcwQbxyGkXbjL/r5cLqLbellBG', 'Administrador', NULL, 1, NULL, 'No', '2024-04-23 00:21:27', '2024-04-23 01:07:15'),
+(15, 1, 'adminprueba', '$2y$10$IO3xdyD5UfR9AQWukQYG/ec54IjVPFJn4LzNY1iAdI1sjnQ2FEjK6', 'Administrador', NULL, 1, NULL, 'No', '2024-04-24 23:42:28', '2024-04-24 23:42:28');
 
 DELIMITER $$
 --

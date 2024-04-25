@@ -128,39 +128,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               $pago = $db->lastInsertId();
               error_log("{$pago}e");
 
-              $sql2 = "SELECT * FROM prestamos
+              $sql2 = "SELECT * FROM prestamos AS p
                       WHERE p.Id = :id";
             $stmt2 = $db->prepare($sql2);
             $stmt2->bindParam(':id', $prestamoId);
             error_log($sql2);
             $stmt2->execute();
             $erPrestamo = $stmt2->fetch(PDO::FETCH_ASSOC);
-            $montoPagoMensual = ((float)$erPrestamo['MontoPagoMensual'] - $monto);
-            $montoPendiente = ((float)$erPrestamo['MontoPendiente'] - $monto);
+            $montoPagoMensual = (float)$erPrestamo['MontoPagoMensual'] - $monto;
+            $montoPendiente = (float)$erPrestamo['MontoPendiente'] - $monto;
+            $montoPagado = isset($erPrestamo['MontoPagado']) ? (float)$erPrestamo['MontoPagado']: 0.00;
+            $newMontoPagado = $montoPagado + $monto;
+            $numbers = getSortedDiasDePagoDelMes($erPrestamo['DiasDePagoDelMes']);
+            error_log("primerow: ".$numbers[0]);
+            $newFechaDePagoMensual = getNextFechaDePagoMensual($numbers, $fechaDePago);
+            error_log("nueva fecha".$newFechaDePagoMensual);
 
             $sql = "UPDATE prestamos SET 
                                 PagoId = :idPago,
+                                FechaPagoMensual = :fechaPagoMensual,
                                 MontoPagoMensual = :montoPagoMensual,
-                                MontoPendiente = :montoPendiente
+                                MontoPendiente = :montoPendiente,
+                                MontoPagado = :montoPagado
                                 WHERE Id = :id";
     
             if ($stmt = $db->prepare($sql)) {
                 // Bind variables to the prepared statement as parameters
                 $stmt->bindParam(":idPago", $pago);
+                $stmt->bindParam(":fechaPagoMensual", $newFechaDePagoMensual);
                 $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
                 $stmt->bindParam(":montoPendiente", $montoPendiente);
+                $stmt->bindParam(":montoPagado", $newMontoPagado);
                 $stmt->bindParam(":id", $prestamoId);
                 // Attempt to execute the prepared statement
                 if ($stmt->execute()) {
+                    error_log("sejcuto");
                     $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $_SESSION['ClienteId'];
                     $resultClient = $db->query($sqlClient);
                     $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
-                    $montoTotalPrestado = (float)$clienteRecord['MontoTotalSolicitado'];
-                    $montoSolicitadoo = (float) $montoSolicitado;
-                    $montoTotalPagadoValue = $montoTotalPrestado > $montoSolicitadoo ? (float)($montoTotalPrestado + $montoSolicitadoo) : (float)( $montoSolicitadoo + $montoTotalPrestado );
+
+
+                    
+                    $montoTotalPagadoValue = isset($clienteRecord['MontoTotalPagado']) ? (float)$clienteRecord['MontoTotalPagado'] : 0.00;
+                    $newMontoTotalPagado = (float)$montoTotalPagadoValue + $monto;
                         
                     $sqlCliente = "UPDATE Clientes 
-                                  SET MontoTotalPagado = ".$montoTotalPagadoValue."
+                                  SET MontoTotalPagado = ".$newMontoTotalPagado."
                     WHERE Id = ". $_SESSION['ClienteId'];
                     $resultCliente = $db->query($sqlCliente);
                     $clienteRecord = $resultCliente->fetch(PDO::FETCH_ASSOC);
@@ -188,100 +201,72 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           error_log("error doing query");
           }
       }
-/*
-    //DETERMINE IF THE PAGO IS FOR INVERSION/PARTICIPACION OR PRESTAMO
-    if ($prestamoId != null) {
-      //prestamo scenario
-      $sql = "UPDATE prestamos SET 
-                                PagoId = :idPago  
-                                WHERE Id = :id";
-    
-    if ($stmt = $db->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bindParam(":idPago", $pago);
-        $stmt->bindParam(":id", $prestamoId);
-        // Attempt to execute the prepared statement
-        if ($stmt->execute()) {
-            // Redirect back to the page with success message
-            header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
-            exit();
-        } else {
-            // Redirect back to the page with error message
-            header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
-            exit();
-        }
-    } else {
-      error_log("hubo un bobo con el query");
     }
-  } elseif ($inversionId != null && $participacionId == null) {
-    //Inversion type Acciones/Bonos
-    $sql = "UPDATE inversiones SET 
-                                PagoId = :IdPago  
-                                WHERE Id = :id";
-    
-    if ($stmt = $db->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bindParam(":IdPago", $pago);
-        $stmt->bindParam(":id", $inversionId);
-        // Attempt to execute the prepared statement
-        if ($stmt->execute()) {
-            // Redirect back to the page with success message
-            header("location: detalle_inversion.php?id=".$inversionId."&success=1");
-            exit();
-        } else {
-            // Redirect back to the page with error message
-            header("detalle_inversion.php?id=".$inversionId."&error=1");
-            exit();
-        }
-    }
+    function getSortedDiasDePagoDelMes($diasDePagoDelMes) {
+        $diasDePagoArray = explode(",", $diasDePagoDelMes);
+        $numbers = array();
+            foreach ($diasDePagoArray as $string) {
+                preg_match_all('!\d+!', $string, $matches);
+                foreach ($matches[0] as $match) {
+                    $numbers[] = (int) $match;
+                }
+            }
+            // Sort the numbers in ascending order
+            sort($numbers);
+        return $numbers;
+      }
+      function getNextFechaDePagoMensual($sortedDiasDePagoArray, $fechaDePago){
+            $sortedDiasDePago = $sortedDiasDePagoArray;
 
-  } elseif ($inversionId != null && $participacionId != null) {
-    //Inversion type Fondos de inversion
-    $sql = "UPDATE inversiones SET 
-                                PagoId = :IdPago  
-                                WHERE Id = :id";
-      error_log("{$pago}");
-    
-    if ($stmt = $db->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bindParam(":IdPago", $pago);
-        $stmt->bindParam(":id", $inversionId);
-        // Attempt to execute the prepared statement
-        if ($stmt->execute()) {
-            // Redirect back to the page with success message
-        } else {
-            error_log("error adding id for payment to investments table brocompai");
-        }
-    }
+            $dateString = $fechaDePago;
+            $fechaDePagoMensual = null;
+            $isFechaDePagoDefined = false;
+            
+            for ($i=0; $i < count($sortedDiasDePago); $i++) { 
+                $lowestDay = $sortedDiasDePago[$i]; // New day value
 
-    //update participacion
-    $sql = "UPDATE participaciones SET 
-                                PagoId = :IdPago  
-                                WHERE Id = :participacionId";
-      error_log("{$pago}");
-    
-    if ($stmt = $db->prepare($sql)) {
-        // Bind variables to the prepared statement as parameters
-        $stmt->bindParam(":IdPago", $pago);
-        $stmt->bindParam(":participacionId", $participacionId);
-        // Attempt to execute the prepared statement
-        if ($stmt->execute()) {
-            // Redirect back to the page with success message
-            header("location: detalle_inversion.php?id=".$inversionId."&success=1");
-            exit();
-        } else {
-            // Redirect back to the page with error message
-            header("detalle_inversion.php?id=".$inversionId."&error=1");
-            exit();
-        }
-    }
-  } else {
-    error_log("all ID was null");
-    error_log($prestamoId);
-    error_log($inversionId);
-    error_log($participacionId);
-  }
-    */
-    
-}
+                // Create a DateTime object from the date string
+                $date = new DateTime($dateString);
+
+                // Set the new day value
+                $date->setDate($date->format('Y'), $date->format('m'), $lowestDay);
+                error_log("las fecha: ".$date->format('Y-m-d H:i:s'));
+
+                // Format the modified date as a string
+                $possibleFechaDePagoMensual = $date->format('Y-m-d');
+                error_log("possible fecha de pago: ".$possibleFechaDePagoMensual);
+                $formattedFechaDePago = new DateTime($fechaDePago);
+                error_log("formatted fecha de pago: ".$formattedFechaDePago->format('Y-m-d'));
+
+                if (!$isFechaDePagoDefined) {
+                  if ($possibleFechaDePagoMensual > $formattedFechaDePago) {
+                    // Create a DateTime object from the date string
+                    $dateObj = new DateTime($possibleFechaDePagoMensual);
+                  
+                    // Get the modified date as a string
+                    $fechaDePagoMensual = $dateObj->format('Y-m-d');
+                    error_log("fercha pago mensual: " . $fechaDePagoMensual);
+                    $isFechaDePagoDefined = true;
+                    return $fechaDePagoMensual;
+                  } else {
+                    //date time object
+                    $dateObj = new DateTime($possibleFechaDePagoMensual);
+                  
+                    // Add one month to the date
+                    $dateObj->modify('+1 month');
+                    error_log("fecha con un mes mas: " . $dateObj->format('Y-m-d'));
+
+
+                    $fechaDePagoMensual = $dateObj;
+                    error_log("fercha pago mensuala: " . $fechaDePagoMensual->format('Y-m-d'));
+                    if($i == $i < count($sortedDiasDePago) -1) {
+                      $fechaDePagoMensual->setDate($date->format('Y'), $date->format('m'), $sortedDiasDePago[0]);
+                      error_log("fercha pago mensuala: " . $fechaDePagoMensual->format('Y-m-d'));
+                      return $fechaDePagoMensual->format('Y-m-d');
+                    }
+                    
+                  }
+                }
+            }
+      }
 ?>

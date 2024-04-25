@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //QUERY to extract ClientId
      // Prepare an insert statement
-    $sql = "SELECT clientes.Id as IdCliente
+    $sql = "SELECT clientes.Id as IdCliente, clientes.MontoTotalPrestado
     FROM clientes
     JOIN usuarios
     WHERE clientes.IdUsuario = usuarios.id && usuarios.Usuario = :usuarioCliente";
@@ -171,26 +171,25 @@ error_log("{$pago}");
     //DETERMINE IF THE PAGO IS FOR INVERSION/PARTICIPACION OR PRESTAMO
     if ($prestamoId != null) {
           if ($isDesembolso) {
+      error_log("tamo en desembolso");
             //behavior if payment is a desembolso
-            $sql2 = "SELECT * FROM prestamos
+            $sql2 = "SELECT * FROM prestamos AS p
                       WHERE p.Id = :id";
             $stmt2 = $db->prepare($sql2);
-            $stmt2->bindParam(':id', $prestamo_id);
+            $stmt2->bindParam(':id', $prestamoId);
             error_log($sql2);
             $stmt2->execute();
             $erPrestamo = $stmt2->fetch(PDO::FETCH_ASSOC);
 
-            $montoPendiente = ((float)$erPrestamo['MontoAprobado']*(float)$erPrestamo['TasaDeInteres']);
-            $diasDePagoArray = explode(",", $erPrestamo['DiasDePagoDelMes']);
-            $numbers = array();
-            foreach ($diasDePagoArray as $string) {
-                preg_match_all('!\d+!', $string, $matches);
-                foreach ($matches[0] as $match) {
-                    $numbers[] = (int) $match;
-                }
-            }
-            // Sort the numbers in ascending order
-            sort($numbers);
+            $montoAprobadows = (float)$erPrestamo['MontoAprobado'];
+            error_log("monto aprobado: ". $montoAprobadows);
+            $tasitaDeInteres = (float)$erPrestamo['TasaDeInteres']*0.10;
+            error_log("tasa de interes: ". $tasitaDeInteres);
+            $montoPendiente = $montoAprobadows*$tasitaDeInteres;
+            $montoPendiente = $montoPendiente + $montoPendiente;
+            error_log("monto pendiente: ".$montoPendiente);
+            $numbers = getSortedDiasDePagoDelMes($erPrestamo['DiasDePagoDelMes']);
+            error_log("primerow: ".$numbers[0]);
           
             // Store the sorted numbers in $sortedDiasDePago
             $sortedDiasDePago = $numbers;
@@ -200,33 +199,46 @@ error_log("{$pago}");
             $isFechaDePagoDefined = false;
             
             for ($i=0; $i < count($sortedDiasDePago); $i++) { 
-                $lowestDay = $sortedDiasDePago[i]; // New day value
+                $lowestDay = $sortedDiasDePago[$i]; // New day value
 
                 // Create a DateTime object from the date string
                 $date = new DateTime($dateString);
 
                 // Set the new day value
                 $date->setDate($date->format('Y'), $date->format('m'), $lowestDay);
+                error_log("las fecha: ".$date->format('Y-m-d H:i:s'));
 
                 // Format the modified date as a string
                 $possibleFechaDePagoMensual = $date->format('Y-m-d');
+                error_log("possible fecha de pago: ".$possibleFechaDePagoMensual);
                 $formattedFechaDePago = new DateTime($fechaDePago);
+                error_log("formatted fecha de pago: ".$formattedFechaDePago->format('Y-m-d'));
 
                 if (!$isFechaDePagoDefined) {
                   if ($possibleFechaDePagoMensual > $formattedFechaDePago) {
                     // Create a DateTime object from the date string
                     $dateObj = new DateTime($possibleFechaDePagoMensual);
                   
-                    // Add one month to the date
-                    $dateObj->modify('+1 month');
-                  
                     // Get the modified date as a string
                     $fechaDePagoMensual = $dateObj->format('Y-m-d');
+                    error_log("fercha pago mensual: " . $fechaDePagoMensual);
                     $montoPagoMensual = $erPrestamo['MontoCuota' . $i];
+                    error_log("monto pago mensual: " . $montoPagoMensual);
                     $isFechaDePagoDefined = true;
                   } else {
-                    $fechaDePagoMensual = $possibleFechaDePagoMensual;
+                    //date time object
+                    $dateObj = new DateTime($possibleFechaDePagoMensual);
+                  
+                    // Add one month to the date
+                    $dateObj->modify('+1 month');
+                    error_log("fecha con un mes mas: " . $dateObj->format('Y-m-d'));
+
+
+                    $fechaDePagoMensual = $dateObj;
+                    $fechaDePagoMensual = $fechaDePagoMensual->format('Y-m-d');
+                    error_log("fercha pago mensuala: " . $fechaDePagoMensual);
                     $montoPagoMensual = $erPrestamo['MontoCuota1'];
+                    error_log("monto pago mensualo: " . $montoPagoMensual);
                   }
                 }
             }
@@ -248,8 +260,45 @@ error_log("{$pago}");
             $stmt->bindParam(":fechaDesembolso", $fechaDePago);
             $stmt->bindParam(":fechaPagoMensual", $fechaDePagoMensual);
             $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
+        error_log("query for prestamo: " . $sql);
+        error_log("pago: ".$pago);
+        error_log("montoPendiente: ".$montoPendiente);
+        error_log("prestamoId: ".$prestamoId);
+        error_log("fechaDePago: ".$fechaDePago);
+        error_log("fechaDePagoMensual: ".$fechaDePagoMensual);
+        error_log("montoPagoMensual: ".$montoPagoMensual);
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
+              //update client monto total prestado
+              $MontoTotalPrestado = isset($cliente['MontoTotalPrestado']) ? $cliente['MontoTotalPrestado'] : 0;
+                    $MontoTotalPrestado = (float)($MontoTotalPrestado + $monto);
+                    error_log("monto tostal presta2: ".$MontoTotalPrestado);
+
+                      $sql = "UPDATE clientes SET 
+                                  MontoTotalPrestado = :montoTotalPrestado
+                                  WHERE Id = :id";
+                                  error_log(" consurta cliente". $sql);
+
+                      if ($stmt = $db->prepare($sql)) {
+                          // Bind variables to the prepared statement as parameters
+                          $stmt->bindParam(":montoTotalPrestado", $MontoTotalPrestado);
+                          $stmt->bindParam(":id", $cliente['IdCliente']);
+                          // Attempt to execute the prepared statement
+                          if ($stmt->execute()) {
+                              // Redirect back to the page with success message
+                              header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
+                              exit();
+                              }
+                              else {
+                              // Redirect back to the page with error message
+                              header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
+                              exit();
+                          }
+                          } else {
+                              // Redirect back to the page with error message
+                              header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
+                              exit();
+                          }
                 // Redirect back to the page with success message
                 header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
                 exit();
@@ -276,42 +325,34 @@ error_log("{$pago}");
           if ($stmt->execute()) {
               $sql2 = "SELECT * FROM prestamos
                       WHERE p.Id = :id";
-            $stmt2 = $db->prepare($sql2);
-            $stmt2->bindParam(':id', $prestamoId);
-            error_log($sql2);
-            $stmt2->execute();
-            $erPrestamo = $stmt2->fetch(PDO::FETCH_ASSOC);
-            $montoPagoMensual = ((float)$erPrestamo['MontoPagoMensual'] - $monto);
-            $montoPendiente = ((float)$erPrestamo['MontoPendiente'] - $monto);
+              $stmt2 = $db->prepare($sql2);
+              $stmt2->bindParam(':id', $prestamoId);
+              error_log($sql2);
+              $stmt2->execute();
+              $erPrestamo = $stmt2->fetch(PDO::FETCH_ASSOC);
+              $montoPagoMensual = ((float)$erPrestamo['MontoPagoMensual'] - $monto);
+              $montoPendiente = ((float)$erPrestamo['MontoPendiente'] - $monto);
 
-            $sql = "UPDATE prestamos SET 
-                                PagoId = :idPago,
-                                MontoPagoMensual = :montoPagoMensual,
-                                MontoPendiente = :montoPendiente
-                                WHERE Id = :id";
-    
-            if ($stmt = $db->prepare($sql)) {
-                // Bind variables to the prepared statement as parameters
-                $stmt->bindParam(":idPago", $pago);
-                $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
-                $stmt->bindParam(":montoPendiente", $montoPendiente);
-                $stmt->bindParam(":id", $prestamoId);
-                // Attempt to execute the prepared statement
-                if ($stmt->execute()) {
-                    // Redirect back to the page with success message
-                    header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
-                    exit();
-                } else {
-                    // Redirect back to the page with error message
-                    header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
-                    exit();
+              $sql = "UPDATE prestamos SET 
+                                  PagoId = :idPago,
+                                  MontoPagoMensual = :montoPagoMensual,
+                                  MontoPendiente = :montoPendiente
+                                  WHERE Id = :id";
+
+              if ($stmt = $db->prepare($sql)) {
+                  // Bind variables to the prepared statement as parameters
+                  $stmt->bindParam(":idPago", $pago);
+                  $stmt->bindParam(":montoPagoMensual", $montoPagoMensual);
+                  $stmt->bindParam(":montoPendiente", $montoPendiente);
+                  $stmt->bindParam(":id", $prestamoId);
+                  // Attempt to execute the prepared statement
+                  if ($stmt->execute()) {
+                    
+              } else {
+                  error_log("hubo un bobo con el query: ".$sql);
+                  header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
+                              exit();
                 }
-            } else {
-              error_log("hubo un bobo con el query");
-            }
-              // Redirect back to the page with success message
-              header("location: detalle_prestamo.php?id=".$prestamoId."&success=1");
-              exit();
           } else {
               // Redirect back to the page with error message
               header("location: detalle_prestamo.php?id=".$prestamoId."&error=1");
@@ -320,6 +361,7 @@ error_log("{$pago}");
         } else {
           error_log("hubo un bobo con el query");
         }
+      }
     }
   } elseif ($inversionId != null && $participacionId == null) {
     //Inversion type Acciones/Bonos
@@ -392,4 +434,17 @@ error_log("{$pago}");
     
     
 }
+function getSortedDiasDePagoDelMes($diasDePagoDelMes) {
+        $diasDePagoArray = explode(",", $diasDePagoDelMes);
+        $numbers = array();
+            foreach ($diasDePagoArray as $string) {
+                preg_match_all('!\d+!', $string, $matches);
+                foreach ($matches[0] as $match) {
+                    $numbers[] = (int) $match;
+                }
+            }
+            // Sort the numbers in ascending order
+            sort($numbers);
+        return $numbers;
+      }
 ?>

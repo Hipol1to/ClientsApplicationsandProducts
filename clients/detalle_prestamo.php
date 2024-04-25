@@ -461,7 +461,7 @@ if($stmt->rowCount() > 0) {
     $client['DiasDePagoDelMes'] = $client['DiasDePagoDelMes'] == null ? "Ninguno" : $client['DiasDePagoDelMes'];
     $client['FechaDeAprobacion'] = $client['FechaDeAprobacion'] == null ? "No aprobado" : $client['FechaDeAprobacion'];
     $isEnabled = false;
-    $balancePrestamo = $client['MontoAprobado']!=null? htmlspecialchars(number_format((floatval($prestamo['MontoSolicitado']) - floatval($prestamo['MontoPagado'])), 2, '.', '') ): "No aprobado" ;
+    $balancePrestamo = $client['MontoPendiente'];
 
     // Display client details
     echo '<div class="modal-body">';

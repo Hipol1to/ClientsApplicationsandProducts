@@ -59,9 +59,10 @@ if(isset($_POST['actualizarStatus'])) {
     $stmt->bindParam(':status', $status);
     $stmt->bindParam(':id', $prestamo_id);
     if($stmt->execute()) {
-        echo "Status updated successfully!";
+      $pago = $stmt->fetch(PDO::FETCH_ASSOC);
+        error_log("Status updated successfully!");
     } else {
-        echo "Error updating status!";
+        error_log("Error updating status!");
     }
 }
 ?>
@@ -195,6 +196,12 @@ if(isset($_POST['actualizarStatus'])) {
                   <p>Pagos</p>
                 </a>
                  </li>
+                 <li class="nav-item">
+                <a href="usuarios.php" class="nav-link">
+                  <i class="fas fa-user nav-icon"></i>
+                  <p>Usuarios</p>
+                </a>
+                 </li>
                  </ul>
                  <ul style="position: absolute; bottom: 0;" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
@@ -229,7 +236,7 @@ if(isset($_POST['actualizarStatus'])) {
             </div>
             <div class="modal-body">
                 <!-- Your form goes here -->
-                <form id="editForm" action="add_pago.php" method="post" enctype="multipart/form-data">
+                <form id="editForm" onsubmit="return isAddPagoFormValid()" action="add_pago.php" method="post" enctype="multipart/form-data">
     <div class="row">
         <!-- Group 1 -->
         <div class="col-sm-8">
@@ -488,7 +495,9 @@ if(isset($_POST['actualizarStatus'])) {
                 $client_id = htmlspecialchars($_GET['id']);
 
                 // Fetch client details from the database using the ID
-                $sql = "SELECT * FROM prestamos WHERE Id = :id";
+                $sql = "SELECT p.*, u.Usuario AS Solicitante FROM prestamos AS P
+                        JOIN usuarios as u
+                        WHERE p.Id = :id AND u.IdCliente = p.IdCliente";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':id', $client_id);
                 $stmt->execute();
@@ -497,7 +506,6 @@ if(isset($_POST['actualizarStatus'])) {
 if($stmt->rowCount() > 0) {
     // Fetch the client's details
     $client = $stmt->fetch(PDO::FETCH_ASSOC);
-    $client['Solicitante'] = $_SESSION['username'];
     $client['PagosRealizados'] = $client['PagoId'] == null ? "Ningún pago realizado" : $client['PagoId'] . " pagos";
     $client['CuotasTotales'] = $client['CuotasTotales'] == null ? "No hay cuotas asignadas" : $client['CuotasTotales'] . " cuotas";
     $client['CantPagosPorMes'] = $client['CantPagosPorMes'] == null ? "N/A" : $client['CantPagosPorMes'];
@@ -527,6 +535,10 @@ if($stmt->rowCount() > 0) {
     echo '<div class="form-group">';
     echo '<label for="montoPagado">Monto Pagado:</label>';
     echo '<input type="text" class="form-control" id="montoPagado" name="montoPagado" value="'.htmlspecialchars($client['MontoPagado']).'" readonly>';
+    echo '</div>';
+    echo '<div class="form-group">';
+    echo '<label for="montoPendiente">Monto Pendiente por pagar:</label>';
+    echo '<input type="text" class="form-control" id="montoPendiente" name="montoPendiente" value="'.htmlspecialchars($client['MontoPendiente']).'" readonly>';
     echo '</div>';
 
     echo '</div>';
@@ -635,7 +647,7 @@ if ($result) {
                   <button type="button" class="btn btn-primary bustonAddPago" data-toggle="modal" data-target="#modalAgregarPagoForParticipacion">Agregar Pago</button>
                   <th></th>
                   <th>Acciones</th>
-                    <th>Solicitante</th>
+                    <th>ID Solicitante</th>
                     <th>Cuenta Remitente</th>
                     <th>Tipo de Cuenta Remitente</th>
                     <th>Entidad Bancaria Remitente</th>
@@ -679,7 +691,7 @@ if ($result) {
             <tr>
             <th></th>
             <th>Acciones</th>
-            <th>Solicitante</th>
+            <th>ID Solicitante</th>
             <th>Cuenta Remitente</th>
             <th>Tipo de Cuenta Remitente</th>
             <th>Entidad Bancaria Remitente</th>
@@ -1220,7 +1232,25 @@ document.getElementById("clientUser").addEventListener("input", function() {
         return false; // Return false if value is not set or is "0.00"
     }
 }
+</script>
+<script>
+  function isAddPagoFormValid() {
+    
 
+    // If all validations pass, return true
+    return true;
+}
+
+function showMessageBelowElement(element, message) {
+    // Create a new div element for the error message
+    const errorMessageDiv = document.createElement('div');
+    errorMessageDiv.textContent = message;
+    errorMessageDiv.style.color = 'red';
+    errorMessageDiv.className = 'error-message'; // Adding a class for identification
+
+    // Insert the error message div below the given element
+    element.parentNode.insertBefore(errorMessageDiv, element.nextSibling);
+}
 </script>
 </body>
 </html>

@@ -17,6 +17,8 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 
 // Function to generate the PDF
 if(isset($_POST['generate_pdf'])) {
+  $clientBody = "";
+  $loanBody = "";
     // Create new PDF document
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 

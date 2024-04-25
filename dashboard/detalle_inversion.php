@@ -173,6 +173,12 @@ if(isset($_POST['actualizarStatus'])) {
                   <p>Pagos</p>
                 </a>
                  </li>
+                 <li class="nav-item">
+                <a href="usuarios.php" class="nav-link">
+                  <i class="fas fa-user nav-icon"></i>
+                  <p>Usuarios</p>
+                </a>
+                 </li>
                  </ul>
                  <ul style="position: absolute; bottom: 0;" class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item">
@@ -562,7 +568,7 @@ if ($inversion['TipoDeInversion'] == "Fondos de inversión") {
                 $client_id = htmlspecialchars($_GET['id']);
 
                 // Fetch client details from the database using the ID
-                $sql = "SELECT * FROM prestamos WHERE Id = :id";
+                $sql = "SELECT * FROM inversiones WHERE Id = :id";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':id', $client_id);
                 $stmt->execute();

@@ -318,7 +318,7 @@ if ($result) {
     <a href="detalle_prestamo.php?id='. $row['Id'].'" class="btn btn-info btn-sm">Ver detalle</a>
 </td>
                 <td>' . $row['Motivo'] . '</td>
-                <td>' . number_format((floatval($row['MontoSolicitado']) - floatval($row['MontoPagado'])), 2, '.', '') . '</td>
+                <td>' . $row['MontoPendiente']. '</td>
                 <td>' . $row['MontoSolicitado'] . '</td>
                 <td>' . $row['Status'] . '</td>
                 <td>' . $row['FechaPagoMensual'] . '</td>

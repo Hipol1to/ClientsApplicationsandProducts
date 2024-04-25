@@ -40,7 +40,9 @@ if(isset($_POST['submit'])){
       $isUserActive = isset($_SESSION['isUserActive']) ? $_SESSION['isUserActive'] : false;
       $hasUserProffile = isset($_SESSION['ClienteId']) ? $_SESSION['ClienteId'] : null;
 
-      if ($isUserAdmin && $isProffileValidated && $isUserActive) {
+      //validacion ideal
+      //if ($isUserAdmin && $isProffileValidated && $isUserActive) {
+      if ($isUserAdmin && $isUserActive) {
         error_log("Usuario admin validado y activo");
         header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');  
         exit();
