@@ -17,7 +17,7 @@ define('DBPASS','');
 define('DBNAME','cap_storage');
 
 //application address
-define('DIR','http://localhost/ClientsApplicationsandProducts/');
+define('DIR','http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/');
 define('SITEEMAIL','noreply@domain.com');
 
 try {

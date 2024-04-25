@@ -5,13 +5,13 @@ require('../includes/config.php');
 require_once('../tcpdf/tcpdf.php');
 
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/dashboard/index.php');
   exit();  
 } elseif (!isset($_SESSION['ClienteId']) && $user->is_logged_in()) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/completa_perfil.php');
   exit();
 } elseif (!$user->is_logged_in()) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/index.php');
   exit();
 }
 
@@ -90,7 +90,7 @@ if ($result) {
       </p>
       <br><br><br><br><br><br><br><br>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Captura trasera de cedula frontal: <br><br><img src="../clients/'.htmlspecialchars($capturaReversoPath).'" alt="Captura de cedula no disponible" height="250px"></span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Captura trasera de cedula: <br><br><img src="../clients/'.htmlspecialchars($capturaReversoPath).'" alt="Captura de cedula no disponible" height="250px"></span></strong>
       </p>
       <p>
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">RNC: '.$clienteRecord['RNC'].'</span></strong>

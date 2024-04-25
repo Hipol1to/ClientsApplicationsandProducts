@@ -2,10 +2,10 @@
 require('../includes/config.php');
 
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/dashboard/index.php');
   exit();  
 } elseif (!isset($_SESSION['ClienteId'])) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/completa_perfil.php');
   exit();
 } 
 ?>

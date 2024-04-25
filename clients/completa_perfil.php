@@ -2,13 +2,13 @@
 require('../includes/config.php');
 
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId']) && !$_SESSION['isProffileInReview']) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/dashboard/index.php');
   exit();  
 } elseif ($_SESSION['isProffileInReview'] && $user->is_logged_in()) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/gracias_por_completar.php');
   exit();
 } elseif (!$user->is_logged_in()) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/index.php');
   exit();
 }
 ?>
