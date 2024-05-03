@@ -2,13 +2,13 @@
 require('../includes/config.php');
 
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId'])) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  header('Location: https://inversioneseverest.net/dashboard/index.php');
   exit();  
 } elseif (!isset($_SESSION['ClienteId']) && $user->is_logged_in()) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  header('Location: https://inversioneseverest.net/clients/completa_perfil.php');
   exit();
 } elseif (!$user->is_logged_in()) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  header('Location: https://inversioneseverest.net/index.php');
   exit();
 }
 ?>

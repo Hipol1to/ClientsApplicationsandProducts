@@ -3,13 +3,13 @@
 require('../includes/config.php');
 
 if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive']) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/index.php');
+  header('Location: https://inversioneseverest.net/clients/index.php');
   exit();  
 } elseif (!$user->is_logged_in()) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  header('Location: https://inversioneseverest.net/index.php');
   exit();  
 } elseif (!isset($_SESSION['ClienteId'])) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  header('Location: https://inversioneseverest.net/clients/completa_perfil.php');
   exit();
 }
 
@@ -32,11 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
             // Redirect back to the page with success message
-            header("location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php?success=1");
+            header("location: https://inversioneseverest.net/dashboard/index.php?success=1");
             exit();
         } else {
             // Redirect back to the page with error message
-            header("location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php?error=1");
+            header("location: https://inversioneseverest.net/dashboard/index.php?error=1");
             exit();
         }
     }

@@ -2,10 +2,10 @@
 require('../includes/config.php');
 
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId']) && !$_SESSION['isProffileInReview']) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  header('Location: https://inversioneseverest.net/dashboard/index.php');
   exit();  
 } elseif (!$_SESSION['isProffileInReview']) {
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/index.php');
+  header('Location: https://inversioneseverest.net/clients/index.php');
   exit();
 }
 ?>

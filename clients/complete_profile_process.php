@@ -4,15 +4,15 @@ require('../includes/config.php');
 error_log("validations to the process");
 if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive'] && isset($_SESSION['ClienteId']) && !$_SESSION['isProffileInReview']) {
   error_log("[PROCESS]you are an admin");
-  header('Location: http://localhost/ClientsApplicationsandProducts/dashboard/index.php');
+  header('Location: https://inversioneseverest.net/dashboard/index.php');
   exit();  
 } elseif ($_SESSION['isProffileInReview'] && $user->is_logged_in()) {
   error_log("[PROCESS]you already sent your proffile");
-  header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
+  header('Location: https://inversioneseverest.net/clients/gracias_por_completar.php');
   exit();
 } elseif (!$user->is_logged_in()) {
   error_log("[PROCESS]you are not logged in");
-  header('Location: http://localhost/ClientsApplicationsandProducts/index.php');
+  header('Location: https://inversioneseverest.net/index.php');
   exit();
 }
 // Check if the form is submitted
@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
 
              $_SESSION['isProffileInReview'] = true;
-            header('Location: http://localhost/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
+            header('Location: https://inversioneseverest.net/clients/gracias_por_completar.php');
             exit();
             
             echo "Perfil completado exitosamente.";
