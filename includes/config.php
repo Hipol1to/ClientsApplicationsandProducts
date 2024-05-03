@@ -12,9 +12,9 @@ date_default_timezone_set('Europe/London');
 
 //database credentials
 define('DBHOST','localhost');
-define('DBUSER','root');
-define('DBPASS','');
-define('DBNAME','cap_storage');
+define('DBUSER','u639419078_soporte');
+define('DBPASS','j$*>~@|ZL+u8');
+define('DBNAME','u639419078_cap_storage');
 
 //application address
 define('DIR','https://inversioneseverest.net/');
