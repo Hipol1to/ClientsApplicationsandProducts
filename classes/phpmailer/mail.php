@@ -12,10 +12,10 @@ class Mail extends PHPMailer
     public $From     = 'noreply@domain.com';
     public $FromName = SITETITLE;
     public $Host     = 'smtp.gmail.com';
-    public $Mailer   = 'smtp';
+    public $Mailer   = 'inversioneseverestgooglekey';
     public $SMTPAuth = true;
-    public $Username = 'thelegendstutorials@gmail.com';
-    public $Password = 'rsqh bevv drhu vqoi';//if using Gmail use an app password more details here https://support.google.com/accounts/answer/185833?hl=en
+    public $Username = 'inversionesevereststaff@gmail.com';
+    public $Password = 'oltx gnhh vguy jmcq';//if using Gmail use an app password more details here https://support.google.com/accounts/answer/185833?hl=en
     //public $SMTPSecure = 'tls';
     public $WordWrap = 75;
 
