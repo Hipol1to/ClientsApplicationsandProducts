@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 25, 2024 at 03:48 AM
+-- Generation Time: May 03, 2024 at 04:50 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -476,7 +476,25 @@ DROP TRIGGER IF EXISTS `sum_MontoTotalPrestado_to_client_after_update_on_prestam
 DELIMITER $$
 CREATE TRIGGER `sum_MontoTotalPrestado_to_client_after_update_on_prestamos` AFTER UPDATE ON `prestamos` FOR EACH ROW BEGIN
     IF OLD.Status <> NEW.Status AND NEW.FechaDesembolso IS NOT NULL THEN
-        UPDATE clientes AS c SET c.MontoTotalPrestado = NEW.MontoAprobado, c.Interes = NEW.TasaDeInteres WHERE NEW.FechaDesembolso IS NOT NULL AND NEW.TasaDeInteres IS NOT NULL;
+        UPDATE clientes AS c SET c.MontoTotalPrestado = c.MontoTotalPrestado + NEW.MontoAprobado, c.Interes = NEW.TasaDeInteres WHERE NEW.FechaDesembolso IS NOT NULL AND NEW.TasaDeInteres IS NOT NULL;
+    END IF;
+END
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `updateStatusWhenMontoPendienteIsBelowZero`;
+DELIMITER $$
+CREATE TRIGGER `updateStatusWhenMontoPendienteIsBelowZero` AFTER UPDATE ON `prestamos` FOR EACH ROW BEGIN
+    IF OLD.MontoPendiente <> NEW.MontoPendiente AND NEW.MontoPendiente < 0.00 THEN
+        UPDATE prestamos AS p SET p.Status = 'FINALIZADO CON ERRORES' WHERE NEW.FechaDesembolso IS NOT NULL AND NEW.TasaDeInteres IS NOT NULL AND NEW.MontoPendiente IS NOT NULL;
+    END IF;
+END
+$$
+DELIMITER ;
+DROP TRIGGER IF EXISTS `updateStatusWhenMontoPendienteIsZero`;
+DELIMITER $$
+CREATE TRIGGER `updateStatusWhenMontoPendienteIsZero` AFTER UPDATE ON `prestamos` FOR EACH ROW BEGIN
+    IF OLD.MontoPendiente <> NEW.MontoPendiente AND NEW.MontoPendiente = 0.00 THEN
+        UPDATE prestamos AS p SET p.Status = 'FINALIZADO' WHERE NEW.FechaDesembolso IS NOT NULL AND NEW.TasaDeInteres IS NOT NULL AND NEW.MontoPendiente IS NOT NULL;
     END IF;
 END
 $$
@@ -532,7 +550,19 @@ JOIN clientes as c
     AND p.DiasDePagoDelMes IS NOT NULL 
     AND p.MontoPagoMensual IS NOT NULL 
     AND p.MontoPagoMensual != 0.00
-    AND DAY(CURRENT_DATE()) = 28$$
+    AND DAY(CURRENT_DATE()) = 1$$
+
+DROP EVENT `sumInteresToMontoPendiente`$$
+CREATE DEFINER=`root`@`localhost` EVENT `sumInteresToMontoPendiente` ON SCHEDULE EVERY 1 DAY STARTS '2024-05-03 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE prestamos as p
+JOIN clientes as c
+    SET p.MontoPendiente = ROUND(CONCAT(p.MontoPendiente + p.MontoPendiente * (p.TasaDeInteres*0.010)), 2),
+    c.MontoDeuda = p.MontoPagoMensual
+    WHERE p.Status IN ('Aprobado', 'Moroso', 'Atrasado') 
+    AND p.MontoCuota1 IS NOT NULL 
+    AND p.DiasDePagoDelMes IS NOT NULL 
+    AND p.MontoPagoMensual IS NOT NULL 
+    AND p.MontoPagoMensual > 0.00
+    AND DAY(CURRENT_DATE()) = 1$$
 
 DELIMITER ;
 COMMIT;
