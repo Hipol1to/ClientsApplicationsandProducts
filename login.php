@@ -155,11 +155,11 @@ $title = 'Iniciar Sesion';
       ?>
 
       <div class="form-group">
-        <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Usuario" value="<?php if(isset($error)){ echo htmlspecialchars($_POST['username'], ENT_QUOTES); } ?>" tabindex="1">
+        <input type="text" name="username" id="username" class="form-control input-lg" placeholder="Usuario" value="<?php if(isset($error)){ echo htmlspecialchars($_POST['username'], ENT_QUOTES); } ?>" tabindex="1" required>
       </div>
 
       <div class="form-group">
-        <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Contraseña" tabindex="3">
+        <input type="password" name="password" id="password" class="form-control input-lg" placeholder="Contraseña" tabindex="3" required>
       </div>
 
       <div class="row">
