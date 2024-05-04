@@ -88,6 +88,7 @@ if ($result) {
       </p>
       <div style="page-break-before: always;"></div>
       ';
+      error_log("Ell voucher path: ".$row2['VoucherPath']);
       $o++;
       }
       $o=1;
