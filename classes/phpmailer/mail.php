@@ -15,7 +15,7 @@ class Mail extends PHPMailer
     public $Mailer   = 'inversioneseverestgooglekey';
     public $SMTPAuth = true;
     public $Username = 'inversionesevereststaff@gmail.com';
-    public $Password = 'cplu wkon zlgf ldpc';//if using Gmail use an app password more details here https://support.google.com/accounts/answer/185833?hl=en
+    public $Password = 'oltx gnhh vguy jmcq';//if using Gmail use an app password more details here https://support.google.com/accounts/answer/185833?hl=en
     //public $SMTPSecure = 'tls';
     public $WordWrap = 75;
 
