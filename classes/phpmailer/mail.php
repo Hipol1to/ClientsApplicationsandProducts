@@ -9,7 +9,7 @@ require __DIR__.'/SMTP.php';
 class Mail extends PHPMailer
 {
     // Set default variables for all new objects
-    public $From     = 'noreply@domain.com';
+    public $From     = 'soporte@inversioneseverest.net';
     public $FromName = "Inversiones Everest";
     public $Host     = 'smtp.hostinger.com';
     public $Mailer   = 'smtp';

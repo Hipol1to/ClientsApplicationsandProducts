@@ -18,7 +18,7 @@ define('DBNAME','u639419078_cap_storage');
 
 //application address
 define('DIR','https://inversioneseverest.net/');
-define('SITEEMAIL','noreply@domain.com');
+define('SITEEMAIL','soporte@inversioneseverest.net');
 
 try {
 
