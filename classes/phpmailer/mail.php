@@ -10,7 +10,7 @@ class Mail extends PHPMailer
 {
     // Set default variables for all new objects
     public $From     = 'noreply@domain.com';
-    public $FromName = SITETITLE;
+    public $FromName = "Inversiones Everest";
     public $Host     = 'smtp.gmail.com';
     public $Mailer   = 'inversioneseverestgooglekey';
     public $SMTPAuth = true;
