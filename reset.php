@@ -51,6 +51,7 @@ if (isset($_POST['submit'])){
 			<p>Pare reiniciar tu contraseña accede al siguiente enlace: <a href='".DIR."resetPassword.php?key=$token'>".DIR."resetPassword.php?key=$token</a></p>";
 
 			$mail = new Mail();
+      $mail->isSMTP();
 			$mail->setFrom(SITEEMAIL);
 			$mail->addAddress($to);
 			$mail->subject($subject);

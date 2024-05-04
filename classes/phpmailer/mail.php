@@ -10,13 +10,14 @@ class Mail extends PHPMailer
 {
     // Set default variables for all new objects
     public $From     = 'noreply@domain.com';
-    public $FromName = SITETITLE;
-    public $Host     = 'smtp.gmail.com';
-    public $Mailer   = 'inversioneseverestgooglekey';
+    public $FromName = "Inversiones Everest";
+    public $Host     = 'smtp.hostinger.com';
+    public $Mailer   = 'smtp';
     public $SMTPAuth = true;
-    public $Username = 'inversionesevereststaff@gmail.com';
-    public $Password = 'oltx gnhh vguy jmcq';//if using Gmail use an app password more details here https://support.google.com/accounts/answer/185833?hl=en
-    //public $SMTPSecure = 'tls';
+    public $Username = 'soporte@inversioneseverest.net';
+    public $Password = '!!zU7543Mjk!!';//if using Gmail use an app password more details here https://support.google.com/accounts/answer/185833?hl=en
+    public $SMTPSecure = 'tls';
+    public $Port = 587;
     public $WordWrap = 75;
 
     public function subject($subject)
