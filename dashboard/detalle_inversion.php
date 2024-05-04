@@ -1022,7 +1022,7 @@ echo'<div class="tab-pane fade" id="nuevo" role="tabpanel" aria-labelledby="nuev
 $sql = "SELECT p.Id, p.IdInversion, p.DescripcionParticipacion, p.MontoInvertido, p.RendimientoEsperado, p.FechaInicioParticipacion, p.FechaFinParticipacion, p.FechaCreacion, p.FechaModificacion, i.IdCliente as IdCliente, u.Usuario as Usuario FROM participaciones as p
 JOIN inversiones i ON p.IdInversion = i.Id
 JOIN clientes c ON i.IdCliente = c.Id
-JOIN Usuarios u ON c.IdUsuario = u.Id
+JOIN usuarios u ON c.IdUsuario = u.Id
 WHERE p.IdInversion = ".$inversion['Id']."";
 $result = $db->query($sql);
 

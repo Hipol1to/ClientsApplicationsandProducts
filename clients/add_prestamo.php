@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
             //fetching cliente info
-            $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $_SESSION['ClienteId'];
+            $sqlClient = "SELECT * FROM clientes WHERE Id = ". $_SESSION['ClienteId'];
             $resultClient = $db->query($sqlClient);
             $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
 
@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $montoSolicitadoo = (float) $montoSolicitado;
             $montoTotalSolicitadoValue = $montoTotalPrestado > $montoSolicitadoo ? (float)($montoTotalPrestado + $montoSolicitadoo) : (float)( $montoSolicitadoo + $montoTotalPrestado );
 
-            $sqlCliente = "UPDATE Clientes 
+            $sqlCliente = "UPDATE clientes 
                           SET MontoTotalSolicitado = ".$montoTotalSolicitadoValue."
             WHERE Id = ". $_SESSION['ClienteId'];
             $resultCliente = $db->query($sqlCliente);

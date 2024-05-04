@@ -23,7 +23,7 @@ class User
 {
     try {
         $stmt = $this->_db->prepare('SELECT Contraseña AS password, Usuario AS username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) AS fullname, C.IdUsuario AS idusuario, u.Active AS isUserActive, c.PerfilValidado AS isProffileValidated, u.IdCliente as ClienteId, u.Id FROM usuarios AS u 
-		LEFT OUTER JOIN Clientes c on c.IdUsuario = u.Id
+		LEFT OUTER JOIN clientes c on c.IdUsuario = u.Id
 		WHERE LOWER(Usuario) = LOWER(:username) AND Active IS NOT NULL');
         $stmt->execute(array('username' => $username));
 
