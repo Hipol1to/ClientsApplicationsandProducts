@@ -1,6 +1,7 @@
 <?php
 ob_start();
 // Start the session if it hasn't been started already
+//comment
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
