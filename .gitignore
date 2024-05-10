@@ -1,5 +1,8 @@
 # ignore all logs
 *.log
 
-/includes/config.php
-/classes/phpmailer/mail.php
+# Ignore config.php file in includes directory
+includes/config.php
+
+# Ignore mail.php file in phpmailer directory under classes directory
+classes/phpmailer/mail.php
