@@ -3,13 +3,13 @@
 require('../includes/config.php');
 
 if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive']) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/index.php');
   exit();  
 } elseif (!$user->is_logged_in()) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/index.php');
   exit();  
 } elseif (!isset($_SESSION['ClienteId'])) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/completa_perfil.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/completa_perfil.php');
   exit();
 }
 
@@ -32,11 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
             // Redirect back to the page with success message
-            header("location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/dashboard/index.php?success=1");
+            header("location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/dashboard/index.php?success=1");
             exit();
         } else {
             // Redirect back to the page with error message
-            header("location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/dashboard/index.php?error=1");
+            header("location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/dashboard/index.php?error=1");
             exit();
         }
     }

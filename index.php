@@ -91,6 +91,7 @@ if(isset($_POST['submit'])){
 			<p>Atentamente, el equipo de Inversiones Everest</p>";
 
 			$mail = new Mail();
+      $mail->isSMTP();
 			$mail->setFrom(SITEEMAIL);
 			$mail->addAddress($to);
 			$mail->subject($subject);

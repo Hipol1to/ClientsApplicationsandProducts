@@ -465,11 +465,11 @@ i.FechaPagoMensual AS fechadepago,
 i.FechaCreacion AS fechadecreacion,
 CONCAT(i.Id) AS requestId
 FROM 
-Prestamos AS i
+prestamos AS i
 JOIN 
-Clientes c ON i.IdCliente = c.Id
+clientes c ON i.IdCliente = c.Id
 JOIN 
-Usuarios u ON c.IdUsuario = u.Id
+usuarios u ON c.IdUsuario = u.Id
 WHERE 
 i.FechaPagoMensual >= DATE_ADD(CURDATE(), INTERVAL 1 MINUTE)";
 

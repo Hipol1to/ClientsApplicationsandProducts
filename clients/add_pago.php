@@ -163,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Attempt to execute the prepared statement
                 if ($stmt->execute()) {
                     error_log("sejcuto");
-                    $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $_SESSION['ClienteId'];
+                    $sqlClient = "SELECT * FROM clientes WHERE Id = ". $_SESSION['ClienteId'];
                     $resultClient = $db->query($sqlClient);
                     $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
 
@@ -172,7 +172,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $montoTotalPagadoValue = isset($clienteRecord['MontoTotalPagado']) ? (float)$clienteRecord['MontoTotalPagado'] : 0.00;
                     $newMontoTotalPagado = (float)$montoTotalPagadoValue + $monto;
                         
-                    $sqlCliente = "UPDATE Clientes 
+                    $sqlCliente = "UPDATE clientes 
                                   SET MontoTotalPagado = ".$newMontoTotalPagado."
                     WHERE Id = ". $_SESSION['ClienteId'];
                     $resultCliente = $db->query($sqlCliente);

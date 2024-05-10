@@ -1,0 +1,304 @@
+[04-May-2024 01:43:53 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:08:01 Europe/London] user is loggedin 1
+[04-May-2024 02:08:01 Europe/London] log for user: adminprueba
+[04-May-2024 02:08:01 Europe/London] user has id: 15
+[04-May-2024 02:08:01 Europe/London] User has fullname: 
+[04-May-2024 02:08:01 Europe/London] User has RNC?: 
+[04-May-2024 02:08:01 Europe/London] is client proffile validated? 
+[04-May-2024 02:08:01 Europe/London] is client proffile on review? 
+[04-May-2024 02:08:01 Europe/London] Is user active?1
+[04-May-2024 02:08:01 Europe/London] is user active? 1
+[04-May-2024 02:08:01 Europe/London] client identifier 1
+[04-May-2024 02:08:01 Europe/London] Usuario admin validado y activo
+[04-May-2024 02:10:27 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:12:39 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:19:56 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:22:07 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:27:04 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:28:09 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:31:02 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:31:02 Europe/London] 1
+[04-May-2024 02:33:47 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:33:47 Europe/London] 1
+[04-May-2024 02:34:54 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:34:55 Europe/London] 1
+[04-May-2024 02:37:01 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:39:02 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:40:45 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:40:45 Europe/London] 1
+[04-May-2024 02:58:47 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 02:58:48 Europe/London] 
+[04-May-2024 03:08:41 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 03:09:25 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 03:09:25 Europe/London] 1
+[04-May-2024 03:13:42 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 03:16:03 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 03:16:03 Europe/London] 1
+[04-May-2024 03:16:19 Europe/London] user is loggedin 1
+[04-May-2024 03:16:19 Europe/London] log for user: adminprueba
+[04-May-2024 03:16:19 Europe/London] user has id: 15
+[04-May-2024 03:16:19 Europe/London] User has fullname: 
+[04-May-2024 03:16:19 Europe/London] User has RNC?: 
+[04-May-2024 03:16:19 Europe/London] is client proffile validated? 
+[04-May-2024 03:16:19 Europe/London] is client proffile on review? 
+[04-May-2024 03:16:19 Europe/London] Is user active?1
+[04-May-2024 03:16:19 Europe/London] is user active? 1
+[04-May-2024 03:16:19 Europe/London] client identifier 1
+[04-May-2024 03:16:19 Europe/London] Usuario admin validado y activo
+[04-May-2024 03:17:02 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 03:17:02 Europe/London] 
+[04-May-2024 03:39:08 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 03:39:10 Europe/London] 
+[04-May-2024 03:39:50 Europe/London] PHP Warning:  Use of undefined constant SITETITLE - assumed 'SITETITLE' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/reset.php on line 53
+[04-May-2024 03:39:51 Europe/London] 
+[04-May-2024 03:43:27 Europe/London] 
+[04-May-2024 03:45:41 Europe/London] 
+[04-May-2024 03:52:03 Europe/London] 
+[04-May-2024 03:56:57 Europe/London] 
+[04-May-2024 05:15:45 Europe/London] 
+[04-May-2024 05:20:42 Europe/London] PHP Fatal error:  Uncaught PHPMailer\PHPMailer\Exception: SMTP Error: The following recipients failed: thelegendstutorials@gmail.com: <noreply@domain.com>: Sender address rejected: not owned by user soporte@inversioneseverest.net
+ in /home/u639419078/domains/inversioneseverest.net/public_html/classes/phpmailer/PHPMailer.php:2124
+Stack trace:
+#0 /home/u639419078/domains/inversioneseverest.net/public_html/classes/phpmailer/PHPMailer.php(1687): PHPMailer\PHPMailer\PHPMailer->smtpSend('Date: Sat, 4 Ma...', '--b1=_kPoRNnjym...')
+#1 /home/u639419078/domains/inversioneseverest.net/public_html/classes/phpmailer/PHPMailer.php(1521): PHPMailer\PHPMailer\PHPMailer->postSend()
+#2 /home/u639419078/domains/inversioneseverest.net/public_html/classes/phpmailer/mail.php(37): PHPMailer\PHPMailer\PHPMailer->send()
+#3 /home/u639419078/domains/inversioneseverest.net/public_html/reset.php(59): Mail->send()
+#4 {main}
+  thrown in /home/u639419078/domains/inversioneseverest.net/public_html/classes/phpmailer/PHPMailer.php on line 2124
+[04-May-2024 05:29:32 Europe/London] user is loggedin 1
+[04-May-2024 05:29:32 Europe/London] log for user: userprueba
+[04-May-2024 05:29:32 Europe/London] user has id: 11
+[04-May-2024 05:29:32 Europe/London] User has fullname: felipe garibo
+[04-May-2024 05:29:32 Europe/London] User has RNC?: 
+[04-May-2024 05:29:32 Europe/London] is client proffile validated? 1
+[04-May-2024 05:29:32 Europe/London] is client proffile on review? 
+[04-May-2024 05:29:32 Europe/London] Is user active?1
+[04-May-2024 05:29:32 Europe/London] is user active? 1
+[04-May-2024 05:29:32 Europe/London] client identifier 44
+[04-May-2024 05:29:32 Europe/London] Usuario cliente validado y activo
+[04-May-2024 05:33:17 Europe/London] user is loggedin 1
+[04-May-2024 05:33:17 Europe/London] log for user: userprueba
+[04-May-2024 05:33:17 Europe/London] user has id: 11
+[04-May-2024 05:33:17 Europe/London] User has fullname: felipe garibo
+[04-May-2024 05:33:17 Europe/London] User has RNC?: 
+[04-May-2024 05:33:17 Europe/London] is client proffile validated? 1
+[04-May-2024 05:33:17 Europe/London] is client proffile on review? 
+[04-May-2024 05:33:17 Europe/London] Is user active?1
+[04-May-2024 05:33:17 Europe/London] is user active? 1
+[04-May-2024 05:33:17 Europe/London] client identifier 44
+[04-May-2024 05:33:17 Europe/London] Usuario cliente validado y activo
+[04-May-2024 05:34:43 Europe/London] user is loggedin 1
+[04-May-2024 05:34:43 Europe/London] log for user: userprueba
+[04-May-2024 05:34:43 Europe/London] user has id: 11
+[04-May-2024 05:34:43 Europe/London] User has fullname: felipe garibo
+[04-May-2024 05:34:43 Europe/London] User has RNC?: 
+[04-May-2024 05:34:43 Europe/London] is client proffile validated? 1
+[04-May-2024 05:34:43 Europe/London] is client proffile on review? 
+[04-May-2024 05:34:43 Europe/London] Is user active?1
+[04-May-2024 05:34:43 Europe/London] is user active? 1
+[04-May-2024 05:34:43 Europe/London] client identifier 44
+[04-May-2024 05:34:43 Europe/London] Usuario cliente validado y activo
+[04-May-2024 05:40:15 Europe/London] user is loggedin 1
+[04-May-2024 05:40:15 Europe/London] log for user: userprueba
+[04-May-2024 05:40:15 Europe/London] user has id: 11
+[04-May-2024 05:40:15 Europe/London] User has fullname: felipe garibo
+[04-May-2024 05:40:15 Europe/London] User has RNC?: 
+[04-May-2024 05:40:15 Europe/London] is client proffile validated? 1
+[04-May-2024 05:40:15 Europe/London] is client proffile on review? 
+[04-May-2024 05:40:15 Europe/London] Is user active?1
+[04-May-2024 05:40:15 Europe/London] is user active? 1
+[04-May-2024 05:40:15 Europe/London] client identifier 44
+[04-May-2024 05:40:15 Europe/London] Usuario cliente validado y activo
+[04-May-2024 16:42:50 Europe/London] user is loggedin 1
+[04-May-2024 16:42:50 Europe/London] log for user: userprueba
+[04-May-2024 16:42:50 Europe/London] user has id: 11
+[04-May-2024 16:42:50 Europe/London] User has fullname: felipe garibo
+[04-May-2024 16:42:50 Europe/London] User has RNC?: 
+[04-May-2024 16:42:50 Europe/London] is client proffile validated? 1
+[04-May-2024 16:42:50 Europe/London] is client proffile on review? 
+[04-May-2024 16:42:50 Europe/London] Is user active?1
+[04-May-2024 16:42:50 Europe/London] is user active? 1
+[04-May-2024 16:42:50 Europe/London] client identifier 44
+[04-May-2024 16:42:50 Europe/London] Usuario cliente validado y activo
+[04-May-2024 20:12:51 Europe/London] user is loggedin 1
+[04-May-2024 20:12:51 Europe/London] log for user: userprueba
+[04-May-2024 20:12:51 Europe/London] user has id: 11
+[04-May-2024 20:12:51 Europe/London] User has fullname: felipe garibo
+[04-May-2024 20:12:51 Europe/London] User has RNC?: 
+[04-May-2024 20:12:51 Europe/London] is client proffile validated? 1
+[04-May-2024 20:12:51 Europe/London] is client proffile on review? 
+[04-May-2024 20:12:51 Europe/London] Is user active?1
+[04-May-2024 20:12:51 Europe/London] is user active? 1
+[04-May-2024 20:12:51 Europe/London] client identifier 44
+[04-May-2024 20:12:51 Europe/London] Usuario cliente validado y activo
+[05-May-2024 06:24:34 Europe/London] 16
+[05-May-2024 06:24:34 Europe/London] 3b1d6b3f0fcbb1ab3c42989803660b33
+[05-May-2024 06:24:34 Europe/London] estoy dentro
+[05-May-2024 06:24:38 Europe/London] user is loggedin 1
+[05-May-2024 06:24:38 Europe/London] log for user: LunalDrk
+[05-May-2024 06:24:38 Europe/London] user has id: 16
+[05-May-2024 06:24:38 Europe/London] User has fullname: 
+[05-May-2024 06:24:38 Europe/London] User has RNC?: 
+[05-May-2024 06:24:38 Europe/London] is client proffile validated? 
+[05-May-2024 06:24:38 Europe/London] is client proffile on review? 
+[05-May-2024 06:24:38 Europe/London] Is user active?1
+[05-May-2024 06:24:38 Europe/London] is user active? 1
+[05-May-2024 06:24:38 Europe/London] perfil de cliente no creado
+[05-May-2024 06:24:38 Europe/London] Usuario no tiene perfil
+[05-May-2024 06:26:59 Europe/London] user is loggedin 1
+[05-May-2024 06:26:59 Europe/London] log for user: adminprueba
+[05-May-2024 06:26:59 Europe/London] user has id: 15
+[05-May-2024 06:26:59 Europe/London] User has fullname: 
+[05-May-2024 06:26:59 Europe/London] User has RNC?: 
+[05-May-2024 06:26:59 Europe/London] is client proffile validated? 
+[05-May-2024 06:26:59 Europe/London] is client proffile on review? 
+[05-May-2024 06:26:59 Europe/London] Is user active?1
+[05-May-2024 06:26:59 Europe/London] is user active? 1
+[05-May-2024 06:26:59 Europe/London] client identifier 1
+[05-May-2024 06:26:59 Europe/London] Usuario admin validado y activo
+[05-May-2024 06:32:28 Europe/London] user is loggedin 1
+[05-May-2024 06:32:28 Europe/London] log for user: LunalDrk
+[05-May-2024 06:32:28 Europe/London] user has id: 16
+[05-May-2024 06:32:28 Europe/London] User has fullname: 
+[05-May-2024 06:32:28 Europe/London] User has RNC?: 
+[05-May-2024 06:32:28 Europe/London] is client proffile validated? 
+[05-May-2024 06:32:28 Europe/London] is client proffile on review? 
+[05-May-2024 06:32:28 Europe/London] Is user active?1
+[05-May-2024 06:32:28 Europe/London] is user active? 1
+[05-May-2024 06:32:28 Europe/London] client identifier 1
+[05-May-2024 06:32:28 Europe/London] Usuario admin validado y activo
+[05-May-2024 23:07:14 Europe/London] user is loggedin 1
+[05-May-2024 23:07:14 Europe/London] log for user: LunalDrk
+[05-May-2024 23:07:14 Europe/London] user has id: 16
+[05-May-2024 23:07:14 Europe/London] User has fullname: 
+[05-May-2024 23:07:14 Europe/London] User has RNC?: 
+[05-May-2024 23:07:14 Europe/London] is client proffile validated? 
+[05-May-2024 23:07:14 Europe/London] is client proffile on review? 
+[05-May-2024 23:07:14 Europe/London] Is user active?1
+[05-May-2024 23:07:14 Europe/London] is user active? 1
+[05-May-2024 23:07:14 Europe/London] client identifier 1
+[05-May-2024 23:07:14 Europe/London] Usuario admin validado y activo
+[05-May-2024 23:11:08 Europe/London] 18
+[05-May-2024 23:11:08 Europe/London] 2449fe76c072eadb4261f0b5f6cb8e3f
+[05-May-2024 23:11:08 Europe/London] estoy dentro
+[05-May-2024 23:11:18 Europe/London] user is loggedin 1
+[05-May-2024 23:11:18 Europe/London] log for user: otrousuario
+[05-May-2024 23:11:18 Europe/London] user has id: 18
+[05-May-2024 23:11:18 Europe/London] User has fullname: 
+[05-May-2024 23:11:18 Europe/London] User has RNC?: 
+[05-May-2024 23:11:18 Europe/London] is client proffile validated? 
+[05-May-2024 23:11:18 Europe/London] is client proffile on review? 
+[05-May-2024 23:11:18 Europe/London] Is user active?1
+[05-May-2024 23:11:18 Europe/London] is user active? 1
+[05-May-2024 23:11:18 Europe/London] perfil de cliente no creado
+[05-May-2024 23:11:18 Europe/London] Usuario no tiene perfil
+[06-May-2024 00:52:46 Europe/London] user is loggedin 1
+[06-May-2024 00:52:46 Europe/London] log for user: LunalDrk
+[06-May-2024 00:52:46 Europe/London] user has id: 16
+[06-May-2024 00:52:46 Europe/London] User has fullname: 
+[06-May-2024 00:52:46 Europe/London] User has RNC?: 
+[06-May-2024 00:52:46 Europe/London] is client proffile validated? 
+[06-May-2024 00:52:46 Europe/London] is client proffile on review? 
+[06-May-2024 00:52:46 Europe/London] Is user active?1
+[06-May-2024 00:52:46 Europe/London] is user active? 1
+[06-May-2024 00:52:46 Europe/London] client identifier 1
+[06-May-2024 00:52:46 Europe/London] Usuario admin validado y activo
+[06-May-2024 01:00:43 Europe/London] user is loggedin 1
+[06-May-2024 01:00:43 Europe/London] log for user: LunalDrk
+[06-May-2024 01:00:43 Europe/London] user has id: 16
+[06-May-2024 01:00:43 Europe/London] User has fullname: 
+[06-May-2024 01:00:43 Europe/London] User has RNC?: 
+[06-May-2024 01:00:43 Europe/London] is client proffile validated? 
+[06-May-2024 01:00:43 Europe/London] is client proffile on review? 
+[06-May-2024 01:00:43 Europe/London] Is user active?1
+[06-May-2024 01:00:43 Europe/London] is user active? 1
+[06-May-2024 01:00:43 Europe/London] client identifier 1
+[06-May-2024 01:00:43 Europe/London] Usuario admin validado y activo
+[10-May-2024 01:44:26 Europe/London] user is loggedin 1
+[10-May-2024 01:44:26 Europe/London] log for user: adminprueba
+[10-May-2024 01:44:26 Europe/London] user has id: 15
+[10-May-2024 01:44:26 Europe/London] User has fullname: 
+[10-May-2024 01:44:26 Europe/London] User has RNC?: 
+[10-May-2024 01:44:26 Europe/London] is client proffile validated? 
+[10-May-2024 01:44:26 Europe/London] is client proffile on review? 
+[10-May-2024 01:44:26 Europe/London] Is user active?1
+[10-May-2024 01:44:26 Europe/London] is user active? 1
+[10-May-2024 01:44:26 Europe/London] client identifier 1
+[10-May-2024 01:44:26 Europe/London] Usuario admin validado y activo
+[10-May-2024 01:45:39 Europe/London] user is loggedin 1
+[10-May-2024 01:45:39 Europe/London] log for user: adminprueba
+[10-May-2024 01:45:39 Europe/London] user has id: 15
+[10-May-2024 01:45:39 Europe/London] User has fullname: 
+[10-May-2024 01:45:39 Europe/London] User has RNC?: 
+[10-May-2024 01:45:39 Europe/London] is client proffile validated? 
+[10-May-2024 01:45:39 Europe/London] is client proffile on review? 
+[10-May-2024 01:45:39 Europe/London] Is user active?1
+[10-May-2024 01:45:39 Europe/London] is user active? 1
+[10-May-2024 01:45:39 Europe/London] client identifier 1
+[10-May-2024 01:45:39 Europe/London] Usuario admin validado y activo
+[10-May-2024 01:46:31 Europe/London] user is loggedin 1
+[10-May-2024 01:46:31 Europe/London] log for user: adminprueba
+[10-May-2024 01:46:31 Europe/London] user has id: 15
+[10-May-2024 01:46:31 Europe/London] User has fullname: 
+[10-May-2024 01:46:31 Europe/London] User has RNC?: 
+[10-May-2024 01:46:31 Europe/London] is client proffile validated? 
+[10-May-2024 01:46:31 Europe/London] is client proffile on review? 
+[10-May-2024 01:46:31 Europe/London] Is user active?1
+[10-May-2024 01:46:31 Europe/London] is user active? 1
+[10-May-2024 01:46:31 Europe/London] client identifier 1
+[10-May-2024 01:46:31 Europe/London] Usuario admin validado y activo
+[10-May-2024 01:47:05 Europe/London] user is loggedin 1
+[10-May-2024 01:47:05 Europe/London] log for user: liluser
+[10-May-2024 01:47:05 Europe/London] user has id: 6
+[10-May-2024 01:47:05 Europe/London] User has fullname: FalinApart Tan tan
+[10-May-2024 01:47:05 Europe/London] User has RNC?: 
+[10-May-2024 01:47:05 Europe/London] is client proffile validated? 1
+[10-May-2024 01:47:05 Europe/London] is client proffile on review? 
+[10-May-2024 01:47:05 Europe/London] Is user active?1
+[10-May-2024 01:47:05 Europe/London] is user active? 1
+[10-May-2024 01:47:05 Europe/London] client identifier 38
+[10-May-2024 01:47:05 Europe/London] Usuario cliente validado y activo
+[10-May-2024 01:47:43 Europe/London] user is loggedin 1
+[10-May-2024 01:47:43 Europe/London] log for user: adminprueba
+[10-May-2024 01:47:43 Europe/London] user has id: 15
+[10-May-2024 01:47:43 Europe/London] User has fullname: 
+[10-May-2024 01:47:43 Europe/London] User has RNC?: 
+[10-May-2024 01:47:43 Europe/London] is client proffile validated? 
+[10-May-2024 01:47:43 Europe/London] is client proffile on review? 
+[10-May-2024 01:47:43 Europe/London] Is user active?1
+[10-May-2024 01:47:43 Europe/London] is user active? 1
+[10-May-2024 01:47:43 Europe/London] client identifier 1
+[10-May-2024 01:47:43 Europe/London] Usuario admin validado y activo
+[10-May-2024 01:49:32 Europe/London] user is loggedin 1
+[10-May-2024 01:49:32 Europe/London] log for user: liluser
+[10-May-2024 01:49:32 Europe/London] user has id: 6
+[10-May-2024 01:49:32 Europe/London] User has fullname: FalinApart Tan tan
+[10-May-2024 01:49:32 Europe/London] User has RNC?: 
+[10-May-2024 01:49:32 Europe/London] is client proffile validated? 1
+[10-May-2024 01:49:32 Europe/London] is client proffile on review? 
+[10-May-2024 01:49:32 Europe/London] Is user active?1
+[10-May-2024 01:49:32 Europe/London] is user active? 1
+[10-May-2024 01:49:32 Europe/London] client identifier 38
+[10-May-2024 01:49:32 Europe/London] Usuario cliente validado y activo
+[10-May-2024 01:50:11 Europe/London] user is loggedin 1
+[10-May-2024 01:50:11 Europe/London] log for user: adminprueba
+[10-May-2024 01:50:11 Europe/London] user has id: 15
+[10-May-2024 01:50:11 Europe/London] User has fullname: 
+[10-May-2024 01:50:11 Europe/London] User has RNC?: 
+[10-May-2024 01:50:11 Europe/London] is client proffile validated? 
+[10-May-2024 01:50:11 Europe/London] is client proffile on review? 
+[10-May-2024 01:50:11 Europe/London] Is user active?1
+[10-May-2024 01:50:11 Europe/London] is user active? 1
+[10-May-2024 01:50:11 Europe/London] client identifier 1
+[10-May-2024 01:50:11 Europe/London] Usuario admin validado y activo
+[10-May-2024 01:52:47 Europe/London] user is loggedin 1
+[10-May-2024 01:52:47 Europe/London] log for user: liluser
+[10-May-2024 01:52:47 Europe/London] user has id: 6
+[10-May-2024 01:52:47 Europe/London] User has fullname: FalinApart Tan tan
+[10-May-2024 01:52:47 Europe/London] User has RNC?: 
+[10-May-2024 01:52:47 Europe/London] is client proffile validated? 1
+[10-May-2024 01:52:47 Europe/London] is client proffile on review? 
+[10-May-2024 01:52:47 Europe/London] Is user active?1
+[10-May-2024 01:52:47 Europe/London] is user active? 1
+[10-May-2024 01:52:47 Europe/London] client identifier 38
+[10-May-2024 01:52:47 Europe/London] Usuario cliente validado y activo

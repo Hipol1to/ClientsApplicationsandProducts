@@ -19,7 +19,7 @@ if (isset($_POST['submit'])){
 	if (! filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
 	    $error[] = 'Por favor inserta un correo electrónico valido';
 	} else {
-		$stmt = $db->prepare('SELECT email FROM Usuarios WHERE email = :email');
+		$stmt = $db->prepare('SELECT email FROM usuarios WHERE email = :email');
 		$stmt->execute(array(':email' => $_POST['email']));
 		$row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])){
 
 		try {
 
-			$stmt = $db->prepare("UPDATE Usuarios SET resetToken = :token, resetComplete='No' WHERE email = :email");
+			$stmt = $db->prepare("UPDATE usuarios SET resetToken = :token, resetComplete='No' WHERE email = :email");
 			$stmt->execute(array(
 				':email' => $row['email'],
 				':token' => $token
@@ -51,6 +51,7 @@ if (isset($_POST['submit'])){
 			<p>Pare reiniciar tu contraseña accede al siguiente enlace: <a href='".DIR."resetPassword.php?key=$token'>".DIR."resetPassword.php?key=$token</a></p>";
 
 			$mail = new Mail();
+      $mail->isSMTP();
 			$mail->setFrom(SITEEMAIL);
 			$mail->addAddress($to);
 			$mail->subject($subject);

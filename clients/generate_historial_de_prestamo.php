@@ -88,6 +88,7 @@ if ($result) {
       </p>
       <div style="page-break-before: always;"></div>
       ';
+      error_log("this is the loan body: ".$loanBody);
       $o++;
       }
       $o=1;
@@ -129,6 +130,7 @@ if ($result) {
     </html>
     ';
 
+    error_log("PDF Finished");
     // Output the HTML content
     $pdf->writeHTML($html, true, false, true, false, '');
 

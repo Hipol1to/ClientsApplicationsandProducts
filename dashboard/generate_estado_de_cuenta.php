@@ -41,7 +41,7 @@ $sql = "SELECT 	Id, IdCliente, Motivo, MontoSolicitado, MontoAprobado, MontoPaga
   error_log($sql);
 $result = $db->query($sql);
 
-  $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $_POST['idClient'];
+  $sqlClient = "SELECT * FROM clientes WHERE Id = ". $_POST['idClient'];
   $resultClient = $db->query($sqlClient);
   $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
 

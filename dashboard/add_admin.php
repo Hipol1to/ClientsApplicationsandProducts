@@ -19,7 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   if (isset($_POST['id'])) {
     error_log("resetiar contra");
-    $stmt = $db->prepare('UPDATE Usuarios SET Contraseña = :contra WHERE id = :id');
+    $stmt = $db->prepare('UPDATE usuarios SET Contraseña = :contra WHERE id = :id');
   $stmt->execute(array(
           ':contra' => "\$2y\$10\$dqLjEA6bsVjTaew7zmSlx.eGEqSpcwQbxyGkXbjL/r5cLqLbellBG",
           ':id' => $_POST['id'] // You may adjust this based on your activation mechanism

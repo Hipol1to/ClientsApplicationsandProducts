@@ -39,7 +39,7 @@ $sql = "SELECT 	Id, IdCliente, Motivo, MontoSolicitado, MontoAprobado, MontoPaga
 error_log($sql);
 $result = $db->query($sql);
 
-  $sqlClient = "SELECT * FROM Clientes WHERE Id = ". $_SESSION['ClienteId'];
+  $sqlClient = "SELECT * FROM clientes WHERE Id = ". $_SESSION['ClienteId'];
   $resultClient = $db->query($sqlClient);
   $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
 
@@ -90,7 +90,7 @@ if ($result) {
       </p>
       <br><br><br><br><br><br><br><br>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Captura trasera de cedula: <br><br><img src="../clients/'.htmlspecialchars($capturaReversoPath).'" alt="Captura de cedula no disponible" height="250px"></span></strong>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Captura trasera de cedula frontal: <br><br><img src="../clients/'.htmlspecialchars($capturaReversoPath).'" alt="Captura de cedula no disponible" height="250px"></span></strong>
       </p>
       <p>
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">RNC: '.$clienteRecord['RNC'].'</span></strong>
