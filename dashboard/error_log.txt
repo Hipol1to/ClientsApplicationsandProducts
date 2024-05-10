@@ -1,0 +1,74 @@
+[05-May-2024 06:31:14 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 40
+             LIMIT 1
+[05-May-2024 06:31:14 Europe/London] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'u639419078_cap_storage.p' in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php:491
+Stack trace:
+#0 /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php(491): PDO->prepare('SELECT p.*, u.U...')
+#1 {main}
+  thrown in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php on line 491
+[05-May-2024 06:33:38 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[05-May-2024 06:33:38 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[05-May-2024 06:34:03 Europe/London] PHP Warning:  Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_pago.php on line 208
+[05-May-2024 06:34:10 Europe/London] PHP Warning:  Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_pago.php on line 208
+[05-May-2024 06:34:16 Europe/London] PHP Warning:  Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_pago.php on line 208
+[05-May-2024 23:07:36 Europe/London] Frontal Cedula path: 
+[05-May-2024 23:07:36 Europe/London] Reverse Cedula path: 
+[05-May-2024 23:08:08 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[05-May-2024 23:08:08 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[06-May-2024 00:53:07 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 40
+             LIMIT 1
+[06-May-2024 00:53:07 Europe/London] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'u639419078_cap_storage.p' in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php:491
+Stack trace:
+#0 /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php(491): PDO->prepare('SELECT p.*, u.U...')
+#1 {main}
+  thrown in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php on line 491
+[06-May-2024 00:53:14 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 40
+             LIMIT 1
+[06-May-2024 00:53:14 Europe/London] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'u639419078_cap_storage.p' in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php:491
+Stack trace:
+#0 /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php(491): PDO->prepare('SELECT p.*, u.U...')
+#1 {main}
+  thrown in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php on line 491
+[06-May-2024 00:53:19 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 40
+             LIMIT 1
+[06-May-2024 00:53:19 Europe/London] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'u639419078_cap_storage.p' in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php:491
+Stack trace:
+#0 /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php(491): PDO->prepare('SELECT p.*, u.U...')
+#1 {main}
+  thrown in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php on line 491
+[06-May-2024 00:53:30 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[06-May-2024 00:53:30 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[06-May-2024 00:56:20 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 40
+             LIMIT 1
+[06-May-2024 00:56:20 Europe/London] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'u639419078_cap_storage.p' in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php:491
+Stack trace:
+#0 /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php(491): PDO->prepare('SELECT p.*, u.U...')
+#1 {main}
+  thrown in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php on line 491
+[06-May-2024 00:57:09 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[06-May-2024 00:57:09 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[06-May-2024 01:01:03 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[06-May-2024 01:01:03 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[06-May-2024 01:01:13 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[06-May-2024 01:01:13 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[06-May-2024 01:01:23 Europe/London] Frontal Cedula path: 
+[06-May-2024 01:01:23 Europe/London] Reverse Cedula path: 

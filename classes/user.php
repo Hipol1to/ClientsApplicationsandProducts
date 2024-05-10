@@ -1,0 +1,125 @@
+<?php
+
+class User 
+{
+	private $_db;
+	private $_ignoreCase;
+
+	function __construct($db)
+	{
+		$this->_db = $db;
+		$this->_ignoreCase = false;
+	}
+	
+	public function setIgnoreCase($sensitive) {
+		$this->_ignoreCase = $sensitive;
+	}
+
+	public function getIgnoreCase() {
+		return $this->_ignoreCase;
+	}
+
+	private function get_user_hash($username)
+{
+    try {
+        $stmt = $this->_db->prepare('SELECT Contraseña AS password, Usuario AS username, Rol, CONCAT(c.Nombre, \' \', c.Apellido) AS fullname, c.IdUsuario AS idusuario, u.Active AS isUserActive, c.PerfilValidado AS isProffileValidated, u.IdCliente as ClienteId, u.Id FROM usuarios AS u 
+		LEFT OUTER JOIN clientes c on c.IdUsuario = u.Id
+		WHERE LOWER(Usuario) = LOWER(:username) AND Active IS NOT NULL');
+        $stmt->execute(array('username' => $username));
+
+        return $stmt->fetch();
+
+    } catch(PDOException $e) {
+        echo '<p class="bg-danger">'.$e->getMessage().'</p>';
+    }
+}
+
+	public function isValidUsername($username)
+	{
+		if (strlen($username) < 3) {
+			return false;
+		}
+
+		if (strlen($username) > 17) {
+			return false;
+		}
+
+		if (! ctype_alnum($username)) {
+			return false;
+		}
+
+		return true;
+	}
+
+	public function login($username, $password)
+{
+    if (!$this->isValidUsername($username)) {
+        return false;
+    }
+
+    if (strlen($password) < 3) {
+        return false;
+    }
+
+    $row = $this->get_user_hash($username);
+
+    if (password_verify($password, $row['password'])) {
+
+        $_SESSION['loggedin'] = true;
+      error_log("user is loggedin ".$_SESSION['loggedin']);
+
+        $_SESSION['username'] = $row['username'];
+        error_log("log for user: " . $_SESSION['username']);
+
+        $_SESSION['userId'] = $row['Id'];
+        error_log("user has id: " . $_SESSION['userId']);
+
+        $_SESSION['fullname'] = $row['fullname'];
+        error_log("User has fullname: " . $_SESSION['fullname']);
+
+		$_SESSION['hasRNC'] = isset($row['RNC']);
+        error_log("User has RNC?: " . $_SESSION['hasRNC']);
+
+		$_SESSION['RNC'] = isset($row['RNC']) ? $row['RNC'] : null;
+
+		$_SESSION['isProffileValidated'] = $row['isProffileValidated'] == 1 ? true : false;
+		error_log("is client proffile validated? " . $_SESSION['isProffileValidated']);
+
+    $_SESSION['isProffileInReview'] = $row['isProffileValidated'] == 2 ? true : false;
+    error_log("is client proffile on review? " . $_SESSION['isProffileInReview']);
+
+		$_SESSION['isUserActive'] = $row['isUserActive'] == 1 ? true : false;
+    error_log("Is user active?" . $_SESSION['isUserActive']);
+
+		$_SESSION['ClienteId'] = isset($row['ClienteId']) ? $row['ClienteId'] : null;
+		
+		error_log("is user active? " . $_SESSION['isUserActive']);
+    if (isset($_SESSION['ClienteId'])) {
+      error_log("client identifier " . $_SESSION['ClienteId']);
+    } else {
+      error_log("perfil de cliente no creado");
+    }
+
+        // Check the role of the logged-in user
+        $role = $row['Rol'];
+        $_SESSION['isAdmin'] = ($role === 'Administrador' || $role === 'Owner') ? true : false;
+
+        return true;
+    }
+    return false;
+}
+
+
+	public function logout()
+	{
+		session_destroy();
+	}
+
+	public function is_logged_in()
+	{
+		if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == true){
+			return true;
+		}
+	}
+
+}

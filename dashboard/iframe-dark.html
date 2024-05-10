@@ -1,0 +1,67 @@
+<script>
+$(document).ready(function() {
+    $(".edit-btn").click(function() {
+        var id = $(this).data("id");
+        $.ajax({
+            url: "fetch_participacion.php", // Changed to fetch inversion details
+            type: "GET",
+            data: { id: id },
+            dataType: "json",
+            success: function(response) {
+                // Clear previous values
+                $("#editFormParticipacion")[0].reset();
+                // Populate modal fields
+                $("#editId").val(response.Id);
+                $("#editIdInversion").val(response.IdInversion);
+                $("#idInversion").val(response.IdInversion);
+                $("#editDescripcionParticipacion").val(response.DescripcionParticipacion);
+                $("#editMontoInvertido").val(response.MontoInvertido);
+                $("#editRendimientoEsperado").val(response.RendimientoEsperado);
+                $("#editFechaInicioParticipacion").val(response.FechaInicioParticipacion);
+                $("#editFechaFinParticipacion").val(response.FechaFinParticipacion);
+                // Show the modal
+                $("#editModal").modal("show");
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr);
+            }
+        });
+    });
+
+    $("#addParticipacionButton").click(function() {
+        var id = $(this).data("id");
+        console.log(id);
+        $.ajax({
+            url: "fetch_participacion.php", // Changed to fetch inversion details
+            type: "GET",
+            data: { id: id },
+            dataType: "json",
+            success: function(response) {
+                // Clear previous values
+                $("#addIdInversionn").val(id);
+                $("#myModal").modal("show");
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr);
+            }
+        });
+    });
+$("#saveChangesBtn").click(function() {
+          var formData = $("#editFormParticipacion").serialize();
+          $.ajax({
+              url: "update_participacion.php",
+              type: "POST",
+              data: formData,
+              success: function(response) {
+                  $("#editModal").modal("hide");
+                  // Optionally, reload the table or update the row with the edited data
+                  location.reload();
+              },
+              error: function(xhr, status, error) {
+                  console.error(xhr.responseText);
+                  // Handle error
+              }
+          });
+      });
+  });
+</script>
