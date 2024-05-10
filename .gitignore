@@ -1,5 +1,5 @@
 # ignore all logs
-*.log
+*.txt
 
 # Ignore config.php file in includes directory
 includes/config.php
