@@ -1,2 +1,5 @@
-includes/config.php
-classes/phpmailer/mail.php
+# ignore all logs
+*.log
+
+/includes/config.php
+/classes/phpmailer/mail.php
