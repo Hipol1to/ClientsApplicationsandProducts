@@ -2,13 +2,13 @@
 require('../includes/config.php');
 
 if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive']) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/index.php');
+  header('Location: https://inversioneseverest.net/clients/index.php');
   exit();  
 } elseif (!$user->is_logged_in()) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/index.php');
+  header('Location: https://inversioneseverest.net/index.php');
   exit();  
 } elseif (!isset($_SESSION['ClienteId'])) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/completa_perfil.php');
+  header('Location: https://inversioneseverest.net/clients/completa_perfil.php');
   exit();
 }
 ?>
@@ -409,7 +409,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                 ?>
             </div>
 
-            <div class="tab-pane fade" id="prestamos" role="tabpanel" aria-labelledby="pagos-tab">
+            <div class="tab-pane fade show active" id="prestamos" role="tabpanel" aria-labelledby="pagos-tab">
                 <!-- Prestamos Content Here -->
                 <?php
 // Include the database connection file
@@ -501,7 +501,7 @@ $result = $db->query($sql);
     </div>';
                 }?>
             </div>
-            <div class="tab-pane fade" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
+            <div class="tab-pane fade show active" id="pagos" role="tabpanel" aria-labelledby="pagos-tab">
                 <!-- Pagos Content Here -->
                 <?php
 // Include the database connection file
@@ -1437,6 +1437,15 @@ $(".dilitpagos").click(function() {
       "autoWidth": false,
       "responsive": true,
     });
+    $('#tablePagosForClient').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
   });
 
 </script>
@@ -1855,6 +1864,19 @@ function showMessageBelowElement(element, message) {
               }
             }
           });
+</script>
+<script>
+  $( document ).ready(function() {
+    var prestamosTable = document.getElementById('prestamos');
+    var pagosTable = document.getElementById('pagos');
+
+    // Remove the class from the element
+    prestamosTable.classList.remove('show');
+    prestamosTable.classList.remove('active');
+
+    pagosTable.classList.remove('show');
+    pagosTable.classList.remove('active');
+});
 </script>
 </body>
 </html>

@@ -606,7 +606,7 @@ if($stmt->rowCount() > 0) {
             echo'</div>';
                                 
 //pagos for prestamo
-echo'<div class="tab-pane fade" id="pagosTabForPrestamos" role="tabpanel" aria-labelledby="nuevo-tab">';
+echo'<div class="tab-pane fade show active" id="pagosTabForPrestamos" role="tabpanel" aria-labelledby="nuevo-tab">';
 // Fetch data from the clientes table
 $sql = "SELECT * FROM pagos WHERE PrestamoId = ".$prestamo_id;
 error_log($sql);
@@ -1241,6 +1241,15 @@ function showMessageBelowElement(element, message) {
     // Insert the error message div below the given element
     element.parentNode.insertBefore(errorMessageDiv, element.nextSibling);
 }
+</script>
+<script>
+  $( document ).ready(function() {
+    var pagosTable = document.getElementById('pagosTabForPrestamos');
+
+    // Remove the class from the element
+    pagosTable.classList.remove('show');
+    pagosTable.classList.remove('active');
+});
 </script>
 </body>
 </html>

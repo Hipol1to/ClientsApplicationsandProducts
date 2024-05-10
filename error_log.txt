@@ -302,3 +302,14 @@ Stack trace:
 [10-May-2024 01:52:47 Europe/London] is user active? 1
 [10-May-2024 01:52:47 Europe/London] client identifier 38
 [10-May-2024 01:52:47 Europe/London] Usuario cliente validado y activo
+[10-May-2024 02:25:03 Europe/London] user is loggedin 1
+[10-May-2024 02:25:03 Europe/London] log for user: adminprueba
+[10-May-2024 02:25:03 Europe/London] user has id: 15
+[10-May-2024 02:25:03 Europe/London] User has fullname: 
+[10-May-2024 02:25:03 Europe/London] User has RNC?: 
+[10-May-2024 02:25:03 Europe/London] is client proffile validated? 
+[10-May-2024 02:25:03 Europe/London] is client proffile on review? 
+[10-May-2024 02:25:03 Europe/London] Is user active?1
+[10-May-2024 02:25:03 Europe/London] is user active? 1
+[10-May-2024 02:25:03 Europe/London] client identifier 1
+[10-May-2024 02:25:03 Europe/London] Usuario admin validado y activo
