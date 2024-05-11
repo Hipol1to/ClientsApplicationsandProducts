@@ -501,7 +501,6 @@ $.ajax({
 }
 });
 </script>
-
 <script>
 $(".enableuser").click(function() {
 var id = $(this).data("id");
