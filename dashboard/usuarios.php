@@ -327,7 +327,10 @@ if ($result) {
                   <tbody>';
 
     // Loop through the fetched results and generate table rows
+  
     while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+      $userElimniarButton = $row['Rol'] == "Administrador" ? '<button class="btn btn-danger btn-sm delete-btn disableuser" data-id="'. $row['Id'].'">Deshabilitar</button>
+      <button class="btn btn-primary btn-sm enableuser" data-id="'. $row['Id'].'">Habilitar</a>' :'<button class="btn btn-danger btn-sm delete-btn dilitusuario" data-id="'. $row['Id'].'">Eliminar</button>';
         echo '<tr>
         <td></td>
         <td>
@@ -336,7 +339,7 @@ if ($result) {
     </div>
     
     <div style="margin-top: 0px;"> <!-- Add a margin-top for spacing -->
-        <button class="btn btn-danger btn-sm delete-btn dilitusuario" data-id="'. $row['Id'].'">Eliminar</button>
+        '.$userElimniarButton.'
     
 </td>
                 <td>' . $row['Usuario'] . '</td>
@@ -484,6 +487,47 @@ var id = $(this).data("id");
 if (confirm("¿Estás seguro que quieres borrar este usuario?")) {
 $.ajax({
     url: "delete_usuario.php",
+    type: "POST",
+    data: { id: id },
+    success: function(response) {
+        // Optionally, reload the table or update the UI
+        location.reload();
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error
+    }
+});
+}
+});
+</script>
+
+<script>
+$(".enableuser").click(function() {
+var id = $(this).data("id");
+if (confirm("¿Estás seguro que quieres habilitar este usuario?")) {
+$.ajax({
+    url: "enable_user.php",
+    type: "POST",
+    data: { id: id },
+    success: function(response) {
+        // Optionally, reload the table or update the UI
+        location.reload();
+    },
+    error: function(xhr, status, error) {
+        console.error(xhr.responseText);
+        // Handle error
+    }
+});
+}
+});
+</script>
+<script>
+$(".disableuser").click(function() {
+var id = $(this).data("id");
+if (confirm("¿Estás seguro que quieres deshabilitar este usuario?")) {
+$.ajax({
+    url: "disable_user.php",
     type: "POST",
     data: { id: id },
     success: function(response) {

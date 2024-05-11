@@ -720,7 +720,7 @@ if($stmt->rowCount() > 0) {
                                 echo'</div>';
 
 //pagos for inversion
-echo'<div class="tab-pane fade" id="pagosTabForInversiones" role="tabpanel" aria-labelledby="nuevo-tab">';
+echo'<div class="tab-pane fade show active" id="pagosTabForInversiones" role="tabpanel" aria-labelledby="nuevo-tab">';
 // Fetch data from the clientes table
 $sql = "SELECT * FROM pagos WHERE InversionId = ".$inversion['Id']."";
 $result = $db->query($sql);
@@ -1022,6 +1022,7 @@ echo'<div class="tab-pane fade" id="nuevo" role="tabpanel" aria-labelledby="nuev
 $sql = "SELECT p.Id, p.IdInversion, p.DescripcionParticipacion, p.MontoInvertido, p.RendimientoEsperado, p.FechaInicioParticipacion, p.FechaFinParticipacion, p.FechaCreacion, p.FechaModificacion, i.IdCliente as IdCliente, u.Usuario as Usuario FROM participaciones as p
 JOIN inversiones i ON p.IdInversion = i.Id
 JOIN clientes c ON i.IdCliente = c.Id
+JOIN usuarios u ON c.IdUsuario = u.Id
 JOIN usuarios u ON c.IdUsuario = u.Id
 WHERE p.IdInversion = ".$inversion['Id']."";
 $result = $db->query($sql);
@@ -1816,6 +1817,14 @@ document.getElementById("clientUser").addEventListener("input", function() {
         });
     });
 </script>
+<script>
+  $( document ).ready(function() {
+    var pagosTable = document.getElementById('pagosTabForInversiones');
 
+    // Remove the class from the element
+    pagosTable.classList.remove('show');
+    pagosTable.classList.remove('active');
+});
+</script>
 </body>
 </html>
