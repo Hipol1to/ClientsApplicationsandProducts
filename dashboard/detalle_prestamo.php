@@ -485,9 +485,9 @@ if(isset($_POST['actualizarStatus'])) {
                 $client_id = htmlspecialchars($_GET['id']);
 
                 // Fetch client details from the database using the ID
-                $sql = "SELECT p.*, u.Usuario AS Solicitante FROM prestamos AS P
+                $sql = "SELECT P.*, u.Usuario AS Solicitante FROM prestamos AS P
                         JOIN usuarios as u
-                        WHERE p.Id = :id AND u.IdCliente = p.IdCliente";
+                        WHERE P.Id = 57 AND u.IdCliente = P.IdCliente;";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':id', $client_id);
                 $stmt->execute();
