@@ -4,13 +4,13 @@ require('../includes/config.php');
 
 // Check if the user is logged in
 if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive']) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/index.php');
   exit();  
 } elseif (!$user->is_logged_in()) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/index.php');
   exit();  
 } elseif (!isset($_SESSION['ClienteId'])) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/completa_perfil.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/completa_perfil.php');
   exit();
 }
 

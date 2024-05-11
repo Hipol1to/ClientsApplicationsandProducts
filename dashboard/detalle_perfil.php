@@ -2,13 +2,13 @@
 require('../includes/config.php');
 
 if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValidated'] && $_SESSION['isUserActive']) {
-  header('Location: https://inversioneseverest.net/clients/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/index.php');
   exit();  
 } elseif (!$user->is_logged_in()) {
-  header('Location: https://inversioneseverest.net/index.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/index.php');
   exit();  
 } elseif (!isset($_SESSION['ClienteId'])) {
-  header('Location: https://inversioneseverest.net/clients/completa_perfil.php');
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/completa_perfil.php');
   exit();
 }
 ?>
@@ -1437,7 +1437,8 @@ $(".dilitpagos").click(function() {
       "autoWidth": false,
       "responsive": true,
     });
-    $('#tablePagosForClient').DataTable({
+  });
+  $('#tablePagosForClient').DataTable({
       "paging": true,
       "lengthChange": false,
       "searching": false,
@@ -1446,7 +1447,6 @@ $(".dilitpagos").click(function() {
       "autoWidth": false,
       "responsive": true,
     });
-  });
 
 </script>
 <!-- Bootstrap Datepicker JS -->

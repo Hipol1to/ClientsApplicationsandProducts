@@ -9,7 +9,7 @@ $isUserActive = isset($_SESSION['isUserActive']) ? $_SESSION['isUserActive'] : f
 //check if already logged in move to home page
 if( $user->is_logged_in() && $isUserAdmin && $isProffileValidated && $isUserActive){ header('Location: index.php'); exit(); }
 elseif ($user->is_logged_in() && !$_SESSION['isAdmin'] && $isProffileValidated && $isUserActive) {
-  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/index.php');  
+  header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/index.php');  
   exit();
 }
 
@@ -44,23 +44,23 @@ if(isset($_POST['submit'])){
       //if ($isUserAdmin && $isProffileValidated && $isUserActive) {
       if ($isUserAdmin && $isUserActive) {
         error_log("Usuario admin validado y activo");
-        header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/dashboard/index.php');  
+        header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/dashboard/index.php');  
         exit();
       } elseif (!$isUserAdmin && $isProffileValidated && $isUserActive) {
         error_log("Usuario cliente validado y activo");
-        header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/index.php');
+        header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/index.php');
         exit();
       } elseif (!$isUserActive) {
         error_log("Usuario no activo");
         $error[] = 'Tu usuario no está activo, asegurate de haber activado tu cuenta o consulta con el administrador';
       } elseif (!$hasUserProffile) {
         error_log("Usuario no tiene perfil");
-        header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/completa_perfil.php');
+        header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/completa_perfil.php');
         exit();
       } elseif ($isProffileInReview) {
         error_log("Perfil de usuario esta en revision");
         error_log($_SESSION['isProffileInReview']);
-        header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProductsSANDBOX/clients/gracias_por_completar.php');
+        header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/gracias_por_completar.php');
         exit();
       }elseif (!$isProffileValidated) {
         error_log("Perfil de usuario no validado");

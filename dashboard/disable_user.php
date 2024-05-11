@@ -12,7 +12,6 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
   header('Location: http://blackestencio.zapto.org/ClientsApplicationsandProducts/clients/completa_perfil.php');
   exit();
 }
-
 // Check if the ID parameter is set
 if (isset($_POST['id'])) {
     // Get the ID from the POST data
@@ -20,7 +19,7 @@ if (isset($_POST['id'])) {
 
     try {
         // Prepare and execute the SQL delete statement
-        $stmt = $db->prepare("DELETE FROM clientes WHERE Id = :id");
+        $stmt = $db->prepare("UPDATE usuarios SET Active = 0 WHERE Id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
 
