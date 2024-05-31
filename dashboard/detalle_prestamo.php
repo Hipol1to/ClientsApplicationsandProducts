@@ -301,10 +301,6 @@ if(isset($_POST['actualizarStatus'])) {
                 <div id="clientUserDropdown" class="dropdown-content"></div>
             </div>
             <div class="form-group">
-                <label for="addCuentaDestinatario">Cuenta Destinatario:</label>
-                <input type="text" class="form-control" id="addCuentaDestinatario" name="addCuentaDestinatario" value="<?php echo $clienteis['NumeroCuentaBancaria']; ?>" required readonly>
-            </div>
-            <div class="form-group">
                 <label for="addTipoCuentaDestinatario">Tipo Cuenta Destinatario:</label>
                 <select class="form-control" id="addTipoCuentaDestinatario" name="addTipoCuentaDestinatario" required>
                   <option value="" selected>--Tipo de Cuenta--</option>
@@ -485,9 +481,9 @@ if(isset($_POST['actualizarStatus'])) {
                 $client_id = htmlspecialchars($_GET['id']);
 
                 // Fetch client details from the database using the ID
-                $sql = "SELECT p.*, u.Usuario AS Solicitante FROM prestamos AS P
+                $sql = "SELECT P.*, u.Usuario AS Solicitante FROM prestamos AS P
                         JOIN usuarios as u
-                        WHERE p.Id = :id AND u.IdCliente = p.IdCliente";
+                        WHERE P.Id = 57 AND u.IdCliente = P.IdCliente;";
                 $stmt = $db->prepare($sql);
                 $stmt->bindParam(':id', $client_id);
                 $stmt->execute();

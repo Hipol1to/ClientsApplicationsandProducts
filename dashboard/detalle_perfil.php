@@ -207,7 +207,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                     $cliente_id = htmlspecialchars($_GET['id']);
 
                     // Fetch prestamo details from the database using the ID
-                    $sql = "SELECT c.Id, c.IdUsuario, c.Nombre, c.Apellido, c.Direccion, c.Cedula, c.CedulaPath, c.RNC, c.NumeroCuentaBancaria, c.EntidadBancaria, c.TipoDeCuentaBancaria, c.MontoTotalSolicitado, c.MontoTotalPrestado, c.MontoTotalPagado, c.Interes, c.MontoDeuda, c.Reenganchado, c.PerfilValidado, c.Puntos, c.FechaIngreso, c.FechaSalida, c.MesesEnEmpresa, usuarios.Usuario, c.FechaCreacion, c.FechaModificacion
+                    $sql = "SELECT c.Id, c.IdUsuario, c.Nombre, c.Apellido, c.Direccion, c.Cedula, c.CedulaPath, c.RNC, c.NoCelular, c.NumeroCuentaBancaria, c.EntidadBancaria, c.TipoDeCuentaBancaria, c.MontoTotalSolicitado, c.MontoTotalPrestado, c.MontoTotalPagado, c.Interes, c.MontoDeuda, c.Reenganchado, c.PerfilValidado, c.Puntos, c.FechaIngreso, c.FechaSalida, c.MesesEnEmpresa, usuarios.Usuario, c.FechaCreacion, c.FechaModificacion
                     FROM clientes as c
                     INNER JOIN usuarios ON c.Id = :id";
 
@@ -333,8 +333,9 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         echo '<input type="text" class="form-control" id="montoDeuda" name="montoDeuda" value="'.htmlspecialchars($cliente['MontoDeuda']).'" readonly>';
                         echo '</div>';
                         echo '<div class="form-group">';
-                        echo '<label for="numeroCuentaBancaria">Numero cuenta bancaria:</label>';
-                        echo '<input type="text" class="form-control" id="numeroCuentaBancaria" name="numeroCuentaBancaria" value="'.htmlspecialchars($cliente['NumeroCuentaBancaria']).'" readonly>';
+                        echo '<label for="noCelular">Telefono celular:</label>';
+                        echo '<input type="text" class="form-control" id="noCelular" name="noCelular" value="'.htmlspecialchars($cliente['NoCelular']).'" readonly>';
+                        echo '</div>';
                         echo '</div>';
                         echo '</div>';
 

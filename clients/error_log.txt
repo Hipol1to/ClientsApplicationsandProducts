@@ -144,3 +144,5 @@
              JOIN usuarios AS u ON u.Id = c.IdUsuario
              WHERE p.Id = 40
              LIMIT 1
+[21-May-2024 16:06:44 Europe/London] PHP Notice:  Undefined index: isProffileInReview in /home/u639419078/domains/inversioneseverest.net/public_html/clients/completa_perfil.php on line 7
+[22-May-2024 17:59:04 Europe/London] PHP Notice:  Undefined index: isProffileInReview in /home/u639419078/domains/inversioneseverest.net/public_html/clients/completa_perfil.php on line 7

@@ -72,3 +72,80 @@ Stack trace:
 [06-May-2024 01:01:13 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
 [06-May-2024 01:01:23 Europe/London] Frontal Cedula path: 
 [06-May-2024 01:01:23 Europe/London] Reverse Cedula path: 
+[11-May-2024 17:00:31 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[11-May-2024 17:00:31 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[11-May-2024 17:00:37 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[11-May-2024 17:00:37 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[11-May-2024 17:00:41 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 57
+             LIMIT 1
+[11-May-2024 17:00:41 Europe/London] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'u639419078_cap_storage.p' in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php:491
+Stack trace:
+#0 /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php(491): PDO->prepare('SELECT p.*, u.U...')
+#1 {main}
+  thrown in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php on line 491
+[11-May-2024 17:00:47 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[11-May-2024 17:00:47 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[11-May-2024 17:00:51 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 40
+             LIMIT 1
+[11-May-2024 17:00:51 Europe/London] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1051 Unknown table 'u639419078_cap_storage.p' in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php:491
+Stack trace:
+#0 /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php(491): PDO->prepare('SELECT p.*, u.U...')
+#1 {main}
+  thrown in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_prestamo.php on line 491
+[11-May-2024 17:03:06 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 40
+             LIMIT 1
+[11-May-2024 17:03:06 Europe/London] SELECT * FROM pagos WHERE PrestamoId = 40
+[11-May-2024 17:03:11 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[11-May-2024 17:03:11 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[11-May-2024 17:03:14 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[11-May-2024 17:03:14 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[11-May-2024 17:03:17 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 57
+             LIMIT 1
+[11-May-2024 17:03:17 Europe/London] SELECT * FROM pagos WHERE PrestamoId = 57
+[11-May-2024 17:03:20 Europe/London] PHP Warning:  Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_pago.php on line 208
+[11-May-2024 17:03:23 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 57
+             LIMIT 1
+[11-May-2024 17:03:23 Europe/London] SELECT * FROM pagos WHERE PrestamoId = 57
+[11-May-2024 17:03:26 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[11-May-2024 17:03:26 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[11-May-2024 17:03:29 Europe/London] PHP Warning:  Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_pago.php on line 208
+[11-May-2024 17:03:30 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[11-May-2024 17:03:30 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[11-May-2024 17:03:33 Europe/London] PHP Warning:  Use of undefined constant php - assumed 'php' (this will throw an Error in a future version of PHP) in /home/u639419078/domains/inversioneseverest.net/public_html/dashboard/detalle_pago.php on line 208
+[11-May-2024 17:03:35 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[11-May-2024 17:03:35 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[11-May-2024 17:03:42 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 40
+             LIMIT 1
+[11-May-2024 17:03:42 Europe/London] SELECT * FROM pagos WHERE PrestamoId = 40
+[31-May-2024 12:11:26 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[31-May-2024 12:11:26 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[31-May-2024 13:22:12 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[31-May-2024 13:22:12 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[31-May-2024 13:25:56 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[31-May-2024 13:25:56 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[31-May-2024 13:26:07 Europe/London] Frontal Cedula path: ../clients/uploads\6659b994a1547_front_Cédula-dominicana-falsa.jpg
+[31-May-2024 13:26:07 Europe/London] Reverse Cedula path: ../clients/uploads\6659b994a154c_back_img-cedular.png

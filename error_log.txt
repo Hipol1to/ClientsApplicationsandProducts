@@ -214,3 +214,94 @@ Stack trace:
 [06-May-2024 01:00:43 Europe/London] is user active? 1
 [06-May-2024 01:00:43 Europe/London] client identifier 1
 [06-May-2024 01:00:43 Europe/London] Usuario admin validado y activo
+[11-May-2024 17:00:25 Europe/London] user is loggedin 1
+[11-May-2024 17:00:25 Europe/London] log for user: compainero
+[11-May-2024 17:00:25 Europe/London] user has id: 10
+[11-May-2024 17:00:25 Europe/London] User has fullname: pablo alberto sanchez carrasco
+[11-May-2024 17:00:25 Europe/London] User has RNC?: 
+[11-May-2024 17:00:25 Europe/London] is client proffile validated? 1
+[11-May-2024 17:00:25 Europe/London] is client proffile on review? 
+[11-May-2024 17:00:25 Europe/London] Is user active?1
+[11-May-2024 17:00:25 Europe/London] is user active? 1
+[11-May-2024 17:00:25 Europe/London] client identifier 43
+[11-May-2024 17:00:25 Europe/London] Usuario admin validado y activo
+[21-May-2024 16:05:56 Europe/London] user is loggedin 1
+[21-May-2024 16:05:56 Europe/London] log for user: Pablo
+[21-May-2024 16:05:56 Europe/London] user has id: 20
+[21-May-2024 16:05:56 Europe/London] User has fullname: 
+[21-May-2024 16:05:56 Europe/London] User has RNC?: 
+[21-May-2024 16:05:56 Europe/London] is client proffile validated? 
+[21-May-2024 16:05:56 Europe/London] is client proffile on review? 
+[21-May-2024 16:05:56 Europe/London] Is user active?
+[21-May-2024 16:05:56 Europe/London] is user active? 
+[21-May-2024 16:05:56 Europe/London] perfil de cliente no creado
+[21-May-2024 16:05:56 Europe/London] Usuario no activo
+[21-May-2024 16:06:11 Europe/London] user is loggedin 1
+[21-May-2024 16:06:11 Europe/London] log for user: Pablo
+[21-May-2024 16:06:11 Europe/London] user has id: 20
+[21-May-2024 16:06:11 Europe/London] User has fullname: 
+[21-May-2024 16:06:11 Europe/London] User has RNC?: 
+[21-May-2024 16:06:11 Europe/London] is client proffile validated? 
+[21-May-2024 16:06:11 Europe/London] is client proffile on review? 
+[21-May-2024 16:06:11 Europe/London] Is user active?
+[21-May-2024 16:06:11 Europe/London] is user active? 
+[21-May-2024 16:06:11 Europe/London] perfil de cliente no creado
+[21-May-2024 16:06:11 Europe/London] Usuario no activo
+[21-May-2024 16:06:15 Europe/London] user is loggedin 1
+[21-May-2024 16:06:15 Europe/London] log for user: Pablo
+[21-May-2024 16:06:15 Europe/London] user has id: 20
+[21-May-2024 16:06:15 Europe/London] User has fullname: 
+[21-May-2024 16:06:15 Europe/London] User has RNC?: 
+[21-May-2024 16:06:15 Europe/London] is client proffile validated? 
+[21-May-2024 16:06:15 Europe/London] is client proffile on review? 
+[21-May-2024 16:06:15 Europe/London] Is user active?
+[21-May-2024 16:06:15 Europe/London] is user active? 
+[21-May-2024 16:06:15 Europe/London] perfil de cliente no creado
+[21-May-2024 16:06:15 Europe/London] Usuario no activo
+[21-May-2024 16:06:40 Europe/London] 20
+[21-May-2024 16:06:40 Europe/London] 40382fec2fa5a9df3feb45ba64a22f71
+[21-May-2024 16:06:40 Europe/London] estoy dentro
+[21-May-2024 16:06:43 Europe/London] user is loggedin 1
+[21-May-2024 16:06:43 Europe/London] log for user: Pablo
+[21-May-2024 16:06:43 Europe/London] user has id: 20
+[21-May-2024 16:06:43 Europe/London] User has fullname: 
+[21-May-2024 16:06:43 Europe/London] User has RNC?: 
+[21-May-2024 16:06:43 Europe/London] is client proffile validated? 
+[21-May-2024 16:06:43 Europe/London] is client proffile on review? 
+[21-May-2024 16:06:43 Europe/London] Is user active?1
+[21-May-2024 16:06:43 Europe/London] is user active? 1
+[21-May-2024 16:06:43 Europe/London] perfil de cliente no creado
+[21-May-2024 16:06:43 Europe/London] Usuario no tiene perfil
+[27-May-2024 12:39:15 Europe/London] user is loggedin 1
+[27-May-2024 12:39:15 Europe/London] log for user: compainero
+[27-May-2024 12:39:15 Europe/London] user has id: 10
+[27-May-2024 12:39:15 Europe/London] User has fullname: pablo alberto sanchez carrasco
+[27-May-2024 12:39:15 Europe/London] User has RNC?: 
+[27-May-2024 12:39:15 Europe/London] is client proffile validated? 1
+[27-May-2024 12:39:15 Europe/London] is client proffile on review? 
+[27-May-2024 12:39:15 Europe/London] Is user active?1
+[27-May-2024 12:39:15 Europe/London] is user active? 1
+[27-May-2024 12:39:15 Europe/London] client identifier 43
+[27-May-2024 12:39:15 Europe/London] Usuario admin validado y activo
+[31-May-2024 12:11:14 Europe/London] user is loggedin 1
+[31-May-2024 12:11:14 Europe/London] log for user: compainero
+[31-May-2024 12:11:14 Europe/London] user has id: 10
+[31-May-2024 12:11:14 Europe/London] User has fullname: pablo alberto sanchez carrasco
+[31-May-2024 12:11:14 Europe/London] User has RNC?: 
+[31-May-2024 12:11:14 Europe/London] is client proffile validated? 1
+[31-May-2024 12:11:14 Europe/London] is client proffile on review? 
+[31-May-2024 12:11:14 Europe/London] Is user active?1
+[31-May-2024 12:11:14 Europe/London] is user active? 1
+[31-May-2024 12:11:14 Europe/London] client identifier 43
+[31-May-2024 12:11:14 Europe/London] Usuario admin validado y activo
+[31-May-2024 13:21:36 Europe/London] user is loggedin 1
+[31-May-2024 13:21:36 Europe/London] log for user: compainero
+[31-May-2024 13:21:36 Europe/London] user has id: 10
+[31-May-2024 13:21:36 Europe/London] User has fullname: pablo alberto sanchez carrasco
+[31-May-2024 13:21:36 Europe/London] User has RNC?: 
+[31-May-2024 13:21:36 Europe/London] is client proffile validated? 1
+[31-May-2024 13:21:36 Europe/London] is client proffile on review? 
+[31-May-2024 13:21:36 Europe/London] Is user active?1
+[31-May-2024 13:21:36 Europe/London] is user active? 1
+[31-May-2024 13:21:36 Europe/London] client identifier 43
+[31-May-2024 13:21:36 Europe/London] Usuario admin validado y activo

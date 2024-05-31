@@ -96,9 +96,6 @@ if ($result) {
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">RNC: '.$clienteRecord['RNC'].'</span></strong>
       </p>
       <p>
-        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Numero de cuenta bancaria: '.$clienteRecord['NumeroCuentaBancaria'].'</span></strong>
-      </p>
-      <p>
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Entidad bancaria: '.$clienteRecord['EntidadBancaria'].'</span></strong>
       </p>
       <p>

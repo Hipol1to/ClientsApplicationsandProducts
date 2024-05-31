@@ -222,10 +222,6 @@ if(isset($_POST['actualizarStatus'])) {
     <div class="row">
         <!-- Group 1 -->
         <div class="col-sm-8">
-             <div class="form-group">
-                <label for="addCuentaRemitente">Numero de cuenta remitente:</label>
-                <input type="text" class="form-control" id="addCuentaRemitente" name="addCuentaRemitente" value="<?php echo $clienteis['NumeroCuentaBancaria']; ?>">
-            </div>
             <div class="form-group">
                 <label for="addTipoCuentaRemitente">Tipo de cuenta remitente:</label>
                 <select class="form-control" id="addTipoCuentaRemitente" name="addTipoCuentaRemitente" required>
