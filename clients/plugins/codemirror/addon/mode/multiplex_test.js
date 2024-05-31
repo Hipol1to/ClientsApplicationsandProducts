@@ -1,17 +1,17 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: https://codemirror.net/LICENSE
+// Distributed under an MIT license: http://codemirror.net/LICENSE
 
-(function() {
-  CodeMirror.defineMode("markdown_with_stex", function(){
+(function () {
+  CodeMirror.defineMode("markdown_with_stex", function () {
     var inner = CodeMirror.getMode({}, "stex");
     var outer = CodeMirror.getMode({}, "markdown");
 
     var innerOptions = {
-      open: '$',
-      close: '$',
+      open: "$",
+      close: "$",
       mode: inner,
-      delimStyle: 'delim',
-      innerStyle: 'inner'
+      delimStyle: "delim",
+      innerStyle: "inner",
     };
 
     return CodeMirror.multiplexingMode(outer, innerOptions);
@@ -24,26 +24,34 @@
       name,
       mode,
       Array.prototype.slice.call(arguments, 1),
-      'multiplexing');
+      "multiplexing"
+    );
   }
 
   MT(
     "stexInsideMarkdown",
-    "[strong **Equation:**] [delim&delim-open $][inner&tag \\pi][delim&delim-close $]");
+    "[strong **Equation:**] [delim&delim-open $][inner&tag \\pi][delim&delim-close $]"
+  );
 
-  CodeMirror.defineMode("identical_delim_multiplex", function() {
-    return CodeMirror.multiplexingMode(CodeMirror.getMode({indentUnit: 2}, "javascript"), {
-      open: "#",
-      close: "#",
-      mode: CodeMirror.getMode({}, "markdown"),
-      parseDelimiters: true,
-      innerStyle: "q"
-    });
+  CodeMirror.defineMode("identical_delim_multiplex", function () {
+    return CodeMirror.multiplexingMode(
+      CodeMirror.getMode({ indentUnit: 2 }, "javascript"),
+      {
+        open: "#",
+        close: "#",
+        mode: CodeMirror.getMode({}, "markdown"),
+        parseDelimiters: true,
+        innerStyle: "q",
+      }
+    );
   });
 
   var mode2 = CodeMirror.getMode({}, "identical_delim_multiplex");
 
-  test.mode("identical_delimiters_with_parseDelimiters", mode2, [
-    "[keyword let] [def x] [operator =] [q #foo][q&em *bar*][q #];"
-  ], "multiplexing")
+  test.mode(
+    "identical_delimiters_with_parseDelimiters",
+    mode2,
+    ["[keyword let] [def x] [operator =] [q #foo][q&em *bar*][q #];"],
+    "multiplexing"
+  );
 })();
