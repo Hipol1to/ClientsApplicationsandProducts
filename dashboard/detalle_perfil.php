@@ -337,7 +337,6 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                         echo '<input type="text" class="form-control" id="noCelular" name="noCelular" value="'.htmlspecialchars($cliente['NoCelular']).'" readonly>';
                         echo '</div>';
                         echo '</div>';
-                        echo '</div>';
 
 
                         echo '<div class="col-sm-4">';
