@@ -144,3 +144,15 @@
              JOIN usuarios AS u ON u.Id = c.IdUsuario
              WHERE p.Id = 40
              LIMIT 1
+[31-May-2024 12:44:37 Europe/London] validations to the process
+[31-May-2024 12:44:37 Europe/London] welcome to the process
+[31-May-2024 12:44:37 Europe/London] C:\wamp64\www\ClientsApplicationsandProducts\clients\uploads\6659b825dde1d_front_Cédula-dominicana-falsa.jpg_.d1vis10n._C:\wamp64\www\ClientsApplicationsandProducts\clients\uploads\6659b825dde22_back_img-cedular.png
+[31-May-2024 12:45:54 Europe/London] validations to the process
+[31-May-2024 12:45:54 Europe/London] welcome to the process
+[31-May-2024 12:45:54 Europe/London] C:\wamp64\www\ClientsApplicationsandProducts\clients\uploads\6659b872970f8_front_Cédula-dominicana-falsa.jpg_.d1vis10n._C:\wamp64\www\ClientsApplicationsandProducts\clients\uploads\6659b872970fd_back_img-cedular.png
+[31-May-2024 12:47:37 Europe/London] validations to the process
+[31-May-2024 12:47:37 Europe/London] welcome to the process
+[31-May-2024 12:47:37 Europe/London] C:\wamp64\www\ClientsApplicationsandProducts\clients\uploads\6659b8d9d0e2b_front_Cédula-dominicana-falsa.jpg_.d1vis10n._C:\wamp64\www\ClientsApplicationsandProducts\clients\uploads\6659b8d9d0e30_back_img-cedular.png
+[31-May-2024 12:50:44 Europe/London] validations to the process
+[31-May-2024 12:50:44 Europe/London] welcome to the process
+[31-May-2024 12:50:44 Europe/London] C:\wamp64\www\ClientsApplicationsandProducts\clients\uploads\6659b994a1547_front_Cédula-dominicana-falsa.jpg_.d1vis10n._C:\wamp64\www\ClientsApplicationsandProducts\clients\uploads\6659b994a154c_back_img-cedular.png

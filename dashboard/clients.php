@@ -485,10 +485,6 @@ if ($result) {
                                 <label for="editInteres">Interés:</label>
                                 <input type="text" class="form-control" id="editInteres" name="editInteres">
                             </div>
-                             <div class="form-group">
-                                <label for="editNumeroCuentaBancaria">Numero de cuenta bancaria:</label>
-                                <input type="text" class="form-control" id="editNumeroCuentaBancaria" name="editNumeroCuentaBancaria">
-                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -635,7 +631,6 @@ if ($result) {
                   console.log(response);
                   $("#editCedula").val(response.Cedula);
                   $("#editRNC").val(response.RNC);
-                  $("#editNumeroCuentaBancaria").val(response.NumeroCuentaBancaria);
                   $("#editClienteTipoCuentaBancaria").val(response.TipoDeCuentaBancaria);
                   $("#clienteEntidadBancaria").val(response.EntidadBancaria);
                   $("#editMontoSolicitado").val(response.MontoTotalSolicitado);

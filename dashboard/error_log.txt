@@ -72,3 +72,33 @@ Stack trace:
 [06-May-2024 01:01:13 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
 [06-May-2024 01:01:23 Europe/London] Frontal Cedula path: 
 [06-May-2024 01:01:23 Europe/London] Reverse Cedula path: 
+[31-May-2024 12:08:56 Europe/London] Frontal Cedula path: ../clients/uploads\6621f3714fd81_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[31-May-2024 12:08:56 Europe/London] Reverse Cedula path: ../clients/uploads\6621f3714fd93_back_como.jpg
+[31-May-2024 12:09:43 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[31-May-2024 12:09:43 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[31-May-2024 12:10:06 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[31-May-2024 12:10:06 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[31-May-2024 12:10:22 Europe/London] SELECT c.*, u.Usuario 
+             FROM clientes AS c 
+             JOIN prestamos AS p ON c.Id = p.IdCliente 
+             JOIN usuarios AS u ON u.Id = c.IdUsuario
+             WHERE p.Id = 57
+             LIMIT 1
+[31-May-2024 12:10:22 Europe/London] SELECT * FROM pagos WHERE PrestamoId = 57
+[31-May-2024 12:10:39 Europe/London] Frontal Cedula path: ../clients/uploads\66255ada4cd35_front_2024-04-18 18_28_10-cedula dominicana reverso - Google Search.png
+[31-May-2024 12:10:39 Europe/London] Reverse Cedula path: ../clients/uploads\66255ada4cd3a_back_como.jpg
+[31-May-2024 12:52:11 Europe/London] Frontal Cedula path: ../clients/uploads\6659b994a1547_front_Cédula-dominicana-falsa.jpg
+[31-May-2024 12:52:11 Europe/London] Reverse Cedula path: ../clients/uploads\6659b994a154c_back_img-cedular.png
+[31-May-2024 12:52:17 Europe/London] Frontal Cedula path: ../clients/uploads\6659b994a1547_front_Cédula-dominicana-falsa.jpg
+[31-May-2024 12:52:17 Europe/London] Reverse Cedula path: ../clients/uploads\6659b994a154c_back_img-cedular.png
+[31-May-2024 12:54:03 Europe/London] Frontal Cedula path: ../clients/uploads\6659b994a1547_front_Cédula-dominicana-falsa.jpg
+[31-May-2024 12:54:03 Europe/London] Reverse Cedula path: ../clients/uploads\6659b994a154c_back_img-cedular.png
+[31-May-2024 12:58:47 Europe/London] Frontal Cedula path: ../clients/uploads\6659b994a1547_front_Cédula-dominicana-falsa.jpg
+[31-May-2024 12:58:47 Europe/London] Reverse Cedula path: ../clients/uploads\6659b994a154c_back_img-cedular.png
+[31-May-2024 12:59:17 Europe/London] Frontal Cedula path: ../clients/uploads\6659b994a1547_front_Cédula-dominicana-falsa.jpg
+[31-May-2024 12:59:17 Europe/London] Reverse Cedula path: ../clients/uploads\6659b994a154c_back_img-cedular.png
+[31-May-2024 12:59:21 Europe/London] id to udate48
+[31-May-2024 12:59:21 Europe/London] isperfil validado1
+[31-May-2024 12:59:21 Europe/London] {"status":"success","message":"Record updated successfully."}
+[31-May-2024 12:59:21 Europe/London] Frontal Cedula path: ../clients/uploads\6659b994a1547_front_Cédula-dominicana-falsa.jpg
+[31-May-2024 12:59:21 Europe/London] Reverse Cedula path: ../clients/uploads\6659b994a154c_back_img-cedular.png

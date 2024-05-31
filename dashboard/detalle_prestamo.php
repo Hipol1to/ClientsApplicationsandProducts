@@ -301,10 +301,6 @@ if(isset($_POST['actualizarStatus'])) {
                 <div id="clientUserDropdown" class="dropdown-content"></div>
             </div>
             <div class="form-group">
-                <label for="addCuentaDestinatario">Cuenta Destinatario:</label>
-                <input type="text" class="form-control" id="addCuentaDestinatario" name="addCuentaDestinatario" value="<?php echo $clienteis['NumeroCuentaBancaria']; ?>" required readonly>
-            </div>
-            <div class="form-group">
                 <label for="addTipoCuentaDestinatario">Tipo Cuenta Destinatario:</label>
                 <select class="form-control" id="addTipoCuentaDestinatario" name="addTipoCuentaDestinatario" required>
                   <option value="" selected>--Tipo de Cuenta--</option>
