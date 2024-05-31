@@ -250,9 +250,9 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
                     if($stmt->rowCount() > 0) {
                         
                         $cedulaPathValues = explode("_.d1vis10n._", $cliente['CedulaPath']);
-                        $capturaFrontalPath = isset($cedulaPathValues[0]) && isset(explode("\clients\\", $cedulaPathValues[0])[1]) ? "../clients/".explode("\clients\\", $cedulaPathValues[0])[1] : null;
+                        $capturaFrontalPath = isset($cedulaPathValues[0]) && isset(explode("/clients/", $cedulaPathValues[0])[1]) ? "../clients/".explode("/clients/", $cedulaPathValues[0])[1] : null;
                         error_log("Frontal Cedula path: ".$capturaFrontalPath);
-                        $capturaReversoPath = isset($cedulaPathValues[1]) && isset(explode("\clients\\", $cedulaPathValues[1])[1]) ? "../clients/".explode("\clients\\", $cedulaPathValues[1])[1] : null; 
+                        $capturaReversoPath = isset($cedulaPathValues[1]) && isset(explode("/clients/", $cedulaPathValues[1])[1]) ? "../clients/".explode("/clients/", $cedulaPathValues[1])[1] : null; 
                         error_log("Reverse Cedula path: ".$capturaReversoPath);
                         $userProffileStatus = null;
                         switch (htmlspecialchars($cliente['PerfilValidado'])) {
