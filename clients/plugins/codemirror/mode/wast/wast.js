@@ -1,19 +1,17 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/LICENSE
 
-(function (mod) {
-  if (typeof exports == "object" && typeof module == "object")
-    // CommonJS
+(function(mod) {
+  if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"), require("../../addon/mode/simple"));
-  else if (typeof define == "function" && define.amd)
-    // AMD
+  else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../../addon/mode/simple"], mod);
-  // Plain browser env
-  else mod(CodeMirror);
-})(function (CodeMirror) {
-  "use strict";
+  else // Plain browser env
+    mod(CodeMirror);
+})(function(CodeMirror) {
+"use strict";
 
-  var kKeywords = [
+var kKeywords = [
     "align",
     "block",
     "br(_if|_table|_on_(cast|data|func|i31|null))?",
@@ -70,17 +68,17 @@
     "i64\\.reinterpret_f64",
     // Atomics.
     "memory(\\.((atomic\\.(notify|wait(32|64)))|grow|size))?",
-    "i64.atomic\\.(load32_u|store32|rmw32\\.(a[dn]d|sub|x?or|(cmp)?xchg)_u)",
+    "i64\.atomic\\.(load32_u|store32|rmw32\\.(a[dn]d|sub|x?or|(cmp)?xchg)_u)",
     "i(32|64)\\.atomic\\.(load((8|16)_u)?|store(8|16)?|rmw(\\.(a[dn]d|sub|x?or|(cmp)?xchg)|(8|16)\\.(a[dn]d|sub|x?or|(cmp)?xchg)_u))",
     // SIMD.
     "v128\\.load(8x8|16x4|32x2)_[su]",
     "v128\\.load(8|16|32|64)_splat",
     "v128\\.(load|store)(8|16|32|64)_lane",
     "v128\\.load(32|64)_zero",
-    "v128.(load|store|const|not|andnot|and|or|xor|bitselect|any_true)",
+    "v128\.(load|store|const|not|andnot|and|or|xor|bitselect|any_true)",
     "i(8x16|16x8)\\.(extract_lane_[su]|(add|sub)_sat_[su]|avgr_u)",
     "i(8x16|16x8|32x4|64x2)\\.(neg|add|sub|abs|shl|shr_[su]|all_true|bitmask|eq|ne|[lg][te]_s)",
-    "(i(8x16|16x8|32x4|64x2)|f(32x4|64x2)).(splat|replace_lane)",
+    "(i(8x16|16x8|32x4|64x2)|f(32x4|64x2))\.(splat|replace_lane)",
     "i(8x16|16x8|32x4)\\.(([lg][te]_u)|((min|max)_[su]))",
     "f(32x4|64x2)\\.(neg|add|sub|abs|nearest|eq|ne|[lg][te]|sqrt|mul|div|min|max|ceil|floor|trunc)",
     "[fi](32x4|64x2)\\.extract_lane",
@@ -102,45 +100,33 @@
     "\\bnull\\b",
     "ref(\\.(([ai]s_(data|func|i31))|cast|eq|func|(is_|as_non_)?null|test))?",
     "rtt(\\.(canon|sub))?",
-  ];
+];
 
-  CodeMirror.defineSimpleMode("wast", {
-    start: [
-      {
-        regex:
-          /[+\-]?(?:nan(?::0x[0-9a-fA-F]+)?|infinity|inf|0x[0-9a-fA-F]+\.?[0-9a-fA-F]*p[+\/-]?\d+|\d+(?:\.\d*)?[eE][+\-]?\d*|\d+\.\d*|0x[0-9a-fA-F]+|\d+)/,
-        token: "number",
-      },
-      { regex: new RegExp(kKeywords.join("|")), token: "keyword" },
-      {
-        regex: /\b((any|data|eq|extern|i31|func)ref|[fi](32|64)|i(8|16))\b/,
-        token: "atom",
-      },
-      {
-        regex: /\$([a-zA-Z0-9_`\+\-\*\/\\\^~=<>!\?@#$%&|:\.]+)/,
-        token: "variable-2",
-      },
-      {
-        regex: /"(?:[^"\\\x00-\x1f\x7f]|\\[nt\\'"]|\\[0-9a-fA-F][0-9a-fA-F])*"/,
-        token: "string",
-      },
-      { regex: /\(;.*?/, token: "comment", next: "comment" },
-      { regex: /;;.*$/, token: "comment" },
-      { regex: /\(/, indent: true },
-      { regex: /\)/, dedent: true },
-    ],
+CodeMirror.defineSimpleMode('wast', {
+  start: [
+    {regex: /[+\-]?(?:nan(?::0x[0-9a-fA-F]+)?|infinity|inf|0x[0-9a-fA-F]+\.?[0-9a-fA-F]*p[+\/-]?\d+|\d+(?:\.\d*)?[eE][+\-]?\d*|\d+\.\d*|0x[0-9a-fA-F]+|\d+)/, token: "number"},
+    {regex: new RegExp(kKeywords.join('|')), token: "keyword"},
+    {regex: /\b((any|data|eq|extern|i31|func)ref|[fi](32|64)|i(8|16))\b/, token: "atom"},
+    {regex: /\$([a-zA-Z0-9_`\+\-\*\/\\\^~=<>!\?@#$%&|:\.]+)/, token: "variable-2"},
+    {regex: /"(?:[^"\\\x00-\x1f\x7f]|\\[nt\\'"]|\\[0-9a-fA-F][0-9a-fA-F])*"/, token: "string"},
+    {regex: /\(;.*?/, token: "comment", next: "comment"},
+    {regex: /;;.*$/, token: "comment"},
+    {regex: /\(/, indent: true},
+    {regex: /\)/, dedent: true},
+  ],
 
-    comment: [
-      { regex: /.*?;\)/, token: "comment", next: "start" },
-      { regex: /.*/, token: "comment" },
-    ],
+  comment: [
+    {regex: /.*?;\)/, token: "comment", next: "start"},
+    {regex: /.*/, token: "comment"},
+  ],
 
-    meta: {
-      dontIndentStates: ["comment"],
-    },
-  });
+  meta: {
+    dontIndentStates: ['comment'],
+  },
+});
 
-  // http://github.com/WebAssembly/design/issues/981 mentions text/webassembly,
-  // which seems like a reasonable choice, although it's not standard right now.
-  CodeMirror.defineMIME("text/webassembly", "wast");
+// https://github.com/WebAssembly/design/issues/981 mentions text/webassembly,
+// which seems like a reasonable choice, although it's not standard right now.
+CodeMirror.defineMIME("text/webassembly", "wast");
+
 });

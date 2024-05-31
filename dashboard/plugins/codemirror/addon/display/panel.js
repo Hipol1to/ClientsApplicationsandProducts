@@ -1,15 +1,13 @@
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
-// Distributed under an MIT license: http://codemirror.net/LICENSE
+// Distributed under an MIT license: https://codemirror.net/LICENSE
 
 (function (mod) {
-  if (typeof exports == "object" && typeof module == "object")
-    // CommonJS
+  if (typeof exports == "object" && typeof module == "object") // CommonJS
     mod(require("../../lib/codemirror"));
-  else if (typeof define == "function" && define.amd)
-    // AMD
+  else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror"], mod);
-  // Plain browser env
-  else mod(CodeMirror);
+  else // Plain browser env
+    mod(CodeMirror);
 })(function (CodeMirror) {
   CodeMirror.defineExtension("addPanel", function (node, options) {
     options = options || {};
@@ -67,7 +65,7 @@
     info.panels.splice(info.panels.indexOf(this), 1);
     this.cm.setSize();
     if (this.options.stable && isAtTop(this.cm, this.node))
-      this.cm.scrollTo(null, this.cm.getScrollInfo().top - this.height);
+      this.cm.scrollTo(null, this.cm.getScrollInfo().top - this.height)
     info.wrapper.removeChild(this.node);
     if (info.panels.length == 0 && !skipRemove) removePanels(this.cm);
   };
@@ -78,60 +76,49 @@
   };
 
   function initPanels(cm) {
-    var wrap = cm.getWrapperElement();
-    var style = window.getComputedStyle
-      ? window.getComputedStyle(wrap)
-      : wrap.currentStyle;
+    var wrap = cm.getWrapperElement()
+    var style = window.getComputedStyle ? window.getComputedStyle(wrap) : wrap.currentStyle;
     var height = parseInt(style.height);
-    var info = (cm.state.panels = {
+    var info = cm.state.panels = {
       setHeight: wrap.style.height,
       panels: [],
-      wrapper: document.createElement("div"),
-    });
-    var hasFocus = cm.hasFocus(),
-      scrollPos = cm.getScrollInfo();
+      wrapper: document.createElement("div")
+    };
+    var hasFocus = cm.hasFocus(), scrollPos = cm.getScrollInfo()
     wrap.parentNode.insertBefore(info.wrapper, wrap);
     info.wrapper.appendChild(wrap);
-    cm.scrollTo(scrollPos.left, scrollPos.top);
+    cm.scrollTo(scrollPos.left, scrollPos.top)
     if (hasFocus) cm.focus();
 
     cm._setSize = cm.setSize;
-    if (height != null)
-      cm.setSize = function (width, newHeight) {
-        if (!newHeight) newHeight = info.wrapper.offsetHeight;
-        info.setHeight = newHeight;
-        if (typeof newHeight != "number") {
-          var px = /^(\d+\.?\d*)px$/.exec(newHeight);
-          if (px) {
-            newHeight = Number(px[1]);
-          } else {
-            info.wrapper.style.height = newHeight;
-            newHeight = info.wrapper.offsetHeight;
-          }
+    if (height != null) cm.setSize = function (width, newHeight) {
+      if (!newHeight) newHeight = info.wrapper.offsetHeight;
+      info.setHeight = newHeight;
+      if (typeof newHeight != "number") {
+        var px = /^(\d+\.?\d*)px$/.exec(newHeight);
+        if (px) {
+          newHeight = Number(px[1]);
+        } else {
+          info.wrapper.style.height = newHeight;
+          newHeight = info.wrapper.offsetHeight;
         }
-        var editorheight =
-          newHeight -
-          info.panels
-            .map(function (p) {
-              return p.node.getBoundingClientRect().height;
-            })
-            .reduce(function (a, b) {
-              return a + b;
-            }, 0);
-        cm._setSize(width, editorheight);
-        height = newHeight;
-      };
+      }
+      var editorheight = newHeight - info.panels
+        .map(function (p) { return p.node.getBoundingClientRect().height; })
+        .reduce(function (a, b) { return a + b; }, 0);
+      cm._setSize(width, editorheight);
+      height = newHeight;
+    };
   }
 
   function removePanels(cm) {
     var info = cm.state.panels;
     cm.state.panels = null;
 
-    var wrap = cm.getWrapperElement();
-    var hasFocus = cm.hasFocus(),
-      scrollPos = cm.getScrollInfo();
+    var wrap = cm.getWrapperElement()
+    var hasFocus = cm.hasFocus(), scrollPos = cm.getScrollInfo()
     info.wrapper.parentNode.replaceChild(wrap, info.wrapper);
-    cm.scrollTo(scrollPos.left, scrollPos.top);
+    cm.scrollTo(scrollPos.left, scrollPos.top)
     if (hasFocus) cm.focus();
     wrap.style.height = info.setHeight;
     cm.setSize = cm._setSize;
@@ -140,7 +127,7 @@
 
   function isAtTop(cm, dom) {
     for (var sibling = dom.nextSibling; sibling; sibling = sibling.nextSibling)
-      if (sibling == cm.getWrapperElement()) return true;
-    return false;
+      if (sibling == cm.getWrapperElement()) return true
+    return false
   }
 });

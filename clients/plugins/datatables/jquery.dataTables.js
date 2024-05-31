@@ -1600,7 +1600,7 @@
 	};
 	
 	// Surprisingly this is faster than [].concat.apply
-	// http://jsperf.com/flatten-an-array-loop-vs-reduce/2
+	// https://jsperf.com/flatten-an-array-loop-vs-reduce/2
 	var _flatten = function (out, val) {
 		if (Array.isArray(val)) {
 			for (var i=0 ; i<val.length ; i++) {
@@ -1623,7 +1623,7 @@
 	};
 	
 	// Array.isArray polyfill.
-	// http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray
 	if (! Array.isArray) {
 	    Array.isArray = function(arg) {
 	        return Object.prototype.toString.call(arg) === '[object Array]';
@@ -1635,7 +1635,7 @@
 	}
 	
 	// .trim() polyfill
-	// http://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim
+	// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trim
 	if (!String.prototype.trim) {
 	  String.prototype.trim = function () {
 	    return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
