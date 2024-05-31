@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_FILES['subir_foto_cedula_posterior']['error'] === UPLOAD_ERR_OK
         ) {
             // Define upload directory
-            $upload_directory = __DIR__ . "\\uploads\\";
+            $upload_directory = __DIR__ . "\/uploads\/";
 
             // Generate unique file names for both photos
             $front_file_name = uniqid() . '_front_' . $_FILES['subir_foto_cedula_frontal']['name'];
