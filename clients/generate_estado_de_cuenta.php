@@ -44,26 +44,9 @@ $result = $db->query($sql);
   $clienteRecord = $resultClient->fetch(PDO::FETCH_ASSOC);
 
   $cedulaPathValues = explode("_.d1vis10n._", $clienteRecord['CedulaPath']);
-  $capturaFrontalPath = isset($cedulaPathValues[0]) && isset(explode("\clients\\", $cedulaPathValues[0])[1]) ? "../clients/".explode("\clients\\", $cedulaPathValues[0])[1] : null;
-  $capturaReversoPath = isset($cedulaPathValues[1]) && isset(explode("\clients\\", $cedulaPathValues[1])[1]) ? "../clients/".explode("\clients\\", $cedulaPathValues[1])[1] : null; 
-
-
-if ($result) {
-  $i = 1;
-  $o = 1;
-    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-      error_log("optimarr");
-      $sql2 ="SELECT Id, IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, InversionId, PrestamoId, ParticipacionId, VoucherPath, FechaDePago, FechaCreacion, FechaModificacion,  (SELECT COUNT(*) FROM pagos WHERE PrestamoId =".$row['Id'].") AS pagosCount FROM pagos WHERE PrestamoId =".$row['Id'];
-      $result2 = $db->query($sql2);
-      error_log($sql2);
-
-      if($row['MontoAprobado'] > $row['MontoPagado']) {
-        $row['Balance'] = ($row['MontoAprobado']) - ($row['MontoPagado']);
-      }
-      else {
-        $row['Balance'] = ($row['MontoPagado']) - ($row['MontoAprobado']);
-      }
-      $clientBody = '
+  $capturaFrontalPath = isset($cedulaPathValues[0]) && isset(explode("/clients/", $cedulaPathValues[0])[1]) ? "../clients/".explode("/clients/", $cedulaPathValues[0])[1] : null;
+  $capturaReversoPath = isset($cedulaPathValues[1]) && isset(explode("/clients/", $cedulaPathValues[1])[1]) ? "../clients/".explode("/clients/", $cedulaPathValues[1])[1] : null; 
+  $clientBody = '
       <p style=" line-height:108%; font-size:14pt">
         <strong>Perfil de cliente:</strong>
       </p>
@@ -81,6 +64,9 @@ if ($result) {
       </p>
       <p>
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Direccion: '.$clienteRecord['Direccion'].'</span></strong>
+      </p>
+      <p>
+        <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Telefono Celular: '.$clienteRecord['NoCelular'].'</span></strong>
       </p>
       <p>
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Cedula: '.$clienteRecord['Cedula'].'</span></strong>
@@ -116,6 +102,23 @@ if ($result) {
       <p>
         <strong><span style="font-family:'.'Segoe UI'.'; color:#212529; background-color:#ffffff">Fecha de ingreso: '.$clienteRecord['FechaIngreso'].'</span></strong>
       </p>';
+
+if ($result) {
+  $i = 1;
+  $o = 1;
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+      error_log("optimarr");
+      $sql2 ="SELECT Id, IdCliente, CuentaRemitente, TipoCuentaRemitente, EntidadBancariaRemitente, CuentaDestinatario, TipoCuentaDestinatario, EntidadBancariaDestinatario, Monto, Motivo, Tipo, InversionId, PrestamoId, ParticipacionId, VoucherPath, FechaDePago, FechaCreacion, FechaModificacion,  (SELECT COUNT(*) FROM pagos WHERE PrestamoId =".$row['Id'].") AS pagosCount FROM pagos WHERE PrestamoId =".$row['Id'];
+      $result2 = $db->query($sql2);
+      error_log($sql2);
+
+      if($row['MontoAprobado'] > $row['MontoPagado']) {
+        $row['Balance'] = ($row['MontoAprobado']) - ($row['MontoPagado']);
+      }
+      else {
+        $row['Balance'] = ($row['MontoPagado']) - ($row['MontoAprobado']);
+      }
+      
 
         $loanBody.='<p style="text-align:center; line-height:108%; font-size:14pt">
         <strong>Préstamo #'.$i.':</strong>
