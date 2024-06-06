@@ -17,15 +17,15 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 }
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  error_log("welcome to the process");
+  error_log("-----complete proffile process-----");
     // Check if all required fields are filled
-    if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['cedula']) && isset($_POST['rnc'])) {
+    if (isset($_POST['nombre']) && isset($_POST['apellido']) && isset($_POST['cedula'])) {
         // Retrieve form data
         $nombre = $_POST['nombre'];
         $apellido = $_POST['apellido'];
         $direccion = isset($_POST['direccion']) ? $_POST['direccion'] : "";
         $cedula = $_POST['cedula'];
-        $rnc = $_POST['rnc'];
+        $rnc = isset($_POST['rnc']) ? $_POST['rnc'] : null ;
         $noCelular = $_POST['clienteCelular'];
 
         // Check if both front and back photos of the ID card are uploaded
@@ -61,9 +61,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         try {
             $cedula_path_mixed = $front_cedula_path."_.d1vis10n._".$back_cedula_path;
             error_log($cedula_path_mixed);
-            // Prepare SQL statement to insert data into the clientes table
-            $stmt = $db->prepare("INSERT INTO clientes (IdUsuario, Nombre, Apellido, Direccion, NoCelular, Cedula, CedulaPath, RNC, PerfilValidado, FechaCreacion, FechaModificacion) 
-                                               VALUES (:idusuario, :nombre, :apellido, :direccion, :noCelular, :cedula, :cedula_path, :rnc, 2, NOW(), NOW())");
+            if (isset($rnc)) {
+              // Prepare SQL statement to insert data into the clientes table
+            $queryy = "INSERT INTO clientes (IdUsuario, Nombre, Apellido, Direccion, NoCelular, Cedula, CedulaPath, RNC, PerfilValidado, FechaCreacion, FechaModificacion) 
+                                               VALUES (:idusuario, :nombre, :apellido, :direccion, :noCelular, :cedula, :cedula_path, :rnc, 2, NOW(), NOW())";
+              $stmt = $db->prepare($queryy);
             
             // Bind parameters
             $stmt->bindParam(':idusuario', $_SESSION['userId']);
@@ -74,6 +76,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bindParam(':cedula', $cedula);
             $stmt->bindParam(':cedula_path', $cedula_path_mixed);
             $stmt->bindParam(':rnc', $rnc);
+            } else {
+        $queryy = "INSERT INTO clientes (IdUsuario, Nombre, Apellido, Direccion, NoCelular, Cedula, CedulaPath, PerfilValidado, FechaCreacion, FechaModificacion) 
+                                               VALUES (:idusuario, :nombre, :apellido, :direccion, :noCelular, :cedula, :cedula_path, 2, NOW(), NOW())";
+              // Prepare SQL statement to insert data into the clientes table
+              $stmt = $db->prepare($queryy);
+            
+            // Bind parameters
+            $stmt->bindParam(':idusuario', $_SESSION['userId']);
+            $stmt->bindParam(':nombre', $nombre);
+            $stmt->bindParam(':apellido', $apellido);
+            $stmt->bindParam(':direccion', $direccion);
+            $stmt->bindParam(':noCelular', $noCelular);
+            $stmt->bindParam(':cedula', $cedula);
+            $stmt->bindParam(':cedula_path', $cedula_path_mixed);
+            }
+      error_log("Query: " . $queryy);
+      error_log("user id: " . $_SESSION['userId']);
+      error_log("apellido: " . $apellido);
+      error_log("direccion: " . $direccion);
+      error_log("noCelular: " . $noCelular);
+      error_log("cedula: " . $cedula);
+      error_log("cedula_path: " . $cedula_path);   
             
             // Execute the statement
             $stmt->execute();
