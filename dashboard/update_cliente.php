@@ -88,10 +88,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId']) && !isset($
         echo json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage() . ', Fields: ' . json_encode($_POST)]);
         error_log(json_encode(['status' => 'error', 'message' => 'Database error: ' . $e->getMessage() . ', Fields: ' . json_encode($_POST)]));
     }
-} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCliente'])) {
+} elseif ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['idCliente'])&& $_POST['isPerfilValidado']) {
   try {
-    //code...
-  
   $clientIdToUpdate = $_POST['idCliente'];
   error_log("id to udate" . $clientIdToUpdate);
   $isPerfilValidado = $_POST['isPerfilValidado'];
@@ -111,12 +109,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId']) && !isset($
         if ($rowCount > 0) {
             echo json_encode(['status' => 'success', 'message' => 'Record updated successfully.']);
             error_log(json_encode(['status' => 'success', 'message' => 'Record updated successfully.']));
-            header("location: detalle_perfil.php?id=".$clientIdToUpdate."&success=1");
+            //header("location: detalle_perfil.php?id=".$clientIdToUpdate."&success=1");
             exit();
         } else {
             echo json_encode(['status' => 'error', 'message' => 'No records updated.']);
             error_log(json_encode(['status' => 'error', 'message' => 'No records updated.']));
-            header("location: detalle_prestamo.php?id=".$idPrestamo."&error=1");
+            error_log("");
             exit();
         }
         } catch (PDOException $e) {
@@ -126,7 +124,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['editId']) && !isset($
   }
 } else {
     // Handle the case where the form is not submitted correctly
-    echo json_encode(['status' => 'error', 'message' => 'Invalid request.']);
-    error_log(json_encode(['status' => 'error', 'message' => 'Invalid request.']));
+    echo json_encode(['status' => 'error', 'message' => 'Invalid request for updating client.']);
+    error_log(json_encode(['status' => 'error', 'message' => 'Invalid request for updating client.']));
+  $clientId = isset($_POST['idCliente']) ? $_POST['idCliente'] : "";
+  $perfilValidado = isset($_POST['isPerfilValidado']) ? $_POST['idCliente'] : "";
+  $method = isset($_SERVER['REQUEST_METHOD']) ? $_SERVER['REQUEST_METHOD'] : "";
+  error_log("Client ID: " . $clientId);
+  error_log("Perfil validado: " . $perfilValidado);
+  error_log("Request method: " . $method);
+  error_log("end update cliente");
 }
 ?>
