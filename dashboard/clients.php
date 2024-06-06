@@ -316,7 +316,7 @@ if ($user->is_logged_in() && !$_SESSION['isAdmin'] && $_SESSION['isProffileValid
 // Fetch data from the clientes table
 $sql = "SELECT c.Id, c.IdUsuario, c.Nombre, c.Apellido, c.Direccion, c.Cedula, c.CedulaPath, c.RNC, c.MontoTotalSolicitado, c.MontoTotalPrestado, c.MontoTotalPagado, c.Interes, c.MontoDeuda, c.Reenganchado, c.PerfilValidado, c.Puntos, c.FechaIngreso, c.FechaSalida, c.MesesEnEmpresa, usuarios.Usuario, c.FechaCreacion, c.FechaModificacion
 FROM clientes as c
-INNER JOIN usuarios ON c.Id = usuarios.IdCliente";
+INNER JOIN usuarios ON c.Id = usuarios.IdCliente WHERE c.Nombre != 'Admin'";
 $result = $db->query($sql);
 
 if ($result) {
