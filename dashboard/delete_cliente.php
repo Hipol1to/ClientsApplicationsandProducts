@@ -30,6 +30,21 @@ if (isset($_POST['id'])) {
             // Respond with success message
             error_log(json_encode(['status' => 'success', 'message' => 'Record deleted successfully.']));
             echo json_encode(['status' => 'success', 'message' => 'Record deleted successfully.']);
+            // Update user
+            $stmt = $db->prepare("UPDATE usuarios SET 
+                                  IdCliente = :nullId 
+                                  WHERE IdCliente = :clienteId");
+            
+            // Bind parameters
+            $stmt->bindParam(':clienteId', $id, PDO::PARAM_STR);
+                    
+            // Create a variable with null value
+            $nullValue = null;
+            $stmt->bindParam(':nullId', $nullValue, PDO::PARAM_NULL);
+                    
+            // Execute the statement
+            $stmt->execute();
+
         } else {
             // Respond with error message if no rows were affected
             error_log(json_encode(['status' => 'error', 'message' => 'No records deleted.']));
