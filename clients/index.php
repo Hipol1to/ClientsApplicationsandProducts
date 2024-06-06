@@ -7,7 +7,13 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 } elseif (!isset($_SESSION['ClienteId'])) {
   header('Location: https://inversioneseverest.net/clients/completa_perfil.php');
   exit();
-} 
+} elseif (!$user->is_logged_in()) {
+  header('Location: https://inversioneseverest.net/index.php');
+  exit();
+} elseif ($_SESSION['isProffileValidated'] == 2) {
+  header('Location: https://inversioneseverest.net/clients/gracias_por_completar.php');
+  exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
