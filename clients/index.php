@@ -10,7 +10,7 @@ if ($user->is_logged_in() && $_SESSION['isAdmin'] && $_SESSION['isProffileValida
 } elseif (!$user->is_logged_in()) {
   header('Location: https://inversioneseverest.net/index.php');
   exit();
-} elseif ($_SESSION['isProffileValidated'] == 2) {
+} elseif ($_SESSION['isProffileInReview']) {
   header('Location: https://inversioneseverest.net/clients/gracias_por_completar.php');
   exit();
 }
