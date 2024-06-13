@@ -171,22 +171,28 @@ $title = 'Usuarios Inversiones Everest';
       ?>
 
       <div class="form-group">
-        <input type="text" name="username" id="username" class="form-control form-control-lg" placeholder="Usuario" value="<?php if(isset($error)){ echo htmlspecialchars($_POST['username'], ENT_QUOTES); } ?>" tabindex="1">
+        <input type="text" name="username" id="username" class="form-control form-control-lg" placeholder="Usuario" value="<?php if(isset($error)){ echo htmlspecialchars($_POST['username'], ENT_QUOTES); } ?>" tabindex="1" required>
       </div>
       <div class="form-group">
-        <input type="email" name="email" id="email" class="form-control form-control-lg" placeholder="Correo Electrónico" value="<?php if(isset($error)){ echo htmlspecialchars($_POST['email'], ENT_QUOTES); } ?>" tabindex="2">
+        <input type="email" name="email" id="email" class="form-control form-control-lg" placeholder="Correo Electrónico" value="<?php if(isset($error)){ echo htmlspecialchars($_POST['email'], ENT_QUOTES); } ?>" tabindex="2" required>
       </div>
       <div class="form-group">
-        <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Contraseña" tabindex="3">
+        <input type="password" name="password" id="password" class="form-control form-control-lg" placeholder="Contraseña" tabindex="3" required>
       </div>
       <div class="form-group">
-        <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control form-control-lg" placeholder="Confirmar contraseña" tabindex="4">
+        <input type="password" name="passwordConfirm" id="passwordConfirm" class="form-control form-control-lg" placeholder="Confirmar contraseña" tabindex="4" required>
       </div>
 
       <div class="form-group">
-        <input style="color: white !important;" type="submit" name="submit" value="Registrate" class="btn btn-primary btn-block btn-lg" tabindex="5">
+        <input style="color: white !important;" type="submit" name="submit" value="Registrate" class="btn btn-primary btn-block btn-lg" tabindex="5" required>
       </div>
     </form>
+    <script>
+      document.getElementById('registrationForm').addEventListener('submit', function(e) {
+      var submitButton = e.target.querySelector('input[type="submit"]');
+      submitButton.disabled = true;
+      });
+    </script>
   </div>
 </div>
 
