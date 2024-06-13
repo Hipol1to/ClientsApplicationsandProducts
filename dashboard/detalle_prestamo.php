@@ -588,14 +588,14 @@ if($stmt->rowCount() > 0) {
                     // If no client with the specified ID is found, display an error message
                     echo '<div class="container">';
                     echo '<h1>Error</h1>';
-                    echo '<p>No se pudo encontrar el cliente</p>';
+                    echo '<p>No se pudo encontrar el prestamo</p>';
                     echo '</div>';
                 }
             } else {
                 // If the ID parameter is not set in the URL, display an error message
                 echo '<div class="container">';
                 echo '<h1>Error</h1>';
-                echo '<p>No se pudo encontrar el cliente</p>';
+                echo '<p>No se pudo encontrar el prestamo</p>';
                 echo '</div>';
             }
 
